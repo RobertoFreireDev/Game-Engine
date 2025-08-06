@@ -5,7 +5,8 @@
 - 256x144 (16:9)
 - 8x8 sprite
 - Letter box integer scaling
-- Use SDL2 and C++
+- C++
+- Use SDL2/SFML
 - Game code in Lua
 
 ## Palette
@@ -14,7 +15,7 @@
 
 ## Controller
 
-- ⬆️(0), ➡️(1), ⬇️(2), ⬅️(3), 4, 5, 6, and Start (7)
+- ⬆️(0), ➡️(1), ⬇️(2), ⬅️(3), 🟢(4), 🔵(5), 🟢(6), and ➖[Start](7)
 
 ![controller](imgs/controller.png)
 
@@ -22,13 +23,12 @@
 
 <pre>
 📁 Content
-├── 🛠️ Game Engine
-├── 🕹️ Game Player
+├── 🖥️ Runner
 ├── 📄 Code 
-├── 📄 Sound Effects
-├── 📄 Songs
-├── 📄 Map
-└── 📄 Sprites
+├── 🎵 Sound Effects
+├── 🎼 Songs
+├── 🐓 Sprites
+└── ⛱️ Map
 </pre>
 
 ## Functions
