@@ -14,6 +14,8 @@
 
 ## Controller
 
+- ⬆️,➡️,⬇️,⬅️,1,2,3,4 and Start
+
 ![controller](imgs/controller.png)
 
 ## Files
@@ -39,9 +41,9 @@
 
 ### Input
 
-- btn([i])    -> Button pressed
+- btn([i])    -> Button is pressed
 - btnp([i])   -> Button just pressed
-- btnr([i])   -> Button released
+- btnr([i])   -> Button just released
 
 ### Draw
 
