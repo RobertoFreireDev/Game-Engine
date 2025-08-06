@@ -14,7 +14,7 @@
 
 ## Controller
 
-- ⬆️(0), ➡️(1), ⬇️(2), ⬅️(3), 4, 5, 6, 7 and Start (8)
+- ⬆️(0), ➡️(1), ⬇️(2), ⬅️(3), 4, 5, 6, and Start (7)
 
 ![controller](imgs/controller.png)
 
