@@ -5,8 +5,8 @@
 - 256x144 (16:9)
 - 8x8 sprite
 - Letter box integer scaling
-- Code in Lua
 - Use SDL2 and C++
+- Game code in Lua
 
 ## Palette
 
@@ -14,7 +14,7 @@
 
 ## Controller
 
-- ⬆️,➡️,⬇️,⬅️,1,2,3,4 and Start
+- ⬆️(0), ➡️(1), ⬇️(2), ⬅️(3), 4, 5, 6, 7 and Start (8)
 
 ![controller](imgs/controller.png)
 
@@ -36,7 +36,8 @@
 ### Game loop
 
 - _init()
-- _update()
+- _update30()   -> 30fps
+- _update()     -> 60fps
 - _draw()
 
 ### Input
@@ -49,3 +50,7 @@
 
 - rect(x0, y0, x1, y1, [col])
 - rectfill(x0, y0, x1, y1, [col])
+
+### System
+
+- _system(0) -> Frames per second should be locked to either 30 or 60.
