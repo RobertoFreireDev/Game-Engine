@@ -8,6 +8,10 @@
 - Code in Lua
 - Use SDL2 and C++
 
+## Palette
+
+![alt text](imgs/lospec500-8x.png)
+
 ## Files
 
 <pre>
