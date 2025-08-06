@@ -10,7 +10,11 @@
 
 ## Palette
 
-![alt text](imgs/lospec500-8x.png)
+![palette](imgs/lospec500-8x.png)
+
+## Controller
+
+![controller](imgs/controller.png)
 
 ## Files
 
@@ -24,3 +28,22 @@
 ├── 📄 Map
 └── 📄 Sprites
 </pre>
+
+## Functions
+
+### Game loop
+
+- _init()
+- _update()
+- _draw()
+
+### Input
+
+- btn([i])    -> Button pressed
+- btnp([i])   -> Button just pressed
+- btnr([i])   -> Button released
+
+### Draw
+
+- rect(x0, y0, x1, y1, [col])
+- rectfill(x0, y0, x1, y1, [col])
