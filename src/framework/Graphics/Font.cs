@@ -53,7 +53,7 @@ public static class Font
         return charTextures;
     }
 
-    public static void DrawText(string text, Vector2 position, Color color, int scale = 2)
+    public static void DrawText(string text, Vector2 position, Color color)
     {
         var boxToDraw = ScreenUtils.BoxToDraw;
         var boxToDrawScale = (ScreenUtils.ScaleX + ScreenUtils.ScaleY) / 2;
@@ -63,19 +63,18 @@ public static class Font
         {
             var charTexture = keyBoardKeys.ContainsKey(key) ? keyBoardKeys[key] : keyBoardKeys[DefaultKey];
 
-            Vector2 origin = new Vector2(-(int)(charTexture.Width / 2f), -(int)(charTexture.Height / 2f));
             GFW.SpriteBatch.Draw(
                 charTexture,
                 new Vector2(boxToDraw.X + (int)(position.X * boxToDrawScale), boxToDraw.Y + (int)(position.Y * boxToDrawScale)),
                 null,
                 color,
                 0f,
-                origin,
-                scale * boxToDrawScale,
+                new Vector2(0,0),
+                boxToDrawScale,
                 SpriteEffects.None,
                 0f);
 
-            position += new Vector2((charTexture.Width - 1) * scale, 0);
+            position += new Vector2((charTexture.Width - 1), 0);
         }
     }
 }
