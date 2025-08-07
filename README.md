@@ -8,16 +8,23 @@
 - C# and monogame
 - Game code in Lua
 
-## Files
+## Diagram
 
 <pre>
-📁 Content
-├── 🖥️ Runner
-├── 📄 Code 
-├── 🎵 Sound Effects
-├── 🎼 Songs
-├── 🐓 Sprites
-└── ⛱️ Map
+📁 Layers
+├── 📁 Application (Lua)
+│   ├── 🖥️ Runner
+│   ├── 📄 Code 
+│   ├── 🎵 Sound Effects
+│   ├── 🎼 Songs
+│   ├── 🐓 Sprites
+│   └── ⛱️ Map
+├── 📁 Binding (C#, NLua)
+│   └── Lua Functions
+└── 📁 Framework (C#, monogame)
+    ├── 📄 IO (read/write file txt/image png)
+    └── 📄 Graphics (Draw sprites/shapes)
+ 
 </pre>
 
 Note: The runner can be used to run your game. But, it can be also used to create tools to create your game assets (sprites, maps, sound effects and songs)
