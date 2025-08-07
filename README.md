@@ -12,12 +12,6 @@
 
 ![palette](imgs/lospec500-8x.png)
 
-## Controller
-
-- ⬆️(0), ➡️(1), ⬇️(2), ⬅️(3), 🟢(4), 🔵(5), 🔴(6), and Start(7)
-
-![controller](imgs/controller.png)
-
 ## Files
 
 <pre>
@@ -38,14 +32,22 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 
 - _init()
 - _update30()   -> 30fps
-- _update60()     -> 60fps
+- _update60()   -> 60fps
 - _draw()
 
 ### Input
 
-- btn([i])    -> Button is pressed
-- btnp([i])   -> Button just pressed
-- btnr([i])   -> Button just released
+⌨️ i -> almost any key
+
+- btn(i)    -> Button is pressed
+- btnp(i)   -> Button just pressed
+- btnr(i)   -> Button just released
+
+🖱️ i -> 0 left 1 right
+
+- click(i)    -> Mouse button is pressed
+- clickp(i)   -> Mouse button just pressed
+- clickr(i)   -> Mouse button just released
 
 ### Draw
 
