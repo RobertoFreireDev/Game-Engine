@@ -1,4 +1,5 @@
 ﻿using framework.Assets;
+using framework.Binding;
 using framework.Graphics;
 using framework.Input;
 using framework.Utils;
@@ -16,6 +17,7 @@ namespace framework
         public static Dictionary<char, Texture2D> MediumFontTextures;
         public static Texture2D PixelTexture;
         public static SpriteBatch SpriteBatch;
+        private LuaBinding game;
 
         public GFW()
         {
@@ -47,6 +49,23 @@ namespace framework
 
         protected override void Initialize()
         {
+            var script = @"
+                function _init()
+                end
+
+                function _update()
+                end
+
+                function _draw()
+                  rectfill(0, 0, 320, 180, 2)
+                  rect(0, 0, 320, 180, 1)
+                  print('HELLO WORLD', 0, 0)
+                  print('HELLO WORLD', 0, 7)
+                end
+            ";
+
+            game = new LuaBinding(script);
+
             base.Initialize();
         }
 
@@ -72,6 +91,8 @@ namespace framework
             ScreenUtils.UpdateIsFocused(IsActive, _graphics.IsFullScreen);
             InputStateManager.Update();
 
+            game.Update();
+
             base.Update(gameTime);
         }
 
@@ -79,22 +100,11 @@ namespace framework
         {
             GraphicsDevice.Clear(Color.Black);
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            Draw();
+            game.Draw();
             SpriteBatch.DrawMouse(MouseInput.Context_Menu_mouse);
             Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);
-        }
-
-        private void Draw()
-        {
-            Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), Color.DarkGray);
-            Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), Color.BurlyWood);
-            Font.DrawText("HELLO WORLD", new Vector2(0, 0), Color.Black);
-            Font.DrawText("HELLO WORLD", new Vector2(0, 7), Color.Black);
-            // Testing mouse position
-            var mousepos = MouseInput.MouseVirtualPosition();
-            Font.DrawText($"({mousepos.X},{mousepos.Y})", mousepos, Color.BurlyWood);
         }
     }
 }

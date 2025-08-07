@@ -1,9 +1,8 @@
-# Game-Engine
+# Black-Box
 
 ## Requirements 
 
 - 320x180 (16:9)
-- 10x10 sprite
 - Letter box integer scaling
 - C# and monogame
 - Game code in Lua
@@ -11,36 +10,34 @@
 ## Diagram
 
 <pre>
-📁 Layers
+📁 Framework (C#, monogame and NLua)
 ├── 📁 Application (Lua)
-│   ├── 🖥️ Runner
+│   ├── 📄 Code
 │   ├── 📄 Metadata (Program title, fps, ...)
-│   ├── 📄 Code 
 │   ├── 🎵 Sound Effects
 │   ├── 🎼 Songs
 │   ├── 🐓 Sprites
 │   └── ⛱️ Map
-└── 📁 Framework (C#, monogame and NLua)
-    ├── 📁 Binding
-    │   └── 📄 Lua Functions
-    ├── 📁 Data
-    │   └── 📄 Images
-    ├── 📁 Utils
-    │   └── 📄 Screen
-    ├── 📁 Game loop
-    │   └── 📄 Game loop
-    ├── 📁 System
-    │   └── 📄 System
-    ├── 📁 IO
-    │   ├── 📄 Read/Update/Delete/Write file txt
-    │   ├── 📄 Read/Update/Delete/Write image png
-    │   ├── 📄 Keyboard input
-    │   └── 📄 Mouse input
-    └── 📁 Graphics
-        ├── 📄 Font
-        ├── 📄 Configure palette
-        ├── 📄 Draw sprites
-        └── 📄 Draw shapes
+├── 📁 Binding
+│   └── 📄 Lua Functions
+├── 📁 Data
+│   └── 📄 Images
+├── 📁 Utils
+│   └── 📄 Screen
+├── 📁 Game loop
+│   └── 📄 Game loop
+├── 📁 System
+│   └── 📄 System
+├── 📁 IO
+│   ├── 📄 Read/Update/Delete/Write file txt
+│   ├── 📄 Read/Update/Delete/Write image png
+│   ├── 📄 Keyboard input
+│   └── 📄 Mouse input
+└── 📁 Graphics
+    ├── 📄 Font
+    ├── 📄 Configure palette
+    ├── 📄 Draw sprites
+    └── 📄 Draw shapes
 </pre>
 
 Note: The runner can be used to run your game. But, it can be also used to create tools to create your game assets (sprites, maps, sound effects and songs)
@@ -70,7 +67,6 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 
 ### Graphics
 
-- pal(t) -> pass a list of Hex color values to use as a palette. MAX: 32 collors. Default: black color.
 - rect(x0, y0, x1, y1, [col])
 - rectfill(x0, y0, x1, y1, [col])
 
