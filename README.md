@@ -14,6 +14,7 @@
 📁 Layers
 ├── 📁 Application (Lua)
 │   ├── 🖥️ Runner
+│   ├── 📄 Metadata (Program title, fps, ...)
 │   ├── 📄 Code 
 │   ├── 🎵 Sound Effects
 │   ├── 🎼 Songs
@@ -36,6 +37,7 @@
     │   ├── 📄 Keyboard input
     │   └── 📄 Mouse input
     └── 📁 Graphics
+        ├── 📄 Font
         ├── 📄 Configure palette
         ├── 📄 Draw sprites
         └── 📄 Draw shapes
@@ -48,8 +50,7 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 ### Game loop
 
 - _init()
-- _update30()   -> 30fps
-- _update60()   -> 60fps
+- _update()
 - _draw()
 
 ### Input

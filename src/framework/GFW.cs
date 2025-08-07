@@ -13,6 +13,7 @@ namespace framework
     {
         public GraphicsDeviceManager _graphics;
         public static Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
+        public static Dictionary<char, Texture2D> MediumFontTextures;
         public static Texture2D PixelTexture;
         public static SpriteBatch SpriteBatch;
 
@@ -57,6 +58,7 @@ namespace framework
             PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             PixelTexture.SetData(new Color[] { Color.White });
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
@@ -77,13 +79,18 @@ namespace framework
         {
             GraphicsDevice.Clear(Color.Black);
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            //Draw BaseBox to test scale
-            Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), Color.DarkGray);
-            Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), Color.BurlyWood);
+            Draw();
             SpriteBatch.DrawMouse(MouseInput.Context_Menu_mouse);
             Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private void Draw()
+        {
+            Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), Color.DarkGray);
+            Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), Color.BurlyWood);
+            Font.DrawText("Hello World", new Vector2(0,0), Color.Black);
         }
     }
 }
