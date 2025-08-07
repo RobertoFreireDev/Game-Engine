@@ -30,6 +30,8 @@
 └── ⛱️ Map
 </pre>
 
+Note: The runner can be used to run your game. But, it can be also used to create tools to create your game assets (sprites, maps, sound effects and songs)
+
 ## Functions
 
 ### Game loop
