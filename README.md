@@ -36,7 +36,7 @@
 
 - _init()
 - _update30()   -> 30fps
-- _update()     -> 60fps
+- _update60()     -> 60fps
 - _draw()
 
 ### Input
