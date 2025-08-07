@@ -23,8 +23,7 @@ namespace framework
             _graphics.IsFullScreen = false;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnResize;
-            IsMouseVisible = true;
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         private void OnResize(Object sender, EventArgs e)
@@ -81,6 +80,8 @@ namespace framework
             //Draw BaseBox to test scale
             Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), Color.DarkGray);
             Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), Color.BurlyWood);
+            SpriteBatch.DrawMouse(MouseInput.Context_Menu_mouse);
+            Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);
         }

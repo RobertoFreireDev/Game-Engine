@@ -24,7 +24,12 @@ internal static class MouseInput
         }
     }
 
-    public static Point MousePosition()
+    public static Vector2 MousePosition()
+    {
+        return new Vector2(InputStateManager.CurrentMouseState().Position.X, InputStateManager.CurrentMouseState().Position.Y);
+    }
+
+    public static Point MouseVirtualPosition()
     {
         return new Point(
                 (int)((-ScreenUtils.BoxToDraw.X + InputStateManager.CurrentMouseState().Position.X) / ScreenUtils.ScaleX),
