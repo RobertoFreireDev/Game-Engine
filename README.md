@@ -8,10 +8,6 @@
 - C# and monogame
 - Game code in Lua
 
-## Palette
-
-![palette](imgs/lospec500-8x.png)
-
 ## Files
 
 <pre>
@@ -48,9 +44,11 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 - click(i)    -> Mouse button is pressed
 - clickp(i)   -> Mouse button just pressed
 - clickr(i)   -> Mouse button just released
+- mouse()     -> Mouse (X,Y) position
 
-### Draw
+### Graphics
 
+- pal(t) -> pass a list of Hex color values to use as a palette. MAX: 32 collors. Default: black color.
 - rect(x0, y0, x1, y1, [col])
 - rectfill(x0, y0, x1, y1, [col])
 
