@@ -27,8 +27,8 @@
     ├── 📁 System
     │   └── 📄 System
     ├── 📁 IO
-    │   ├── 📄 Read/Write file txt
-    │   ├── 📄 Read/Write image png
+    │   ├── 📄 Read/Update/Delete/Write file txt
+    │   ├── 📄 Read/Update/Delete/Write image png
     │   ├── 📄 Keyboard input
     │   └── 📄 Mouse input
     └── 📁 Graphics
