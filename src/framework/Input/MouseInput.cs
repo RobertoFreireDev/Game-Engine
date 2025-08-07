@@ -8,8 +8,9 @@ internal static class MouseInput
 {
     public const int Context_Menu_mouse = 0;
     public const int Pointer_mouse = 1;
-    public static MouseCursor ContextMenuCursor = MouseCursor.FromTexture2D(GFW.Textures["contextmenu_mouse"], 10, 0);
-    public static MouseCursor PointerCursor = MouseCursor.FromTexture2D(GFW.Textures["pointer_mouse"], 10, 0);
+    private static int offsetX = 10;
+    public static MouseCursor ContextMenuCursor = MouseCursor.FromTexture2D(GFW.Textures["contextmenu_mouse"], offsetX, 0);
+    public static MouseCursor PointerCursor = MouseCursor.FromTexture2D(GFW.Textures["pointer_mouse"], offsetX, 0);
 
     public static void TryUpdateStatus(int status)
     {
@@ -26,7 +27,7 @@ internal static class MouseInput
 
     public static Vector2 MousePosition()
     {
-        return new Vector2(InputStateManager.CurrentMouseState().Position.X, InputStateManager.CurrentMouseState().Position.Y);
+        return new Vector2(InputStateManager.CurrentMouseState().Position.X - offsetX, InputStateManager.CurrentMouseState().Position.Y);
     }
 
     public static Point MouseVirtualPosition()
