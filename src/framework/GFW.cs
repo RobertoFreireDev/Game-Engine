@@ -1,14 +1,17 @@
-﻿using framework.Input;
+﻿using framework.Assets;
+using framework.Input;
 using framework.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace framework
 {
     public class GFW : Game
     {
         public GraphicsDeviceManager _graphics;
+        public static Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
         private SpriteBatch _spriteBatch;
 
         public GFW()
@@ -49,6 +52,7 @@ namespace framework
         protected override void LoadContent()
         {
             ScreenUtils.SetResolution(_graphics, GraphicsDevice);
+            Textures = Images.GetAllImages(GraphicsDevice);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
         }

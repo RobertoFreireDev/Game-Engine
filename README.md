@@ -22,6 +22,8 @@
 ├── 📁 Binding (C#, NLua)
 │   └── 📄 Lua Functions
 └── 📁 Framework (C#, monogame)
+    ├── 📁 Data
+    │   └── 📄 Images
     ├── 📁 Utils
     │   └── 📄 Screen
     ├── 📁 Game loop

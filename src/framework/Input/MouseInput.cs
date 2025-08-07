@@ -8,18 +8,18 @@ internal static class MouseInput
 {
     public const int Context_Menu_mouse = 0;
     public const int Pointer_mouse = 1;
-    //public static MouseCursor ContextMenuCursor = MouseCursor.FromTexture2D(GameEngineData.Images["contextmenu_mouse"], 10, 0);
-    //public static MouseCursor PointerCursor = MouseCursor.FromTexture2D(GameEngineData.Images["pointer_mouse"], 10, 0);
+    public static MouseCursor ContextMenuCursor = MouseCursor.FromTexture2D(GFW.Textures["contextmenu_mouse"], 10, 0);
+    public static MouseCursor PointerCursor = MouseCursor.FromTexture2D(GFW.Textures["pointer_mouse"], 10, 0);
 
     public static void TryUpdateStatus(int status)
     {
         switch (status)
         {
             case Context_Menu_mouse:
-                //Mouse.SetCursor(ContextMenuCursor);
+                Mouse.SetCursor(ContextMenuCursor);
                 break;
             case Pointer_mouse:
-                //Mouse.SetCursor(PointerCursor);
+                Mouse.SetCursor(PointerCursor);
                 break;
         }
     }
