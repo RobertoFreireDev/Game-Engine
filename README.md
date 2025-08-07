@@ -2,8 +2,8 @@
 
 ## Requirements 
 
-- 256x144 (16:9)
-- 8x8 sprite
+- 320x180 (16:9)
+- 10x10 sprite
 - Letter box integer scaling
 - C# and monogame
 - Game code in Lua
