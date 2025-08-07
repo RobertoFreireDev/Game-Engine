@@ -53,7 +53,7 @@ public static class Font
         return charTextures;
     }
 
-    public static void DrawText(string text, Vector2 position, Color color, float scale = 1f)
+    public static void DrawText(string text, Vector2 position, Color color, int scale = 2)
     {
         var boxToDraw = ScreenUtils.BoxToDraw;
         var boxToDrawScale = (ScreenUtils.ScaleX + ScreenUtils.ScaleY) / 2;

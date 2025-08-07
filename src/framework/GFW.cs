@@ -90,7 +90,10 @@ namespace framework
         {
             Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), Color.DarkGray);
             Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), Color.BurlyWood);
-            Font.DrawText("Hello World", new Vector2(0,0), Color.Black);
+            Font.DrawText("Hello World", new Vector2(0, 0), Color.Black);
+            // Testing mouse position
+            var mousepos = MouseInput.MouseVirtualPosition();
+            Font.DrawText($"({mousepos.X},{mousepos.Y})", mousepos, Color.BurlyWood);
         }
     }
 }
