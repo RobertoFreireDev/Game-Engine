@@ -71,4 +71,17 @@ internal static class ScreenUtils
         ScaleX = (float)BoxToDraw.Width / BaseBox.Width;
         ScaleY = (float)BoxToDraw.Height / BaseBox.Height;
     }
+
+    public static Rectangle ScaleRectangle(Rectangle bounds)
+    {
+        var boxToDraw = BoxToDraw;
+        var scaleX = ScaleX;
+        var scaleY = ScaleY;
+
+        return new Rectangle(
+            boxToDraw.X + (int)Math.Floor(bounds.X * scaleX),
+            boxToDraw.Y + (int)Math.Floor(bounds.Y * scaleY),
+            (int)Math.Ceiling(bounds.Width * scaleX),
+            (int)Math.Ceiling(bounds.Height * scaleY));
+    }
 }

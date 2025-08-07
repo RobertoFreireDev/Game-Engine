@@ -1,4 +1,5 @@
 ﻿using framework.Assets;
+using framework.Graphics;
 using framework.Input;
 using framework.Utils;
 using Microsoft.Xna.Framework;
@@ -13,7 +14,7 @@ namespace framework
         public GraphicsDeviceManager _graphics;
         public static Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
         public static Texture2D PixelTexture;
-        private SpriteBatch _spriteBatch;
+        public static SpriteBatch SpriteBatch;
 
         public GFW()
         {
@@ -56,7 +57,7 @@ namespace framework
             Textures = Images.GetAllImages(GraphicsDevice);
             PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             PixelTexture.SetData(new Color[] { Color.White });
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
@@ -76,9 +77,11 @@ namespace framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            _spriteBatch.Draw(PixelTexture, ScreenUtils.BoxToDraw, Color.Red);
-            _spriteBatch.End();
+            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            //Draw BaseBox to test scale
+            Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), Color.DarkGray);
+            Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), Color.BurlyWood);
+            SpriteBatch.End();
             base.Draw(gameTime);
         }
     }

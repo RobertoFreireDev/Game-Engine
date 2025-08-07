@@ -19,9 +19,9 @@
 │   ├── 🎼 Songs
 │   ├── 🐓 Sprites
 │   └── ⛱️ Map
-├── 📁 Binding (C#, NLua)
-│   └── 📄 Lua Functions
-└── 📁 Framework (C#, monogame)
+└── 📁 Framework (C#, monogame and NLua)
+    ├── 📁 Binding
+    │   └── 📄 Lua Functions
     ├── 📁 Data
     │   └── 📄 Images
     ├── 📁 Utils
