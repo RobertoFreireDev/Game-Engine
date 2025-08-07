@@ -20,11 +20,21 @@
 │   ├── 🐓 Sprites
 │   └── ⛱️ Map
 ├── 📁 Binding (C#, NLua)
-│   └── Lua Functions
+│   └── 📄 Lua Functions
 └── 📁 Framework (C#, monogame)
-    ├── 📄 IO (read/write file txt/image png)
-    └── 📄 Graphics (Draw sprites/shapes)
- 
+    ├── 📁 Game loop
+    │   └── 📄 Game loop
+    ├── 📁 System
+    │   └── 📄 System
+    ├── 📁 IO
+    │   ├── 📄 Read/Write file txt
+    │   ├── 📄 Read/Write image png
+    │   ├── 📄 Keyboard input
+    │   └── 📄 Mouse input
+    └── 📁 Graphics
+        ├── 📄 Configure palette
+        ├── 📄 Draw sprites
+        └── 📄 Draw shapes
 </pre>
 
 Note: The runner can be used to run your game. But, it can be also used to create tools to create your game assets (sprites, maps, sound effects and songs)
