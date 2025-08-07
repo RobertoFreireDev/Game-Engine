@@ -12,6 +12,7 @@ namespace framework
     {
         public GraphicsDeviceManager _graphics;
         public static Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
+        public static Texture2D PixelTexture;
         private SpriteBatch _spriteBatch;
 
         public GFW()
@@ -45,8 +46,6 @@ namespace framework
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -55,8 +54,9 @@ namespace framework
             ScreenUtils.SetResolution(_graphics, GraphicsDevice);
             Window.Position = new Point(0, 35);
             Textures = Images.GetAllImages(GraphicsDevice);
+            PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
+            PixelTexture.SetData(new Color[] { Color.White });
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -70,17 +70,15 @@ namespace framework
             ScreenUtils.UpdateIsFocused(IsActive, _graphics.IsFullScreen);
             InputStateManager.Update();
 
-            // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
-            // TODO: Add your drawing code here
-
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Draw(PixelTexture, ScreenUtils.BoxToDraw, Color.Red);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
