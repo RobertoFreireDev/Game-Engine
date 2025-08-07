@@ -5,8 +5,7 @@
 - 256x144 (16:9)
 - 8x8 sprite
 - Letter box integer scaling
-- C++
-- Use SDL2/SFML
+- C# and monogame
 - Game code in Lua
 
 ## Palette
