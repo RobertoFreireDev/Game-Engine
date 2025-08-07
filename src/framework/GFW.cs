@@ -39,7 +39,8 @@ namespace framework
                 return;
             }
 
-            ScreenUtils.SetResolution(_graphics, GraphicsDevice, window.ClientBounds.Width, window.ClientBounds.Height, window.ClientBounds.X, window.ClientBounds.Y);
+            ScreenUtils.SetResolution(_graphics, GraphicsDevice, window.ClientBounds.Width, window.ClientBounds.Height);
+            Window.Position = new Point(window.ClientBounds.X, window.ClientBounds.Y);
         }
 
         protected override void Initialize()
@@ -52,6 +53,7 @@ namespace framework
         protected override void LoadContent()
         {
             ScreenUtils.SetResolution(_graphics, GraphicsDevice);
+            Window.Position = new Point(0, 35);
             Textures = Images.GetAllImages(GraphicsDevice);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
@@ -65,6 +67,7 @@ namespace framework
             if (Input.KeyboardInput.IsF2Released())
                 ScreenUtils.ToggleFullScreen(_graphics, GraphicsDevice);
 
+            ScreenUtils.UpdateIsFocused(IsActive, _graphics.IsFullScreen);
             InputStateManager.Update();
 
             // TODO: Add your update logic here

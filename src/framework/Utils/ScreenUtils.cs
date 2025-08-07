@@ -10,15 +10,13 @@ internal static class ScreenUtils
     public static float ScaleX;
     public static float ScaleY;
     private static Point GameResolution;
-    private static Point Position;
     private static Rectangle BaseBox = new Rectangle(0, 0, 256, 144);
     private static bool IsFocused;
 
-    public static void SetResolution(GraphicsDeviceManager graphics, GraphicsDevice graphicsDevice, int w = 0, int h = 0, int x = 0, int y = 35)
+    public static void SetResolution(GraphicsDeviceManager graphics, GraphicsDevice graphicsDevice, int w = 0, int h = 0)
     {
         GameResolution = new Point(Math.Max(w, BaseBox.Width), Math.Max(h, BaseBox.Height));
         ApplyChanges(graphics, graphicsDevice);
-        Position = new Point(x, y);
     }
 
     private static void ApplyChanges(GraphicsDeviceManager graphics, GraphicsDevice graphicsDevice)
