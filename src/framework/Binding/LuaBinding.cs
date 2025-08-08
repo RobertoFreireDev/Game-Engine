@@ -47,6 +47,8 @@ public class LuaBinding
         // File
         _lua.RegisterFunction("ioread", this, GetType().GetMethod("ReadFile"));
         _lua.RegisterFunction("iocreate", this, GetType().GetMethod("CreateFile"));
+        _lua.RegisterFunction("ioupdate", this, GetType().GetMethod("UpdateFile"));
+        _lua.RegisterFunction("iodelete", this, GetType().GetMethod("DeleteFile"));
 
         try
         {
@@ -278,9 +280,19 @@ public class LuaBinding
         return TxtFileIO.Read(fileName);
     }
 
-    public static bool CreateFile(string fileName, string content)
+    public static void CreateFile(string fileName, string content)
     {
-        return TxtFileIO.Create(fileName, content);
+        TxtFileIO.Create(fileName, content);
+    }
+
+    public static void UpdateFile(string fileName, string content)
+    {
+        TxtFileIO.Update(fileName, content);
+    }
+
+    public static void DeleteFile(string fileName)
+    {
+        TxtFileIO.Delete(fileName);
     }
     #endregion
 }

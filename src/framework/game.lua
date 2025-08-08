@@ -14,7 +14,7 @@ end
 function _update()
     local h = 72
     if btnr(h) then
-        iocreate("test","some test\nmore test and some test");
+        iodelete("test");
     end
 end
 

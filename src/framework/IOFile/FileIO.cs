@@ -28,7 +28,7 @@ public static class FileIO
         return string.Empty;
     }
 
-    public static bool Create(string fileName, string content)
+    public static void Create(string fileName, string content)
     {
         try
         {
@@ -36,26 +36,64 @@ public static class FileIO
             if (File.Exists(path))
             {
                 LuaError.SetError($"File already exists: {path}");
-                return false;
             }
 
-            using (FileStream fs = File.Create(path))
-            using (StreamWriter writer = new StreamWriter(fs))
-            {
-                string[] lines = content.Split('\n');
+            CreateOrUpdateFile(path, content);
 
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    writer.WriteLine(lines[i]);
-                }
-            }
-
-            return true;
         }
         catch (Exception e)
         {
             LuaError.SetError("Error creating file: " + e.Message);
-            return false;
+        }
+    }
+
+    public static void Update(string fileName, string content)
+    {
+        try
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            if (!File.Exists(path))
+            {
+                LuaError.SetError($"File doesn't exist: {path}");
+            }
+
+            CreateOrUpdateFile(path, content);
+        }
+        catch (Exception e)
+        {
+            LuaError.SetError("Error updating file: " + e.Message);
+        }
+    }
+
+    public static void Delete(string fileName)
+    {
+        try
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            if (!File.Exists(path))
+            {
+                LuaError.SetError($"File not found: {path}");
+            }
+
+            File.Delete(path);
+        }
+        catch (Exception e)
+        {
+            LuaError.SetError("Error deleting file: " + e.Message);
+        }
+    }
+
+    private static void CreateOrUpdateFile(string path, string content)
+    {
+        using (FileStream fs = File.Create(path))
+        using (StreamWriter writer = new StreamWriter(fs))
+        {
+            string[] lines = content.Split('\n');
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                writer.WriteLine(lines[i]);
+            }
         }
     }
 }

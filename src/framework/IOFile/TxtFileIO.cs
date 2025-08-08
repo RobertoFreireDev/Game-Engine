@@ -1,4 +1,6 @@
-﻿namespace framework.IOFile;
+﻿using System;
+
+namespace framework.IOFile;
 
 public static class TxtFileIO
 {
@@ -7,8 +9,18 @@ public static class TxtFileIO
         return FileIO.Read($"{fileName}.txt");
     }
 
-    public static bool Create(string fileName, string content)
+    public static void Create(string fileName, string content)
     {
-        return FileIO.Create($"{fileName}.txt", content);
+        FileIO.Create($"{fileName}.txt", content);
+    }
+
+    public static void Update(string fileName, string content)
+    {
+        FileIO.Update($"{fileName}.txt", content);
+    }
+
+    public static void Delete(string fileName)
+    {
+        FileIO.Delete($"{fileName}.txt");
     }
 }
