@@ -1,35 +1,5 @@
 # Black-Box
 
-# Diagram
-
-<pre>
-📁 Framework (C#, monogame and NLua)
-├── 📁 Application (Lua)
-│   ├── 📄 Code
-│   ├── 🎵 Sound Effects
-│   ├── 🎼 Songs
-│   ├── 🐓 Sprites
-│   └── ⛱️ Map
-├── 📁 Binding
-│   └── 📄 Lua Functions
-├── 📁 Assets
-│   └── 📄 Images
-├── 📁 Utils
-│   └── 📄 Screen
-├── 📁 System
-│   └── 📄 System
-├── 📁 IO
-│   ├── 📄 Read/Update/Delete/Write file txt
-│   ├── 📄 Read/Update/Delete/Write image png
-│   ├── 📄 Keyboard input
-│   └── 📄 Mouse input
-└── 📁 Graphics
-    ├── 📄 Font
-    ├── 📄 Configure palette
-    ├── 📄 Draw sprites
-    └── 📄 Draw shapes
-</pre>
-
 Note: The runner can be used to run your game. But, it can be also used to create tools to create your game assets (sprites, maps, sound effects and songs)
 
 # Functions
