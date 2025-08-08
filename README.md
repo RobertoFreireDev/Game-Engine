@@ -23,6 +23,7 @@ rect(0, 0, 320, 180, 3)
 
 ### Parameters
 
+- string p -> palette list in hex color
 - int c    -> 0-15 color index
 - bool w   -> wraptext
 - int l    -> wrap limit in x
@@ -67,6 +68,10 @@ inittitle("MY GAME")
 - bool btn(k)    -> keyboard pressed
 - bool btnp(k)   -> keyboard just pressed
 - bool btnr(k)   -> keyboard released
+
+```lua
+btnr(72) -- button h
+```
 
 ### Keys int k
 

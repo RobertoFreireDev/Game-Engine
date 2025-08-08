@@ -27,7 +27,6 @@ namespace framework
         public GFW()
         {
             _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
             _graphics.IsFullScreen = false;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnResize;
