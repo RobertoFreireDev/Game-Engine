@@ -13,14 +13,13 @@
 📁 Framework (C#, monogame and NLua)
 ├── 📁 Application (Lua)
 │   ├── 📄 Code
-│   ├── 📄 Metadata (Program title, fps, ...)
 │   ├── 🎵 Sound Effects
 │   ├── 🎼 Songs
 │   ├── 🐓 Sprites
 │   └── ⛱️ Map
 ├── 📁 Binding
 │   └── 📄 Lua Functions
-├── 📁 Data
+├── 📁 Assets
 │   └── 📄 Images
 ├── 📁 Utils
 │   └── 📄 Screen
@@ -49,10 +48,3 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 - btn(i)    -> Button is pressed
 - btnp(i)   -> Button just pressed
 - btnr(i)   -> Button just released
-
-🖱️ i -> 0 left 1 right
-
-- click(i)    -> Mouse button is pressed
-- clickp(i)   -> Mouse button just pressed
-- clickr(i)   -> Mouse button just released
-- mouse()     -> Mouse (X,Y) position

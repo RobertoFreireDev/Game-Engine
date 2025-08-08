@@ -46,9 +46,11 @@ namespace framework
                 end
 
                 function _update()
-                    local pos = mouse()
-                    p.x = pos.x
-                    p.y = pos.y
+                    if clickr(1) then
+                        local pos = mouse()
+                        p.x = pos.x
+                        p.y = pos.y
+                    end
                 end
 
                 function _draw()

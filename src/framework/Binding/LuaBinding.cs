@@ -24,6 +24,9 @@ public class LuaBinding
 
         // Input 
         _lua.RegisterFunction("mouse", this, GetType().GetMethod("GetMousePos"));
+        _lua.RegisterFunction("click", this, GetType().GetMethod("MouseButtonPressed"));
+        _lua.RegisterFunction("clickp", this, GetType().GetMethod("MouseButtonJustPressed"));
+        _lua.RegisterFunction("clickr", this, GetType().GetMethod("MouseButtonReleased"));
 
         // Draw
         _lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
@@ -140,6 +143,42 @@ public class LuaBinding
         table["y"] = mousepos.Y;
 
         return table;
+    }
+
+    public static bool MouseButtonPressed(int i)
+    {
+        if (i == 1)
+        {
+            return MouseInput.RightButton_Pressed();
+        }
+        else
+        {
+            return MouseInput.LeftButton_Pressed();
+        }
+    }
+
+    public static bool MouseButtonJustPressed(int i)
+    {
+        if (i == 1)
+        {
+            return MouseInput.RightButton_JustPressed();
+        }
+        else
+        {
+            return MouseInput.LeftButton_JustPressed();
+        }
+    }
+
+    public static bool MouseButtonReleased(int i)
+    {
+        if (i == 1)
+        {
+            return MouseInput.RightButton_Released();
+        }
+        else
+        {
+            return MouseInput.LeftButton_Released();
+        }
     }
     # endregion
 
