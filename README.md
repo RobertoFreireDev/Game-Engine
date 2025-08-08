@@ -34,13 +34,28 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 
 # Functions
 
+## Mouse
+
+- {x,y} mousepos       -> Get mouse position
+- bool mouseclick(s)   -> Mouse button pressed
+- bool mouseclickp(s)  -> Mouse button just pressed
+- bool mouseclickr(s)  -> Mouse button just released
+- bool mousescroll(d)  -> scroll
+- void mousecursor(c)  -> update cursor
+
+### Parameters
+
+- int s: 1 Right, others Left
+- int d: 1 Up, others Down
+- int c: 1 Pointer, others Context menu
+
 ## Keyboard
 
-- btn(i)    -> keyboard pressed
-- btnp(i)   -> keyboard just pressed
-- btnr(i)   -> keyboard released
+- bool btn(k)    -> keyboard pressed
+- bool btnp(k)   -> keyboard just pressed
+- bool btnr(k)   -> keyboard released
 
-### Keys i 
+### Keys int k
 
 | Key | Number | Description |
 |-----|--------|-------------|
