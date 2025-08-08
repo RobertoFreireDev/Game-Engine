@@ -18,6 +18,7 @@ namespace framework
         public static Dictionary<char, Texture2D> MediumFontTextures;
         public static Texture2D PixelTexture;
         public static SpriteBatch SpriteBatch;
+        public static string Title;
         private LuaBinding game;
 
         public GFW()
@@ -52,6 +53,7 @@ namespace framework
         {
             var script = @"
                 function _init()
+                    cfgtitle(""MY GAME"")
                     pal(""#000000,#ffffff,#ffffb0,#7e70ca,#a8734a,#e9b287,#772d26,#b66862,#85d4dc,#c5ffff,#a85fb4,#e99df5,#559e4a,#92df87,#42348b,#bdcc71"")
                 end
 
@@ -94,6 +96,7 @@ namespace framework
             InputStateManager.Update();
 
             game.Update();
+            Window.Title = Title;
 
             base.Update(gameTime);
         }

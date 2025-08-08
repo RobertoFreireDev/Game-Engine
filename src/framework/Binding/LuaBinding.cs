@@ -16,6 +16,9 @@ public class LuaBinding
 
     public LuaBinding(string script)
     {
+        // Config functions
+        Lua.RegisterFunction("cfgtitle", this, GetType().GetMethod("ConfigTitle"));
+
         // Draw functions
         Lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
         Lua.RegisterFunction("rect", this, GetType().GetMethod("Rect"));
@@ -70,6 +73,13 @@ public class LuaBinding
             }
         }
     }
+
+    #region ConfigFunctions
+    public static void ConfigTitle(string text)
+    {
+        GFW.Title = text;
+    }
+    #endregion
 
     #region DrawFunctions
     public static void Pal(string palette)
