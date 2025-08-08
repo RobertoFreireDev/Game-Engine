@@ -8,12 +8,13 @@ namespace framework.Binding;
 
 public class LuaBinding
 {
+    private Lua Lua = new Lua();
     private string _scriptName = "gescript";
-
-    public Lua Lua = new Lua();
+    private bool _error = false;
 
     public LuaBinding(string script)
     {
+        Lua.UseTraceback = true;
         // Config functions
         Lua.RegisterFunction("inittitle", this, GetType().GetMethod("ConfigTitle"));
         Lua.RegisterFunction("initbckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
@@ -40,7 +41,8 @@ public class LuaBinding
             }
             catch (Exception ex)
             {
-                // Add error screen with exception message
+                _error = true;
+                LuaError.Message = ex.Message;
             }
         }
     }
@@ -49,7 +51,7 @@ public class LuaBinding
     {
 
         var updateFunc = Lua.GetFunction("_update");
-        if (updateFunc != null)
+        if (updateFunc != null && !_error)
         {
             try
             {
@@ -57,7 +59,8 @@ public class LuaBinding
             }
             catch (Exception ex)
             {
-                // Add error screen with exception message
+                _error = true;
+                LuaError.Message = ex.Message;
             }
         }
     }
@@ -65,7 +68,12 @@ public class LuaBinding
     public void Draw()
     {
         var drawFunc = Lua.GetFunction("_draw");
-        if (drawFunc != null)
+
+        if (_error)
+        {
+            LuaError.Draw();
+        }
+        else if (drawFunc != null)
         {
             try
             {
@@ -73,57 +81,63 @@ public class LuaBinding
             }
             catch (Exception ex)
             {
-                // Add error screen with exception message
+                _error = true;
+                LuaError.Message = ex.Message;
             }
         }
     }
 
     #region ConfigFunctions
-    public void ConfigTitle(string text)
+    public static void ConfigTitle(string text)
     {
         GFW.Title = text;
     }
 
-    public void ConfigFps30()
+    public static void ConfigFps30()
     {
         GFW.FPS = 30;
     }
 
-    public void ConfigFps60()
+    public static void ConfigFps60()
     {
         GFW.FPS = 60;
     }
     
-    public void ConfigBackGroundColor(int colorIndex)
+    public static void ConfigBackGroundColor(int colorIndex)
     {
         GFW.BackgroundColor = colorIndex;
     }
     #endregion
 
     #region DrawFunctions
-    public void Pal(string palette)
+    public static void Pal(string palette)
     {
         ColorUtils.SetPalette(palette);
     }
 
-    public void Rect(int x, int y, int width, int height, int color = 0)
+    public static void Rect(int x, int y, int width, int height, int color = 0)
     {
         Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));
     }
 
-    public void RectFill(int x, int y, int width, int height, int color = 0)
+    public static void RectFill(int x, int y, int width, int height, int color = 0)
     {
         Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));
     }
 
-    public void Print(string text, int x, int y, int color = 0)
+    public static void PrintMultiple(string text, int x, int y, int lineHeight, int color = 0)
+    {
+        Font.DrawTextMultiLine(text, x, y, lineHeight, ColorUtils.GetColor(color));
+    }
+
+    public static void Print(string text, int x, int y, int color = 0)
     {
         Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(color));
     }
     #endregion
 
     #region System info
-    public int GetFps()
+    public static int GetFps()
     {
         return FPSUtils.FPS;
     }

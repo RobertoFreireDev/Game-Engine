@@ -1,7 +1,6 @@
 ﻿using framework.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace framework.Graphics;
@@ -53,6 +52,16 @@ public static class Font
         return charTextures;
     }
 
+    public static void DrawTextMultiLine(string text, int x, int y, int lineHeight, Color color)
+    {
+        string[] lines = text.Split('\n');
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            DrawText(lines[i], new Vector2(x, y + i * lineHeight), color);
+        }
+    }
+
     public static void DrawText(string text, Vector2 position, Color color)
     {
         var boxToDraw = ScreenUtils.BoxToDraw;
@@ -62,6 +71,17 @@ public static class Font
         foreach (char key in text)
         {
             var charTexture = keyBoardKeys.ContainsKey(key) ? keyBoardKeys[key] : keyBoardKeys[DefaultKey];
+
+            if (key == '\t')
+            {
+                position += new Vector2(charTexture.Width*4, 0);
+                continue;
+            }
+
+            if (key == '\r')
+            {
+                continue;
+            }
 
             GFW.SpriteBatch.Draw(
                 charTexture,
