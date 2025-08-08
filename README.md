@@ -7,7 +7,17 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 ## Draw
 
 - void pal(p)                 -> Set palette
+
+```lua
+pal("#000000,#ffffff,#ffffb0,#7e70ca,#a8734a,#e9b287,#772d26,#b66862,#85d4dc,#c5ffff,#a85fb4,#e99df5,#559e4a,#92df87,#42348b,#bdcc71")
+```
+
 - void rect(x,y,w,h,[c])      -> Draw rectangle border
+
+```lua
+rect(0, 0, 320, 180, 3)  
+```
+
 - void rectfill(x,y,w,h,[c])  -> Draw rectangle
 - void print(t,x,y,[c],[w],[l])
 
@@ -24,6 +34,11 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 ## Configuration
 
 - void inittitle()    -> Update title
+
+```lua
+inittitle("MY GAME")
+```
+
 - void initbckgdclr(c) -> Update background color
 - void initfps30()    -> Set 30 Fps 
 - void initfps60()    -> Set 60 Fps
