@@ -34,7 +34,7 @@ namespace framework
             ColorUtils.SetPalette();
 
             var script = @"
-                p={}
+                local p={}
                 p.x=0
                 p.y=0
 
@@ -46,13 +46,13 @@ namespace framework
                 end
 
                 function _update()
-                    --local mousepos = mouse()
-                    --p.x = mousepos[1]
-                    --p.y = mousepos[2]
+                    local pos = mouse()
+                    p.x = pos.x
+                    p.y = pos.y
                 end
 
                 function _draw()
-                  --rect(0, 0, 320, 180, 1)                  
+                  rect(0, 0, 320, 180, 1)                  
                   rectfill(p.x, p.y, 8, 8, 1)
                 end
             ";

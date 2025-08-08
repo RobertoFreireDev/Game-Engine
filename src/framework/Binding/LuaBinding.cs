@@ -9,34 +9,34 @@ namespace framework.Binding;
 
 public class LuaBinding
 {
-    private Lua Lua = new Lua();
+    private static Lua _lua = new Lua();
     private string _scriptName = "game";
     private bool _error = false;
 
     public LuaBinding(string script)
     {
-        Lua.UseTraceback = true;
+        _lua.UseTraceback = true;
         // Config
-        Lua.RegisterFunction("inittitle", this, GetType().GetMethod("ConfigTitle"));
-        Lua.RegisterFunction("initbckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
-        Lua.RegisterFunction("initfps30", this, GetType().GetMethod("ConfigFps30"));
-        Lua.RegisterFunction("initfps60", this, GetType().GetMethod("ConfigFps60"));
+        _lua.RegisterFunction("inittitle", this, GetType().GetMethod("ConfigTitle"));
+        _lua.RegisterFunction("initbckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
+        _lua.RegisterFunction("initfps30", this, GetType().GetMethod("ConfigFps30"));
+        _lua.RegisterFunction("initfps60", this, GetType().GetMethod("ConfigFps60"));
 
         // Input 
-        Lua.RegisterFunction("mouse", this, GetType().GetMethod("GetMousePos"));
+        _lua.RegisterFunction("mouse", this, GetType().GetMethod("GetMousePos"));
 
         // Draw
-        Lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
-        Lua.RegisterFunction("rect", this, GetType().GetMethod("Rect"));
-        Lua.RegisterFunction("rectfill", this, GetType().GetMethod("RectFill"));
-        Lua.RegisterFunction("print", this, GetType().GetMethod("Print"));
+        _lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
+        _lua.RegisterFunction("rect", this, GetType().GetMethod("Rect"));
+        _lua.RegisterFunction("rectfill", this, GetType().GetMethod("RectFill"));
+        _lua.RegisterFunction("print", this, GetType().GetMethod("Print"));
 
         // Status
-        Lua.RegisterFunction("sysfps", this, GetType().GetMethod("GetFps"));
+        _lua.RegisterFunction("sysfps", this, GetType().GetMethod("GetFps"));
 
         try
         {
-            Lua.DoString(script, _scriptName);
+            _lua.DoString(script, _scriptName);
         }
         catch (Exception ex)
         {
@@ -51,7 +51,7 @@ public class LuaBinding
 
         try
         {
-            var initFunc = Lua.GetFunction("_init");
+            var initFunc = _lua.GetFunction("_init");
             if (initFunc != null)
             {
                 initFunc.Call();
@@ -73,7 +73,7 @@ public class LuaBinding
 
         try
         {
-            var updateFunc = Lua.GetFunction("_update");
+            var updateFunc = _lua.GetFunction("_update");
             if (updateFunc != null)
             {
                 updateFunc.Call();
@@ -96,7 +96,7 @@ public class LuaBinding
 
         try
         {
-            var drawFunc = Lua.GetFunction("_draw");
+            var drawFunc = _lua.GetFunction("_draw");
             if (drawFunc != null)
             {
                 drawFunc.Call();
@@ -132,9 +132,14 @@ public class LuaBinding
     #endregion
 
     #region Input
-    public static double[] GetMousePos()
+    public static LuaTable GetMousePos()
     {
-        return ConvertVectorToDouble(MouseInput.MouseVirtualPosition());
+        var mousepos = MouseInput.MouseVirtualPosition();
+        LuaTable table = _lua.DoString("return {}")[0] as LuaTable;
+        table["x"] = mousepos.X;
+        table["y"] = mousepos.Y;
+
+        return table;
     }
     # endregion
 
@@ -164,13 +169,6 @@ public class LuaBinding
     public static int GetFps()
     {
         return FPSUtils.FPS;
-    }
-    #endregion
-
-    #region Utils
-    private static double[] ConvertVectorToDouble(Vector2 vector)
-    {
-        return new double[] { (double)vector.X, (double)vector.Y };
     }
     #endregion
 }
