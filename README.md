@@ -1,6 +1,8 @@
 # Black-Box
 
-Note: The runner can be used to run your game. But, it can be also used to create tools to create your game assets (sprites, maps, sound effects and songs)
+This engine starts as a blank canvas, giving Lua full control over display and logic
+
+Developers can write Lua scripts to build custom tools, editors, or complete games
 
 # Functions
 
