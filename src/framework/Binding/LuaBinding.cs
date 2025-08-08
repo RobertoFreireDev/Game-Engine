@@ -143,9 +143,9 @@ public class LuaBinding
         Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));
     }
 
-    public static void Print(string text, int x, int y, int color = 0)
+    public static void Print(string text, int x, int y, int color = 0, bool wraptext = false, int wrapLimit = 0)
     {
-        Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(color));
+        Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(color), wraptext, wrapLimit);
     }
     #endregion
 

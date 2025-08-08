@@ -62,7 +62,7 @@ public static class Font
         }
     }
 
-    public static void DrawText(string text, Vector2 position, Color color)
+    public static void DrawText(string text, Vector2 position, Color color, bool wraptext = false, int wrapLimit = 0)
     {
         var boxToDraw = ScreenUtils.BoxToDraw;
         var boxToDrawScale = (ScreenUtils.ScaleX + ScreenUtils.ScaleY) / 2;
@@ -71,6 +71,11 @@ public static class Font
         var copyPos = new Vector2(position.X, position.Y);
         int additionalLines = 0;
 
+        if (wrapLimit == 0)
+        {
+            wrapLimit = ScreenUtils.BaseBox.Width - keyBoardKeys[DefaultKey].Width * 4;
+        }
+
         for (int i = 0; i < lines.Length; i++)
         {
             position = new Vector2(copyPos.X, copyPos.Y + (i + additionalLines) * 9);
@@ -78,7 +83,7 @@ public static class Font
             {
                 var charTexture = keyBoardKeys.ContainsKey(key) ? keyBoardKeys[key] : keyBoardKeys[DefaultKey];
 
-                if (position.X >= ScreenUtils.BaseBox.Width - charTexture.Width*4)
+                if (wraptext && position.X >= wrapLimit)
                 {
                     additionalLines++;
                     position = new Vector2(copyPos.X, copyPos.Y + (i + additionalLines) * 9);

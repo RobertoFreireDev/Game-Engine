@@ -47,7 +47,7 @@ namespace framework
                 function _draw()
                   rectfill(0, 0, 320, 180, 2)
                   rect(0, 0, 320, 180, 1)
-                  print(sysfps()), 0, 0)
+                  print(tostring(sysfps()), 0, 0)
                 end
             ";
 
