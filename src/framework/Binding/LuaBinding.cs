@@ -2,6 +2,7 @@
 using framework.Input;
 using framework.Utils;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
 
@@ -28,7 +29,11 @@ public class LuaBinding
         _lua.RegisterFunction("mouseclickp", this, GetType().GetMethod("MouseButtonJustPressed"));
         _lua.RegisterFunction("mouseclickr", this, GetType().GetMethod("MouseButtonReleased"));
         _lua.RegisterFunction("mousescroll", this, GetType().GetMethod("Scroll"));
-        _lua.RegisterFunction("mousecursor", this, GetType().GetMethod("UpdateCursor"));        
+        _lua.RegisterFunction("mousecursor", this, GetType().GetMethod("UpdateCursor"));
+
+        _lua.RegisterFunction("btn", this, GetType().GetMethod("Pressed"));
+        _lua.RegisterFunction("btnp", this, GetType().GetMethod("JustPressed"));
+        _lua.RegisterFunction("btnr", this, GetType().GetMethod("Released"));
 
         // Draw
         _lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
@@ -205,6 +210,36 @@ public class LuaBinding
         {
             MouseInput.UpdateCursor(MouseInput.Context_Menu_mouse);
         }
+    }
+
+    public static bool JustPressed(int keyNumber)
+    {
+        if (!Enum.IsDefined(typeof(Keys), keyNumber))
+        {
+            return false;
+        }
+
+        return Input.KeyboardInput.JustPressed((Keys) keyNumber);
+    }
+
+    public static bool Released(int keyNumber)
+    {
+        if (!Enum.IsDefined(typeof(Keys), keyNumber))
+        {
+            return false;
+        }
+
+        return Input.KeyboardInput.Released((Keys)keyNumber);
+    }
+
+    public static bool Pressed(int keyNumber)
+    {
+        if (!Enum.IsDefined(typeof(Keys), keyNumber))
+        {
+            return false;
+        }
+
+        return Input.KeyboardInput.Pressed((Keys)keyNumber);
     }
     #endregion
 

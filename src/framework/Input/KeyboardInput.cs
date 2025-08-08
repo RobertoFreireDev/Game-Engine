@@ -14,18 +14,18 @@ public static class KeyboardInput
         return Released(Keys.F2);
     }
 
-    private static bool JustPressed(Keys key)
+    public static bool JustPressed(Keys key)
     {
         return InputStateManager.CurrentKeyboardState()[key] == KeyState.Down && InputStateManager.PreviousKeyboardState()[key] == KeyState.Up;
     }
 
-    private static bool Released(Keys key)
+    public static bool Released(Keys key)
     {
         return InputStateManager.CurrentKeyboardState()[key] == KeyState.Up && InputStateManager.PreviousKeyboardState()[key] == KeyState.Down;
     }
 
-    private static bool Pressed(Keys currentKey)
+    public static bool Pressed(Keys key)
     {
-        return InputStateManager.CurrentKeyboardState()[currentKey] == KeyState.Down;
+        return InputStateManager.CurrentKeyboardState()[key] == KeyState.Down;
     }
 }

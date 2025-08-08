@@ -46,12 +46,11 @@ namespace framework
                 end
 
                 function _update()
-                    local pos = mousepos()                        
-                    p.x = pos.x
-                    p.y = pos.y
-
-                    if p.x < 100 then                        
-                        mousecursor(1)
+                    local h = 72
+                    if btnr(h) then
+                        local pos = mousepos()                        
+                        p.x = pos.x
+                        p.y = pos.y
                     end
                 end
 
