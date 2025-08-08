@@ -116,6 +116,11 @@ public static class ColorUtils
 
     public static void SetPalette(int index = 0)
     {
+        if (index >= PaletteList.Count)
+        {
+            index = 0;
+        }
+
         CurrentPalette = index;
         string[] colors = PaletteList[index].Split(',');
         PrimaryColor = GetColor(colors[0].Trim());

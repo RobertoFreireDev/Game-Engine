@@ -67,6 +67,7 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 
 ### Graphics
 
+- pal(i)    -> i 0-23 palettes 
 - rect(x0, y0, x1, y1, [col])
 - rectfill(x0, y0, x1, y1, [col])
 

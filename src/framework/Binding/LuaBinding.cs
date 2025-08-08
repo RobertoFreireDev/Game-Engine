@@ -17,6 +17,7 @@ public class LuaBinding
     public LuaBinding(string script)
     {
         // Draw functions
+        Lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
         Lua.RegisterFunction("rect", this, GetType().GetMethod("Rect"));
         Lua.RegisterFunction("rectfill", this, GetType().GetMethod("RectFill"));
         Lua.RegisterFunction("print", this, GetType().GetMethod("Print"));
@@ -71,6 +72,11 @@ public class LuaBinding
     }
 
     #region DrawFunctions
+    public static void Pal(int palIndex = 0)
+    {
+        ColorUtils.SetPalette(palIndex);
+    }
+
     public static void Rect(int x, int y, int width, int height, int color = 0)
     {
         Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));

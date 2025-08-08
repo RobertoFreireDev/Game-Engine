@@ -53,6 +53,7 @@ namespace framework
             ColorUtils.SetPalette();
             var script = @"
                 function _init()
+                    pal(11)
                 end
 
                 function _update()
