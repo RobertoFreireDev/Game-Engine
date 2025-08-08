@@ -4,9 +4,37 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 
 # Functions
 
+## Draw
+
+- void pal(p)                 -> Set palette
+- void rect(x,y,w,h,[c])      -> Draw rectangle border
+- void rectfill(x,y,w,h,[c])  -> Draw rectangle
+- void print(t,x,y,[c],[w],[l])
+
+- ### Parameters
+
+- int c    -> 0-15 color index
+- bool w   -> wraptext
+- int l    -> wrap limit in x
+
+## System
+
+- int sysfps()        -> get FPS
+
+## Configuration
+
+- void inittitle()    -> Update title
+- void initbckgdclr(c) -> Update background color
+- void initfps30()    -> Set 30 Fps 
+- void initfps60()    -> Set 60 Fps
+
+### Parameters
+
+- int c    -> 0-15 color index
+
 ## Mouse
 
-- {x,y} mousepos       -> Get mouse position
+- {x,y} mousepos()      -> Get mouse position
 - bool mouseclick(s)   -> Mouse button pressed
 - bool mouseclickp(s)  -> Mouse button just pressed
 - bool mouseclickr(s)  -> Mouse button just released
