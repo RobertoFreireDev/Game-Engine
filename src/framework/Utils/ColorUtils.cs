@@ -82,8 +82,14 @@ public static class ColorUtils
         }
     }
 
-    public static void SetPalette(string palette)
+    public static void SetPalette(string palette = "")
     {
+        if (string.IsNullOrWhiteSpace(palette))
+        {
+            SetColor(defaultPalette);
+            return;
+        }
+
         try
         {
             SetColor(palette);
@@ -116,10 +122,17 @@ public static class ColorUtils
 
     private static Color GetColor(string hexColor)
     {
-        hexColor = hexColor.Substring(1);
-        int r = Convert.ToInt32(hexColor.Substring(0, 2), 16);
-        int g = Convert.ToInt32(hexColor.Substring(2, 2), 16);
-        int b = Convert.ToInt32(hexColor.Substring(4, 2), 16);
-        return new Color(r, g, b);
+        try
+        {
+            hexColor = hexColor.Substring(1);
+            int r = Convert.ToInt32(hexColor.Substring(0, 2), 16);
+            int g = Convert.ToInt32(hexColor.Substring(2, 2), 16);
+            int b = Convert.ToInt32(hexColor.Substring(4, 2), 16);
+            return new Color(r, g, b);
+        }
+        catch (Exception ex)
+        {
+            return PrimaryColor;
+        }
     }
 }

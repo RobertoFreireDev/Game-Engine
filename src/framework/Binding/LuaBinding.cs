@@ -1,10 +1,8 @@
 ﻿using framework.Graphics;
 using framework.Utils;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
-using System.IO;
 
 namespace framework.Binding;
 
@@ -18,6 +16,7 @@ public class LuaBinding
     {
         // Config functions
         Lua.RegisterFunction("inittitle", this, GetType().GetMethod("ConfigTitle"));
+        Lua.RegisterFunction("initbckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
         Lua.RegisterFunction("initfps30", this, GetType().GetMethod("ConfigFps30"));
         Lua.RegisterFunction("initfps60", this, GetType().GetMethod("ConfigFps60"));
 
@@ -89,7 +88,12 @@ public class LuaBinding
     public static void ConfigFps60()
     {
         GFW.FPS = 60;
-    }    
+    }
+    
+    public static void ConfigBackGroundColor(int colorIndex)
+    {
+        GFW.BackgroundColor = colorIndex;
+    }
     #endregion
 
     #region DrawFunctions

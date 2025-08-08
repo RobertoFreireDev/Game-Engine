@@ -19,6 +19,7 @@ namespace framework
         public static SpriteBatch SpriteBatch;
         public static string Title;
         public static int FPS;
+        public static int BackgroundColor;
         private LuaBinding game;
 
         public GFW()
@@ -30,11 +31,13 @@ namespace framework
             Window.ClientSizeChanged += OnResize;
             IsMouseVisible = false;
             IsFixedTimeStep = true;
+            ColorUtils.SetPalette();
 
             var script = @"
                 function _init()
                     inittitle(""MY GAME"")
                     initfps60()
+                    initbckgdclr(2)
                     pal(""#000000,#ffffff,#ffffb0,#7e70ca,#a8734a,#e9b287,#772d26,#b66862,#85d4dc,#c5ffff,#a85fb4,#e99df5,#559e4a,#92df87,#42348b,#bdcc71"")
                 end
 
@@ -113,7 +116,7 @@ namespace framework
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             game.Draw();
             SpriteBatch.DrawMouse(MouseInput.Context_Menu_mouse);
-            Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, Color.Black);
+            Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, ColorUtils.GetColor(BackgroundColor));
             SpriteBatch.End();
             base.Draw(gameTime);
         }
