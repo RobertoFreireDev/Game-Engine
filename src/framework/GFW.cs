@@ -34,6 +34,10 @@ namespace framework
             ColorUtils.SetPalette();
 
             var script = @"
+                p={}
+                p.x=0
+                p.y=0
+
                 function _init()
                     inittitle(""MY GAME"")
                     initfps60()
@@ -42,12 +46,14 @@ namespace framework
                 end
 
                 function _update()
+                    --local mousepos = mouse()
+                    --p.x = mousepos[1]
+                    --p.y = mousepos[2]
                 end
 
                 function _draw()
-                  rectfill(0, 0, 320, 180, 2)
-                  rect(0, 0, 320, 180, 1)
-                  print(tostring(sysfps()), 0, 0)
+                  --rect(0, 0, 320, 180, 1)                  
+                  rectfill(p.x, p.y, 8, 8, 1)
                 end
             ";
 

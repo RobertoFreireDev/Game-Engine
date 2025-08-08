@@ -1,4 +1,5 @@
 ﻿using framework.Graphics;
+using framework.Input;
 using framework.Utils;
 using Microsoft.Xna.Framework;
 using NLua;
@@ -15,19 +16,22 @@ public class LuaBinding
     public LuaBinding(string script)
     {
         Lua.UseTraceback = true;
-        // Config functions
+        // Config
         Lua.RegisterFunction("inittitle", this, GetType().GetMethod("ConfigTitle"));
         Lua.RegisterFunction("initbckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
         Lua.RegisterFunction("initfps30", this, GetType().GetMethod("ConfigFps30"));
         Lua.RegisterFunction("initfps60", this, GetType().GetMethod("ConfigFps60"));
 
-        // Draw functions
+        // Input 
+        Lua.RegisterFunction("mouse", this, GetType().GetMethod("GetMousePos"));
+
+        // Draw
         Lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
         Lua.RegisterFunction("rect", this, GetType().GetMethod("Rect"));
         Lua.RegisterFunction("rectfill", this, GetType().GetMethod("RectFill"));
         Lua.RegisterFunction("print", this, GetType().GetMethod("Print"));
 
-        // Status functions
+        // Status
         Lua.RegisterFunction("sysfps", this, GetType().GetMethod("GetFps"));
 
         try
@@ -127,6 +131,13 @@ public class LuaBinding
     }
     #endregion
 
+    #region Input
+    public static double[] GetMousePos()
+    {
+        return ConvertVectorToDouble(MouseInput.MouseVirtualPosition());
+    }
+    # endregion
+
     #region DrawFunctions
     public static void Pal(string palette)
     {
@@ -135,12 +146,12 @@ public class LuaBinding
 
     public static void Rect(int x, int y, int width, int height, int color = 0)
     {
-        Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));
+        Shapes.DrawRectBorder(new Rectangle(x, y, width, height), ColorUtils.GetColor(color));
     }
 
     public static void RectFill(int x, int y, int width, int height, int color = 0)
     {
-        Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));
+        Shapes.DrawRectFill(new Rectangle(x, y, width, height), ColorUtils.GetColor(color));
     }
 
     public static void Print(string text, int x, int y, int color = 0, bool wraptext = false, int wrapLimit = 0)
@@ -149,10 +160,17 @@ public class LuaBinding
     }
     #endregion
 
-    #region System info
+    #region SystemFunctions
     public static int GetFps()
     {
         return FPSUtils.FPS;
+    }
+    #endregion
+
+    #region Utils
+    private static double[] ConvertVectorToDouble(Vector2 vector)
+    {
+        return new double[] { (double)vector.X, (double)vector.Y };
     }
     #endregion
 }
