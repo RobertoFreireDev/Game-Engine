@@ -1,11 +1,24 @@
 ﻿using framework.Binding;
 using framework.Utils;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace framework.Graphics;
 
 public static class LuaError
 {
-    public static string Message;
+    private static string _message;
+    private static bool _error = false;
+
+    public static bool HasError()
+    {
+        return _error;
+    }
+
+    public static void SetError(string message)
+    {
+        _error = true;
+        _message = message;
+    }
 
     public static void Draw()
     {
@@ -15,6 +28,6 @@ public static class LuaError
             ScreenUtils.BaseBox.Width,
             ScreenUtils.BaseBox.Height,
             0);
-        LuaBinding.Print(Message, 2, 2, 1);
+        LuaBinding.Print(_message, 2, 2, 1, true);
     }
 }

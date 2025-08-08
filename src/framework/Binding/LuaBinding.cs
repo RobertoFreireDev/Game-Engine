@@ -12,7 +12,6 @@ public class LuaBinding
 {
     private static Lua _lua = new Lua();
     private string _scriptName = "game";
-    private bool _error = false;
 
     public LuaBinding(string script)
     {
@@ -50,11 +49,10 @@ public class LuaBinding
         }
         catch (Exception ex)
         {
-            _error = true;
-            LuaError.Message = ex.Message;
+            LuaError.SetError(ex.Message);
         }
-
-        if (_error)
+        
+        if (LuaError.HasError())
         {
             return;
         }
@@ -69,14 +67,13 @@ public class LuaBinding
         }
         catch (Exception ex)
         {
-            _error = true;
-            LuaError.Message = ex.Message;
+            LuaError.SetError(ex.Message);
         }
     }
 
     public void Update()
     {
-        if (_error)
+        if (LuaError.HasError())
         {
             return;
         }
@@ -91,14 +88,13 @@ public class LuaBinding
         }
         catch (Exception ex)
         {
-            _error = true;
-            LuaError.Message = ex.Message;
+            LuaError.SetError(ex.Message);
         }
     }
 
     public void Draw()
     {
-        if (_error)
+        if (LuaError.HasError())
         {
             LuaError.Draw();
             return;
@@ -114,8 +110,7 @@ public class LuaBinding
         }
         catch (Exception ex)
         {
-            _error = true;
-            LuaError.Message = ex.Message;
+            LuaError.SetError(ex.Message);
         }
     }
 

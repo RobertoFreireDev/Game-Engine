@@ -11,7 +11,7 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 - void rectfill(x,y,w,h,[c])  -> Draw rectangle
 - void print(t,x,y,[c],[w],[l])
 
-- ### Parameters
+### Parameters
 
 - int c    -> 0-15 color index
 - bool w   -> wraptext
