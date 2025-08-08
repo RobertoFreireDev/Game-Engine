@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
-using System.Formats.Tar;
 
 namespace framework.Binding;
 

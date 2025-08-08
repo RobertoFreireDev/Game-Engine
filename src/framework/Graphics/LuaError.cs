@@ -1,6 +1,5 @@
 ﻿using framework.Binding;
 using framework.Utils;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace framework.Graphics;
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace framework.IOFile;
+﻿namespace framework.IOFile;
 
 public static class TxtFileIO
 {
