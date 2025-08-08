@@ -69,13 +69,20 @@ public static class Font
         var keyBoardKeys = GFW.MediumFontTextures;
         string[] lines = text.Split('\n');
         var copyPos = new Vector2(position.X, position.Y);
+        int additionalLines = 0;
 
         for (int i = 0; i < lines.Length; i++)
         {
-            position = new Vector2(copyPos.X, copyPos.Y + i * 9);
+            position = new Vector2(copyPos.X, copyPos.Y + (i + additionalLines) * 9);
             foreach (char key in lines[i])
             {
                 var charTexture = keyBoardKeys.ContainsKey(key) ? keyBoardKeys[key] : keyBoardKeys[DefaultKey];
+
+                if (position.X >= ScreenUtils.BaseBox.Width - charTexture.Width*4)
+                {
+                    additionalLines++;
+                    position = new Vector2(copyPos.X, copyPos.Y + (i + additionalLines) * 9);
+                }
 
                 if (key == '\t')
                 {
