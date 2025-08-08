@@ -1,5 +1,6 @@
 ﻿using framework.Graphics;
 using framework.Input;
+using framework.IOFile;
 using framework.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -42,6 +43,10 @@ public class LuaBinding
 
         // Status
         _lua.RegisterFunction("sysfps", this, GetType().GetMethod("GetFps"));
+
+        // File
+        _lua.RegisterFunction("ioread", this, GetType().GetMethod("ReadFile"));
+        _lua.RegisterFunction("iocreate", this, GetType().GetMethod("CreateFile"));
 
         try
         {
@@ -136,7 +141,7 @@ public class LuaBinding
     }
     #endregion
 
-    #region Input
+    #region InputFunctions
     public static LuaTable GetMousePos()
     {
         var mousepos = MouseInput.MouseVirtualPosition();
@@ -264,6 +269,18 @@ public class LuaBinding
     public static int GetFps()
     {
         return FPSUtils.FPS;
+    }
+    #endregion
+
+    #region
+    public static string ReadFile(string fileName)
+    {
+        return TxtFileIO.Read(fileName);
+    }
+
+    public static bool CreateFile(string fileName, string content)
+    {
+        return TxtFileIO.Create(fileName, content);
     }
     #endregion
 }

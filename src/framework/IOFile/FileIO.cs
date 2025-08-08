@@ -1,12 +1,13 @@
 ﻿using framework.Graphics;
 using System;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace framework.IOFile;
 
 public static class FileIO
 {
-    public static string ReadFile(string fileName)
+    public static string Read(string fileName)
     {
         var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
         try
@@ -20,7 +21,7 @@ public static class FileIO
         {
             LuaError.SetError("File not found: " + e.Message);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             LuaError.SetError("Error reading file: " + e.Message);
         }
@@ -28,21 +29,35 @@ public static class FileIO
         return string.Empty;
     }
 
-    public static bool CreateFile(string fileName)
+    public static bool Create(string fileName, string content)
     {
-        // Validate file already exists
-        return true;
-    }
+        var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
 
-    public static bool UpdateFile(string fileName)
-    {
-        // Validate file doesn't exist
-        return true;
-    }
+        try
+        {
+            if (File.Exists(path))
+            {
+                LuaError.SetError($"File already exists: {path}");
+                return false;
+            }
 
-    public static bool Delete(string fileName)
-    {
-        // Validate file doesn't exist
-        return true;
+            using (FileStream fs = File.Create(path))
+            using (StreamWriter writer = new StreamWriter(fs))
+            {
+                string[] lines = content.Split('\n');
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    writer.WriteLine(lines[i]);
+                }
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            LuaError.SetError("Error creating file: " + e.Message);
+            return false;
+        }
     }
 }

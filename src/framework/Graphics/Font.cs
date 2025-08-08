@@ -52,16 +52,6 @@ public static class Font
         return charTextures;
     }
 
-    public static void DrawTextMultiLine(string text, int x, int y, int lineHeight, Color color)
-    {
-        string[] lines = text.Split('\n');
-
-        for (int i = 0; i < lines.Length; i++)
-        {
-            DrawText(lines[i], new Vector2(x, y + i * lineHeight), color);
-        }
-    }
-
     public static void DrawText(string text, Vector2 position, Color color, bool wraptext = false, int wrapLimit = 0)
     {
         var boxToDraw = ScreenUtils.BoxToDraw;

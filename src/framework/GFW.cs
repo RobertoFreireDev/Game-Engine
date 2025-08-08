@@ -33,7 +33,7 @@ namespace framework
             IsMouseVisible = false;
             IsFixedTimeStep = true;
             ColorUtils.SetPalette();            ;
-            var script = FileIO.ReadFile("game.lua");
+            var script = LuaFileIO.Read("game");
             game = new LuaBinding(script);
 
 
