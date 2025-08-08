@@ -1,7 +1,6 @@
 ﻿using framework.Graphics;
 using System;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace framework.IOFile;
 
@@ -9,9 +8,9 @@ public static class FileIO
 {
     public static string Read(string fileName)
     {
-        var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
         try
         {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             using (StreamReader reader = new StreamReader(path))
             {
                 return reader.ReadToEnd();
@@ -31,10 +30,9 @@ public static class FileIO
 
     public static bool Create(string fileName, string content)
     {
-        var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-
         try
         {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             if (File.Exists(path))
             {
                 LuaError.SetError($"File already exists: {path}");
