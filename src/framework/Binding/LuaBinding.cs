@@ -72,9 +72,9 @@ public class LuaBinding
     }
 
     #region DrawFunctions
-    public static void Pal(int palIndex = 0)
+    public static void Pal(string palette)
     {
-        ColorUtils.SetPalette(palIndex);
+        ColorUtils.SetPalette(palette);
     }
 
     public static void Rect(int x, int y, int width, int height, int color = 0)
