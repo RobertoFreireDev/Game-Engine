@@ -44,12 +44,6 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 
 ## Functions
 
-### Game loop
-
-- _init()
-- _update()
-- _draw()
-
 ### Input
 
 ⌨️ i -> almost any key
@@ -64,13 +58,3 @@ Note: The runner can be used to run your game. But, it can be also used to creat
 - clickp(i)   -> Mouse button just pressed
 - clickr(i)   -> Mouse button just released
 - mouse()     -> Mouse (X,Y) position
-
-### Graphics
-
-- pal(i)    -> i 0-23 palettes 
-- rect(x0, y0, x1, y1, [col])
-- rectfill(x0, y0, x1, y1, [col])
-
-### System
-
-- _system(0) -> Frames per second should be locked to either 30 or 60.
