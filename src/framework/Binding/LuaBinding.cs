@@ -17,7 +17,9 @@ public class LuaBinding
     public LuaBinding(string script)
     {
         // Config functions
-        Lua.RegisterFunction("cfgtitle", this, GetType().GetMethod("ConfigTitle"));
+        Lua.RegisterFunction("inittitle", this, GetType().GetMethod("ConfigTitle"));
+        Lua.RegisterFunction("initfps30", this, GetType().GetMethod("ConfigFps30"));
+        Lua.RegisterFunction("initfps60", this, GetType().GetMethod("ConfigFps60"));
 
         // Draw functions
         Lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
@@ -26,7 +28,6 @@ public class LuaBinding
         Lua.RegisterFunction("print", this, GetType().GetMethod("Print"));
         Lua.DoString(script, _scriptName);
 
-        // Call the _init function in Lua
         var initFunc = Lua.GetFunction("_init");
         if (initFunc != null)
         {
@@ -79,6 +80,16 @@ public class LuaBinding
     {
         GFW.Title = text;
     }
+
+    public static void ConfigFps30()
+    {
+        GFW.FPS = 30;
+    }
+
+    public static void ConfigFps60()
+    {
+        GFW.FPS = 60;
+    }    
     #endregion
 
     #region DrawFunctions

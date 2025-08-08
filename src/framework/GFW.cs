@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace framework
 {
@@ -19,6 +18,7 @@ namespace framework
         public static Texture2D PixelTexture;
         public static SpriteBatch SpriteBatch;
         public static string Title;
+        public static int FPS;
         private LuaBinding game;
 
         public GFW()
@@ -29,6 +29,32 @@ namespace framework
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnResize;
             IsMouseVisible = false;
+            IsFixedTimeStep = true;
+
+            var script = @"
+                function _init()
+                    inittitle(""MY GAME"")
+                    initfps60()
+                    pal(""#000000,#ffffff,#ffffb0,#7e70ca,#a8734a,#e9b287,#772d26,#b66862,#85d4dc,#c5ffff,#a85fb4,#e99df5,#559e4a,#92df87,#42348b,#bdcc71"")
+                end
+
+                function _update()
+                end
+
+                function _draw()
+                  rectfill(0, 0, 320, 180, 2)
+                  rect(0, 0, 320, 180, 1)
+                  print(""HELLO WORLD"", 0, 0)
+                  print(""HELLO WORLD"", 0, 7)
+                end
+            ";
+
+            game = new LuaBinding(script);
+
+
+            Window.Title = Title;
+            TargetElapsedTime = FPS != 30 ? TimeSpan.FromSeconds(1.0 / 60.0) : TimeSpan.FromSeconds(1.0 / 30.0);
+            _graphics.SynchronizeWithVerticalRetrace = false;
         }
 
         private void OnResize(Object sender, EventArgs e)
@@ -51,25 +77,6 @@ namespace framework
 
         protected override void Initialize()
         {
-            var script = @"
-                function _init()
-                    cfgtitle(""MY GAME"")
-                    pal(""#000000,#ffffff,#ffffb0,#7e70ca,#a8734a,#e9b287,#772d26,#b66862,#85d4dc,#c5ffff,#a85fb4,#e99df5,#559e4a,#92df87,#42348b,#bdcc71"")
-                end
-
-                function _update()
-                end
-
-                function _draw()
-                  rectfill(0, 0, 320, 180, 2)
-                  rect(0, 0, 320, 180, 1)
-                  print(""HELLO WORLD"", 0, 0)
-                  print(""HELLO WORLD"", 0, 7)
-                end
-            ";
-
-            game = new LuaBinding(script);
-
             base.Initialize();
         }
 
@@ -96,7 +103,6 @@ namespace framework
             InputStateManager.Update();
 
             game.Update();
-            Window.Title = Title;
 
             base.Update(gameTime);
         }
