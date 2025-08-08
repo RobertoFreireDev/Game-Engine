@@ -1,13 +1,6 @@
 # Black-Box
 
-## Requirements 
-
-- 320x180 (16:9)
-- Letter box integer scaling
-- C# and monogame
-- Game code in Lua
-
-## Diagram
+# Diagram
 
 <pre>
 📁 Framework (C#, monogame and NLua)
@@ -39,9 +32,15 @@
 
 Note: The runner can be used to run your game. But, it can be also used to create tools to create your game assets (sprites, maps, sound effects and songs)
 
-## Functions
+# Functions
 
-### Input
+## Keyboard
+
+- btn(i)    -> keyboard pressed
+- btnp(i)   -> keyboard just pressed
+- btnr(i)   -> keyboard released
+
+### Keys i 
 
 | Key | Number | Description |
 |-----|--------|-------------|
