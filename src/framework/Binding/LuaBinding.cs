@@ -9,7 +9,7 @@ namespace framework.Binding;
 public class LuaBinding
 {
     private Lua Lua = new Lua();
-    private string _scriptName = "gescript";
+    private string _scriptName = "game";
     private bool _error = false;
 
     public LuaBinding(string script)
@@ -30,60 +30,78 @@ public class LuaBinding
         // Status functions
         Lua.RegisterFunction("sysfps", this, GetType().GetMethod("GetFps"));
 
-        Lua.DoString(script, _scriptName);
-
-        var initFunc = Lua.GetFunction("_init");
-        if (initFunc != null)
+        try
         {
-            try
+            Lua.DoString(script, _scriptName);
+        }
+        catch (Exception ex)
+        {
+            _error = true;
+            LuaError.Message = ex.Message;
+        }
+
+        if (_error)
+        {
+            return;
+        }
+
+        try
+        {
+            var initFunc = Lua.GetFunction("_init");
+            if (initFunc != null)
             {
                 initFunc.Call();
             }
-            catch (Exception ex)
-            {
-                _error = true;
-                LuaError.Message = ex.Message;
-            }
+        }
+        catch (Exception ex)
+        {
+            _error = true;
+            LuaError.Message = ex.Message;
         }
     }
 
     public void Update()
     {
-
-        var updateFunc = Lua.GetFunction("_update");
-        if (updateFunc != null && !_error)
+        if (_error)
         {
-            try
+            return;
+        }
+
+        try
+        {
+            var updateFunc = Lua.GetFunction("_update");
+            if (updateFunc != null)
             {
                 updateFunc.Call();
             }
-            catch (Exception ex)
-            {
-                _error = true;
-                LuaError.Message = ex.Message;
-            }
+        }
+        catch (Exception ex)
+        {
+            _error = true;
+            LuaError.Message = ex.Message;
         }
     }
 
     public void Draw()
     {
-        var drawFunc = Lua.GetFunction("_draw");
-
         if (_error)
         {
             LuaError.Draw();
+            return;
         }
-        else if (drawFunc != null)
+
+        try
         {
-            try
+            var drawFunc = Lua.GetFunction("_draw");
+            if (drawFunc != null)
             {
                 drawFunc.Call();
             }
-            catch (Exception ex)
-            {
-                _error = true;
-                LuaError.Message = ex.Message;
-            }
+        }
+        catch (Exception ex)
+        {
+            _error = true;
+            LuaError.Message = ex.Message;
         }
     }
 
@@ -123,11 +141,6 @@ public class LuaBinding
     public static void RectFill(int x, int y, int width, int height, int color = 0)
     {
         Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));
-    }
-
-    public static void PrintMultiple(string text, int x, int y, int lineHeight, int color = 0)
-    {
-        Font.DrawTextMultiLine(text, x, y, lineHeight, ColorUtils.GetColor(color));
     }
 
     public static void Print(string text, int x, int y, int color = 0)

@@ -15,6 +15,6 @@ public static class LuaError
             ScreenUtils.BaseBox.Width,
             ScreenUtils.BaseBox.Height,
             0);
-        LuaBinding.PrintMultiple(Message, 2, 2, 10, 1);
+        LuaBinding.Print(Message, 2, 2, 1);
     }
 }

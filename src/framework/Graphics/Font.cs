@@ -67,34 +67,40 @@ public static class Font
         var boxToDraw = ScreenUtils.BoxToDraw;
         var boxToDrawScale = (ScreenUtils.ScaleX + ScreenUtils.ScaleY) / 2;
         var keyBoardKeys = GFW.MediumFontTextures;
+        string[] lines = text.Split('\n');
+        var copyPos = new Vector2(position.X, position.Y);
 
-        foreach (char key in text)
+        for (int i = 0; i < lines.Length; i++)
         {
-            var charTexture = keyBoardKeys.ContainsKey(key) ? keyBoardKeys[key] : keyBoardKeys[DefaultKey];
-
-            if (key == '\t')
+            position = new Vector2(copyPos.X, copyPos.Y + i * 9);
+            foreach (char key in lines[i])
             {
-                position += new Vector2(charTexture.Width*4, 0);
-                continue;
+                var charTexture = keyBoardKeys.ContainsKey(key) ? keyBoardKeys[key] : keyBoardKeys[DefaultKey];
+
+                if (key == '\t')
+                {
+                    position += new Vector2(charTexture.Width * 4, 0);
+                    continue;
+                }
+
+                if (key == '\r')
+                {
+                    continue;
+                }
+
+                GFW.SpriteBatch.Draw(
+                    charTexture,
+                    new Vector2(boxToDraw.X + (int)(position.X * boxToDrawScale), boxToDraw.Y + (int)(position.Y * boxToDrawScale)),
+                    null,
+                    color,
+                    0f,
+                    new Vector2(0, 0),
+                    boxToDrawScale,
+                    SpriteEffects.None,
+                    0f);
+
+                position += new Vector2((charTexture.Width - 1), 0);
             }
-
-            if (key == '\r')
-            {
-                continue;
-            }
-
-            GFW.SpriteBatch.Draw(
-                charTexture,
-                new Vector2(boxToDraw.X + (int)(position.X * boxToDrawScale), boxToDraw.Y + (int)(position.Y * boxToDrawScale)),
-                null,
-                color,
-                0f,
-                new Vector2(0,0),
-                boxToDrawScale,
-                SpriteEffects.None,
-                0f);
-
-            position += new Vector2((charTexture.Width - 1), 0);
         }
     }
 }
