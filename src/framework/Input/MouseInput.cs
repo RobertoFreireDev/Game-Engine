@@ -9,19 +9,17 @@ internal static class MouseInput
     public const int Context_Menu_mouse = 0;
     public const int Pointer_mouse = 1;
     private static int offsetX = 10;
-    public static MouseCursor ContextMenuCursor = MouseCursor.FromTexture2D(GFW.Textures["contextmenu_mouse"], offsetX, 0);
-    public static MouseCursor PointerCursor = MouseCursor.FromTexture2D(GFW.Textures["pointer_mouse"], offsetX, 0);
+    public static int Current_Cursor = Context_Menu_mouse;    
 
-    public static void TryUpdateStatus(int status)
+    public static void UpdateCursor(int cursor)
     {
-        switch (status)
+        if (cursor == Context_Menu_mouse)
         {
-            case Context_Menu_mouse:
-                Mouse.SetCursor(ContextMenuCursor);
-                break;
-            case Pointer_mouse:
-                Mouse.SetCursor(PointerCursor);
-                break;
+            Current_Cursor = Context_Menu_mouse;
+        }
+        else
+        {
+            Current_Cursor = Pointer_mouse;
         }
     }
 
@@ -36,11 +34,6 @@ internal static class MouseInput
                 (int)((-ScreenUtils.BoxToDraw.X + InputStateManager.CurrentMouseState().Position.X) / ScreenUtils.ScaleX),
                 (int)((-ScreenUtils.BoxToDraw.Y + InputStateManager.CurrentMouseState().Position.Y) / ScreenUtils.ScaleY)
             );
-    }
-
-    public static int GetScrollWheelValue()
-    {
-        return InputStateManager.CurrentMouseState().ScrollWheelValue;
     }
 
     public static bool ScrollUp()

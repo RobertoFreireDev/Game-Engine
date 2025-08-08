@@ -2,6 +2,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace framework.Utils;
 
@@ -40,6 +41,8 @@ public static class ColorUtils
     private static Color Color16;
 
     private static string defaultPalette = "#0a080d,#dfe9f5,#f7aaa8,#697594,#d4689a,#782c96,#e83562,#f2825c,#ffc76e,#88c44d,#3f9e59,#373461,#4854a8,#7199d9,#9e5252,#4d2536";
+
+    private static readonly Regex HexColorRegex = new Regex(@"^#[0-9a-fA-F]{6}$", RegexOptions.Compiled);
 
     public static Color GetColor(int Color)
     {
@@ -84,7 +87,7 @@ public static class ColorUtils
 
     public static void SetPalette(string palette = "")
     {
-        if (string.IsNullOrWhiteSpace(palette))
+        if (string.IsNullOrWhiteSpace(palette) || !ValidateHexColorList(palette))
         {
             SetColor(defaultPalette);
             return;
@@ -134,5 +137,24 @@ public static class ColorUtils
         {
             return PrimaryColor;
         }
+    }
+
+    public static bool ValidateHexColorList(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return false;
+
+        string[] colors = input.Split(',');
+
+        if (colors.Length != 16)
+            return false;
+
+        foreach (string color in colors)
+        {
+            if (!HexColorRegex.IsMatch(color.Trim()))
+                return false;
+        }
+
+        return true;
     }
 }

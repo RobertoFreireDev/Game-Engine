@@ -46,16 +46,18 @@ namespace framework
                 end
 
                 function _update()
-                    if clickr(1) then
-                        local pos = mouse()
-                        p.x = pos.x
-                        p.y = pos.y
+                    local pos = mousepos()                        
+                    p.x = pos.x
+                    p.y = pos.y
+
+                    if p.x < 100 then                        
+                        mousecursor(1)
                     end
                 end
 
                 function _draw()
-                  rect(0, 0, 320, 180, 1)                  
-                  rectfill(p.x, p.y, 8, 8, 1)
+                  rect(0, 0, 320, 180, 3)                  
+                  rectfill(p.x, p.y, 8, 8, 4)
                 end
             ";
 
@@ -122,7 +124,7 @@ namespace framework
             GraphicsDevice.Clear(Color.Black);
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             game.Draw();
-            SpriteBatch.DrawMouse(MouseInput.Context_Menu_mouse);
+            SpriteBatch.DrawMouse();
             Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, ColorUtils.GetColor(BackgroundColor));
             SpriteBatch.End();
             base.Draw(gameTime);

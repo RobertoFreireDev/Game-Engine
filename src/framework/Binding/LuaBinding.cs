@@ -23,10 +23,12 @@ public class LuaBinding
         _lua.RegisterFunction("initfps60", this, GetType().GetMethod("ConfigFps60"));
 
         // Input 
-        _lua.RegisterFunction("mouse", this, GetType().GetMethod("GetMousePos"));
-        _lua.RegisterFunction("click", this, GetType().GetMethod("MouseButtonPressed"));
-        _lua.RegisterFunction("clickp", this, GetType().GetMethod("MouseButtonJustPressed"));
-        _lua.RegisterFunction("clickr", this, GetType().GetMethod("MouseButtonReleased"));
+        _lua.RegisterFunction("mousepos", this, GetType().GetMethod("GetMousePos"));
+        _lua.RegisterFunction("mouseclick", this, GetType().GetMethod("MouseButtonPressed"));
+        _lua.RegisterFunction("mouseclickp", this, GetType().GetMethod("MouseButtonJustPressed"));
+        _lua.RegisterFunction("mouseclickr", this, GetType().GetMethod("MouseButtonReleased"));
+        _lua.RegisterFunction("mousescroll", this, GetType().GetMethod("Scroll"));
+        _lua.RegisterFunction("mousecursor", this, GetType().GetMethod("UpdateCursor"));        
 
         // Draw
         _lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
@@ -180,7 +182,31 @@ public class LuaBinding
             return MouseInput.LeftButton_Released();
         }
     }
-    # endregion
+
+    public static bool Scroll(int i)
+    {
+        if (i == 1)
+        {
+            return MouseInput.ScrollUp();
+        }
+        else
+        {
+            return MouseInput.ScrollDown();
+        }
+    }
+
+    public static void UpdateCursor(int i)
+    {
+        if (i == 1)
+        {
+            MouseInput.UpdateCursor(MouseInput.Pointer_mouse);
+        }
+        else
+        {
+            MouseInput.UpdateCursor(MouseInput.Context_Menu_mouse);
+        }
+    }
+    #endregion
 
     #region DrawFunctions
     public static void Pal(string palette)

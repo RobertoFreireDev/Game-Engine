@@ -6,16 +6,15 @@ namespace framework.Graphics;
 
 public static class Mouse
 {
-    public static void DrawMouse(this SpriteBatch spriteBatch, int status = 0)
+    public static void DrawMouse(this SpriteBatch spriteBatch)
     {
-        var mousePos = MouseInput.MousePosition();
-        if (status == MouseInput.Context_Menu_mouse)
+        if (MouseInput.Current_Cursor == MouseInput.Pointer_mouse)
         {
-            spriteBatch.Draw(GFW.Textures["contextmenu_mouse"], mousePos, Color.White);
+            spriteBatch.Draw(GFW.Textures["pointer_mouse"], MouseInput.MousePosition(), Color.White);
         }
-        else 
+        else
         {
-            spriteBatch.Draw(GFW.Textures["pointer_mouse"], mousePos, Color.White);
+            spriteBatch.Draw(GFW.Textures["contextmenu_mouse"], MouseInput.MousePosition(), Color.White);
         }
     }
 }
