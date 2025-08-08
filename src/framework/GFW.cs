@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace framework
 {
@@ -49,6 +50,7 @@ namespace framework
 
         protected override void Initialize()
         {
+            ColorUtils.SetPalette();
             var script = @"
                 function _init()
                 end

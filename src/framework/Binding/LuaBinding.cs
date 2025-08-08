@@ -3,6 +3,7 @@ using framework.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
+using System;
 using System.IO;
 
 namespace framework.Binding;
@@ -22,10 +23,17 @@ public class LuaBinding
         Lua.DoString(script, _scriptName);
 
         // Call the _init function in Lua
-        var updateFunc = Lua.GetFunction("_init");
-        if (updateFunc != null)
+        var initFunc = Lua.GetFunction("_init");
+        if (initFunc != null)
         {
-            updateFunc.Call();
+            try
+            {
+                initFunc.Call();
+            }
+            catch (Exception ex)
+            {
+                // Add error screen with exception message
+            }
         }
     }
 
@@ -35,7 +43,14 @@ public class LuaBinding
         var updateFunc = Lua.GetFunction("_update");
         if (updateFunc != null)
         {
-            updateFunc.Call();
+            try
+            {
+                updateFunc.Call();
+            }
+            catch (Exception ex)
+            {
+                // Add error screen with exception message
+            }
         }
     }
 
@@ -44,24 +59,31 @@ public class LuaBinding
         var drawFunc = Lua.GetFunction("_draw");
         if (drawFunc != null)
         {
-            drawFunc.Call();
+            try
+            {
+                drawFunc.Call();
+            }
+            catch (Exception ex)
+            {
+                // Add error screen with exception message
+            }
         }
     }
 
     #region DrawFunctions
-    public static void Rect(int x, int y, int width, int height, int color)
+    public static void Rect(int x, int y, int width, int height, int color = 0)
     {
-        Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), Color.BurlyWood);
+        Shapes.DrawRectBorder(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));
     }
 
-    public static void RectFill(int x, int y, int width, int height, int color)
+    public static void RectFill(int x, int y, int width, int height, int color = 0)
     {
-        Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), Color.DarkGray);
+        Shapes.DrawRectFill(new Rectangle(0, 0, 320, 180), ColorUtils.GetColor(color));
     }
 
-    public static void Print(string text, int x, int y)
+    public static void Print(string text, int x, int y, int color = 0)
     {
-        Font.DrawText(text, new Vector2(x, y), Color.Black);
+        Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(color));
     }
     #endregion
 }
