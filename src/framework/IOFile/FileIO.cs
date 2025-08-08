@@ -6,6 +6,25 @@ namespace framework.IOFile;
 
 public static class FileIO
 {
+    public static bool HasFile(string fileName)
+    {
+        try
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            if (File.Exists(path))
+            {
+                return true;
+            }
+
+        }
+        catch (Exception e)
+        {
+            LuaError.SetError("Error finding file: " + e.Message);
+        }
+
+        return false;
+    }
+
     public static string Read(string fileName)
     {
         try

@@ -4,6 +4,11 @@ namespace framework.IOFile;
 
 public static class TxtFileIO
 {
+    public static bool HasFile(string fileName)
+    {
+        return FileIO.HasFile($"{fileName}.txt");
+    }
+
     public static string Read(string fileName)
     {
         return FileIO.Read($"{fileName}.txt");

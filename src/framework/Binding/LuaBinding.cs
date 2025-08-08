@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
+using System.Formats.Tar;
 
 namespace framework.Binding;
 
@@ -44,7 +45,8 @@ public class LuaBinding
         // Status
         _lua.RegisterFunction("sysfps", this, GetType().GetMethod("GetFps"));
 
-        // File
+        // File        
+        _lua.RegisterFunction("iohasfile", this, GetType().GetMethod("HasFile"));
         _lua.RegisterFunction("ioread", this, GetType().GetMethod("ReadFile"));
         _lua.RegisterFunction("iocreate", this, GetType().GetMethod("CreateFile"));
         _lua.RegisterFunction("ioupdate", this, GetType().GetMethod("UpdateFile"));
@@ -275,6 +277,11 @@ public class LuaBinding
     #endregion
 
     #region
+    public static bool HasFile(string fileName)
+    {
+        return TxtFileIO.HasFile(fileName);
+    }
+
     public static string ReadFile(string fileName)
     {
         return TxtFileIO.Read(fileName);
