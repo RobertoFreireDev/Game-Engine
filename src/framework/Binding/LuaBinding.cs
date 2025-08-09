@@ -2,6 +2,7 @@
 using framework.Graphics;
 using framework.Input;
 using framework.IOFile;
+using framework.Sfx;
 using framework.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -323,6 +324,23 @@ public class LuaBinding
     #region SfxFunctions
     public static void PlaySfx(int n)
     {
+        var player = new SfxPlayer();
+
+        // Create a simple beep SFX
+        var beep = new SfxData();
+        for (int i = 0; i < 32; i++)
+        {
+            beep.Notes[i] = new Note
+            {
+                Pitch = 60 + (i % 4), // alternating pitch
+                Wave = Waveform.Square,
+                Volume = 0.5f
+            };
+        }
+        beep.Speed = 0.1f;
+
+        // Play it
+        player.Sfx(beep);
     }
     #endregion
 }
