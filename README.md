@@ -20,17 +20,19 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 pal("#000000,#ffffff,#ffffb0,#7e70ca,#a8734a,#e9b287,#772d26,#b66862,#85d4dc,#c5ffff,#a85fb4,#e99df5,#559e4a,#92df87,#42348b,#bdcc71")
 ```
 
-- void rect(int x, int y, int width, int height, int color = 0)
+- void rect(int x, int y, int width, int height, int colorIndex = 0)
 
 ```lua
 rect(0, 0, 320, 180, 3)  
 ```
 
-- void rectfill(int x, int y, int width, int height, int color = 0)
-- void print(string text, int x, int y, int color = 0, bool wraptext = false, int wrapLimit = 0)
+- void rectfill(int x, int y, int width, int height, int colorIndex = 0)
+- void print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)
 - void spr(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
 
 ## IOFile
+
+Only .txt file
 
 - bool iohasfile(string fileName)
 - string ioread(string fileName)

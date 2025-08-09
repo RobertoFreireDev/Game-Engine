@@ -270,19 +270,19 @@ public class LuaBinding
         ColorUtils.SetPalette(palette);
     }
 
-    public static void Rect(int x, int y, int width, int height, int color = 0)
+    public static void Rect(int x, int y, int width, int height, int colorIndex = 0)
     {
-        Shapes.DrawRectBorder(new Rectangle(x, y, width, height), ColorUtils.GetColor(color));
+        Shapes.DrawRectBorder(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex));
     }
 
-    public static void RectFill(int x, int y, int width, int height, int color = 0)
+    public static void RectFill(int x, int y, int width, int height, int colorIndex = 0)
     {
-        Shapes.DrawRectFill(new Rectangle(x, y, width, height), ColorUtils.GetColor(color));
+        Shapes.DrawRectFill(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex));
     }
 
-    public static void Print(string text, int x, int y, int color = 0, bool wraptext = false, int wrapLimit = 0)
+    public static void Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)
     {
-        Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(color), wraptext, wrapLimit);
+        Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(colorIndex), wraptext, wrapLimit);
     }
     #endregion
 
