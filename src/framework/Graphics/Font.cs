@@ -28,9 +28,10 @@ public static class Font
         '<','>',' ','~','Ꮖ'
     };
 
-    public static Dictionary<char, Texture2D> GetCharacterTextures(GraphicsDevice graphicsDevice)
+    public static Dictionary<char, Texture2D> GetCharacterTextures(
+        GraphicsDevice graphicsDevice,
+        Texture2D texture)
     {
-        Texture2D fontAtlas = GFW.Textures[Id];
         int columns = Columns;
         int charWidth = CharWidth;
         int charHeight = CharHeight;
@@ -44,7 +45,7 @@ public static class Font
             var sourceRect = new Rectangle(x, y, charWidth, charHeight);
             var characterTexture = new Texture2D(graphicsDevice, charWidth, charHeight);
             Color[] data = new Color[charWidth * charHeight];
-            fontAtlas.GetData(0, sourceRect, data, 0, data.Length);
+            texture.GetData(0, sourceRect, data, 0, data.Length);
             characterTexture.SetData(data);
             charTextures[charIndex] = characterTexture;
         }

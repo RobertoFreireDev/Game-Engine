@@ -6,21 +6,17 @@ namespace framework.Input;
 
 internal static class MouseInput
 {
-    public const int Context_Menu_mouse = 0;
-    public const int Pointer_mouse = 1;
     private static int offsetX = 10;
-    public static int Current_Cursor = Context_Menu_mouse;    
+    public static int Current_Cursor = 0;    
 
     public static void UpdateCursor(int cursor)
     {
-        if (cursor == Context_Menu_mouse)
+        if (cursor < 0 || cursor > 47)
         {
-            Current_Cursor = Context_Menu_mouse;
+            return;
         }
-        else
-        {
-            Current_Cursor = Pointer_mouse;
-        }
+
+        Current_Cursor = cursor;
     }
 
     public static Vector2 MousePosition()

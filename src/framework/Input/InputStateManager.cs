@@ -31,7 +31,6 @@ public static class InputStateManager
 
     public static void Update()
     {
-        MouseInput.UpdateCursor(MouseInput.Context_Menu_mouse);
         _previousKeyboardState = _currentKeyboardState;
         _currentKeyboardState = Keyboard.GetState();
 

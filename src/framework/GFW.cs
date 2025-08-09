@@ -14,8 +14,9 @@ namespace framework
     public class GFW : Game
     {
         public GraphicsDeviceManager _graphics;
-        public static Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, Texture2D> SystemTextures = new Dictionary<string, Texture2D>();
         public static Dictionary<char, Texture2D> MediumFontTextures;
+        public static Dictionary<int, Texture2D> MouseTextures;
         public static Texture2D PixelTexture;
         public static SpriteBatch SpriteBatch;
         public static string Title;
@@ -68,11 +69,12 @@ namespace framework
         {
             ScreenUtils.SetResolution(_graphics, GraphicsDevice);
             Window.Position = new Point(0, 35);
-            Textures = Images.GetAllImages(GraphicsDevice);
+            SystemTextures = Images.GetAllImages(GraphicsDevice);
             PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             PixelTexture.SetData(new Color[] { Color.White });
             SpriteBatch = new SpriteBatch(GraphicsDevice);
-            MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice);
+            MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice, SystemTextures["medium_font"]);
+            MouseTextures = TextureUtils.GetTextures(GraphicsDevice, SystemTextures["mouse"], 10, 32, 32);
         }
 
         protected override void Update(GameTime gameTime)

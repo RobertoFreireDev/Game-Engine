@@ -8,13 +8,6 @@ public static class Mouse
 {
     public static void DrawMouse(this SpriteBatch spriteBatch)
     {
-        if (MouseInput.Current_Cursor == MouseInput.Pointer_mouse)
-        {
-            spriteBatch.Draw(GFW.Textures["pointer_mouse"], MouseInput.MousePosition(), Color.White);
-        }
-        else
-        {
-            spriteBatch.Draw(GFW.Textures["contextmenu_mouse"], MouseInput.MousePosition(), Color.White);
-        }
+        spriteBatch.Draw(GFW.MouseTextures[MouseInput.Current_Cursor], MouseInput.MousePosition(), Color.White);
     }
 }

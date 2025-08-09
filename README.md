@@ -63,7 +63,7 @@ inittitle("MY GAME")
 
 - int s: 1 Right, others Left
 - int d: 1 Up, others Down
-- int c: 1 Pointer, others Context menu
+- int c
 
 ## Keyboard
 

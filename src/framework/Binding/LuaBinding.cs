@@ -208,14 +208,7 @@ public class LuaBinding
 
     public static void UpdateCursor(int i)
     {
-        if (i == 1)
-        {
-            MouseInput.UpdateCursor(MouseInput.Pointer_mouse);
-        }
-        else
-        {
-            MouseInput.UpdateCursor(MouseInput.Context_Menu_mouse);
-        }
+        MouseInput.UpdateCursor(i);
     }
 
     public static bool JustPressed(int keyNumber)
