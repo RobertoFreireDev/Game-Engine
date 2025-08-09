@@ -51,6 +51,9 @@ public class LuaBinding
         _lua.RegisterFunction("ioupdate", this, GetType().GetMethod("UpdateFile"));
         _lua.RegisterFunction("iodelete", this, GetType().GetMethod("DeleteFile"));
 
+        //Sfx
+        _lua.RegisterFunction("sfx", this, GetType().GetMethod("PlaySfx"));
+
         try
         {
             _lua.DoString(script, _scriptName);
@@ -275,7 +278,7 @@ public class LuaBinding
     }
     #endregion
 
-    #region
+    #region IOFileFunctions
     public static bool HasFile(string fileName)
     {
         return TxtFileIO.HasFile(fileName);
@@ -299,6 +302,12 @@ public class LuaBinding
     public static void DeleteFile(string fileName)
     {
         TxtFileIO.Delete(fileName);
+    }
+    #endregion
+
+    #region SfxFunctions
+    public static void Sfx(int n, int? channel = null, int? offset = null, int? length = null)
+    {
     }
     #endregion
 }
