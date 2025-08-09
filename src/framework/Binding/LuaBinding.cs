@@ -18,12 +18,11 @@ public class LuaBinding
     public LuaBinding(string script)
     {
         _lua.UseTraceback = true;
-        // Init
-        _lua.RegisterFunction("inittitle", this, GetType().GetMethod("ConfigTitle"));
-        _lua.RegisterFunction("initbckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
-        _lua.RegisterFunction("initfps30", this, GetType().GetMethod("ConfigFps30"));
-        _lua.RegisterFunction("initfps60", this, GetType().GetMethod("ConfigFps60"));
-        _lua.RegisterFunction("inittexture", this, GetType().GetMethod("LoadTextureFromBase64"));
+        // Config
+        _lua.RegisterFunction("title", this, GetType().GetMethod("ConfigTitle"));
+        _lua.RegisterFunction("fps30", this, GetType().GetMethod("ConfigFps30"));
+        _lua.RegisterFunction("fps60", this, GetType().GetMethod("ConfigFps60"));
+        _lua.RegisterFunction("texture", this, GetType().GetMethod("LoadTextureFromBase64"));
 
         // Input 
         _lua.RegisterFunction("mousepos", this, GetType().GetMethod("GetMousePos"));
@@ -38,6 +37,7 @@ public class LuaBinding
         _lua.RegisterFunction("btnr", this, GetType().GetMethod("Released"));
 
         // Draw
+        _lua.RegisterFunction("bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
         _lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
         _lua.RegisterFunction("rect", this, GetType().GetMethod("Rect"));
         _lua.RegisterFunction("rectfill", this, GetType().GetMethod("RectFill"));
@@ -150,17 +150,17 @@ public class LuaBinding
     #region InitFunctions
     public static void ConfigTitle(string text)
     {
-        GFW.Title = text;
+        GFW.UpdateTitle(text);
     }
 
     public static void ConfigFps30()
     {
-        GFW.FPS = 30;
+        GFW.UpdateFPS(30);
     }
 
     public static void ConfigFps60()
     {
-        GFW.FPS = 60;
+        GFW.UpdateFPS(60);
     }
     
     public static void ConfigBackGroundColor(int colorIndex)

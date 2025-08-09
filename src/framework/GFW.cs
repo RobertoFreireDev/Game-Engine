@@ -22,6 +22,7 @@ namespace framework
         public static string Title;
         public static int FPS;
         public static int BackgroundColor;
+        private static bool Updated = false;
         private LuaBinding game;
 
         public GFW()
@@ -33,6 +34,18 @@ namespace framework
             IsMouseVisible = false;
             IsFixedTimeStep = true;
             ColorUtils.SetPalette();
+        }
+
+        public static void UpdateFPS(int fps)
+        {
+            FPS = fps;
+            Updated = true;
+        }
+
+        public static void UpdateTitle(string title)
+        {
+            Title = title;
+            Updated = true;
         }
 
         private void OnResize(Object sender, EventArgs e)
@@ -73,8 +86,6 @@ namespace framework
             GameImage.GraphicsDevice = GraphicsDevice;
             var script = LuaFileIO.Read("game");
             game = new LuaBinding(script);
-            Window.Title = Title;
-            TargetElapsedTime = FPS != 30 ? TimeSpan.FromSeconds(1.0 / 60.0) : TimeSpan.FromSeconds(1.0 / 30.0);
             _graphics.SynchronizeWithVerticalRetrace = false;
         }
 
@@ -91,6 +102,13 @@ namespace framework
 
             game.Update();
             FPSUtils.Update(gameTime);
+
+            if (Updated)
+            {
+                Window.Title = Title;
+                TargetElapsedTime = FPS != 30 ? TimeSpan.FromSeconds(1.0 / 60.0) : TimeSpan.FromSeconds(1.0 / 30.0);
+                Updated = false;
+            }
             base.Update(gameTime);
         }
 
