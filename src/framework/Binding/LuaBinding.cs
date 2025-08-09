@@ -306,7 +306,7 @@ public class LuaBinding
     #endregion
 
     #region SfxFunctions
-    public static void Sfx(int n, int? channel = null, int? offset = null, int? length = null)
+    public static void PlaySfx(int n)
     {
     }
     #endregion
