@@ -34,7 +34,7 @@ rect(0, 0, 320, 180, 3)
 
 - int sysfps()        -> get FPS
 
-## Configuration
+## Init
 
 - void inittitle()    -> Update title
 

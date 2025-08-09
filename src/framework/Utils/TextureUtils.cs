@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace framework.Utils;
 
@@ -32,5 +34,12 @@ public static class TextureUtils
             }
         }
         return textures;
+    }
+
+    public static Texture2D Convert64ToTexture(GraphicsDevice graphicsDevice, string imageBase64)
+    {
+        byte[] imageBytes = Convert.FromBase64String(imageBase64);
+        using var ms = new MemoryStream(imageBytes);
+        return Texture2D.FromStream(graphicsDevice, ms);
     }
 }

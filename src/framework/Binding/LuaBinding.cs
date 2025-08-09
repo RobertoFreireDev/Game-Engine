@@ -1,4 +1,5 @@
-﻿using framework.Graphics;
+﻿using framework.Assets;
+using framework.Graphics;
 using framework.Input;
 using framework.IOFile;
 using framework.Utils;
@@ -17,11 +18,12 @@ public class LuaBinding
     public LuaBinding(string script)
     {
         _lua.UseTraceback = true;
-        // Config
+        // Init
         _lua.RegisterFunction("inittitle", this, GetType().GetMethod("ConfigTitle"));
         _lua.RegisterFunction("initbckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
         _lua.RegisterFunction("initfps30", this, GetType().GetMethod("ConfigFps30"));
         _lua.RegisterFunction("initfps60", this, GetType().GetMethod("ConfigFps60"));
+        _lua.RegisterFunction("inittexture", this, GetType().GetMethod("LoadTextureFromBase64"));
 
         // Input 
         _lua.RegisterFunction("mousepos", this, GetType().GetMethod("GetMousePos"));
@@ -40,6 +42,7 @@ public class LuaBinding
         _lua.RegisterFunction("rect", this, GetType().GetMethod("Rect"));
         _lua.RegisterFunction("rectfill", this, GetType().GetMethod("RectFill"));
         _lua.RegisterFunction("print", this, GetType().GetMethod("Print"));
+        _lua.RegisterFunction("spr", this, GetType().GetMethod("DrawTexture"));
 
         // Status
         _lua.RegisterFunction("sysfps", this, GetType().GetMethod("GetFps"));
@@ -125,7 +128,26 @@ public class LuaBinding
         }
     }
 
-    #region ConfigFunctions
+    #region TextureFunctions
+    public static void LoadTextureFromBase64(string spriteBase64, int width, int height)
+    {
+        try
+        {
+            GameImage.LoadTexture(spriteBase64, width, height);
+        }
+        catch (Exception ex)
+        {
+            LuaError.SetError(ex.Message);
+        }
+    }
+
+    public static void DrawTexture(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    {
+        Sprites.DrawSprite(i, x, y, w, h, flipX, flipY);
+    }
+    #endregion
+
+    #region InitFunctions
     public static void ConfigTitle(string text)
     {
         GFW.Title = text;

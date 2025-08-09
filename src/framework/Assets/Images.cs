@@ -1,7 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using framework.Utils;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.IO;
 
 namespace framework.Assets;
 
@@ -25,13 +24,7 @@ public static class Images
 
         foreach (var pair in Base64Images)
         {
-            string name = pair.Key;
-            string base64 = pair.Value;
-
-            byte[] imageBytes = Convert.FromBase64String(base64);
-            using var ms = new MemoryStream(imageBytes);
-            var texture = Texture2D.FromStream(graphicsDevice, ms);
-            textures.Add(name, texture);
+            textures.Add(pair.Key, TextureUtils.Convert64ToTexture(graphicsDevice, pair.Value));
         }
 
         return textures;

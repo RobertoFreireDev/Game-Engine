@@ -32,14 +32,7 @@ namespace framework
             Window.ClientSizeChanged += OnResize;
             IsMouseVisible = false;
             IsFixedTimeStep = true;
-            ColorUtils.SetPalette();            ;
-            var script = LuaFileIO.Read("game");
-            game = new LuaBinding(script);
-
-
-            Window.Title = Title;
-            TargetElapsedTime = FPS != 30 ? TimeSpan.FromSeconds(1.0 / 60.0) : TimeSpan.FromSeconds(1.0 / 30.0);
-            _graphics.SynchronizeWithVerticalRetrace = false;
+            ColorUtils.SetPalette();
         }
 
         private void OnResize(Object sender, EventArgs e)
@@ -75,6 +68,14 @@ namespace framework
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice, SystemTextures["medium_font"]);
             MouseTextures = TextureUtils.GetTextures(GraphicsDevice, SystemTextures["mouse"], 10, 32, 32);
+
+            // Load game
+            GameImage.GraphicsDevice = GraphicsDevice;
+            var script = LuaFileIO.Read("game");
+            game = new LuaBinding(script);
+            Window.Title = Title;
+            TargetElapsedTime = FPS != 30 ? TimeSpan.FromSeconds(1.0 / 60.0) : TimeSpan.FromSeconds(1.0 / 30.0);
+            _graphics.SynchronizeWithVerticalRetrace = false;
         }
 
         protected override void Update(GameTime gameTime)
