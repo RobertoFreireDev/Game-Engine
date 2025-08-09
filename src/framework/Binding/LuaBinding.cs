@@ -333,7 +333,7 @@ public class LuaBinding
             beep.Notes[i] = new Note
             {
                 Pitch = 60 + (i % 4), // alternating pitch
-                Wave = Waveform.Square,
+                Wave = Waveform.Triangle,
                 Volume = 0.5f
             };
         }

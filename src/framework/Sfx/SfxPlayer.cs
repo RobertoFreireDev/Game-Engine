@@ -90,22 +90,21 @@ public class SfxPlayer
                 var note = sfx.Notes[ch.Position];
                 float freq = PitchToFrequency(note.Pitch);
                 float t = (float)(i / (float)SampleRate);
-                buffer[i] += GenerateWave(note.Wave, freq, ch.Time, note.Volume);
+
+                ch.Phase += freq / SampleRate;
+                ch.Phase -= Math.Floor(ch.Phase); // keep in 0..1
+                buffer[i] += GenerateWave(note.Wave, ch.Phase, note.Volume);
             }
         }
     }
 
     private float PitchToFrequency(int pitch)
     {
-        // PICO-8 C-0 is around 16.35 Hz, but we'll map MIDI-style here
         return 440f * (float)Math.Pow(2, (pitch - 69) / 12.0);
     }
 
-    private float GenerateWave(Waveform wave, float freq, double time, float volume)
+    private float GenerateWave(Waveform wave, double phase, float volume)
     {
-        double phase = time * freq;
-        phase -= Math.Floor(phase); // keep in 0..1
-
         switch (wave)
         {
             case Waveform.Square:
