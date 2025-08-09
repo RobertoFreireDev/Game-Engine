@@ -4,6 +4,12 @@ This engine starts as a blank canvas, giving Lua full control over display and l
 
 Developers can write Lua scripts to build custom tools, editors, or complete games
 
+## Requirements 
+
+- 320x180 (16:9)
+- Letter box integer scaling
+- Game code in Lua
+
 # Functions
 
 ## Draw
