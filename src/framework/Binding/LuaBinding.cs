@@ -335,7 +335,7 @@ public class LuaBinding
             beep.Notes[i] = new Note
             {
                 Pitch = 60 + (i % 4),
-                Wave = values[randomIndex],
+                Wave = Waveform.Saw,//values[randomIndex],
                 Volume = 0.5f
             };
         }

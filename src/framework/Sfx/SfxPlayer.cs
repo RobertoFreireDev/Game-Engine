@@ -8,6 +8,8 @@ public class SfxPlayer
     private const int SampleRate = 44100;
     private SfxChannel[] channels = new SfxChannel[4];
     private DynamicSoundEffectInstance sound;
+    private const float FadeInSeconds = 0.01f;
+    private const float FadeOutSeconds = 0.01f;
 
     public SfxPlayer()
     {
@@ -32,6 +34,9 @@ public class SfxPlayer
         ch.Position = offset;
         ch.Time = 0;
         ch.Playing = true;
+        ch.Phase = 0.0;
+        ch.CurrentSample = 0;
+        ch.TotalSamples = (int)(sfx.Notes.Length * sfx.Speed * SampleRate);
     }
 
     public void Stop(int channel)
@@ -76,6 +81,8 @@ public class SfxPlayer
             for (int i = 0; i < samples; i++)
             {
                 ch.Time += 1.0 / SampleRate;
+                ch.CurrentSample++;
+
                 if (ch.Time >= sfx.Speed)
                 {
                     ch.Time -= sfx.Speed;
@@ -89,11 +96,28 @@ public class SfxPlayer
 
                 var note = sfx.Notes[ch.Position];
                 float freq = PitchToFrequency(note.Pitch);
-                float t = (float)(i / (float)SampleRate);
 
                 ch.Phase += freq / SampleRate;
-                ch.Phase -= Math.Floor(ch.Phase); // keep in 0..1
-                buffer[i] += GenerateWave(note.Wave, ch.Phase, note.Volume);
+                ch.Phase -= Math.Floor(ch.Phase);
+
+                float sample = GenerateWave(note.Wave, ch.Phase, note.Volume);
+
+                // Calculate fade-in and fade-out gain multiplier
+                float gain = 1f;
+                int fadeInSamples = (int)(FadeInSeconds * SampleRate);
+                int fadeOutSamples = (int)(FadeOutSeconds * SampleRate);
+
+                if (ch.CurrentSample < fadeInSamples)
+                {
+                    gain = ch.CurrentSample / (float)fadeInSamples; // ramp up 0->1
+                }
+                else if (ch.CurrentSample > ch.TotalSamples - fadeOutSamples)
+                {
+                    gain = (ch.TotalSamples - ch.CurrentSample) / (float)fadeOutSamples; // ramp down 1->0
+                    gain = Math.Clamp(gain, 0f, 1f);
+                }
+
+                buffer[i] += sample * gain;
             }
         }
     }
@@ -108,11 +132,11 @@ public class SfxPlayer
         switch (wave)
         {
             case Waveform.Square:
-                return (phase < 0.5 ? 1f : -1f) * volume;
+                return (phase < 0.5 ? 1f : -1f) * volume * 0.5f;
             case Waveform.Triangle:
-                return (float)((Math.Abs(phase * 2 - 1) * 2 - 1) * volume * 2);
+                return (float)(4f * volume * Math.Abs(2 * phase - 1) - 1f);
             case Waveform.Saw:
-                return (float)((phase * 2 - 1) * volume);
+                return (float)((phase * 2 - 1) * volume) * 0.8f;
             case Waveform.Noise:
                 return ((float)(new Random().NextDouble() * 2 - 1) * volume);
             default:
