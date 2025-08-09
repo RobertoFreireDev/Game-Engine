@@ -1,15 +1,23 @@
 ﻿using framework.Graphics;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace framework.IOFile;
 
 public static class FileIO
 {
-    public static bool HasFile(string fileName)
+    public static bool HasFile(string fileName, string extension)
     {
         try
         {
+            if (!ValidateFileName(fileName))
+            {
+                return false;
+            }
+
+            fileName += $".{extension}";
+
             var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             if (File.Exists(path))
             {
@@ -25,10 +33,17 @@ public static class FileIO
         return false;
     }
 
-    public static string Read(string fileName)
+    public static string Read(string fileName, string extension)
     {
         try
         {
+            if (!ValidateFileName(fileName))
+            {
+                return string.Empty;
+            }
+
+            fileName += $".{extension}";
+
             var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             using (StreamReader reader = new StreamReader(path))
             {
@@ -47,10 +62,17 @@ public static class FileIO
         return string.Empty;
     }
 
-    public static void Create(string fileName, string content)
+    public static void Create(string fileName, string extension, string content)
     {
         try
         {
+            if (!ValidateFileName(fileName))
+            {
+                return;
+            }
+
+            fileName += $".{extension}";
+
             var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             if (File.Exists(path))
             {
@@ -66,10 +88,17 @@ public static class FileIO
         }
     }
 
-    public static void Update(string fileName, string content)
+    public static void Update(string fileName, string extension, string content)
     {
         try
         {
+            if (!ValidateFileName(fileName))
+            {
+                return;
+            }
+
+            fileName += $".{extension}";
+
             var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             if (!File.Exists(path))
             {
@@ -84,10 +113,17 @@ public static class FileIO
         }
     }
 
-    public static void Delete(string fileName)
+    public static void Delete(string fileName, string extension)
     {
         try
         {
+            if (!ValidateFileName(fileName))
+            {
+                return;
+            }
+
+            fileName += $".{extension}";
+
             var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
             if (!File.Exists(path))
             {
@@ -114,5 +150,22 @@ public static class FileIO
                 writer.WriteLine(lines[i]);
             }
         }
+    }
+
+    public static bool ValidateFileName(string fileName)
+    {
+        if (string.IsNullOrWhiteSpace(fileName) || fileName.Length > 16)
+        {
+            LuaError.SetError("File name should have 1 to 16 letters");
+            return false;
+        }
+
+        if (!fileName.All(char.IsLetter))
+        {
+            LuaError.SetError("File name should have only letters");
+            return false;
+        }
+
+        return true;
     }
 }
