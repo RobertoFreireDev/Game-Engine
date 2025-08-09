@@ -22,15 +22,15 @@ rect(0, 0, 320, 180, 3)
 
 - void rectfill(int x, int y, int width, int height, int color = 0)
 - void print(string text, int x, int y, int color = 0, bool wraptext = false, int wrapLimit = 0)
-- spr(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+- void spr(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
 
 ## IOFile
 
-- iohasfile(string fileName)
-- ioread(string fileName)
-- iocreate(string fileName, string content)
-- ioupdate(string fileName, string content)
-- iodelete(string fileName)
+- bool iohasfile(string fileName)
+- string ioread(string fileName)
+- void iocreate(string fileName, string content)
+- void ioupdate(string fileName, string content)
+- void iodelete(string fileName)
 
 ## System
 
