@@ -324,22 +324,22 @@ public class LuaBinding
     #region SfxFunctions
     public static void PlaySfx(int n)
     {
+        Random rand = new Random();
+        Waveform[] values = (Waveform[]) Enum.GetValues(typeof(Waveform));
         var player = new SfxPlayer();
 
-        // Create a simple beep SFX
         var beep = new SfxData();
         for (int i = 0; i < 32; i++)
         {
+            int randomIndex = rand.Next(2) + 2;
             beep.Notes[i] = new Note
             {
-                Pitch = 60 + (i % 4), // alternating pitch
-                Wave = Waveform.Triangle,
+                Pitch = 60 + (i % 4),
+                Wave = values[randomIndex],
                 Volume = 0.5f
             };
         }
         beep.Speed = 0.1f;
-
-        // Play it
         player.Sfx(beep);
     }
     #endregion

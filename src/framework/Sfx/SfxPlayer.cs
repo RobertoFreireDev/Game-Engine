@@ -110,7 +110,7 @@ public class SfxPlayer
             case Waveform.Square:
                 return (phase < 0.5 ? 1f : -1f) * volume;
             case Waveform.Triangle:
-                return (float)((Math.Abs(phase * 2 - 1) * 2 - 1) * volume);
+                return (float)((Math.Abs(phase * 2 - 1) * 2 - 1) * volume * 2);
             case Waveform.Saw:
                 return (float)((phase * 2 - 1) * volume);
             case Waveform.Noise:
