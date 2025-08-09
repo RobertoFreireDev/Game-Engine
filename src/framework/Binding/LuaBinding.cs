@@ -322,25 +322,33 @@ public class LuaBinding
     #endregion
 
     #region SfxFunctions
-    public static void PlaySfx(int n)
+    public static void PlaySfx(string sound, int speed = 1)
     {
-        Random rand = new Random();
-        Waveform[] values = (Waveform[]) Enum.GetValues(typeof(Waveform));
         var player = new SfxPlayer();
-
-        var beep = new SfxData();
-        for (int i = 0; i < 32; i++)
+        var sfx = new SfxData();
+        int maxNotes = 32;
+        int charsPerNote = 5;
+        int noteCount = sound.Length / charsPerNote;
+        for (int i = 0; i < Math.Min(noteCount, maxNotes); i++)
         {
-            int randomIndex = rand.Next(2) + 2;
-            beep.Notes[i] = new Note
+            int pitchDigit = (sound[i * charsPerNote] -'0')*10 + (sound[i * charsPerNote + 1] -'0');
+            int waveDigit = sound[i * charsPerNote + 2] - '0';
+            int volumeDigit = (sound[i * charsPerNote + 3] - '0') * 10 + (sound[i * charsPerNote + 4] - '0');
+
+            pitchDigit = CalcUtils.Clamp(pitchDigit, 36, 71);
+            waveDigit = CalcUtils.Clamp(waveDigit, 0, 4);
+            volumeDigit = CalcUtils.Clamp(volumeDigit, 0,10);
+            speed = CalcUtils.Clamp(speed, 1, 32);
+
+            sfx.Notes[i] = new Note
             {
-                Pitch = 60 + (i % 4),
-                Wave = Waveform.Saw,//values[randomIndex],
-                Volume = 0.5f
+                Pitch = pitchDigit,
+                Wave = volumeDigit == 0 ? Waveform.None : (Waveform)waveDigit,
+                Volume = volumeDigit / 10f
             };
         }
-        beep.Speed = 0.1f;
-        player.Sfx(beep);
+        sfx.Speed = speed * 0.02f;
+        player.Sfx(sfx);
     }
     #endregion
 }
