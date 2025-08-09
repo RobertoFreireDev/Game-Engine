@@ -8,74 +8,71 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 
 ## Draw
 
-- void pal(p)                 -> Set palette
+- void pal(string palette)
 
 ```lua
 pal("#000000,#ffffff,#ffffb0,#7e70ca,#a8734a,#e9b287,#772d26,#b66862,#85d4dc,#c5ffff,#a85fb4,#e99df5,#559e4a,#92df87,#42348b,#bdcc71")
 ```
 
-- void rect(x,y,w,h,[c])      -> Draw rectangle border
+- void rect(int x, int y, int width, int height, int color = 0)
 
 ```lua
 rect(0, 0, 320, 180, 3)  
 ```
 
-- void rectfill(x,y,w,h,[c])  -> Draw rectangle
-- void print(t,x,y,[c],[w],[l])
+- void rectfill(int x, int y, int width, int height, int color = 0)
+- void print(string text, int x, int y, int color = 0, bool wraptext = false, int wrapLimit = 0)
+- spr(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
 
-### Parameters
+## IOFile
 
-- string p -> palette list in hex color
-- int c    -> 0-15 color index
-- bool w   -> wraptext
-- int l    -> wrap limit in x
+- iohasfile(string fileName)
+- ioread(string fileName)
+- iocreate(string fileName, string content)
+- ioupdate(string fileName, string content)
+- iodelete(string fileName)
 
 ## System
 
-- int sysfps()        -> get FPS
+- int sysfps()
 
 ## Init
 
-- void inittitle()    -> Update title
+- void inittitle()
 
 ```lua
 inittitle("MY GAME")
 ```
 
-- void initbckgdclr(c) -> Update background color
-- void initfps30()    -> Set 30 Fps 
-- void initfps60()    -> Set 60 Fps
+- void initbckgdclr(int colorIndex)
+- void initfps30() 
+- void initfps60()
+- void inittexture(string spriteBase64, int tileWidth, int tileHeight)
 
-### Parameters
-
-- int c    -> 0-15 color index
+```lua
+inittexture("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",32,32)
+```
 
 ## Mouse
 
-- {x,y} mousepos()      -> Get mouse position
-- bool mouseclick(s)   -> Mouse button pressed
-- bool mouseclickp(s)  -> Mouse button just pressed
-- bool mouseclickr(s)  -> Mouse button just released
-- bool mousescroll(d)  -> scroll
-- void mousecursor(c)  -> update cursor
-
-### Parameters
-
-- int s: 1 Right, others Left
-- int d: 1 Up, others Down
-- int c
+- {x,y} mousepos()
+- bool mouseclick(int i)
+- bool mouseclickp(int i)
+- bool mouseclickr(int i)
+- bool mousescroll(int i)
+- void mousecursor(int i)
 
 ## Keyboard
 
-- bool btn(k)    -> keyboard pressed
-- bool btnp(k)   -> keyboard just pressed
-- bool btnr(k)   -> keyboard released
+- bool btn(int keyNumber)
+- bool btnp(int keyNumber)
+- bool btnr(int keyNumber)
 
 ```lua
 btnr(72) -- button h
 ```
 
-### Keys int k
+### key Number
 
 | Key | Number | Description |
 |-----|--------|-------------|

@@ -129,11 +129,11 @@ public class LuaBinding
     }
 
     #region TextureFunctions
-    public static void LoadTextureFromBase64(string spriteBase64, int width, int height)
+    public static void LoadTextureFromBase64(string spriteBase64, int tileWidth, int tileHeight)
     {
         try
         {
-            GameImage.LoadTexture(spriteBase64, width, height);
+            GameImage.LoadTexture(spriteBase64, tileWidth, tileHeight);
         }
         catch (Exception ex)
         {
