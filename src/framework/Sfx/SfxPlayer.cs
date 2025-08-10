@@ -222,15 +222,16 @@ public class SfxPlayer
             if (!ch.Playing || ch.CurrentSfx == null) continue;
 
             var sfx = ch.CurrentSfx;
+            var speed = sfx.Speed * Constants.SpeedSfx;
 
             for (int i = 0; i < samples; i++)
             {
                 ch.Time += 1.0 / SampleRate;
                 ch.CurrentSample++;
 
-                if (ch.Time >= sfx.Speed)
+                if (ch.Time >= speed)
                 {
-                    ch.Time -= sfx.Speed;
+                    ch.Time -= speed;
                     ch.Position++;
                     if (ch.Position >= sfx.Notes.Length)
                     {

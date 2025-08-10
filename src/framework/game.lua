@@ -1,6 +1,6 @@
 ﻿function _init()
     _loadsfx()
-    _configsfx(0,32,"64110360006411065110671106711036000651106411062110360006011060110");
+    _configsfx(0,1,"64110360006411065110671106711036000651106411062110360006011060110");
 end
 
 function _update()
@@ -10,7 +10,7 @@ function _update()
         --_playsfx(0,8)    
     end
     if _btnp(w) then
-        _playsfx(0)    
+        _playsfx(0,8)    
     end
 end
 
