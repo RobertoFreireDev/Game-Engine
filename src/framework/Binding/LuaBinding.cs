@@ -54,12 +54,16 @@ public class LuaBinding
         _lua.RegisterFunction("_ioread", this, GetType().GetMethod("ReadFile"));
         _lua.RegisterFunction("_iocreate", this, GetType().GetMethod("CreateFile"));
         _lua.RegisterFunction("_ioupdate", this, GetType().GetMethod("UpdateFile"));
+        _lua.RegisterFunction("_iocreateorupdate", this, GetType().GetMethod("CreateOrUpdateFile"));
         _lua.RegisterFunction("_iodelete", this, GetType().GetMethod("DeleteFile"));
-
+        _lua.RegisterFunction("_loadsfx", this, GetType().GetMethod("ReadSfx"));
+        _lua.RegisterFunction("_savesfx", this, GetType().GetMethod("CreateOrUpdateSfx"));
+        
         //Sfx
         _lua.RegisterFunction("_configsfx", this, GetType().GetMethod("ConfigSfx"));
         _lua.RegisterFunction("_playsfx", this, GetType().GetMethod("PlaySfx"));
         _lua.RegisterFunction("_stopsfx", this, GetType().GetMethod("StopSfx"));
+        _lua.RegisterFunction("_validfx", this, GetType().GetMethod("ValidSfx"));
 
         try
         {
@@ -322,12 +326,43 @@ public class LuaBinding
     {
         TxtFileIO.Delete(fileName);
     }
+
+    public static void CreateOrUpdateFile(string fileName, string content)
+    {
+        TxtFileIO.CreateOrUpdate(fileName, content);
+    }
+
+    public static void ReadSfx()
+    {
+        if (!HasFile(Constants.Sfxfilename))
+        {
+            return;
+        }
+        var content = TxtFileIO.Read(Constants.Sfxfilename);
+        _player.ConvertStringToData(content);
+    }
+
+    public static void CreateOrUpdateSfx()
+    {
+        var content = _player.ConvertDataToString();
+        if (string.IsNullOrWhiteSpace(content))
+        {
+            return;
+        }
+        TxtFileIO.CreateOrUpdate(Constants.Sfxfilename, content);
+    }
     #endregion
 
     #region SfxFunctions
-    public static void ConfigSfx(int index, string sound)
+    public static void ConfigSfx(int index, int speed, string sound)
     {
+        sound += CalcUtils.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed).ToString("D2");
         _player.SetSfx(index, sound);
+    }
+
+    public static bool ValidSfx(string sound)
+    {
+        return _player.ValidateSoundString(sound);
     }
 
     public static void PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)

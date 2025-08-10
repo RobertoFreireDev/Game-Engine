@@ -113,6 +113,27 @@ public static class FileIO
         }
     }
 
+    public static void CreateOrUpdate(string fileName, string extension, string content)
+    {
+        try
+        {
+            if (!ValidateFileName(fileName))
+            {
+                return;
+            }
+
+            fileName += $".{extension}";
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+
+            CreateOrUpdateFile(path, content);
+        }
+        catch (Exception e)
+        {
+            LuaError.SetError("Error updating file: " + e.Message);
+        }
+    }
+
     public static void Delete(string fileName, string extension)
     {
         try

@@ -1,23 +1,23 @@
 ﻿using framework.Utils;
 using Microsoft.Xna.Framework.Audio;
 using System;
-using System.Reflection;
-using System.Threading.Channels;
+using System.Linq;
+using System.Text;
 
 namespace framework.Sfx;
 
 public class SfxPlayer
 {
     private const int SampleRate = 44100;
-    private SfxChannel[] channels = new SfxChannel[4];
+    private SfxChannel[] channels = new SfxChannel[Constants.ChannelQty];
     private DynamicSoundEffectInstance sound;
     private const float FadeInSeconds = 0.01f;
     private const float FadeOutSeconds = 0.01f;
-    private SfxData[] Data = new SfxData[256];
+    private SfxData[] Data = new SfxData[Constants.SfxQty];
 
     public SfxPlayer()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < channels.Length; i++)
             channels[i] = new SfxChannel();
 
         sound = new DynamicSoundEffectInstance(SampleRate, AudioChannels.Mono);
@@ -27,34 +27,138 @@ public class SfxPlayer
 
     public void SetSfx(int index, string sound)
     {
-        if (!ValidIndex(index))
+        sound = CleanNotes(sound);
+        if (!ValidIndex(index) || !ValidateSoundString(sound))
         {
             return;
         }
 
         var sfx = new SfxData();
-        int maxNotes = 32;
-        int charsPerNote = 5;
-        int noteCount = sound.Length / charsPerNote;
-        for (int i = 0; i < Math.Min(noteCount, maxNotes); i++)
+        int noteCount = (sound.Length - Constants.SpeedDigits) / Constants.CharsPerNote;
+        for (int i = 0; i < Math.Min(noteCount, Constants.MaxNotes); i++)
         {
-            int pitchDigit = (sound[i * charsPerNote] - '0') * 10 + (sound[i * charsPerNote + 1] - '0');
-            int waveDigit = sound[i * charsPerNote + 2] - '0';
-            int volumeDigit = (sound[i * charsPerNote + 3] - '0') * 10 + (sound[i * charsPerNote + 4] - '0');
+            int pitchDigit = (sound[i * Constants.CharsPerNote] - '0') * 10 + (sound[i * Constants.CharsPerNote + 1] - '0');
+            int waveDigit = sound[i * Constants.CharsPerNote + 2] - '0';
+            int volumeDigit = (sound[i * Constants.CharsPerNote + 3] - '0') * 10 + (sound[i * Constants.CharsPerNote + 4] - '0');
 
-            pitchDigit = CalcUtils.Clamp(pitchDigit, 36, 71);
-            waveDigit = CalcUtils.Clamp(waveDigit, 0, 4);
-            volumeDigit = CalcUtils.Clamp(volumeDigit, 0, 10);            
+            pitchDigit = CalcUtils.Clamp(pitchDigit, Constants.MinPitch, Constants.MaxPitch);
+            waveDigit = CalcUtils.Clamp(waveDigit, Constants.MinWave, Constants.MaxWave);
+            volumeDigit = CalcUtils.Clamp(volumeDigit, Constants.MinVolume, Constants.MaxVolume);            
 
             sfx.Notes[i] = new Note
             {
                 Pitch = pitchDigit,
                 Wave = volumeDigit == 0 ? Waveform.None : (Waveform)waveDigit,
                 Volume = volumeDigit / 10f
-            };
+            };            
         }
 
+        sfx.Speed = int.Parse(sound.Substring(noteCount * Constants.CharsPerNote, 2));
         Data[index] = sfx;
+    }
+
+    private string CleanNotes(string sound)
+    {
+        if (sound.Length < 2)
+            return sound;
+
+        string speed = sound.Substring(sound.Length - 2, 2);
+        string notesPart = sound.Substring(0, sound.Length - 2);
+        var groups = Enumerable.Range(0, notesPart.Length / 5)
+            .Select(i => notesPart.Substring(i * 5, 5))
+            .Where(g => g != "00000");
+        return string.Concat(groups) + speed;
+    }
+
+
+    public bool ValidateSoundString(string sound)
+    {
+        if (string.IsNullOrEmpty(sound))
+            return false;
+
+        int notesLength = (sound.Length - Constants.SpeedDigits);
+
+        if (notesLength % Constants.CharsPerNote != 0)
+            return false;
+
+        int noteCount = notesLength / Constants.CharsPerNote;
+
+        if (noteCount > Constants.MaxNotes)
+        {
+            return false;
+        }
+
+        int speed;
+        for (int i = 0; i < noteCount; i++)
+        {
+            int pitch;
+            int wave;
+            int volume;
+
+            if (!int.TryParse(sound.Substring(i * Constants.CharsPerNote, 2), out pitch))
+                return false;
+            if (!int.TryParse(sound.Substring(i * Constants.CharsPerNote + 2, 1), out wave))
+                return false;
+            if (!int.TryParse(sound.Substring(i * Constants.CharsPerNote + 3, 2), out volume))
+                return false;
+
+            if (pitch < Constants.MinPitch || pitch > Constants.MaxPitch)
+                return false;
+            if (wave < Constants.MinWave || wave > Constants.MaxWave)
+                return false;
+            if (volume < Constants.MinVolume || volume > Constants.MaxVolume)
+                return false;
+        }
+
+        if (!int.TryParse(sound.Substring(noteCount * Constants.CharsPerNote, 2), out speed))
+            return false;
+
+        return true;
+    }
+
+    public void ConvertStringToData(string sounds)
+    {
+        var data = sounds.Split('\n');
+        for (int i=0; i < data.Length; i++)
+        {
+            SetSfx(i, data[i].TrimEnd());
+        }
+    }
+
+    public string ConvertDataToString()
+    {
+        var sb = new StringBuilder();
+
+        for (int i = 0; i < Data.Length; i++)
+        {
+            for (int j = 0; j < Constants.MaxNotes; j++)
+            {
+                if (Data[i]?.Notes?[j] is not null)
+                {
+                    var note = Data[i].Notes[j];
+
+                    int pitch = note.Pitch;
+                    int wave = (int)note.Wave;
+                    int volume = (int)Math.Round(note.Volume * 10f);
+
+                    sb.Append(pitch.ToString("D2"));
+                    sb.Append(wave);
+                    sb.Append(volume.ToString("D2"));
+                }
+            }
+
+            if (Data[i]?.Speed is not null)
+            {
+                sb.Append(Data[i].Speed.ToString("D2"));
+            }
+
+            if (i < Data.Length - 1)
+            {
+                sb.Append("\n");
+            }
+        }
+
+        return sb.ToString();
     }
 
     private bool ValidIndex(int index)
@@ -70,7 +174,7 @@ public class SfxPlayer
         }
 
         var sfx = Data[index];
-        sfx.SetSpeed(speed);
+        sfx.Speed = CalcUtils.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed);
         channel = CalcUtils.Clamp(channel, 0, 4);
 
         var ch = channels[channel];
@@ -80,7 +184,7 @@ public class SfxPlayer
         ch.Playing = true;
         ch.Phase = 0.0;
         ch.CurrentSample = 0;
-        ch.TotalSamples = (int)(sfx.Notes.Length * sfx.Speed * SampleRate);
+        ch.TotalSamples = (int)(sfx.Notes.Length * sfx.Speed * Constants.SpeedSfx * SampleRate);
     }
 
     public void Stop(int channel)

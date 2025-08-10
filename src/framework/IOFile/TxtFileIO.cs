@@ -24,6 +24,11 @@ public static class TxtFileIO
         FileIO.Update(fileName, extension, content);
     }
 
+    public static void CreateOrUpdate(string fileName, string content)
+    {
+        FileIO.CreateOrUpdate(fileName, extension, content);
+    }
+
     public static void Delete(string fileName)
     {
         FileIO.Delete(fileName, extension);
