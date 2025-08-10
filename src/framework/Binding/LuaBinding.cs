@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
+using System.Runtime.Intrinsics.Arm;
 
 namespace framework.Binding;
 
@@ -71,6 +72,11 @@ public class LuaBinding
         _lua.RegisterFunction("_stopsfx", this, GetType().GetMethod("StopSfx"));
         _lua.RegisterFunction("_validfx", this, GetType().GetMethod("ValidSfx"));
 
+        //Time
+        _lua.RegisterFunction("_stimer", this, GetType().GetMethod("StartTimer"));
+        _lua.RegisterFunction("_gtimer", this, GetType().GetMethod("GetTimer"));
+        _lua.RegisterFunction("_gtime", this, GetType().GetMethod("GetDateTime"));
+        
         try
         {
             _lua.DoString(script, _scriptName);
@@ -328,7 +334,7 @@ public class LuaBinding
     #region SystemFunctions
     public static int GetFps()
     {
-        return FPSUtils.FPS;
+        return TimeUtils.FPS;
     }
     #endregion
 
@@ -404,6 +410,23 @@ public class LuaBinding
     public static void StopSfx(int index)
     {
         _player.Stop(index);
-    }    
+    }
+    #endregion
+
+    #region
+    public static void StartTimer(int i = 0)
+    {
+        TimeUtils.StartTimer(i);
+    }
+
+    public static double GetTimer(int i = 0, int d = 4)
+    {
+        return TimeUtils.GetTime(i, d);
+    }
+
+    public static string GetDateTime(int i = 0)
+    {
+        return TimeUtils.GetDateTime(i);
+    }
     #endregion
 }

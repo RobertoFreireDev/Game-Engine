@@ -113,7 +113,7 @@ namespace framework
 
         protected override void Draw(GameTime gameTime)
         {
-            FPSUtils.Update(gameTime);
+            TimeUtils.Update(gameTime);
             GraphicsDevice.Clear(Color.Black);
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             game.Draw();
