@@ -12,14 +12,17 @@ end
 
 function _draw()
     _rect(0, 0, 320, 180, 5, 10)
-    _circfill(20, 2, 0, 1)
-    _circfill(20, 10, 1, 1)
-    _circfill(20, 30, 2, 1)
-    _circfill(20, 60, 3, 1)
-    _circfill(20, 90, 20, 1)
-    _circ(100, 2, 0, 1)
-    _circ(100, 10, 1, 1)
-    _circ(100, 30, 2, 1)
-    _circ(100, 60, 3, 1)
-    _circ(100, 90, 20, 1)
+    for i = 1, 20000 do
+        local x = math.random(20, 300)
+        local y = math.random(20, 160)
+        local r = math.random(0, 10)
+        local c = 1
+
+        if math.random() < 0.5 then
+            _circfill(x, y, r, c)
+        else
+            _circ(x, y, r, c)
+        end
+    end
+    _print(tostring(_sysfps()),2,2,1)
 end
