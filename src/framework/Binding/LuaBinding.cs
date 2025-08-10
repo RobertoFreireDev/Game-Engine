@@ -20,43 +20,43 @@ public class LuaBinding
     {
         _lua.UseTraceback = true;
         // Config
-        _lua.RegisterFunction("title", this, GetType().GetMethod("ConfigTitle"));
-        _lua.RegisterFunction("fps30", this, GetType().GetMethod("ConfigFps30"));
-        _lua.RegisterFunction("fps60", this, GetType().GetMethod("ConfigFps60"));
-        _lua.RegisterFunction("texture", this, GetType().GetMethod("LoadTextureFromBase64"));
+        _lua.RegisterFunction("_title", this, GetType().GetMethod("ConfigTitle"));
+        _lua.RegisterFunction("_fps30", this, GetType().GetMethod("ConfigFps30"));
+        _lua.RegisterFunction("_fps60", this, GetType().GetMethod("ConfigFps60"));
+        _lua.RegisterFunction("_texture", this, GetType().GetMethod("LoadTextureFromBase64"));
 
         // Input 
-        _lua.RegisterFunction("mousepos", this, GetType().GetMethod("GetMousePos"));
-        _lua.RegisterFunction("mouseclick", this, GetType().GetMethod("MouseButtonPressed"));
-        _lua.RegisterFunction("mouseclickp", this, GetType().GetMethod("MouseButtonJustPressed"));
-        _lua.RegisterFunction("mouseclickr", this, GetType().GetMethod("MouseButtonReleased"));
-        _lua.RegisterFunction("mousescroll", this, GetType().GetMethod("Scroll"));
-        _lua.RegisterFunction("mousecursor", this, GetType().GetMethod("UpdateCursor"));
+        _lua.RegisterFunction("_mousepos", this, GetType().GetMethod("GetMousePos"));
+        _lua.RegisterFunction("_mouseclick", this, GetType().GetMethod("MouseButtonPressed"));
+        _lua.RegisterFunction("_mouseclickp", this, GetType().GetMethod("MouseButtonJustPressed"));
+        _lua.RegisterFunction("_mouseclickr", this, GetType().GetMethod("MouseButtonReleased"));
+        _lua.RegisterFunction("_mousescroll", this, GetType().GetMethod("Scroll"));
+        _lua.RegisterFunction("_mousecursor", this, GetType().GetMethod("UpdateCursor"));
 
-        _lua.RegisterFunction("btn", this, GetType().GetMethod("Pressed"));
-        _lua.RegisterFunction("btnp", this, GetType().GetMethod("JustPressed"));
-        _lua.RegisterFunction("btnr", this, GetType().GetMethod("Released"));
+        _lua.RegisterFunction("_btn", this, GetType().GetMethod("Pressed"));
+        _lua.RegisterFunction("_btnp", this, GetType().GetMethod("JustPressed"));
+        _lua.RegisterFunction("_btnr", this, GetType().GetMethod("Released"));
 
         // Draw
-        _lua.RegisterFunction("bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
-        _lua.RegisterFunction("pal", this, GetType().GetMethod("Pal"));
-        _lua.RegisterFunction("rect", this, GetType().GetMethod("Rect"));
-        _lua.RegisterFunction("rectfill", this, GetType().GetMethod("RectFill"));
-        _lua.RegisterFunction("print", this, GetType().GetMethod("Print"));
-        _lua.RegisterFunction("spr", this, GetType().GetMethod("DrawTexture"));
+        _lua.RegisterFunction("_bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
+        _lua.RegisterFunction("_pal", this, GetType().GetMethod("Pal"));
+        _lua.RegisterFunction("_rect", this, GetType().GetMethod("Rect"));
+        _lua.RegisterFunction("_rectfill", this, GetType().GetMethod("RectFill"));
+        _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
+        _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawTexture"));
 
         // Status
-        _lua.RegisterFunction("sysfps", this, GetType().GetMethod("GetFps"));
+        _lua.RegisterFunction("_sysfps", this, GetType().GetMethod("GetFps"));
 
         // File        
-        _lua.RegisterFunction("iohasfile", this, GetType().GetMethod("HasFile"));
-        _lua.RegisterFunction("ioread", this, GetType().GetMethod("ReadFile"));
-        _lua.RegisterFunction("iocreate", this, GetType().GetMethod("CreateFile"));
-        _lua.RegisterFunction("ioupdate", this, GetType().GetMethod("UpdateFile"));
-        _lua.RegisterFunction("iodelete", this, GetType().GetMethod("DeleteFile"));
+        _lua.RegisterFunction("_iohasfile", this, GetType().GetMethod("HasFile"));
+        _lua.RegisterFunction("_ioread", this, GetType().GetMethod("ReadFile"));
+        _lua.RegisterFunction("_iocreate", this, GetType().GetMethod("CreateFile"));
+        _lua.RegisterFunction("_ioupdate", this, GetType().GetMethod("UpdateFile"));
+        _lua.RegisterFunction("_iodelete", this, GetType().GetMethod("DeleteFile"));
 
         //Sfx
-        _lua.RegisterFunction("sfx", this, GetType().GetMethod("PlaySfx"));
+        _lua.RegisterFunction("_sfx", this, GetType().GetMethod("PlaySfx"));
 
         try
         {
