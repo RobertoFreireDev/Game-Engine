@@ -8,6 +8,11 @@ namespace framework.Graphics;
 
 public static class Shapes
 {
+    public static void DrawPixel(int x, int y, Color color)
+    {
+        GFW.SpriteBatch.Draw(GFW.PixelTexture, ScreenUtils.ScaleRectangle(new Rectangle(x, y, 1, 1)), color);
+    }
+
     public static void DrawLine(int x0, int y0, int x1, int y1, Color color)
     {
         int dx = Math.Abs(x1 - x0);

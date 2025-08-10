@@ -47,6 +47,7 @@ public class LuaBinding
         _lua.RegisterFunction("_circ", this, GetType().GetMethod("Circ"));
         _lua.RegisterFunction("_circfill", this, GetType().GetMethod("CircFill"));
         _lua.RegisterFunction("_line", this, GetType().GetMethod("DrawLine"));
+        _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));        
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
         _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawTexture"));
         _lua.RegisterFunction("_sprs", this, GetType().GetMethod("DrawTextureWithShader"));
@@ -311,6 +312,11 @@ public class LuaBinding
     public static void DrawLine(int x0, int y0, int x1, int y1, int colorIndex = 0, int transparency = 10)
     {
         Shapes.DrawLine(x0, y0, x1, y1, ColorUtils.GetColor(colorIndex, transparency));
+    }
+
+    public static void DrawPixel(int x, int y, int colorIndex = 0, int transparency = 10)
+    {
+        Shapes.DrawPixel(x, y, ColorUtils.GetColor(colorIndex, transparency));
     }
 
     public static void Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)

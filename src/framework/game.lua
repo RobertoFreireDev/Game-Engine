@@ -13,5 +13,6 @@ end
 function _draw()
     _rect(0, 0, 320, 180, 5, 10)
     _line(100,100,50,60,1)
+    _pixel(100,102,13)
     _print(tostring(_sysfps()),2,2,1)
 end
