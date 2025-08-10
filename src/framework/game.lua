@@ -12,7 +12,7 @@ end
 
 function _draw()
     _rect(0, 0, 320, 180, 5, 10)
-    for i = 1, 20000 do
+    for i = 1, 1000 do
         local x = math.random(20, 300)
         local y = math.random(20, 160)
         local r = math.random(0, 10)

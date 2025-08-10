@@ -101,7 +101,6 @@ namespace framework
             InputStateManager.Update();
 
             game.Update();
-            FPSUtils.Update(gameTime);
 
             if (Updated)
             {
@@ -114,6 +113,7 @@ namespace framework
 
         protected override void Draw(GameTime gameTime)
         {
+            FPSUtils.Update(gameTime);
             GraphicsDevice.Clear(Color.Black);
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             game.Draw();

@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
-using System.Runtime.ConstrainedExecution;
 
 namespace framework.Binding;
 
