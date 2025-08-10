@@ -20,6 +20,7 @@ public class LuaBinding
     public LuaBinding(string script)
     {
         _lua.UseTraceback = true;
+
         // Config
         _lua.RegisterFunction("_title", this, GetType().GetMethod("ConfigTitle"));
         _lua.RegisterFunction("_fps30", this, GetType().GetMethod("ConfigFps30"));
@@ -45,6 +46,7 @@ public class LuaBinding
         _lua.RegisterFunction("_rectfill", this, GetType().GetMethod("RectFill"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
         _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawTexture"));
+        _lua.RegisterFunction("_sprs", this, GetType().GetMethod("DrawTextureWithShader"));
 
         // Status
         _lua.RegisterFunction("_sysfps", this, GetType().GetMethod("GetFps"));
@@ -151,7 +153,12 @@ public class LuaBinding
 
     public static void DrawTexture(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        Sprites.DrawSprite(i, x, y, w, h, flipX, flipY);
+        Sprites.DrawSprite(i, x, y, Color.White, w, h, flipX, flipY);
+    }
+
+    public static void DrawTextureWithShader(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    {
+        Sprites.DrawSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
     }
     #endregion
 
@@ -278,14 +285,14 @@ public class LuaBinding
         ColorUtils.SetPalette(palette);
     }
 
-    public static void Rect(int x, int y, int width, int height, int colorIndex = 0)
+    public static void Rect(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)
     {
-        Shapes.DrawRectBorder(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex));
+        Shapes.DrawRectBorder(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex, transparency));
     }
 
-    public static void RectFill(int x, int y, int width, int height, int colorIndex = 0)
+    public static void RectFill(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)
     {
-        Shapes.DrawRectFill(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex));
+        Shapes.DrawRectFill(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex, transparency));
     }
 
     public static void Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)
@@ -356,7 +363,7 @@ public class LuaBinding
     #region SfxFunctions
     public static void ConfigSfx(int index, int speed, string sound)
     {
-        sound += CalcUtils.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed).ToString("D2");
+        sound += Math.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed).ToString("D2");
         _player.SetSfx(index, sound);
     }
 

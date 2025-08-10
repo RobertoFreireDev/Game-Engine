@@ -8,7 +8,7 @@ namespace framework.Graphics;
 public static class Sprites
 {
     public static void DrawSprite(
-        int n,int x, int y, int w = 1, int h = 1,
+        int n, int x, int y, Color color, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
         if (n < 0 || n >= GameImage.Total)
@@ -31,7 +31,7 @@ public static class Sprites
             GameImage.GameTexture,
             ScreenUtils.ScaleRectangle(destination),
             source,
-            Color.White,
+            color,
             0f,
             Vector2.Zero,
             effects,

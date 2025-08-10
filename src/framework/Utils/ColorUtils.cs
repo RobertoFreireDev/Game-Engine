@@ -42,42 +42,43 @@ public static class ColorUtils
 
     private static readonly Regex HexColorRegex = new Regex(@"^#[0-9a-fA-F]{6}$", RegexOptions.Compiled);
 
-    public static Color GetColor(int Color)
+    public static Color GetColor(int Color, int transparency = 10)
     {
+        transparency = Math.Clamp(transparency, 0, 10);
         switch (Color)
         {
             case 0:
-                return PrimaryColor;
+                return PrimaryColor * (transparency / 10.0f);
             case 1:
-                return SecondaryColor;
+                return SecondaryColor * (transparency / 10.0f);
             case 2:
-                return TertiaryColor;
+                return TertiaryColor * (transparency / 10.0f);
             case 3:
-                return QuaternaryColor;
+                return QuaternaryColor * (transparency / 10.0f);
             case 4:
-                return Color5;
+                return Color5 * (transparency / 10.0f);
             case 5:
-                return Color6;
+                return Color6 * (transparency / 10.0f);
             case 6:
-                return Color7;
+                return Color7 * (transparency / 10.0f);
             case 7:
-                return Color8;
+                return Color8 * (transparency / 10.0f);
             case 8:
-                return Color9;
+                return Color9 * (transparency / 10.0f);
             case 9:
-                return Color10;
+                return Color10 * (transparency / 10.0f);
             case 10:
-                return Color11;
+                return Color11 * (transparency / 10.0f);
             case 11:
-                return Color12;
+                return Color12 * (transparency / 10.0f);
             case 12:
-                return Color13;
+                return Color13 * (transparency / 10.0f);
             case 13:
-                return Color14;
+                return Color14 * (transparency / 10.0f);
             case 14:
-                return Color15;
+                return Color15 * (transparency / 10.0f);
             case 15:
-                return Color16;
+                return Color16 * (transparency / 10.0f);
             default:
                 return PrimaryColor;
         }

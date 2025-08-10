@@ -41,9 +41,9 @@ public class SfxPlayer
             int waveDigit = sound[i * Constants.CharsPerNote + 2] - '0';
             int volumeDigit = (sound[i * Constants.CharsPerNote + 3] - '0') * 10 + (sound[i * Constants.CharsPerNote + 4] - '0');
 
-            pitchDigit = CalcUtils.Clamp(pitchDigit, Constants.MinPitch, Constants.MaxPitch);
-            waveDigit = CalcUtils.Clamp(waveDigit, Constants.MinWave, Constants.MaxWave);
-            volumeDigit = CalcUtils.Clamp(volumeDigit, Constants.MinVolume, Constants.MaxVolume);            
+            pitchDigit = Math.Clamp(pitchDigit, Constants.MinPitch, Constants.MaxPitch);
+            waveDigit = Math.Clamp(waveDigit, Constants.MinWave, Constants.MaxWave);
+            volumeDigit = Math.Clamp(volumeDigit, Constants.MinVolume, Constants.MaxVolume);            
 
             sfx.Notes[i] = new Note
             {
@@ -174,8 +174,8 @@ public class SfxPlayer
         }
 
         var sfx = Data[index];
-        sfx.Speed = CalcUtils.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed);
-        channel = CalcUtils.Clamp(channel, 0, 4);
+        sfx.Speed = Math.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed);
+        channel = Math.Clamp(channel, 0, Constants.ChannelQty);
 
         var ch = channels[channel];
         ch.CurrentSfx = sfx;

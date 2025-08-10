@@ -18,9 +18,9 @@ public static class Shapes
         // Bottom
         DrawRectFill(new Rectangle(rect.X, rect.Y + rect.Height - thickness, rect.Width, thickness), color);
         // Left
-        DrawRectFill(new Rectangle(rect.X, rect.Y, thickness, rect.Height), color);
+        DrawRectFill(new Rectangle(rect.X, rect.Y+1, thickness, rect.Height - 2), color);
         // Right
-        DrawRectFill(new Rectangle(rect.X + rect.Width - thickness, rect.Y, thickness, rect.Height), color);
+        DrawRectFill(new Rectangle(rect.X + rect.Width - thickness, rect.Y + 1, thickness, rect.Height -2), color);
     }
 
     public static void DrawRectWithHole(GraphicsDevice graphicsDevice, Rectangle hole, Color color)
