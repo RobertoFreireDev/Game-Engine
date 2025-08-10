@@ -1,11 +1,45 @@
 ﻿using framework.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace framework.Graphics;
 
 public static class Shapes
 {
+    public static void DrawCircFill(int x, int y, int r, Color clr)
+    {
+        if (r < 0)
+        {
+            return;
+        }
+
+        if (r == 0)
+        {
+            GFW.SpriteBatch.Draw(
+                GFW.PixelTexture,
+                ScreenUtils.ScaleRectangle(new Rectangle(x, y, 1, 1)),
+                clr
+            );
+            return;
+        }
+
+        for (int dy = -r; dy <= r; dy++)
+        {
+            for (int dx = -r; dx <= r; dx++)
+            {
+                if (Math.Abs(dx) + Math.Abs(dy) <= r * 1.5f)
+                {
+                    GFW.SpriteBatch.Draw(
+                        GFW.PixelTexture,
+                        ScreenUtils.ScaleRectangle(new Rectangle(x + dx, y + dy, 1, 1)),
+                        clr
+                    );
+                }
+            }
+        }
+    }
+
     public static void DrawRectFill(Rectangle rect, Color color)
     {
         GFW.SpriteBatch.Draw(GFW.PixelTexture, ScreenUtils.ScaleRectangle(rect), color);

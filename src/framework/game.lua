@@ -12,9 +12,9 @@ end
 
 function _draw()
     _rect(0, 0, 320, 180, 5, 10)
-    _rect(20, 10, 20, 20, 3, 10)
-    _rectfill(10, 100, 40, 40, 2, 5)
-    _spr(0, 100, 0)
-    _sprs(0, 50, 100, 4, 10)
-    _print(tostring(_sysfps()),200,100,1)
+    _circfill(20, 2, 0, 1)
+    _circfill(20, 10, 1, 1)
+    _circfill(20, 30, 2, 1)
+    _circfill(20, 60, 3, 1)
+    _circfill(20, 90, 4, 1)
 end
