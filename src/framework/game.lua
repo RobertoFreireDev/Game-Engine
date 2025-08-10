@@ -1,5 +1,6 @@
 ﻿function _init()
     _stimer(2)
+    _bckgdclr(2)
 end
 
 function _update()

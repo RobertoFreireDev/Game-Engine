@@ -34,6 +34,7 @@ namespace framework
             IsMouseVisible = false;
             IsFixedTimeStep = true;
             ColorUtils.SetPalette();
+            Window.Title = "Black Box";
         }
 
         public static void UpdateFPS(int fps)
