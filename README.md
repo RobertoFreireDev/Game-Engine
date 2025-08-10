@@ -4,6 +4,18 @@ This engine starts as a blank canvas, giving Lua full control over display and l
 
 Developers can write Lua scripts to build custom tools, editors, or complete games.
 
+## TO DO
+
+**SFX:**
+
+- music([n,] [fade_len,] [channel_mask])
+
+**MAP:**
+
+- map(cel_x, cel_y, sx, sy, cel_w, cel_h, [layer])
+- mget(x, y)
+- mset(x, y, v)
+
 ### Key Number
 
 | Key | Number | Description |
