@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace framework.Graphics;
 
 public static class Shapes
 {
-    public static void DrawCircFill(int x, int y, int r, Color clr)
+    public static void DrawCirc(int xm, int ym, int r, Color color)
     {
         if (r < 0)
         {
@@ -18,25 +19,154 @@ public static class Shapes
         {
             GFW.SpriteBatch.Draw(
                 GFW.PixelTexture,
-                ScreenUtils.ScaleRectangle(new Rectangle(x, y, 1, 1)),
-                clr
+                ScreenUtils.ScaleRectangle(new Rectangle(xm, ym, 1, 1)),
+                color
             );
             return;
         }
 
-        for (int dy = -r; dy <= r; dy++)
+        int x0 = xm - r;
+        int y0 = ym - r;
+        int x1 = xm + r;
+        int y1 = ym + r;
+
+        int rx0 = Math.Min(x0, x1);
+        int ry0 = Math.Min(y0, y1);
+        int rx1 = Math.Max(x0, x1);
+        int ry1 = Math.Max(y0, y1);
+        var bounds = ScreenUtils.ScaleRectangle(new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0));
+        rx0 = bounds.Left;
+        ry0 = bounds.Top;
+        rx1 = bounds.Right;
+        ry1 = bounds.Bottom;
+
+        int xC = (int)Math.Round((rx0 + rx1) / 2.0);
+        int yC = (int)Math.Round((ry0 + ry1) / 2.0);
+
+        int evenX = (rx0 + rx1) % 2;
+        int evenY = (ry0 + ry1) % 2;
+
+        int rX = rx1 - xC;
+        int rY = ry1 - yC;
+
+        List<Point> pixels = new List<Point>();
+
+        for (int x = rx0; x <= xC; x++)
         {
-            for (int dx = -r; dx <= r; dx++)
+            double angle = Math.Acos((x - xC) / (double)rX);
+            int y = (int)Math.Round(rY * Math.Sin(angle) + yC);
+
+            pixels.Add(new Point(x - evenX, y));
+            pixels.Add(new Point(x - evenX, 2 * yC - y - evenY));
+            pixels.Add(new Point(2 * xC - x, y));
+            pixels.Add(new Point(2 * xC - x, 2 * yC - y - evenY));
+        }
+        for (int y = ry0; y <= yC; y++)
+        {
+            double angle = Math.Asin((y - yC) / (double)rY);
+            int x = (int)Math.Round(rX * Math.Cos(angle) + xC);
+
+            pixels.Add(new Point(x, y - evenY));
+            pixels.Add(new Point(2 * xC - x - evenX, y - evenY));
+            pixels.Add(new Point(x, 2 * yC - y));
+            pixels.Add(new Point(2 * xC - x - evenX, 2 * yC - y));
+        }
+
+        foreach (var p in pixels)
+        {
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(p.X, p.Y, 1, 1), color);
+        }
+    }
+
+    public static void DrawCircFill(int xm, int ym, int r, Color color)
+    {
+        if (r < 0)
+        {
+            return;
+        }
+
+        if (r == 0)
+        {
+            GFW.SpriteBatch.Draw(
+                GFW.PixelTexture,
+                ScreenUtils.ScaleRectangle(new Rectangle(xm, ym, 1, 1)),
+                color
+            );
+            return;
+        }
+
+        int x0 = xm - r;
+        int y0 = ym - r;
+        int x1 = xm + r;
+        int y1 = ym + r;
+
+        int rx0 = Math.Min(x0, x1);
+        int ry0 = Math.Min(y0, y1);
+        int rx1 = Math.Max(x0, x1);
+        int ry1 = Math.Max(y0, y1);
+        var bounds = ScreenUtils.ScaleRectangle(new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0));
+        rx0 = bounds.Left;
+        ry0 = bounds.Top;
+        rx1 = bounds.Right;
+        ry1 = bounds.Bottom;
+
+        int xC = (int)Math.Round((rx0 + rx1) / 2.0);
+        int yC = (int)Math.Round((ry0 + ry1) / 2.0);
+
+        int evenX = (rx0 + rx1) % 2;
+        int evenY = (ry0 + ry1) % 2;
+
+        int rX = rx1 - xC;
+        int rY = ry1 - yC;
+
+        // Dictionary keyed by y, value = list of x positions in that y line
+        var linePixels = new Dictionary<int, List<int>>();
+
+        // Helper to add points in linePixels dictionary
+        void AddPixel(int x, int y)
+        {
+            if (!linePixels.TryGetValue(y, out var xs))
             {
-                if (Math.Abs(dx) + Math.Abs(dy) <= r * 1.5f)
-                {
-                    GFW.SpriteBatch.Draw(
-                        GFW.PixelTexture,
-                        ScreenUtils.ScaleRectangle(new Rectangle(x + dx, y + dy, 1, 1)),
-                        clr
-                    );
-                }
+                xs = new List<int>();
+                linePixels[y] = xs;
             }
+            xs.Add(x);
+        }
+
+        // Collect points on the circle border (top/bottom half and left/right half)
+        for (int x = rx0; x <= xC; x++)
+        {
+            double angle = Math.Acos((x - xC) / (double)rX);
+            int y = (int)Math.Round(rY * Math.Sin(angle) + yC);
+
+            AddPixel(x - evenX, y);
+            AddPixel(x - evenX, 2 * yC - y - evenY);
+            AddPixel(2 * xC - x, y);
+            AddPixel(2 * xC - x, 2 * yC - y - evenY);
+        }
+        for (int y = ry0; y <= yC; y++)
+        {
+            double angle = Math.Asin((y - yC) / (double)rY);
+            int x = (int)Math.Round(rX * Math.Cos(angle) + xC);
+
+            AddPixel(x, y - evenY);
+            AddPixel(2 * xC - x - evenX, y - evenY);
+            AddPixel(x, 2 * yC - y);
+            AddPixel(2 * xC - x - evenX, 2 * yC - y);
+        }
+
+        // For each line, find min and max x, then draw a rectangle spanning from min x to max x at y with height 1
+        foreach (var kvp in linePixels)
+        {
+            int y = kvp.Key;
+            List<int> xs = kvp.Value;
+            xs.Sort();
+
+            int minX = xs[0];
+            int maxX = xs[xs.Count - 1];
+            int width = maxX - minX + 1;
+
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(minX, y, width, 1), color);
         }
     }
 

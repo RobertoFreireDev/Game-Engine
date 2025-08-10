@@ -45,6 +45,7 @@ public class LuaBinding
         _lua.RegisterFunction("_pal", this, GetType().GetMethod("Pal"));
         _lua.RegisterFunction("_rect", this, GetType().GetMethod("Rect"));
         _lua.RegisterFunction("_rectfill", this, GetType().GetMethod("RectFill"));
+        _lua.RegisterFunction("_circ", this, GetType().GetMethod("Circ"));
         _lua.RegisterFunction("_circfill", this, GetType().GetMethod("CircFill"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
         _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawTexture"));
@@ -295,6 +296,11 @@ public class LuaBinding
     public static void RectFill(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)
     {
         Shapes.DrawRectFill(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex, transparency));
+    }
+
+    public static void Circ(int x, int y, int r, int colorIndex = 0, int transparency = 10)
+    {
+        Shapes.DrawCirc(x, y, r, ColorUtils.GetColor(colorIndex, transparency));
     }
 
     public static void CircFill(int x, int y, int r, int colorIndex = 0, int transparency = 10)
