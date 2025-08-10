@@ -8,6 +8,35 @@ namespace framework.Graphics;
 
 public static class Shapes
 {
+    public static void DrawLine(int x0, int y0, int x1, int y1, Color color)
+    {
+        int dx = Math.Abs(x1 - x0);
+        int dy = Math.Abs(y1 - y0);
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+        int err = dx - dy;
+
+        while (true)
+        {
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, ScreenUtils.ScaleRectangle(new Rectangle(x0, y0, 1, 1)), color);
+
+            if (x0 == x1 && y0 == y1)
+                break;
+
+            int e2 = 2 * err;
+            if (e2 > -dy)
+            {
+                err -= dy;
+                x0 += sx;
+            }
+            if (e2 < dx)
+            {
+                err += dx;
+                y0 += sy;
+            }
+        }
+    }
+
     public static void DrawCirc(int xm, int ym, int r, Color color)
     {
         if (r < 0)

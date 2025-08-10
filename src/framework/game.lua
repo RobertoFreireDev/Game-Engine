@@ -12,17 +12,6 @@ end
 
 function _draw()
     _rect(0, 0, 320, 180, 5, 10)
-    for i = 1, 1000 do
-        local x = math.random(20, 300)
-        local y = math.random(20, 160)
-        local r = math.random(0, 10)
-        local c = 1
-
-        if math.random() < 0.5 then
-            _circfill(x, y, r, c)
-        else
-            _circ(x, y, r, c)
-        end
-    end
+    _line(100,100,50,60,1)
     _print(tostring(_sysfps()),2,2,1)
 end
