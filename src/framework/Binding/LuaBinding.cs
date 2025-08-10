@@ -15,6 +15,7 @@ public class LuaBinding
 {
     private static Lua _lua = new Lua();
     private string _scriptName = "game";
+    private static SfxPlayer _player = new SfxPlayer();
 
     public LuaBinding(string script)
     {
@@ -56,7 +57,9 @@ public class LuaBinding
         _lua.RegisterFunction("_iodelete", this, GetType().GetMethod("DeleteFile"));
 
         //Sfx
-        _lua.RegisterFunction("_sfx", this, GetType().GetMethod("PlaySfx"));
+        _lua.RegisterFunction("_configsfx", this, GetType().GetMethod("ConfigSfx"));
+        _lua.RegisterFunction("_playsfx", this, GetType().GetMethod("PlaySfx"));
+        _lua.RegisterFunction("_stopsfx", this, GetType().GetMethod("StopSfx"));
 
         try
         {
@@ -322,33 +325,19 @@ public class LuaBinding
     #endregion
 
     #region SfxFunctions
-    public static void PlaySfx(string sound, int speed = 1)
+    public static void ConfigSfx(int index, string sound)
     {
-        var player = new SfxPlayer();
-        var sfx = new SfxData();
-        int maxNotes = 32;
-        int charsPerNote = 5;
-        int noteCount = sound.Length / charsPerNote;
-        for (int i = 0; i < Math.Min(noteCount, maxNotes); i++)
-        {
-            int pitchDigit = (sound[i * charsPerNote] -'0')*10 + (sound[i * charsPerNote + 1] -'0');
-            int waveDigit = sound[i * charsPerNote + 2] - '0';
-            int volumeDigit = (sound[i * charsPerNote + 3] - '0') * 10 + (sound[i * charsPerNote + 4] - '0');
-
-            pitchDigit = CalcUtils.Clamp(pitchDigit, 36, 71);
-            waveDigit = CalcUtils.Clamp(waveDigit, 0, 4);
-            volumeDigit = CalcUtils.Clamp(volumeDigit, 0,10);
-            speed = CalcUtils.Clamp(speed, 1, 32);
-
-            sfx.Notes[i] = new Note
-            {
-                Pitch = pitchDigit,
-                Wave = volumeDigit == 0 ? Waveform.None : (Waveform)waveDigit,
-                Volume = volumeDigit / 10f
-            };
-        }
-        sfx.Speed = speed * 0.02f;
-        player.Sfx(sfx);
+        _player.SetSfx(index, sound);
     }
+
+    public static void PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)
+    {
+        _player.PlaySfx(index, speed, channel, offset);
+    }
+
+    public static void StopSfx(int index)
+    {
+        _player.Stop(index);
+    }    
     #endregion
 }

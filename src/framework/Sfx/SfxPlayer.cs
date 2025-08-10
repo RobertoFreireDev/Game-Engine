@@ -1,5 +1,8 @@
-﻿using Microsoft.Xna.Framework.Audio;
+﻿using framework.Utils;
+using Microsoft.Xna.Framework.Audio;
 using System;
+using System.Reflection;
+using System.Threading.Channels;
 
 namespace framework.Sfx;
 
@@ -10,6 +13,7 @@ public class SfxPlayer
     private DynamicSoundEffectInstance sound;
     private const float FadeInSeconds = 0.01f;
     private const float FadeOutSeconds = 0.01f;
+    private SfxData[] Data = new SfxData[256];
 
     public SfxPlayer()
     {
@@ -21,13 +25,53 @@ public class SfxPlayer
         sound.Play();
     }
 
-    public void Sfx(SfxData sfx, int channel = -1, int offset = 0)
+    public void SetSfx(int index, string sound)
     {
-        if (channel == -1)
+        if (!ValidIndex(index))
         {
-            channel = FindFreeChannel();
-            if (channel == -1) channel = 0; // overwrite channel 0 if all busy
+            return;
         }
+
+        var sfx = new SfxData();
+        int maxNotes = 32;
+        int charsPerNote = 5;
+        int noteCount = sound.Length / charsPerNote;
+        for (int i = 0; i < Math.Min(noteCount, maxNotes); i++)
+        {
+            int pitchDigit = (sound[i * charsPerNote] - '0') * 10 + (sound[i * charsPerNote + 1] - '0');
+            int waveDigit = sound[i * charsPerNote + 2] - '0';
+            int volumeDigit = (sound[i * charsPerNote + 3] - '0') * 10 + (sound[i * charsPerNote + 4] - '0');
+
+            pitchDigit = CalcUtils.Clamp(pitchDigit, 36, 71);
+            waveDigit = CalcUtils.Clamp(waveDigit, 0, 4);
+            volumeDigit = CalcUtils.Clamp(volumeDigit, 0, 10);            
+
+            sfx.Notes[i] = new Note
+            {
+                Pitch = pitchDigit,
+                Wave = volumeDigit == 0 ? Waveform.None : (Waveform)waveDigit,
+                Volume = volumeDigit / 10f
+            };
+        }
+
+        Data[index] = sfx;
+    }
+
+    private bool ValidIndex(int index)
+    {
+        return index >= 0 && index < channels.Length;
+    }
+
+    public void PlaySfx(int index, int speed = 1,int channel = -1, int offset = 0)
+    {
+        if (!ValidIndex(index))
+        {
+            return;
+        }
+
+        var sfx = Data[index];
+        sfx.SetSpeed(speed);
+        channel = CalcUtils.Clamp(channel, 0, 4);
 
         var ch = channels[channel];
         ch.CurrentSfx = sfx;
@@ -41,14 +85,11 @@ public class SfxPlayer
 
     public void Stop(int channel)
     {
+        if (channel < 0 || channel > channels.Length)
+        {
+            return;
+        }
         channels[channel].Playing = false;
-    }
-
-    private int FindFreeChannel()
-    {
-        for (int i = 0; i < channels.Length; i++)
-            if (!channels[i].Playing) return i;
-        return -1;
     }
 
     private void OnBufferNeeded(object sender, EventArgs e)
