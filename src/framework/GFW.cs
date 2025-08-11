@@ -119,9 +119,9 @@ namespace framework
             GraphicsDevice.Clear(ColorUtils.GetColor(BackgroundColor));
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
             game.Draw();
-            SpriteBatch.DrawMouse();
             SpriteBatch.End();
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            SpriteBatch.DrawMouse();
             Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);
