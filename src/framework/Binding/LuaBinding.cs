@@ -27,7 +27,8 @@ public class LuaBinding
         _lua.RegisterFunction("_fps60", this, GetType().GetMethod("ConfigFps60"));
         _lua.RegisterFunction("_texture", this, GetType().GetMethod("LoadTextureFromBase64"));
 
-        // Input 
+        // Input
+        _lua.RegisterFunction("_mouseshow", this, GetType().GetMethod("ShowHideMouse"));
         _lua.RegisterFunction("_mousepos", this, GetType().GetMethod("GetMousePos"));
         _lua.RegisterFunction("_mouseclick", this, GetType().GetMethod("MouseButtonPressed"));
         _lua.RegisterFunction("_mouseclickp", this, GetType().GetMethod("MouseButtonJustPressed"));
@@ -295,6 +296,11 @@ public class LuaBinding
     #endregion
 
     #region DrawFunctions
+    public static void ShowHideMouse(bool value)
+    {
+        GFW.ShowHideMouse(value);
+    }
+
     public static void Pal(string palette)
     {
         ColorUtils.SetPalette(palette);

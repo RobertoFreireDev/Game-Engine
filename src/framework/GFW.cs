@@ -22,6 +22,7 @@ namespace blackbox
         public static SpriteBatch SpriteBatch;
         public static string Title;
         public static int FPS;
+        public static bool ShowMouse = true;
         public static int BackgroundColor;
         private static bool Updated = false;
         private LuaBinding game;
@@ -37,6 +38,12 @@ namespace blackbox
             ColorUtils.SetPalette();
             Window.Title = "Black Box";
         }
+
+        public static void ShowHideMouse(bool value)
+        {
+            ShowMouse = value;
+        }
+        
 
         public static void UpdateFPS(int fps)
         {
@@ -84,7 +91,6 @@ namespace blackbox
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice, SystemTextures["medium_font"]);
             MouseTextures = TextureUtils.GetTextures(SystemTextures["mouse"], 10, 32, 32);
-
             // Load game
             var script = LuaFileIO.Read("game");
             game = new LuaBinding(script);
@@ -121,7 +127,10 @@ namespace blackbox
             game.Draw();
             SpriteBatch.End();
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            SpriteBatch.DrawMouse();
+            if (ShowMouse)
+            {
+                SpriteBatch.DrawMouse();
+            }            
             Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);
