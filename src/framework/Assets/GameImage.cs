@@ -12,11 +12,10 @@ public static class GameImage
     public static int TileWidth;
     public static int TileHeight;
     public static int Total;
-    public static GraphicsDevice GraphicsDevice;
 
     public static void LoadTexture(string spriteBase64, int width, int height)
     {
-        GameTexture = TextureUtils.Convert64ToTexture(GraphicsDevice, spriteBase64);
+        GameTexture = TextureUtils.Convert64ToTexture(spriteBase64);
         TileWidth = width;
         TileHeight = height;
         Columns = GameTexture.Width / TileWidth;

@@ -1,7 +1,7 @@
-﻿using blackbox;
-using blackbox.Utils;
+﻿using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 
 namespace blackbox.Graphics;
 
@@ -11,6 +11,11 @@ public static class Map
     public static byte[] Flags = new byte[256];
     // Data contains the index of the Sprite/Flag. 1 byte => 256 values
     public static byte[,] Data = new byte[Constants.ResolutionX*16,Constants.ResolutionY*8];
+
+    public static void LoadMap(Texture2D texture, int columns, int width, int height)
+    {
+        Sprites = TextureUtils.GetTextures(texture, columns, width, height).ToArray();
+    }
 
     public static byte GetMapValue(int x, int y)
     {

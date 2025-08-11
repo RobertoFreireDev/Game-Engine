@@ -17,7 +17,7 @@ namespace blackbox
         public GraphicsDeviceManager _graphics;
         public static Dictionary<string, Texture2D> SystemTextures = new Dictionary<string, Texture2D>();
         public static Dictionary<char, Texture2D> MediumFontTextures;
-        public static Dictionary<int, Texture2D> MouseTextures;
+        public static List<Texture2D> MouseTextures;
         public static Texture2D PixelTexture;
         public static SpriteBatch SpriteBatch;
         public static string Title;
@@ -76,16 +76,16 @@ namespace blackbox
         protected override void LoadContent()
         {
             ScreenUtils.SetResolution(_graphics, GraphicsDevice);
+            GrapUtils.GraphicsDevice = GraphicsDevice;
             Window.Position = new Point(0, 35);
-            SystemTextures = Images.GetAllImages(GraphicsDevice);
+            SystemTextures = Images.GetAllImages();
             PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             PixelTexture.SetData(new Color[] { Color.White });
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice, SystemTextures["medium_font"]);
-            MouseTextures = TextureUtils.GetTextures(GraphicsDevice, SystemTextures["mouse"], 10, 32, 32);
+            MouseTextures = TextureUtils.GetTextures(SystemTextures["mouse"], 10, 32, 32);
 
             // Load game
-            GameImage.GraphicsDevice = GraphicsDevice;
             var script = LuaFileIO.Read("game");
             game = new LuaBinding(script);
             _graphics.SynchronizeWithVerticalRetrace = true;

@@ -12,9 +12,7 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 
 **MAP:**
 
-- map(cel_x, cel_y, sx, sy, cel_w, cel_h, [layer])
-- mget(x, y)
-- mset(x, y, v)
+- Implement and test map
 
 ### Key Number
 

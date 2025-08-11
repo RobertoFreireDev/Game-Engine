@@ -18,13 +18,13 @@ public static class Images
         }
     };
 
-    public static Dictionary<string, Texture2D> GetAllImages(GraphicsDevice graphicsDevice)
+    public static Dictionary<string, Texture2D> GetAllImages()
     {
         var textures = new Dictionary<string, Texture2D>();
 
         foreach (var pair in Base64Images)
         {
-            textures.Add(pair.Key, TextureUtils.Convert64ToTexture(graphicsDevice, pair.Value));
+            textures.Add(pair.Key, TextureUtils.Convert64ToTexture(pair.Value));
         }
 
         return textures;
