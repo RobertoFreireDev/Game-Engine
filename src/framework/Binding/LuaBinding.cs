@@ -1,4 +1,5 @@
-﻿using framework.Assets;
+﻿using blackbox.Graphics;
+using framework.Assets;
 using framework.Graphics;
 using framework.Input;
 using framework.IOFile;
@@ -52,6 +53,7 @@ public class LuaBinding
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
         _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawTexture"));
         _lua.RegisterFunction("_sprs", this, GetType().GetMethod("DrawTextureWithShader"));
+        _lua.RegisterFunction("_camera", this, GetType().GetMethod("Camera"));
 
         // Status
         _lua.RegisterFunction("_sysfps", this, GetType().GetMethod("GetFps"));
@@ -328,6 +330,11 @@ public class LuaBinding
     public static void Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)
     {
         Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(colorIndex), wraptext, wrapLimit);
+    }
+
+    public static void Camera(float x = 0.0f, float y = 0.0f)
+    {
+        Camera2D.Camera(x, y);
     }
     #endregion
 

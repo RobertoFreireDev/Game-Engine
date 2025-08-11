@@ -16,10 +16,6 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 - mget(x, y)
 - mset(x, y, v)
 
-**Graphics:**
-
-- camera([x,] [y])
-
 ### Key Number
 
 | Key | Number | Description |

@@ -1,4 +1,5 @@
-﻿using framework.Assets;
+﻿using blackbox.Graphics;
+using framework.Assets;
 using framework.Binding;
 using framework.Graphics;
 using framework.Input;
@@ -87,7 +88,7 @@ namespace framework
             GameImage.GraphicsDevice = GraphicsDevice;
             var script = LuaFileIO.Read("game");
             game = new LuaBinding(script);
-            _graphics.SynchronizeWithVerticalRetrace = false;
+            _graphics.SynchronizeWithVerticalRetrace = true;
         }
 
         protected override void Update(GameTime gameTime)
@@ -115,11 +116,13 @@ namespace framework
         protected override void Draw(GameTime gameTime)
         {
             TimeUtils.Update(gameTime);
-            GraphicsDevice.Clear(Color.Black);
-            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            GraphicsDevice.Clear(ColorUtils.GetColor(BackgroundColor));
+            SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
             game.Draw();
             SpriteBatch.DrawMouse();
-            Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, ColorUtils.GetColor(BackgroundColor));
+            SpriteBatch.End();
+            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);
         }

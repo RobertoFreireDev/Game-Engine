@@ -1,19 +1,23 @@
-﻿function _init()
+﻿p = {}
+p.x = 8
+p.y = 8
+
+local left, up, right, down	= 37, 38, 39, 40
+
+function _init()
     _stimer(2)
     _bckgdclr(2)
 end
 
 function _update()
     local q,w = 81,87
-    if _btnp(q) then  
-        _stimer(2)
-    end
-    if _btnp(w) then  
-    end
+    if _btn(left) then p.x = p.x - 1 end
+    if _btn(right) then p.x = p.x + 1 end
+    if _btn(up) then p.y = p.y - 1 end
+    if _btn(down) then p.y = p.y + 1 end
+    _camera(p.x, p.y)
 end
 
 function _draw()
     _rect(0, 0, 320, 180, 5, 10)
-    _print(tostring(_gtime()),2,2,1)
-    _print(tostring(_gtimer(2,2)),2,10,1)
 end
