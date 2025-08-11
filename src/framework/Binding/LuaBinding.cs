@@ -9,7 +9,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
-using System.Runtime.Intrinsics.Arm;
+using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace framework.Binding;
 
@@ -49,7 +50,7 @@ public class LuaBinding
         _lua.RegisterFunction("_circ", this, GetType().GetMethod("Circ"));
         _lua.RegisterFunction("_circfill", this, GetType().GetMethod("CircFill"));
         _lua.RegisterFunction("_line", this, GetType().GetMethod("DrawLine"));
-        _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));        
+        _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
         _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawTexture"));
         _lua.RegisterFunction("_sprs", this, GetType().GetMethod("DrawTextureWithShader"));
@@ -67,7 +68,7 @@ public class LuaBinding
         _lua.RegisterFunction("_iodelete", this, GetType().GetMethod("DeleteFile"));
         _lua.RegisterFunction("_loadsfx", this, GetType().GetMethod("ReadSfx"));
         _lua.RegisterFunction("_savesfx", this, GetType().GetMethod("CreateOrUpdateSfx"));
-        
+
         //Sfx
         _lua.RegisterFunction("_configsfx", this, GetType().GetMethod("ConfigSfx"));
         _lua.RegisterFunction("_playsfx", this, GetType().GetMethod("PlaySfx"));
@@ -78,7 +79,12 @@ public class LuaBinding
         _lua.RegisterFunction("_stimer", this, GetType().GetMethod("StartTimer"));
         _lua.RegisterFunction("_gtimer", this, GetType().GetMethod("GetTimer"));
         _lua.RegisterFunction("_gtime", this, GetType().GetMethod("GetDateTime"));
-        
+
+        //Map
+        _lua.RegisterFunction("_mget", this, GetType().GetMethod("GetMapValue"));
+        _lua.RegisterFunction("_mset", this, GetType().GetMethod("SetMapValue"));
+        _lua.RegisterFunction("_map", this, GetType().GetMethod("DrawMap"));
+
         try
         {
             _lua.DoString(script, _scriptName);
@@ -87,7 +93,7 @@ public class LuaBinding
         {
             LuaError.SetError(ex.Message);
         }
-        
+
         if (LuaError.HasError())
         {
             return;
@@ -189,7 +195,7 @@ public class LuaBinding
     {
         GFW.UpdateFPS(60);
     }
-    
+
     public static void ConfigBackGroundColor(int colorIndex)
     {
         GFW.BackgroundColor = colorIndex;
@@ -267,7 +273,7 @@ public class LuaBinding
             return false;
         }
 
-        return Input.KeyboardInput.JustPressed((Keys) keyNumber);
+        return Input.KeyboardInput.JustPressed((Keys)keyNumber);
     }
 
     public static bool Released(int keyNumber)
@@ -420,7 +426,7 @@ public class LuaBinding
     }
     #endregion
 
-    #region
+    #region TimerFunctions
     public static void StartTimer(int i = 0)
     {
         TimeUtils.StartTimer(i);
@@ -434,6 +440,23 @@ public class LuaBinding
     public static string GetDateTime(int i = 0)
     {
         return TimeUtils.GetDateTime(i);
+    }
+    #endregion
+
+    #region MapFunctions
+    public static int mget(int x, int y)
+    {
+        return Map.GetMapValue(x, y);
+    }
+
+    public static void mset(int x, int y, byte v)
+    {
+        Map.SetMapValue(x, y, v);
+    }
+    
+    public static void map(int tileSize, int colorIndex, int cel_x, int cel_y, int sx, int sy, int cel_w, int cel_h)
+    {
+        Map.DrawMap(tileSize, ColorUtils.GetColor(colorIndex), cel_x, cel_y, sx, sy, cel_w, cel_h);
     }
     #endregion
 }

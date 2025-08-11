@@ -9,7 +9,7 @@ internal static class ScreenUtils
     public static Rectangle BoxToDraw;
     public static float ScaleX;
     public static float ScaleY;
-    public static Rectangle BaseBox = new Rectangle(0, 0, 320, 180);
+    public static Rectangle BaseBox = new Rectangle(0, 0, Constants.ResolutionX, Constants.ResolutionY);
     private static Point GameResolution;
     private static bool IsFocused;
 
