@@ -1,18 +1,15 @@
 ﻿using blackbox.Graphics;
-using framework.Assets;
-using framework.Graphics;
-using framework.Input;
-using framework.IOFile;
-using framework.Sfx;
-using framework.Utils;
+using blackbox.Assets;
+using blackbox.Input;
+using blackbox.IOFile;
+using blackbox.Sfx;
+using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
-using System.Collections.Generic;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace framework.Binding;
+namespace blackbox.Binding;
 
 public class LuaBinding
 {
@@ -444,17 +441,17 @@ public class LuaBinding
     #endregion
 
     #region MapFunctions
-    public static int mget(int x, int y)
+    public static int GetMapValue(int x, int y)
     {
         return Map.GetMapValue(x, y);
     }
 
-    public static void mset(int x, int y, byte v)
+    public static void SetMapValue(int x, int y, byte v)
     {
         Map.SetMapValue(x, y, v);
     }
     
-    public static void map(int tileSize, int colorIndex, int cel_x, int cel_y, int sx, int sy, int cel_w, int cel_h)
+    public static void DrawMap(int tileSize, int colorIndex, int cel_x, int cel_y, int sx, int sy, int cel_w, int cel_h)
     {
         Map.DrawMap(tileSize, ColorUtils.GetColor(colorIndex), cel_x, cel_y, sx, sy, cel_w, cel_h);
     }

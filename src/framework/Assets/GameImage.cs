@@ -1,7 +1,7 @@
-﻿using framework.Utils;
+﻿using blackbox.Utils;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace framework.Assets;
+namespace blackbox.Assets;
 
 public static class GameImage
 {

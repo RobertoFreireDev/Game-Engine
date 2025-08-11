@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace framework.Utils;
+namespace blackbox.Utils;
 
 internal static class ScreenUtils
 {

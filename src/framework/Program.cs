@@ -1,2 +1,2 @@
-﻿using var game = new framework.GFW();
+﻿using var game = new blackbox.GFW();
 game.Run();

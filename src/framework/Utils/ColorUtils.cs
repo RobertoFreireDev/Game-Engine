@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Text.RegularExpressions;
 
-namespace framework.Utils;
+namespace blackbox.Utils;
 
 public static class ColorUtils
 {

@@ -1,9 +1,9 @@
-﻿using framework.Assets;
-using framework.Utils;
+﻿using blackbox.Assets;
+using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace framework.Graphics;
+namespace blackbox.Graphics;
 
 public static class Sprites
 {

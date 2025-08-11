@@ -1,8 +1,8 @@
-﻿using framework.Utils;
+﻿using blackbox.Utils;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace framework.Assets;
+namespace blackbox.Assets;
 
 public static class Images
 {

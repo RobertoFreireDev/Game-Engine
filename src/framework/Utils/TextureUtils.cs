@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace framework.Utils;
+namespace blackbox.Utils;
 
 public static class TextureUtils
 {

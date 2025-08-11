@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace framework.Input;
+namespace blackbox.Input;
 
 public static class KeyboardInput
 {

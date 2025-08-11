@@ -1,4 +1,4 @@
-﻿namespace framework.IOFile;
+﻿namespace blackbox.IOFile;
 
 public static class TxtFileIO
 {

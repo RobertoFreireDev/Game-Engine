@@ -1,7 +1,7 @@
-﻿using framework.Binding;
-using framework.Utils;
+﻿using blackbox.Binding;
+using blackbox.Utils;
 
-namespace framework.Graphics;
+namespace blackbox.Graphics;
 
 public static class LuaError
 {

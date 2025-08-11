@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace framework.Utils;
+namespace blackbox.Utils;
 
 public static class TimeUtils
 {

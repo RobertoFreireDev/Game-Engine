@@ -1,16 +1,16 @@
 ﻿using blackbox.Graphics;
-using framework.Assets;
-using framework.Binding;
-using framework.Graphics;
-using framework.Input;
-using framework.IOFile;
-using framework.Utils;
+using blackbox.Assets;
+using blackbox.Binding;
+using blackbox.Graphics;
+using blackbox.Input;
+using blackbox.IOFile;
+using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace framework
+namespace blackbox
 {
     public class GFW : Game
     {

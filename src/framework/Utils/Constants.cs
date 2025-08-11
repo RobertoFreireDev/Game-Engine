@@ -1,4 +1,4 @@
-﻿namespace framework.Utils;
+﻿namespace blackbox.Utils;
 
 public static class Constants
 {

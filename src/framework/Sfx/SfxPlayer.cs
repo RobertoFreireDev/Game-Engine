@@ -1,10 +1,10 @@
-﻿using framework.Utils;
+﻿using blackbox.Utils;
 using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Linq;
 using System.Text;
 
-namespace framework.Sfx;
+namespace blackbox.Sfx;
 
 public class SfxPlayer
 {

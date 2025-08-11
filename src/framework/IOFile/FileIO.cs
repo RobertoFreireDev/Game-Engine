@@ -1,9 +1,9 @@
-﻿using framework.Graphics;
+﻿using blackbox.Graphics;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace framework.IOFile;
+namespace blackbox.IOFile;
 
 public static class FileIO
 {

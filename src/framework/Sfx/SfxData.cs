@@ -1,6 +1,6 @@
-﻿using framework.Utils;
+﻿using blackbox.Utils;
 
-namespace framework.Sfx;
+namespace blackbox.Sfx;
 
 public class SfxData
 {

@@ -1,10 +1,10 @@
-﻿using framework.Utils;
+﻿using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace framework.Graphics;
+namespace blackbox.Graphics;
 
 public static class Shapes
 {

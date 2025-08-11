@@ -1,4 +1,4 @@
-﻿namespace framework.Sfx;
+﻿namespace blackbox.Sfx;
 
 public struct Note
 {

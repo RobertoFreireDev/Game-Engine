@@ -1,8 +1,8 @@
-﻿using framework.Input;
+﻿using blackbox.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace framework.Graphics;
+namespace blackbox.Graphics;
 
 public static class Mouse
 {
