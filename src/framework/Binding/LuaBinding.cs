@@ -196,9 +196,9 @@ public class LuaBinding
         GFW.UpdateFPS(60);
     }
 
-    public static void EnableCRTshader(bool value)
+    public static void EnableCRTshader(bool value, int inner = 85, int outer = 110)
     {
-        GFW.EnableCRTshader(value);
+        GFW.EnableCRTshader(value, inner, outer);
     }
 
     public static void ConfigBackGroundColor(int colorIndex)

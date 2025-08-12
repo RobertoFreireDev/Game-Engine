@@ -5,6 +5,9 @@
 sampler2D TextureSampler : register(s0);
 
 float2 Resolution; // in pixels (width, height)
+// Wider range for smoother fade
+float Inner; // start earlier toward center
+float Outer; // end farther toward corners
 
 // helper: saturate for ps_3_0
 float saturate_f(float x) { return clamp(x, 0.0, 1.0); }
@@ -63,14 +66,14 @@ float4 main(float2 uv : TEXCOORD0) : COLOR0
 
     // --- Vignette / darken corners ---
     // stronger toward corners using radial falloff
-    //float2 v = center;
-    //v.x *= aspect; // correct for aspect
-    //float dist = length(v);
+    float2 v = center;
+    v.x *= aspect; // correct for aspect
+    float dist = length(v);
     // vignette: smoothstep from inner radius to outer radius
-    //float vignette = saturate_f(1.0 - smoothstep(0.45, 0.9, dist));
+    float vignette = saturate_f(1.0 - smoothstep(Inner, Outer, dist));
     // give the vignette a soft power curve
-    //vignette = pow(vignette, 1.25);
-    //col *= vignette;
+    vignette = pow(vignette, 1.25);
+    col *= vignette;
 
     // --- CRT Phosphor Bloom (tiny blur-like softening) ---
     // emulate slightly soft edges by adding a tiny mix of neighbor samples

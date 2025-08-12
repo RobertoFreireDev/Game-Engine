@@ -27,6 +27,8 @@ namespace blackbox
         private static bool Updated = false;
         private LuaBinding game;
         private Effect crtEffect;
+        private static float Inner = 0.00f;
+        private static float Outer = 0.00f;
         private RenderTarget2D sceneTarget;
 
         public GFW()
@@ -47,9 +49,11 @@ namespace blackbox
             ShowMouse = value;
         }
 
-        public static void EnableCRTshader(bool value)
+        public static void EnableCRTshader(bool value, int inner, int outer)
         {
             ApplyCRTshader = value;
+            Inner = Math.Clamp(inner,0,110) * 0.01f;
+            Outer = Math.Clamp(outer,0,110) * 0.01f;
         }
 
         public static void UpdateFPS(int fps)
@@ -135,6 +139,8 @@ namespace blackbox
             crtEffect.Parameters["Resolution"].SetValue(
                 new Vector2(GraphicsDevice.PresentationParameters.BackBufferWidth,
                             GraphicsDevice.PresentationParameters.BackBufferHeight));
+            crtEffect.Parameters["Inner"].SetValue(Inner);
+            crtEffect.Parameters["Outer"].SetValue(Outer);
             base.Update(gameTime);
         }
 
