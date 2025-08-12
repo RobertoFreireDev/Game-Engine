@@ -17,7 +17,7 @@ function _update()
     if _btn(right) then p.x = p.x + 1 _crtshader(false) end
     if _btn(up) then p.y = p.y - 1 end
     if _btn(down) then p.y = p.y + 1 end
-    _camera(p.x,p.y)
+    _camera(-20 + p.x,-20 + p.y)
 end
 
 function _draw()
@@ -26,4 +26,5 @@ function _draw()
     _circ(20, 100, 60, 0, 10)
     _circfill(150, 120, 6, 1, 10)
     _spr(0, p.x + 20, p.y + 20, 3, 3, false, false)
+    _print(tostring(_gtime()),2,2,1)
 end

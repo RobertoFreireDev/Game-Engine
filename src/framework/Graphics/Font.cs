@@ -55,8 +55,6 @@ public static class Font
 
     public static void DrawText(string text, Vector2 position, Color color, bool wraptext = false, int wrapLimit = 0)
     {
-        var boxToDraw = ScreenUtils.BoxToDraw;
-        var boxToDrawScale = (ScreenUtils.ScaleX + ScreenUtils.ScaleY) / 2;
         var keyBoardKeys = GFW.MediumFontTextures;
         string[] lines = text.Split('\n');
         var copyPos = new Vector2(position.X, position.Y);
@@ -93,12 +91,12 @@ public static class Font
 
                 GFW.SpriteBatch.Draw(
                     charTexture,
-                    new Vector2(boxToDraw.X + (int)(position.X * boxToDrawScale), boxToDraw.Y + (int)(position.Y * boxToDrawScale)),
+                    new Vector2((int)position.X, (int)position.Y),
                     null,
                     color,
                     0f,
                     new Vector2(0, 0),
-                    boxToDrawScale,
+                    1.0f,
                     SpriteEffects.None,
                     0f);
 
