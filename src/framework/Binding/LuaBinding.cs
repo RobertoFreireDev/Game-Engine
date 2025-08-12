@@ -79,6 +79,7 @@ public class LuaBinding
         //Time
         _lua.RegisterFunction("_stimer", this, GetType().GetMethod("StartTimer"));
         _lua.RegisterFunction("_gtimer", this, GetType().GetMethod("GetTimer"));
+        _lua.RegisterFunction("_pgame", this, GetType().GetMethod("PauseGame"));
         _lua.RegisterFunction("_gtime", this, GetType().GetMethod("GetDateTime"));
 
         //Map
@@ -452,6 +453,11 @@ public class LuaBinding
     public static double GetTimer(int i = 0, int d = 4)
     {
         return TimeUtils.GetTime(i, d);
+    }
+
+    public static void PauseGame(bool value)
+    {
+        GFW.PauseGame(value);
     }
 
     public static string GetDateTime(int i = 0)

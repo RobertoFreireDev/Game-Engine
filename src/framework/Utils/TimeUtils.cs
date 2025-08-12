@@ -10,8 +10,6 @@ public static class TimeUtils
     private static int _fps = 0;
     private static double[] Timers = new double[16];
 
-    private static double _totalGameTime = 0;
-
     public static int FPS => _fps;
 
     public static void Update(GameTime gameTime)
@@ -20,7 +18,7 @@ public static class TimeUtils
 
         _frameCounter++;
         _elapsedTime += delta;
-        if (ScreenUtils.IsFocused) // only advances when game runs
+        if (ScreenUtils.IsFocused && !GFW.GamePaused)
         {
             for (int i = 0; i < Timers.Length; i++)
             {

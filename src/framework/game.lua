@@ -17,6 +17,9 @@ function _update()
     if _btn(right) then p.x = p.x + 1 _crtshader(false) end
     if _btn(up) then p.y = p.y - 1 _stimer(2) end
     if _btn(down) then p.y = p.y + 1 end
+
+    if _btn(q) then _pgame(true) end
+    if _btn(w) then _pgame(false) end
     _camera(-20 + p.x,-20 + p.y)
 end
 

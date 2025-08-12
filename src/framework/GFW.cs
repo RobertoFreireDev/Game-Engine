@@ -26,6 +26,7 @@ namespace blackbox
         public static int BackgroundColor;
         private static bool Updated = false;
         private LuaBinding game;
+        public static bool GamePaused = false;
         private Effect crtEffect;
         private static float Inner = 0.00f;
         private static float Outer = 0.00f;
@@ -42,6 +43,11 @@ namespace blackbox
             IsFixedTimeStep = true;
             ColorUtils.SetPalette();
             Window.Title = "Black Box";
+        }
+        
+        public static void PauseGame(bool value)
+        {
+            GamePaused = value;
         }
 
         public static void ShowHideMouse(bool value)
