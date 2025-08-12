@@ -173,18 +173,18 @@ namespace blackbox
             {
                 SpriteBatch.DrawMouse();
             }            
-            DrawRectWithHole(GraphicsDevice, ScreenUtils.ScaleRectangle(ScreenUtils.BaseBox), Color.Black);
+            DrawRectWithHole(ScreenUtils.ScaleRectangle(ScreenUtils.BaseBox), Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);
         }
 
-        public static void DrawRectWithHole(GraphicsDevice graphicsDevice, Rectangle hole, Color color)
+        public void DrawRectWithHole(Rectangle hole, Color color)
         {
-            var viewport = graphicsDevice.Viewport.Bounds;
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, viewport.Y, viewport.Width, viewport.Y + hole.Y), color);
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, hole.Bottom, viewport.Width, viewport.Bottom - hole.Bottom), color);
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, hole.Y, hole.X - viewport.X, hole.Height), color);
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(hole.Right, hole.Y, viewport.Right - hole.Right, hole.Height), color);
+            var viewport = GraphicsDevice.Viewport.Bounds;
+            SpriteBatch.Draw(PixelTexture, new Rectangle(viewport.X, viewport.Y, viewport.Width, viewport.Y + hole.Y), color);
+            SpriteBatch.Draw(PixelTexture, new Rectangle(viewport.X, hole.Bottom, viewport.Width, viewport.Bottom - hole.Bottom), color);
+            SpriteBatch.Draw(PixelTexture, new Rectangle(viewport.X, hole.Y, hole.X - viewport.X, hole.Height), color);
+            SpriteBatch.Draw(PixelTexture, new Rectangle(hole.Right, hole.Y, viewport.Right - hole.Right, hole.Height), color);
         }
     }
 }

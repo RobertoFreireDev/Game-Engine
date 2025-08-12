@@ -27,4 +27,5 @@ function _draw()
     _circfill(150, 120, 6, 1, 10)
     _spr(0, p.x + 20, p.y + 20, 3, 3, false, false)
     _print(tostring(_gtime()),2,2,1)
+    _print(tostring(_isfocused()),2,30,11)
 end

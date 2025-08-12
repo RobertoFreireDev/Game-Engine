@@ -11,7 +11,7 @@ internal static class ScreenUtils
     public static float ScaleY;
     public static Rectangle BaseBox = new Rectangle(0, 0, Constants.ResolutionX, Constants.ResolutionY);
     private static Point GameResolution;
-    private static bool IsFocused;
+    public static bool IsFocused { private set; get; }
 
     public static void SetResolution(GraphicsDeviceManager graphics, GraphicsDevice graphicsDevice, int w = 0, int h = 0)
     {

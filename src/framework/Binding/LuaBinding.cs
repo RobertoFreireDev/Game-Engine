@@ -41,6 +41,8 @@ public class LuaBinding
         _lua.RegisterFunction("_btnp", this, GetType().GetMethod("JustPressed"));
         _lua.RegisterFunction("_btnr", this, GetType().GetMethod("Released"));
 
+        _lua.RegisterFunction("_isfocused", this, GetType().GetMethod("IsFocused"));
+
         // Draw
         _lua.RegisterFunction("_bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
         _lua.RegisterFunction("_pal", this, GetType().GetMethod("Pal"));
@@ -358,6 +360,11 @@ public class LuaBinding
     public static int GetFps()
     {
         return TimeUtils.FPS;
+    }
+
+    public static bool IsFocused()
+    {
+        return ScreenUtils.IsFocused;
     }
     #endregion
 
