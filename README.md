@@ -15,20 +15,6 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 - Implement LoadSpritesAndMap and SaveSpritesAndMap TextureFileIO functions
 - Test all map/flag functions
 
-**Draw:**
-Draw texture or sprite with effects
-
-Effects:
-- rectangle(area)
-- Texture
-array of effects
-- Lighting (dynamic lights, ambient light, shadows)
-- noise / grain / dithering
-- Transparency / alpha blending
-- scroll x and y over time 
-- Bloom / glow
-- Blur (motion blur, depth blur)
-
 ### Key Number
 
 | Key | Number | Description |
