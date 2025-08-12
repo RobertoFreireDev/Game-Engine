@@ -12,7 +12,8 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 
 **MAP:**
 
-- Implement and test map
+- Implement LoadSpritesAndMap and SaveSpritesAndMap TextureFileIO functions
+- Test all map/flag functions
 
 ### Key Number
 

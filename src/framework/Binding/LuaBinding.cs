@@ -53,8 +53,10 @@ public class LuaBinding
         _lua.RegisterFunction("_line", this, GetType().GetMethod("DrawLine"));
         _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
-        _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawTexture"));
-        _lua.RegisterFunction("_sprs", this, GetType().GetMethod("DrawTextureWithShader"));
+        _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawSprite"));
+        _lua.RegisterFunction("_sprs", this, GetType().GetMethod("DrawSpriteWithShader"));
+        _lua.RegisterFunction("_cspr", this, GetType().GetMethod("DrawTexture"));
+        _lua.RegisterFunction("_csprs", this, GetType().GetMethod("DrawTextureWithShader"));
         _lua.RegisterFunction("_camera", this, GetType().GetMethod("Camera"));
 
         // Status
@@ -180,12 +182,12 @@ public class LuaBinding
 
     public static void DrawTexture(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        Sprites.DrawSprite(i, x, y, Color.White, w, h, flipX, flipY);
+        Sprites.DrawCustomSprite(i, x, y, Color.White, w, h, flipX, flipY);
     }
 
     public static void DrawTextureWithShader(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        Sprites.DrawSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
+        Sprites.DrawCustomSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
     }
     #endregion
 
@@ -355,6 +357,16 @@ public class LuaBinding
     public static void Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)
     {
         Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(colorIndex), wraptext, wrapLimit);
+    }
+
+    public static void DrawSprite(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    {
+        Sprites.DrawSprite(i, x, y, Color.White, w, h, flipX, flipY);
+    }
+
+    public static void DrawSpriteWithShader(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    {
+        Sprites.DrawSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
     }
 
     public static void Camera(float x = 0.0f, float y = 0.0f)

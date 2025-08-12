@@ -6,15 +6,16 @@ namespace blackbox.Graphics;
 
 public static class Map
 {
-    public static Texture2D[] Sprites = new Texture2D[256];
-    public static byte[] Flags = new byte[256];
+    public static byte[,] SpritesAsSingleRectangle = new byte[64*10,4*10]; // 64x4 = 256 sprites
+    public static int Columns = 64;
+    public static int Rows = 4;
+    public static int TileWidth = 10; // 10x10 pixels each minimum sprite
+    public static int TileHeight = 10;
+    public static int Total = 256;
+    public static Texture2D[] Sprites = new Texture2D[Total];
+    public static byte[] Flags = new byte[Total];
     // Data contains the index of the Sprite/Flag. 1 byte => 256 values
     public static byte[,] Data = new byte[Constants.ResolutionX*16,Constants.ResolutionY*8];
-
-    public static void LoadMap(Texture2D texture, int columns, int width, int height)
-    {
-        Sprites = TextureUtils.GetTextures(texture, columns, width, height).ToArray();
-    }
 
     public static bool FGet(int tileIndex, int flag = -1)
     {

@@ -4,6 +4,9 @@ public static class Constants
 {
     public const int ResolutionX = 320;
     public const int ResolutionY = 180;
+    public const string Spritesfilename = "blackboxsprites";
+    public const string SpriteMapfilename = "blackboxspritesmap";
+    public const string Mapfilename = "blackboxmap";
     public const string Sfxfilename = "blackboxsfx";
     public const int CharsPerNote = 5;
     public const int ChannelQty = 4;
