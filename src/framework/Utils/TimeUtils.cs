@@ -8,14 +8,25 @@ public static class TimeUtils
     private static int _frameCounter = 0;
     private static double _elapsedTime = 0;
     private static int _fps = 0;
-    private static DateTime[] Times = new DateTime[16];
+    private static double[] Timers = new double[16];
+
+    private static double _totalGameTime = 0;
 
     public static int FPS => _fps;
 
     public static void Update(GameTime gameTime)
     {
+        double delta = gameTime.ElapsedGameTime.TotalSeconds;
+
         _frameCounter++;
-        _elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
+        _elapsedTime += delta;
+        if (ScreenUtils.IsFocused) // only advances when game runs
+        {
+            for (int i = 0; i < Timers.Length; i++)
+            {
+                Timers[i] += delta;
+            }
+        }
 
         if (_elapsedTime >= 1)
         {
@@ -27,22 +38,18 @@ public static class TimeUtils
 
     public static void StartTimer(int i)
     {
-        if (i < 0 || i >= 16)
-        {
+        if (i < 0 || i >= Timers.Length)
             return;
-        }
 
-        Times[i] = DateTime.UtcNow;
+        Timers[i] = 0.0;
     }
 
     public static double GetTime(int i = 0, int d = 2)
     {
-        if (i < 0 || i >= 16)
-        {
-            return 0.0f;
-        }
+        if (i < 0 || i >= Timers.Length)
+            return 0.0;
 
-        return Math.Round((DateTime.UtcNow - Times[i]).TotalSeconds, d);
+        return Math.Round(Timers[i], d);
     }
 
     public static string GetDateTime(int i)

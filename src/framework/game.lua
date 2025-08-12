@@ -15,7 +15,7 @@ function _update()
     local q,w = 81,87
     if _btn(left) then p.x = p.x - 1 _crtshader(true) end
     if _btn(right) then p.x = p.x + 1 _crtshader(false) end
-    if _btn(up) then p.y = p.y - 1 end
+    if _btn(up) then p.y = p.y - 1 _stimer(2) end
     if _btn(down) then p.y = p.y + 1 end
     _camera(-20 + p.x,-20 + p.y)
 end
@@ -28,4 +28,8 @@ function _draw()
     _spr(0, p.x + 20, p.y + 20, 3, 3, false, false)
     _print(tostring(_gtime()),2,2,1)
     _print(tostring(_isfocused()),2,30,11)
+    _print(tostring(_gtimer(2,2)),2,40,11)
+    _print(tostring(_gtimer(2)),2,50,11)
+    _print(tostring(_gtimer(3,10)),2,60,11)
+    
 end
