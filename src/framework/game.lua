@@ -34,5 +34,4 @@ function _draw()
     _print(tostring(_gtimer(2,2)),2,40,11)
     _print(tostring(_gtimer(2)),2,50,11)
     _print(tostring(_gtimer(3,10)),2,60,11)
-    
 end

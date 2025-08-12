@@ -82,6 +82,12 @@ public class LuaBinding
         _lua.RegisterFunction("_pgame", this, GetType().GetMethod("PauseGame"));
         _lua.RegisterFunction("_gtime", this, GetType().GetMethod("GetDateTime"));
 
+        //Flags
+        _lua.RegisterFunction("_gflag", this, GetType().GetMethod("GetFlag"));
+        _lua.RegisterFunction("_gflags", this, GetType().GetMethod("GetAllFlags"));
+        _lua.RegisterFunction("_sflag", this, GetType().GetMethod("SetFlag"));
+        _lua.RegisterFunction("_sflags", this, GetType().GetMethod("SetAllFlags"));
+
         //Map
         _lua.RegisterFunction("_mget", this, GetType().GetMethod("GetMapValue"));
         _lua.RegisterFunction("_mset", this, GetType().GetMethod("SetMapValue"));
@@ -467,6 +473,26 @@ public class LuaBinding
     #endregion
 
     #region MapFunctions
+    public static bool GetFlag(int tileIndex, int flag = -1)
+    {
+        return Map.FGet(tileIndex, flag);
+    }
+
+    public static byte GetAllFlags(int tileIndex)
+    {
+        return Map.FGetByte(tileIndex);
+    }
+
+    public static void SetFlag(int tileIndex, int flag, bool value)
+    {
+        Map.FSet(tileIndex, flag, value);
+    }
+
+    public static void SetAllFlags(int tileIndex, byte value)
+    {
+        Map.FSetByte(tileIndex, value);
+    }
+
     public static int GetMapValue(int x, int y)
     {
         return Map.GetMapValue(x, y);

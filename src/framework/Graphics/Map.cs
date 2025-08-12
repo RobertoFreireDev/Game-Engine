@@ -16,6 +16,50 @@ public static class Map
         Sprites = TextureUtils.GetTextures(texture, columns, width, height).ToArray();
     }
 
+    public static bool FGet(int tileIndex, int flag = -1)
+    {
+        if (tileIndex < 0 || tileIndex >= Flags.Length)
+            return false;
+
+        if (flag == -1)
+        {
+            // Return "true" if any flag bit is set
+            return Flags[tileIndex] != 0;
+        }
+        else
+        {
+            if (flag < 0 || flag > 7) return false;
+            return (Flags[tileIndex] & (1 << flag)) != 0;
+        }
+    }
+
+    public static byte FGetByte(int tileIndex)
+    {
+        if (tileIndex < 0 || tileIndex >= Flags.Length)
+            return 0;
+
+        return Flags[tileIndex];
+    }
+
+    public static void FSet(int tileIndex, int flag, bool value)
+    {
+        if (tileIndex < 0 || tileIndex >= Flags.Length || flag < 0 || flag > 7)
+            return;
+
+        if (value)
+            Flags[tileIndex] |= (byte)(1 << flag); // Set bit
+        else
+            Flags[tileIndex] &= (byte)~(1 << flag); // Clear bit
+    }
+
+    public static void FSetByte(int tileIndex, byte value)
+    {
+        if (tileIndex < 0 || tileIndex >= Flags.Length)
+            return;
+
+        Flags[tileIndex] = value;
+    }
+
     public static byte GetMapValue(int x, int y)
     {
         if (x < 0 || y < 0 || x >= Data.GetLength(0) || y >= Data.GetLength(1))
