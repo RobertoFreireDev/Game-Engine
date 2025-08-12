@@ -22,12 +22,12 @@ Effects:
 - rectangle(area)
 - Texture
 array of effects
-- lighting
-- noise
-- distortion
-- transparency
-- scrollx over time 
-- scrolly over time
+- Lighting (dynamic lights, ambient light, shadows)
+- noise / grain / dithering
+- Transparency / alpha blending
+- scroll x and y over time 
+- Bloom / glow
+- Blur (motion blur, depth blur)
 
 ### Key Number
 
