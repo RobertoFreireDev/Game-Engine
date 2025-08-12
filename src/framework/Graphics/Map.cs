@@ -1,7 +1,6 @@
 ﻿using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Linq;
 
 namespace blackbox.Graphics;
 
@@ -44,11 +43,11 @@ public static class Map
                 byte tileIndex = GetMapValue(mapX, mapY);
                 GFW.SpriteBatch.Draw(
                     Sprites[tileIndex],
-                    ScreenUtils.ScaleRectangle(new Rectangle(
+                    new Rectangle(
                         sx + x * tileSize, 
                         sy + y * tileSize,
                         tileSize,
-                        tileSize)), 
+                        tileSize), 
                     color);
             }
         }

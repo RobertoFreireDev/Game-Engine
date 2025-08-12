@@ -29,7 +29,7 @@ public static class Sprites
 
         GFW.SpriteBatch.Draw(
             GameImage.GameTexture,
-            ScreenUtils.ScaleRectangle(destination),
+            destination,
             source,
             color,
             0f,

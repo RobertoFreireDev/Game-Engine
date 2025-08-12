@@ -1,6 +1,4 @@
-﻿using blackbox.Utils;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -10,7 +8,7 @@ public static class Shapes
 {
     public static void DrawPixel(int x, int y, Color color)
     {
-        GFW.SpriteBatch.Draw(GFW.PixelTexture, ScreenUtils.ScaleRectangle(new Rectangle(x, y, 1, 1)), color);
+        GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(x, y, 1, 1), color);
     }
 
     public static void DrawLine(int x0, int y0, int x1, int y1, Color color)
@@ -23,7 +21,7 @@ public static class Shapes
 
         while (true)
         {
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, ScreenUtils.ScaleRectangle(new Rectangle(x0, y0, 1, 1)), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(x0, y0, 1, 1), color);
 
             if (x0 == x1 && y0 == y1)
                 break;
@@ -53,7 +51,7 @@ public static class Shapes
         {
             GFW.SpriteBatch.Draw(
                 GFW.PixelTexture,
-                ScreenUtils.ScaleRectangle(new Rectangle(xm, ym, 1, 1)),
+                new Rectangle(xm, ym, 1, 1),
                 color
             );
             return;
@@ -68,7 +66,7 @@ public static class Shapes
         int ry0 = Math.Min(y0, y1);
         int rx1 = Math.Max(x0, x1);
         int ry1 = Math.Max(y0, y1);
-        var bounds = ScreenUtils.ScaleRectangle(new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0));
+        var bounds = new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0);
         rx0 = bounds.Left;
         ry0 = bounds.Top;
         rx1 = bounds.Right;
@@ -123,7 +121,7 @@ public static class Shapes
         {
             GFW.SpriteBatch.Draw(
                 GFW.PixelTexture,
-                ScreenUtils.ScaleRectangle(new Rectangle(xm, ym, 1, 1)),
+                new Rectangle(xm, ym, 1, 1),
                 color
             );
             return;
@@ -138,7 +136,7 @@ public static class Shapes
         int ry0 = Math.Min(y0, y1);
         int rx1 = Math.Max(x0, x1);
         int ry1 = Math.Max(y0, y1);
-        var bounds = ScreenUtils.ScaleRectangle(new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0));
+        var bounds = new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0);
         rx0 = bounds.Left;
         ry0 = bounds.Top;
         rx1 = bounds.Right;
@@ -206,7 +204,7 @@ public static class Shapes
 
     public static void DrawRectFill(Rectangle rect, Color color)
     {
-        GFW.SpriteBatch.Draw(GFW.PixelTexture, ScreenUtils.ScaleRectangle(rect), color);
+        GFW.SpriteBatch.Draw(GFW.PixelTexture, rect, color);
     }
 
     public static void DrawRectBorder(Rectangle rect, Color color, int thickness = 1)
@@ -216,18 +214,8 @@ public static class Shapes
         // Bottom
         DrawRectFill(new Rectangle(rect.X, rect.Y + rect.Height - thickness, rect.Width, thickness), color);
         // Left
-        DrawRectFill(new Rectangle(rect.X, rect.Y+1, thickness, rect.Height - 2), color);
+        DrawRectFill(new Rectangle(rect.X, rect.Y + 1, thickness, rect.Height - 2), color);
         // Right
-        DrawRectFill(new Rectangle(rect.X + rect.Width - thickness, rect.Y + 1, thickness, rect.Height -2), color);
-    }
-
-    public static void DrawRectWithHole(GraphicsDevice graphicsDevice, Rectangle hole, Color color)
-    {
-        var viewport = graphicsDevice.Viewport.Bounds;
-        hole = ScreenUtils.ScaleRectangle(hole);
-        GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, viewport.Y, viewport.Width, viewport.Y + hole.Y), color);
-        GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, hole.Bottom, viewport.Width, viewport.Bottom - hole.Bottom), color);
-        GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, hole.Y, hole.X - viewport.X, hole.Height), color);
-        GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(hole.Right, hole.Y, viewport.Right - hole.Right, hole.Height), color);
+        DrawRectFill(new Rectangle(rect.X + rect.Width - thickness, rect.Y + 1, thickness, rect.Height - 2), color);
     }
 }

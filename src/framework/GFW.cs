@@ -1,7 +1,6 @@
 ﻿using blackbox.Graphics;
 using blackbox.Assets;
 using blackbox.Binding;
-using blackbox.Graphics;
 using blackbox.Input;
 using blackbox.IOFile;
 using blackbox.Utils;
@@ -23,13 +22,17 @@ namespace blackbox
         public static string Title;
         public static int FPS;
         public static bool ShowMouse = true;
+        public static bool ApplyCRTshader = false;
         public static int BackgroundColor;
         private static bool Updated = false;
         private LuaBinding game;
+        private Effect crtEffect;
+        private RenderTarget2D sceneTarget;
 
         public GFW()
         {
             _graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
             _graphics.IsFullScreen = false;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnResize;
@@ -43,7 +46,11 @@ namespace blackbox
         {
             ShowMouse = value;
         }
-        
+
+        public static void EnableCRTshader(bool value)
+        {
+            ApplyCRTshader = value;
+        }
 
         public static void UpdateFPS(int fps)
         {
@@ -95,6 +102,14 @@ namespace blackbox
             var script = LuaFileIO.Read("game");
             game = new LuaBinding(script);
             _graphics.SynchronizeWithVerticalRetrace = true;
+            crtEffect = Content.Load<Effect>("CRT");
+            sceneTarget = new RenderTarget2D(
+                GraphicsDevice,
+                GraphicsDevice.PresentationParameters.BackBufferWidth,
+                GraphicsDevice.PresentationParameters.BackBufferHeight,
+                false,
+                SurfaceFormat.Color,
+                DepthFormat.None);
         }
 
         protected override void Update(GameTime gameTime)
@@ -116,24 +131,54 @@ namespace blackbox
                 TargetElapsedTime = FPS != 30 ? TimeSpan.FromSeconds(1.0 / 60.0) : TimeSpan.FromSeconds(1.0 / 30.0);
                 Updated = false;
             }
+
+            crtEffect.Parameters["Resolution"].SetValue(
+                new Vector2(GraphicsDevice.PresentationParameters.BackBufferWidth,
+                            GraphicsDevice.PresentationParameters.BackBufferHeight));
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             TimeUtils.Update(gameTime);
+            GraphicsDevice.SetRenderTarget(sceneTarget);
             GraphicsDevice.Clear(ColorUtils.GetColor(BackgroundColor));
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
             game.Draw();
             SpriteBatch.End();
+
+            // STEP 2: Reset back buffer and apply CRT shader
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Black);
+
+            // Pass Resolution to the shader (important!)
+            crtEffect.Parameters["Resolution"].SetValue(new Vector2(
+                sceneTarget.Width,
+                sceneTarget.Height
+            ));
+
+            SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp,
+                              null, null, effect: ApplyCRTshader ? crtEffect : null);
+            SpriteBatch.Draw(sceneTarget, ScreenUtils.BoxToDraw, Color.White);
+            SpriteBatch.End();
+
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
             if (ShowMouse)
             {
                 SpriteBatch.DrawMouse();
             }            
-            Shapes.DrawRectWithHole(GraphicsDevice, ScreenUtils.BaseBox, Color.Black);
+            DrawRectWithHole(GraphicsDevice, ScreenUtils.ScaleRectangle(ScreenUtils.BaseBox), Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public static void DrawRectWithHole(GraphicsDevice graphicsDevice, Rectangle hole, Color color)
+        {
+            var viewport = graphicsDevice.Viewport.Bounds;
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, viewport.Y, viewport.Width, viewport.Y + hole.Y), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, hole.Bottom, viewport.Width, viewport.Bottom - hole.Bottom), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(viewport.X, hole.Y, hole.X - viewport.X, hole.Height), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(hole.Right, hole.Y, viewport.Right - hole.Right, hole.Height), color);
         }
     }
 }

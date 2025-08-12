@@ -25,6 +25,7 @@ public class LuaBinding
         _lua.RegisterFunction("_title", this, GetType().GetMethod("ConfigTitle"));
         _lua.RegisterFunction("_fps30", this, GetType().GetMethod("ConfigFps30"));
         _lua.RegisterFunction("_fps60", this, GetType().GetMethod("ConfigFps60"));
+        _lua.RegisterFunction("_crtshader", this, GetType().GetMethod("EnableCRTshader"));
         _lua.RegisterFunction("_texture", this, GetType().GetMethod("LoadTextureFromBase64"));
 
         // Input
@@ -136,6 +137,7 @@ public class LuaBinding
     {
         if (LuaError.HasError())
         {
+            Camera(0, 0);
             LuaError.Draw();
             return;
         }
@@ -155,7 +157,7 @@ public class LuaBinding
     }
 
     #region TextureFunctions
-    public static void LoadTextureFromBase64(string spriteBase64, int tileWidth, int tileHeight)
+    public static void LoadTextureFromBase64(int tileWidth, int tileHeight, string spriteBase64)
     {
         try
         {
@@ -192,6 +194,11 @@ public class LuaBinding
     public static void ConfigFps60()
     {
         GFW.UpdateFPS(60);
+    }
+
+    public static void EnableCRTshader(bool value)
+    {
+        GFW.EnableCRTshader(value);
     }
 
     public static void ConfigBackGroundColor(int colorIndex)
