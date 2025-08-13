@@ -10,6 +10,10 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 
 - music([n,] [fade_len,] [channel_mask])
 
+**Sprites:**
+
+- create function set pixel and get pixel to get/set pixel in srpitesAsSingleData. usefully for spriteeditor and also to change sprite during game
+
 **MAP:**
 
 - Implement LoadSpritesAndMap and SaveSpritesAndMap TextureFileIO functions
