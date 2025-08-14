@@ -4,6 +4,12 @@ This engine starts as a blank canvas, giving Lua control over display and logic
 
 Developers can write Lua scripts to build custom tools, editors, or complete games.
 
+## Legal
+
+- How to mention Nlua and Monogame?
+- Make sure there is no copyright issue with Name and/or Product/Game Engine.
+- What else?
+
 ## TO DO
 
 **SFX:**

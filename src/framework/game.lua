@@ -13,7 +13,7 @@ end
 
 function _update()
     local q,w = 81,87
-    if _btn(left) then p.x = p.x - 1 _crtshader(true) end
+    if _btn(left) then p.x = p.x - 1 _crtshader(true,105,110) end
     if _btn(right) then p.x = p.x + 1 _crtshader(false) end
     if _btn(up) then p.y = p.y - 1 _stimer(2) end
     if _btn(down) then p.y = p.y + 1 end
