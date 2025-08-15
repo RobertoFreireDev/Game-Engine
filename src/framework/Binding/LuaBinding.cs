@@ -55,9 +55,9 @@ public class LuaBinding
         _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
         _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawSprite"));
-        _lua.RegisterFunction("_sprs", this, GetType().GetMethod("DrawSpriteWithShader"));
+        _lua.RegisterFunction("_sprc", this, GetType().GetMethod("DrawSpriteWithColor"));
         _lua.RegisterFunction("_cspr", this, GetType().GetMethod("DrawTexture"));
-        _lua.RegisterFunction("_csprs", this, GetType().GetMethod("DrawTextureWithShader"));
+        _lua.RegisterFunction("_csprc", this, GetType().GetMethod("DrawTextureWithColor"));
         _lua.RegisterFunction("_cspre", this, GetType().GetMethod("DrawTextureWithEffect"));
         _lua.RegisterFunction("_camera", this, GetType().GetMethod("Camera"));
 
@@ -188,21 +188,24 @@ public class LuaBinding
         Sprites.DrawCustomSprite(i, x, y, Color.White, w, h, flipX, flipY);
     }
 
-    public static void DrawTextureWithShader(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawTextureWithColor(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
         Sprites.DrawCustomSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
     }
 
-    public static void DrawTextureWithEffect(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawTextureWithEffect(int i, int x, int y, string parameters = "", int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
+        if (string.IsNullOrWhiteSpace(parameters) || parameters.Length < 4)
+        {
+            return;
+        }
         GFW.SpriteBatch.End();
         GFW.SpriteBatch.Begin(effect: GFW.CustomEffect, samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
         var rectangle = GameImage.GameTexture.Bounds;
-        // Make this parameters
-        GFW.CustomEffect.Parameters["DistortX"].SetValue(0.02f);
-        GFW.CustomEffect.Parameters["DistortY"].SetValue(0.02f);
-        GFW.CustomEffect.Parameters["WaveFreq"].SetValue(20f);
-        GFW.CustomEffect.Parameters["WaveSpeed"].SetValue(3f);
+        GFW.CustomEffect.Parameters["DistortX"].SetValue(SubstringToInt(parameters, 0, 1) * 0.01f);
+        GFW.CustomEffect.Parameters["DistortY"].SetValue(SubstringToInt(parameters, 1, 1) * 0.01f);
+        GFW.CustomEffect.Parameters["WaveFreq"].SetValue(SubstringToInt(parameters, 2, 1) * 10f);
+        GFW.CustomEffect.Parameters["WaveSpeed"].SetValue(SubstringToInt(parameters, 3, 1) * 1f);
         GFW.CustomEffect.Parameters["Time"].SetValue((float)TimeUtils.ElapsedTime);
         Sprites.DrawCustomSprite(i, x, y, Color.White, w, h, flipX, flipY);
         GFW.SpriteBatch.End();
@@ -383,7 +386,7 @@ public class LuaBinding
         Sprites.DrawSprite(i, x, y, Color.White, w, h, flipX, flipY);
     }
 
-    public static void DrawSpriteWithShader(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawSpriteWithColor(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
         Sprites.DrawSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
     }
@@ -542,6 +545,22 @@ public class LuaBinding
     public static void DrawMap(int tileSize, int colorIndex, int cel_x, int cel_y, int sx, int sy, int cel_w, int cel_h)
     {
         Map.DrawMap(tileSize, ColorUtils.GetColor(colorIndex), cel_x, cel_y, sx, sy, cel_w, cel_h);
+    }
+    #endregion
+
+    #region Utils
+    public static int SubstringToInt(string source, int start, int length)
+    {
+        try
+        {
+            return int.Parse(source.AsSpan(start, length));
+        }
+        catch
+        {
+            LuaError.SetError($"Error Parsing string to int: {source}");
+        }
+
+        return 0;
     }
     #endregion
 }

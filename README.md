@@ -12,6 +12,15 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 
 ## TO DO
 
+**Effects:**
+
+- Lighting (dynamic lights, ambient light, shadows)
+- noise / grain / dithering
+- Transparency / alpha blending
+- scroll x and y over time 
+- Bloom / glow
+- Blur (motion blur, depth blur)
+
 **SFX:**
 
 - music([n,] [fade_len,] [channel_mask])
