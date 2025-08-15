@@ -5,24 +5,26 @@ namespace blackbox.Utils;
 
 public static class TimeUtils
 {
+    public static double ElapsedTime { private set; get; } = 0;
+    public static double Delta { private set; get; }
+    public static int FPS => _fps;
     private static int _frameCounter = 0;
     private static double _elapsedTime = 0;
     private static int _fps = 0;
     private static double[] Timers = new double[16];
 
-    public static int FPS => _fps;
-
     public static void Update(GameTime gameTime)
     {
-        double delta = gameTime.ElapsedGameTime.TotalSeconds;
+        Delta = gameTime.ElapsedGameTime.TotalSeconds;
 
         _frameCounter++;
-        _elapsedTime += delta;
+        ElapsedTime += Delta;
+        _elapsedTime += Delta;
         if (ScreenUtils.IsFocused && !GFW.GamePaused)
         {
             for (int i = 0; i < Timers.Length; i++)
             {
-                Timers[i] += delta;
+                Timers[i] += Delta;
             }
         }
 

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace blackbox.Binding;
 
@@ -57,6 +58,7 @@ public class LuaBinding
         _lua.RegisterFunction("_sprs", this, GetType().GetMethod("DrawSpriteWithShader"));
         _lua.RegisterFunction("_cspr", this, GetType().GetMethod("DrawTexture"));
         _lua.RegisterFunction("_csprs", this, GetType().GetMethod("DrawTextureWithShader"));
+        _lua.RegisterFunction("_cspre", this, GetType().GetMethod("DrawTextureWithEffect"));
         _lua.RegisterFunction("_camera", this, GetType().GetMethod("Camera"));
 
         // Status
@@ -83,6 +85,7 @@ public class LuaBinding
         _lua.RegisterFunction("_gtimer", this, GetType().GetMethod("GetTimer"));
         _lua.RegisterFunction("_pgame", this, GetType().GetMethod("PauseGame"));
         _lua.RegisterFunction("_gtime", this, GetType().GetMethod("GetDateTime"));
+        _lua.RegisterFunction("_gdeltatime", this, GetType().GetMethod("GetDeltaTime"));
 
         //Flags
         _lua.RegisterFunction("_gflag", this, GetType().GetMethod("GetFlag"));
@@ -148,7 +151,7 @@ public class LuaBinding
     {
         if (LuaError.HasError())
         {
-            Camera(0, 0);
+            Camera(0, 0); 
             LuaError.Draw();
             return;
         }
@@ -188,6 +191,22 @@ public class LuaBinding
     public static void DrawTextureWithShader(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
         Sprites.DrawCustomSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
+    }
+
+    public static void DrawTextureWithEffect(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    {
+        GFW.SpriteBatch.End();
+        GFW.SpriteBatch.Begin(effect: GFW.CustomEffect, samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
+        var rectangle = GameImage.GameTexture.Bounds;
+        // Make this parameters
+        GFW.CustomEffect.Parameters["DistortX"].SetValue(0.02f);
+        GFW.CustomEffect.Parameters["DistortY"].SetValue(0.02f);
+        GFW.CustomEffect.Parameters["WaveFreq"].SetValue(20f);
+        GFW.CustomEffect.Parameters["WaveSpeed"].SetValue(3f);
+        GFW.CustomEffect.Parameters["Time"].SetValue((float)TimeUtils.ElapsedTime);
+        Sprites.DrawCustomSprite(i, x, y, Color.White, w, h, flipX, flipY);
+        GFW.SpriteBatch.End();
+        GFW.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
     }
     #endregion
 
@@ -481,6 +500,11 @@ public class LuaBinding
     public static string GetDateTime(int i = 0)
     {
         return TimeUtils.GetDateTime(i);
+    }
+
+    public static double GetDeltaTime()
+    {
+        return TimeUtils.Delta;
     }
     #endregion
 

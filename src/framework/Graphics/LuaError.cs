@@ -15,6 +15,7 @@ public static class LuaError
 
     public static void SetError(string message)
     {
+        LuaBinding.EnableCRTshader(false);
         _error = true;
         _message = message;
     }

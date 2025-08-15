@@ -27,6 +27,7 @@ namespace blackbox
         private static bool Updated = false;
         private LuaBinding game;
         public static bool GamePaused = false;
+        public static Effect CustomEffect;
         private Effect crtEffect;
         private static float Inner = 0.00f;
         private static float Outer = 0.00f;
@@ -113,6 +114,7 @@ namespace blackbox
             game = new LuaBinding(script);
             _graphics.SynchronizeWithVerticalRetrace = true;
             crtEffect = Content.Load<Effect>("CRT");
+            CustomEffect = Content.Load<Effect>("CustomShader");
             sceneTarget = new RenderTarget2D(
                 GraphicsDevice,
                 GraphicsDevice.PresentationParameters.BackBufferWidth,
@@ -124,10 +126,10 @@ namespace blackbox
 
         protected override void Update(GameTime gameTime)
         {
-            if (Input.KeyboardInput.IsAltF4Pressed())
+            if (KeyboardInput.IsAltF4Pressed())
                 Exit();
 
-            if (Input.KeyboardInput.IsF2Released())
+            if (KeyboardInput.IsF2Released())
                 ScreenUtils.ToggleFullScreen(_graphics, GraphicsDevice);
 
             ScreenUtils.UpdateIsFocused(IsActive, _graphics.IsFullScreen);
