@@ -11,11 +11,15 @@ float Time; // time in seconds
 float WaveFreq; // e.g., 20
 float WaveSpeed; // e.g., 3
 
+// Scroll parameters
+float ScrollX; // pixels per second or normalized speed
+float ScrollY;
+
 float4 main(float2 uv : TEXCOORD0) : COLOR0
 {
-    float waveX = sin(uv.y * WaveFreq + Time * WaveSpeed) * DistortX;
-    float waveY = cos(uv.x * WaveFreq + Time * WaveSpeed) * DistortY;
-    float2 distortedUV = uv + float2(waveX, waveY);
+    float waveX = sin(uv.y * WaveFreq + Time * WaveSpeed) * DistortX + frac(Time * ScrollX);
+    float waveY = cos(uv.x * WaveFreq + Time * WaveSpeed) * DistortY + frac(Time * ScrollY);
+    float2 distortedUV = frac(uv + float2(waveX, waveY));
     return tex2D(TextureSampler, distortedUV);
 }
 
