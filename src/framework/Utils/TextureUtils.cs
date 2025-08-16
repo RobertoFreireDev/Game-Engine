@@ -39,4 +39,14 @@ public static class TextureUtils
         using var ms = new MemoryStream(imageBytes);
         return Texture2D.FromStream(GrapUtils.GraphicsDevice, ms);
     }
+
+    public static string TextureToBase64(Texture2D texture)
+    {
+        using (var ms = new MemoryStream())
+        {
+            texture.SaveAsPng(ms, texture.Width, texture.Height);
+            byte[] imageBytes = ms.ToArray();
+            return Convert.ToBase64String(imageBytes);
+        }
+    }
 }
