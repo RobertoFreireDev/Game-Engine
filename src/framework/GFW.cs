@@ -110,7 +110,15 @@ namespace blackbox
             MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice, SystemTextures["medium_font"]);
             MouseTextures = TextureUtils.GetTextures(SystemTextures["mouse"], 10, 32, 32);
             // Load game
-            var script = LuaFileIO.Read("game");
+            var script = string.Empty;
+            if (LuaFileIO.HasFile(Constants.Editorfilename))
+            {
+                script = LuaFileIO.Read(Constants.Editorfilename);
+            }
+            else if (LuaFileIO.HasFile(Constants.Gamefilename))
+            {
+                script = LuaFileIO.Read(Constants.Gamefilename);
+            }
             game = new LuaBinding(script);
             _graphics.SynchronizeWithVerticalRetrace = true;
             crtEffect = Content.Load<Effect>("CRT");
