@@ -194,14 +194,15 @@ public class LuaBinding
         Sprites.DrawCustomSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
     }
 
-    public static void DrawTextureWithEffect(int i, int x, int y, double time, string parameters = "", int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawTextureWithEffect(int i, int x, int y, double time, string parameters = "0000000", int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        if (string.IsNullOrWhiteSpace(parameters) || parameters.Length < 6)
+        if (string.IsNullOrWhiteSpace(parameters) || parameters.Length < 7)
         {
             return;
         }
         GFW.SpriteBatch.End();
         var rectangle = GameImage.GameTexture.Bounds;
+        var color = colorIndex < 0 ? new Vector4(1, 1, 1, 1) : ColorUtils.GetColor(colorIndex, transparency).ToVector4();
         GFW.CustomEffect.Parameters["Time"].SetValue((float)time);
         GFW.CustomEffect.Parameters["DistortX"].SetValue(SubstringToInt(parameters, 0, 1) * 0.01f);
         GFW.CustomEffect.Parameters["DistortY"].SetValue(SubstringToInt(parameters, 1, 1) * 0.01f);
@@ -209,7 +210,9 @@ public class LuaBinding
         GFW.CustomEffect.Parameters["WaveSpeed"].SetValue(SubstringToInt(parameters, 3, 1) * 1f);
         GFW.CustomEffect.Parameters["ScrollX"].SetValue(SubstringToInt(parameters, 4, 1) * 0.02f);
         GFW.CustomEffect.Parameters["ScrollY"].SetValue(SubstringToInt(parameters, 5, 1) * 0.02f);
-        GFW.CustomEffect.Parameters["TintColor"].SetValue(colorIndex < 0 ? new Vector4(1, 1, 1, 1) : ColorUtils.GetColor(colorIndex, transparency).ToVector4());
+        GFW.CustomEffect.Parameters["OutlineColor"].SetValue(color);
+        GFW.CustomEffect.Parameters["OutlineThickness"].SetValue(SubstringToInt(parameters, 6, 1) * 0.001f);
+        GFW.CustomEffect.Parameters["TintColor"].SetValue(color);
         
         GFW.SpriteBatch.Begin(effect: GFW.CustomEffect, samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
         Sprites.DrawCustomSprite(i, x, y, Color.White, w, h, flipX, flipY);
