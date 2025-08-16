@@ -15,12 +15,15 @@ float WaveSpeed; // e.g., 3
 float ScrollX; // pixels per second or normalized speed
 float ScrollY;
 
+// Color & Transparency
+float4 TintColor; // RGBA (1,1,1,1 = no change)
+
 float4 main(float2 uv : TEXCOORD0) : COLOR0
 {
     float waveX = sin(uv.y * WaveFreq + Time * WaveSpeed) * DistortX + frac(Time * ScrollX);
     float waveY = cos(uv.x * WaveFreq + Time * WaveSpeed) * DistortY + frac(Time * ScrollY);
     float2 distortedUV = frac(uv + float2(waveX, waveY));
-    return tex2D(TextureSampler, distortedUV);
+    return tex2D(TextureSampler, distortedUV) * TintColor;
 }
 
 technique Technique1
