@@ -194,9 +194,9 @@ public class LuaBinding
         Sprites.DrawCustomSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
     }
 
-    public static void DrawTextureWithEffect(int i, int x, int y, double time, string parameters = "0000000", int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawTextureWithEffect(int i, int x, int y, double time, string parameters = "00000000", int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        if (string.IsNullOrWhiteSpace(parameters) || parameters.Length < 7)
+        if (string.IsNullOrWhiteSpace(parameters) || parameters.Length < 8)
         {
             return;
         }
@@ -213,7 +213,8 @@ public class LuaBinding
         GFW.CustomEffect.Parameters["OutlineColor"].SetValue(color);
         GFW.CustomEffect.Parameters["OutlineThickness"].SetValue(SubstringToInt(parameters, 6, 1) * 0.001f);
         GFW.CustomEffect.Parameters["TintColor"].SetValue(color);
-        
+        GFW.CustomEffect.Parameters["NoiseAmount"].SetValue(SubstringToInt(parameters, 7, 1) * 0.05f);
+
         GFW.SpriteBatch.Begin(effect: GFW.CustomEffect, samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
         Sprites.DrawCustomSprite(i, x, y, Color.White, w, h, flipX, flipY);
         GFW.SpriteBatch.End();

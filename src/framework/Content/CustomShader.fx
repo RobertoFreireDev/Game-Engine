@@ -22,6 +22,15 @@ float4 TintColor; // RGBA (1,1,1,1 = no change)
 float4 OutlineColor;
 float OutlineThickness;
 
+// Noise intensity
+float NoiseAmount; // e.g., 0.05
+
+// Simple pseudo-random function
+float rand(float2 co)
+{
+    return frac(sin(dot(co.xy, float2(12.9898, 78.233))) * 43758.5453);
+}
+
 float4 main(float2 uv : TEXCOORD0) : COLOR0
 {
     // Distortion + scroll
@@ -32,6 +41,13 @@ float4 main(float2 uv : TEXCOORD0) : COLOR0
     // Sample base texture
     float4 baseColor = tex2D(TextureSampler, distortedUV) * TintColor;
 
+    // Apply noise
+    if (NoiseAmount > 0)
+    {
+        float n = rand(distortedUV + Time);
+        baseColor.rgb += (n - 0.5) * NoiseAmount; // center noise around 0
+    }
+    
     // If pixel has alpha, return it directly
     if (baseColor.a > 0.1)
     {
