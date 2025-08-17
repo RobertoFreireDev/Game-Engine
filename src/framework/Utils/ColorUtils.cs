@@ -80,7 +80,7 @@ public static class ColorUtils
             case 15:
                 return Color16 * (transparency / 10.0f);
             default:
-                return PrimaryColor;
+                return new Color(1,1,1,1);
         }
     }
 

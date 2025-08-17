@@ -49,4 +49,25 @@ public static class TextureUtils
             return Convert.ToBase64String(imageBytes);
         }
     }
+
+    public static Texture2D IntArrayToTexture2D(int[,] pixels)
+    {
+        int width = pixels.GetLength(1);
+        int height = pixels.GetLength(0);
+
+        Texture2D texture = new Texture2D(GrapUtils.GraphicsDevice, width, height);
+        Color[] data = new Color[width * height];
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int index = y * width + x;
+                data[index] = ColorUtils.GetColor(pixels[y, x]);
+            }
+        }
+
+        texture.SetData(data);
+        return texture;
+    }
 }

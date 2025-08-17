@@ -1,6 +1,7 @@
 ﻿using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace blackbox.Assets;
 
@@ -12,8 +13,17 @@ public class GameImageData
     public int TileWidth;
     public int TileHeight;
     public int Total;
-}
 
+    public GameImageData(Texture2D texture, int width, int height)
+    {
+        GameTexture = texture;
+        TileWidth = width;
+        TileHeight = height;
+        Columns = GameTexture.Width / TileWidth;
+        Rows = GameTexture.Height / TileHeight;
+        Total = Columns * Rows;
+    }
+}
 public static class GameImage
 {
     public static GameImageData[] GameImageData = new GameImageData[Constants.MaxGameTextures];
@@ -25,13 +35,11 @@ public static class GameImage
             return;
         }
 
-        GameImageData[index] = new GameImageData();
-        GameImageData[index].GameTexture = TextureUtils.Convert64ToTexture(spriteBase64);
-        GameImageData[index].TileWidth = width;
-        GameImageData[index].TileHeight = height;
-        GameImageData[index].Columns = GameImageData[index].GameTexture.Width / GameImageData[index].TileWidth;
-        GameImageData[index].Rows = GameImageData[index].GameTexture.Height / GameImageData[index].TileHeight;
-        GameImageData[index].Total = GameImageData[index].Columns * GameImageData[index].Rows;
+        GameImageData[index] = new GameImageData(
+                TextureUtils.Convert64ToTexture(spriteBase64),
+                width,
+                height
+            );
     }
 
     public static void DrawCustomSprite(
@@ -43,7 +51,6 @@ public static class GameImage
             return;
         }
 
-        int scale = (int)(ScreenUtils.ScaleX + ScreenUtils.ScaleY) / 2;
         Rectangle source = new Rectangle(
             (n % GameImageData[index].Columns) * GameImageData[index].TileWidth,
             (n / GameImageData[index].Columns) * GameImageData[index].TileHeight,

@@ -54,8 +54,6 @@ public class LuaBinding
         _lua.RegisterFunction("_line", this, GetType().GetMethod("DrawLine"));
         _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
-        _lua.RegisterFunction("_spr", this, GetType().GetMethod("DrawSprite"));
-        _lua.RegisterFunction("_sprc", this, GetType().GetMethod("DrawSpriteWithColor"));
         _lua.RegisterFunction("_cspr", this, GetType().GetMethod("DrawTexture"));
         _lua.RegisterFunction("_csprc", this, GetType().GetMethod("DrawTextureWithColor"));
         _lua.RegisterFunction("_cspre", this, GetType().GetMethod("DrawTextureWithEffect"));
@@ -88,16 +86,12 @@ public class LuaBinding
         _lua.RegisterFunction("_gdeltatime", this, GetType().GetMethod("GetDeltaTime"));
         _lua.RegisterFunction("_gelapsedtime", this, GetType().GetMethod("GetElapsedTime"));
 
-        //Flags
-        _lua.RegisterFunction("_gflag", this, GetType().GetMethod("GetFlag"));
-        _lua.RegisterFunction("_gflags", this, GetType().GetMethod("GetAllFlags"));
-        _lua.RegisterFunction("_sflag", this, GetType().GetMethod("SetFlag"));
-        _lua.RegisterFunction("_sflags", this, GetType().GetMethod("SetAllFlags"));
-
-        //Map
-        _lua.RegisterFunction("_mget", this, GetType().GetMethod("GetMapValue"));
-        _lua.RegisterFunction("_mset", this, GetType().GetMethod("SetMapValue"));
-        _lua.RegisterFunction("_map", this, GetType().GetMethod("DrawMap"));
+        // Grid
+        _lua.RegisterFunction("_creategrid", this, GetType().GetMethod("CreateGrid"));
+        _lua.RegisterFunction("_ggridbase64", this, GetType().GetMethod("GetBase64"));
+        _lua.RegisterFunction("_spixel", this, GetType().GetMethod("SetPixel"));
+        _lua.RegisterFunction("_gpixel", this, GetType().GetMethod("GetPixel"));
+        _lua.RegisterFunction("_cgridc", this, GetType().GetMethod("DrawCustomGrid"));
 
         try
         {
@@ -218,6 +212,35 @@ public class LuaBinding
         GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
         GFW.SpriteBatch.End();
         GFW.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
+    }
+    #endregion
+
+    #region GridFunctions
+    public static void CreateGrid(int index)
+    {
+        GameGrid.CreateGrid(index);
+    }
+
+    public static string GetBase64(int index)
+    {
+        return GameGrid.GetBase64(index);
+    }
+
+    public static void SetPixel(int index, int x, int y, int colorIndex = -1)
+    {
+        GameGrid.SetPixel(index,x,y,colorIndex);
+    }
+
+    public static int GetPixel(int index, int x, int y)
+    {
+        return GameGrid.GetPixel(index,x,y);
+    }
+
+    public static void DrawCustomGrid(
+        int index, int n, int x, int y, int scale, int colorIndex = 0, int transparency = 10, int w = 1, int h = 1,
+        bool flipX = false, bool flipY = false)
+    {
+        GameGrid.DrawCustomGrid(index,n,x,y, scale, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency), w,h,flipX,flipY);
     }
     #endregion
 
@@ -389,16 +412,6 @@ public class LuaBinding
         Font.DrawText(text, new Vector2(x, y), ColorUtils.GetColor(colorIndex), wraptext, wrapLimit);
     }
 
-    public static void DrawSprite(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
-    {
-        Sprites.DrawSprite(i, x, y, Color.White, w, h, flipX, flipY);
-    }
-
-    public static void DrawSpriteWithColor(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
-    {
-        Sprites.DrawSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
-    }
-
     public static void Camera(float x = 0.0f, float y = 0.0f)
     {
         Camera2D.Camera(x, y);
@@ -521,43 +534,6 @@ public class LuaBinding
     public static double GetElapsedTime()
     {
         return TimeUtils.ElapsedTime;
-    }
-    #endregion
-
-    #region MapFunctions
-    public static bool GetFlag(int tileIndex, int flag = -1)
-    {
-        return Map.FGet(tileIndex, flag);
-    }
-
-    public static byte GetAllFlags(int tileIndex)
-    {
-        return Map.FGetByte(tileIndex);
-    }
-
-    public static void SetFlag(int tileIndex, int flag, bool value)
-    {
-        Map.FSet(tileIndex, flag, value);
-    }
-
-    public static void SetAllFlags(int tileIndex, byte value)
-    {
-        Map.FSetByte(tileIndex, value);
-    }
-
-    public static int GetMapValue(int x, int y)
-    {
-        return Map.GetMapValue(x, y);
-    }
-
-    public static void SetMapValue(int x, int y, byte v)
-    {
-        Map.SetMapValue(x, y, v);
-    }
-    
-    public static void DrawMap(int tileSize, int colorIndex, int cel_x, int cel_y, int sx, int sy, int cel_w, int cel_h)
-    {
-        Map.DrawMap(tileSize, ColorUtils.GetColor(colorIndex), cel_x, cel_y, sx, sy, cel_w, cel_h);
     }
     #endregion
 

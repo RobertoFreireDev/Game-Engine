@@ -41,7 +41,7 @@ function new_button(i,s,c,t,x,y,x1,y1,w,h)
 	o.b = new_body(i,s,c,t,x,y,x1,y1,w,h)
 
 	function o:update() 
-		if _mouseclick(0) and o.b:contains(_mousepos()) then
+		if _mouseclickp(0) and o.b:contains(_mousepos()) then
 			o:clicked()
 		end
 	end
@@ -64,7 +64,7 @@ function new_colorbutton(c,x,y,x1,y1,w,h)
 	end
 
 	function o:update() 
-		if _mouseclick(0) and o:contains(_mousepos()) then
+		if _mouseclickp(0) and o:contains(_mousepos()) then
 			o:clicked()
 		end
 	end
