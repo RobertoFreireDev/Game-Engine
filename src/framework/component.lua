@@ -52,3 +52,26 @@ function new_button(s,c,t,x,y,x1,y1,w,h)
 		
 	return o
 end
+
+function new_colorbutton(c,x,y,x1,y1,w,h)
+	local o = {c=c,x=x,y=y,box={x=x1,y=y1,w=w,h=h}}
+
+	function o:contains(p)
+		local bx = o.x + o.box.x
+		local by = o.y + o.box.y
+		return p.x >= bx and p.x <= bx + o.box.w and
+		       p.y >= by and p.y <= by + o.box.h
+	end
+
+	function o:update() 
+		if _mouseclick(0) and o:contains(_mousepos()) then
+			o:clicked()
+		end
+	end
+		
+	function o:draw()
+		_rectfill(o.x + o.box.x,o.y + o.box.y,o.box.w,o.box.h,o.c)
+	end
+		
+	return o
+end
