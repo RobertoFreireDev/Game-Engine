@@ -19,10 +19,35 @@
 			o1y < o2y + o2.box.h and
 			o1y + b.box.h > o2y
 	end
+
+	function o:contains(p)
+		local b=self
+		local bx = b.x + b.box.x
+		local by = b.y + b.box.y
+		return p.x >= bx and p.x <= bx + b.box.w and
+		       p.y >= by and p.y <= by + b.box.h
+	end
 		
 	function o:draw()
 		local b=self
 		_csprc(b.s,b.x,b.y,b.c,b.t, 1, 1, false, false)
+	end
+		
+	return o
+end
+
+function new_button(s,c,t,x,y,x1,y1,w,h)
+	local o={}
+	o.b = new_body(s,c,t,x,y,x1,y1,w,h)
+
+	function o:update()            
+		if o.b:contains(_mousepos()) then
+			o:clicked()
+		end
+	end
+		
+	function o:draw()
+		o.b:draw()
 	end
 		
 	return o

@@ -25,7 +25,11 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 
 **Math:**
 
+- using lua library
+
 **Table:**
+
+- using lua library
 
 ### Key Number
 
