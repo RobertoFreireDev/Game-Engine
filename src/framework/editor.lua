@@ -15,9 +15,10 @@ end
 function _init()
     buttons = {}
     _texture(0,10,10,"iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAAXNSR0IArs4c6QAAAGBQTFRFAAAAIiA0RSg8Zjkxj1Y733Em2aBm7sOa+/I2meVQar4wN5RuS2kvUkskMjw5Pz90MGCCW27hY5v/X83ky9v8////m623hH6HaWpqWVZSdkKKrDIy2Vdj13u6j5dKim8w+2O8zwAAACB0Uk5TAP////////////////////////////////////////+Smq12AAAATElEQVRoge3SwQkAIQxFwTRh/60uSFYswC8eZvDgyUeIVXeMqe/RRldW7XikTzayTxJJ3IxUPLJ2sf+z45X/6WAEAAAAAAAAAAB42wdh2QY9AvdvoAAAAABJRU5ErkJggg==")
-    spritebutton = new_button(0,11,10,0,0,0,0,10,10)
+    _texture(1,100,100,"iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAAXNSR0IArs4c6QAAAGBQTFRFAAAAIiA0RSg8Zjkxj1Y733Em2aBm7sOa+/I2meVQar4wN5RuS2kvUkskMjw5Pz90MGCCW27hY5v/X83ky9v8////m623hH6HaWpqWVZSdkKKrDIy2Vdj13u6j5dKim8w+2O8zwAAACB0Uk5TAP////////////////////////////////////////+Smq12AAAAUUlEQVRoge3RMREAAAjEMFDw/t2iAo4hQ+cOqaR7uzqZ7C+SmwkTJkyYMGHChAkTJkyYMGHChAkTJkyYMGHChAkTJkyYMGHChAkTJkyYMHlpMh2+OJAFn+v0AAAAAElFTkSuQmCC")
+    spritebutton = new_button(0,0,11,10,0,0,0,0,10,10)
     spritebutton.clicked = function(o) change_state(spriteeditor) buttonSelected = o end
-    mapbutton = new_button(1,11,10,0,10,0,0,10,10)
+    mapbutton = new_button(0,1,11,10,0,10,0,0,10,10)
     mapbutton.clicked = function(o) change_state(mapeditor) buttonSelected = o end
     add(buttons,spritebutton)
     add(buttons,mapbutton)

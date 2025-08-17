@@ -7,7 +7,6 @@ grid_w, grid_h = 10, 10
 cell = 10             -- size of each cell in pixels
 origin_x, origin_y = 100, 20  -- top-left of grid on screen
 pixels = {}
-chessgrid = {} 
 
 function spriteeditor:init()
     collorButtons = {}
@@ -26,17 +25,6 @@ function spriteeditor:init()
         pixels[y] = {}
             for x=1,grid_w do
             pixels[y][x] = nil
-        end
-    end
-
-    for y=1,grid_h * 5 do
-        chessgrid[y] = {}
-        for x=1,grid_w * 5 do
-            if ((x + y) % 2 == 0) then
-                chessgrid[y][x] = 11
-            else
-                chessgrid[y][x] = 0
-            end
         end
     end
 end
@@ -61,17 +49,8 @@ function spriteeditor:draw()
         o:draw()
     end)
 
-    _rectfill(origin_x - 1, origin_y - 1,grid_w * cell + 2,grid_h * cell + 2, 0)
-    
-    for y=1,grid_h * 5 do
-        for x=1,grid_w * 5 do
-            local px = origin_x + (x-1)*(cell / 5)
-            local py = origin_y + (y-1)*(cell / 5)
-            if chessgrid[y][x] ~= nil then
-                _rectfill(px, py,(cell / 5),(cell / 5), chessgrid[y][x])
-            end
-        end
-    end
+    _rectfill(origin_x - 1, origin_y - 1,grid_w * cell + 2,grid_h * cell + 2, 0)    
+    _cspr(1,0,origin_x,origin_y)
 
     for y=1,grid_h do
         for x=1,grid_w do

@@ -24,4 +24,5 @@ public static class Constants
     public const int MaxSpeed = 32;
     public const int SpeedDigits = 2; // Look at MaxSpeed
     public const float SpeedSfx = 0.02f;
+    public const int MaxGameTextures = 256;
 }

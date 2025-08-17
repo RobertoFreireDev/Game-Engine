@@ -3,7 +3,7 @@ using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace blackbox.Graphics;
+namespace blackbox.Assets;
 
 public static class Sprites
 {

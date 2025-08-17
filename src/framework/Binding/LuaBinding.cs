@@ -188,7 +188,7 @@ public class LuaBinding
     {
         GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
     }
-
+   
     public static void DrawTextureWithColor(int index, int i, int x, int y, int colorIndex = 0, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
         GameImage.DrawCustomSprite(index, i, x, y, ColorUtils.GetColor(colorIndex, transparency), w, h, flipX, flipY);
@@ -201,7 +201,6 @@ public class LuaBinding
             return;
         }
         GFW.SpriteBatch.End();
-        var rectangle = GameImage.GameTexture[index].Bounds;
         var color = colorIndex < 0 ? new Vector4(1, 1, 1, 1) : ColorUtils.GetColor(colorIndex, transparency).ToVector4();
         GFW.CustomEffect.Parameters["Time"].SetValue((float)time);
         GFW.CustomEffect.Parameters["DistortX"].SetValue(SubstringToInt(parameters, 0, 1) * 0.01f);

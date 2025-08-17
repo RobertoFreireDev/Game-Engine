@@ -1,5 +1,5 @@
-﻿function new_body(s,c,t,x,y,x1,y1,w,h)
-	local o={s=s,c=c,t=t,x=x,y=y,box={x=x1,y=y1,w=w,h=h}}
+﻿function new_body(i,s,c,t,x,y,x1,y1,w,h)
+	local o={i=i,s=s,c=c,t=t,x=x,y=y,box={x=x1,y=y1,w=w,h=h}}
 		
 	function o:collides(dx,dy,o2)		
 		local b=self
@@ -30,15 +30,15 @@
 		
 	function o:draw()
 		local b=self
-		_csprc(0,b.s,b.x,b.y,b.c,b.t, 1, 1, false, false)
+		_csprc(b.i,b.s,b.x,b.y,b.c,b.t, 1, 1, false, false)
 	end
 		
 	return o
 end
 
-function new_button(s,c,t,x,y,x1,y1,w,h)
+function new_button(i,s,c,t,x,y,x1,y1,w,h)
 	local o={}
-	o.b = new_body(s,c,t,x,y,x1,y1,w,h)
+	o.b = new_body(i,s,c,t,x,y,x1,y1,w,h)
 
 	function o:update() 
 		if _mouseclick(0) and o.b:contains(_mousepos()) then
