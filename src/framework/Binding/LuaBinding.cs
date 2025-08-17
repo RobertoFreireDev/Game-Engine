@@ -88,6 +88,7 @@ public class LuaBinding
 
         // Grid
         _lua.RegisterFunction("_creategrid", this, GetType().GetMethod("CreateGrid"));
+        _lua.RegisterFunction("_cleargrid", this, GetType().GetMethod("ClearGrid"));
         _lua.RegisterFunction("_ggridbase64", this, GetType().GetMethod("GetBase64"));
         _lua.RegisterFunction("_spixel", this, GetType().GetMethod("SetPixel"));
         _lua.RegisterFunction("_gpixel", this, GetType().GetMethod("GetPixel"));
@@ -219,6 +220,11 @@ public class LuaBinding
     public static void CreateGrid(int index)
     {
         GameGrid.CreateGrid(index);
+    }
+
+    public static void ClearGrid(int index, int x, int y, int w, int h)
+    {
+        GameGrid.ClearGrid(index, x, y, w, h);
     }
 
     public static string GetBase64(int index)

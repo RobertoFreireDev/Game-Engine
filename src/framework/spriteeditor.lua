@@ -1,5 +1,7 @@
 ﻿spriteeditor={}
 collorButtons = {}
+paintbuttons = {}
+paintbuttonselected = nil
 selectedcolor = 0
 
 gridIndex, cell, grid_w, grid_h = 0, 10 , 10, 10
@@ -17,13 +19,20 @@ function spriteeditor:init()
         cbtn.clicked = function(o) selectedcolor = o.c  end 
         add(collorButtons,cbtn)
 	end
-
+    paintbuttons = {}
+    eraserbutton = new_button(0,10,12,10,20,20,0,0,10,10)
+    eraserbutton.clicked = function(o) paintbuttonselected = o selectedcolor = -1 end
+    add(paintbuttons,eraserbutton)
     _creategrid(gridIndex)
 end
 
 function spriteeditor:update()
     foreach(collorButtons, function(o)
         o:update()
+    end)
+    foreach(paintbuttons, function(o)
+        o:update()
+        o.b.c = paintbuttonselected == o and 13 or 12
     end)
 
     local mousepos = screen_to_grid(_mousepos())
@@ -38,6 +47,9 @@ function spriteeditor:draw()
     _rectfill(270-1,64-1,42,12,0)
     _rectfill(270,64,40,10,selectedcolor)
     foreach(collorButtons, function(o)
+        o:draw()
+    end)
+    foreach(paintbuttons, function(o)
         o:draw()
     end)
 

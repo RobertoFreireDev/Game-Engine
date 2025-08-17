@@ -27,7 +27,6 @@ public static class GameGrid
 {
     public static GameGridData[] GameGridData = new GameGridData[Constants.MaxGameGrids];
 
-
     public static void CreateGrid(int index)
     {
         if (index < 0 || index >= Constants.MaxGameGrids)
