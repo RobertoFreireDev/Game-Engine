@@ -26,6 +26,15 @@
     <PackageReference Include="NLua" Version="1.7.5" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="library.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="component.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="sprite.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="editor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
