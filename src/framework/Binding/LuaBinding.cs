@@ -172,11 +172,11 @@ public class LuaBinding
     }
 
     #region TextureFunctions
-    public static void LoadTextureFromBase64(int tileWidth, int tileHeight, string spriteBase64)
+    public static void LoadTextureFromBase64(int index, int tileWidth, int tileHeight, string spriteBase64)
     {
         try
         {
-            GameImage.LoadTexture(spriteBase64, tileWidth, tileHeight);
+            GameImage.LoadTexture(index, spriteBase64, tileWidth, tileHeight);
         }
         catch (Exception ex)
         {
@@ -184,24 +184,24 @@ public class LuaBinding
         }
     }
 
-    public static void DrawTexture(int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawTexture(int index, int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        Sprites.DrawCustomSprite(i, x, y, Color.White, w, h, flipX, flipY);
+        GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
     }
 
-    public static void DrawTextureWithColor(int i, int x, int y, int index, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawTextureWithColor(int index, int i, int x, int y, int colorIndex = 0, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        Sprites.DrawCustomSprite(i, x, y, ColorUtils.GetColor(index, transparency), w, h, flipX, flipY);
+        GameImage.DrawCustomSprite(index, i, x, y, ColorUtils.GetColor(colorIndex, transparency), w, h, flipX, flipY);
     }
 
-    public static void DrawTextureWithEffect(int i, int x, int y, double time, string parameters = "00000000", int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawTextureWithEffect(int index, int i, int x, int y, double time, string parameters = "00000000", int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
         if (string.IsNullOrWhiteSpace(parameters) || parameters.Length < 8)
         {
             return;
         }
         GFW.SpriteBatch.End();
-        var rectangle = GameImage.GameTexture.Bounds;
+        var rectangle = GameImage.GameTexture[index].Bounds;
         var color = colorIndex < 0 ? new Vector4(1, 1, 1, 1) : ColorUtils.GetColor(colorIndex, transparency).ToVector4();
         GFW.CustomEffect.Parameters["Time"].SetValue((float)time);
         GFW.CustomEffect.Parameters["DistortX"].SetValue(SubstringToInt(parameters, 0, 1) * 0.01f);
@@ -216,7 +216,7 @@ public class LuaBinding
         GFW.CustomEffect.Parameters["NoiseAmount"].SetValue(SubstringToInt(parameters, 7, 1) * 0.05f);
 
         GFW.SpriteBatch.Begin(effect: GFW.CustomEffect, samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
-        Sprites.DrawCustomSprite(i, x, y, Color.White, w, h, flipX, flipY);
+        GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
         GFW.SpriteBatch.End();
         GFW.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
     }
