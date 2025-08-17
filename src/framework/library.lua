@@ -1,4 +1,6 @@
-﻿function add(t, v, i)
+﻿-- Table functions
+
+function add(t, v, i)
   assert(type(t) == "table", "add: first argument must be a table")
   if v == nil then return nil end
   if i ~= nil then
@@ -16,4 +18,14 @@ function foreach(t, f)
   for i = 1, #t do
     f(t[i])
   end
+end
+
+-- Math functions
+
+function flr(x)
+    if x >= 0 then
+        return x - (x % 1)
+    else
+        return x - (1 + (x % 1)) % 1
+    end
 end

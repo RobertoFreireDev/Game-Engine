@@ -23,11 +23,9 @@ end
 
 function _update()
     state:update()
-    if _mouseclick(0) then
-        foreach(objects, function(o)
-            o:update()
-        end)
-    end
+    foreach(objects, function(o)
+        o:update()
+    end)
 end
 
 function _draw()

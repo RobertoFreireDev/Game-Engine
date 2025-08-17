@@ -40,8 +40,8 @@ function new_button(s,c,t,x,y,x1,y1,w,h)
 	local o={}
 	o.b = new_body(s,c,t,x,y,x1,y1,w,h)
 
-	function o:update()            
-		if o.b:contains(_mousepos()) then
+	function o:update() 
+		if _mouseclick(0) and o.b:contains(_mousepos()) then
 			o:clicked()
 		end
 	end
