@@ -1,7 +1,6 @@
 ﻿using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace blackbox.Assets;
 

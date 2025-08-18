@@ -31,6 +31,12 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 
 - using lua library
 
+**Shader:**
+
+add if else logic to frac()/loop image or not 
+
+-  float2 distortedUV = frac(uv + float2(waveX, waveY));
+
 ### Key Number
 
 | Key | Number | Description |
