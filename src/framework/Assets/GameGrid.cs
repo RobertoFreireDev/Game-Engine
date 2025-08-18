@@ -8,6 +8,7 @@ namespace blackbox.Assets;
 public class GameGridData
 {
     public int[,] GameGrid;
+    public Texture2D GameGridTexture;
     public int Columns;
     public int Rows;
     public int Size;
@@ -20,36 +21,13 @@ public class GameGridData
         Rows = Constants.GameGridHeight;
         Total = Columns * Rows;
         GameGrid = new int[Columns * Size, Rows * Size];
-    }
-}
-
-public static class GameGrid
-{
-    public static GameGridData[] GameGridData = new GameGridData[Constants.MaxGameGrids];
-
-    public static void CreateGrid(int index)
-    {
-        if (index < 0 || index >= Constants.MaxGameGrids)
-        {
-            return;
-        }
-
-        GameGridData[index] = new GameGridData();
-        ClearGrid(index,0,0, GameGridData[index].Size, GameGridData[index].Size);
+        ClearGrid(0, 0, Size, Size);
     }
 
-    public static void ClearGrid(int index, int x, int y, int w, int h)
+    public void ClearGrid(int x, int y, int w, int h)
     {
-        if (index < 0 || index >= Constants.MaxGameGrids)
-        {
-            return;
-        }
-
-        var gridData = GameGridData[index];
-        if (gridData == null) return;
-
-        int gridWidth = gridData.GameGrid.GetLength(0);
-        int gridHeight = gridData.GameGrid.GetLength(1);
+        int gridWidth = GameGrid.GetLength(0);
+        int gridHeight = GameGrid.GetLength(1);
 
         // Clamp the rectangle to the grid bounds
         int startX = Math.Max(0, x);
@@ -61,45 +39,78 @@ public static class GameGrid
         {
             for (int xx = startX; xx < endX; xx++)
             {
-                gridData.GameGrid[xx, yy] = -1;
+                GameGrid[xx, yy] = -1;
             }
         }
+
+        UpdateTexture2d();
     }
 
-    public static Texture2D GetTexture2d(int index)
+    public void SetPixel(int x, int y, int colorIndex = -1)
     {
-        if (index < 0 || index >= Constants.MaxGameGrids || GameGridData[index] is null)
+        GameGrid[y, x] = colorIndex;
+        UpdateTexture2d();
+    }
+
+    public void UpdateTexture2d()
+    {
+        GameGridTexture = TextureUtils.IntArrayToTexture2D(GameGrid);
+    }
+}
+
+public static class GameGrid
+{
+    public static GameGridData[] GameGridData = new GameGridData[Constants.MaxGameGrids];
+
+    public static void CreateGrid(int index)
+    {
+        if (!IsValidIndex(index))
         {
-            return null;
+            return;
         }
 
-        return TextureUtils.IntArrayToTexture2D(GameGridData[index].GameGrid);
+        GameGridData[index] = new GameGridData();
+    }
+
+    public static void ClearGrid(int index, int x, int y, int w, int h)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+
+        GameGridData[index].ClearGrid(x, y, w, h);
+    }
+
+    public static bool IsValidIndex(int index)
+    {
+        return index >= 0 && index < Constants.MaxGameGrids;
     }
 
     public static string GetBase64(int index)
     {
-        if (index < 0 || index >= Constants.MaxGameGrids || GameGridData[index] is null)
+        if (!IsValidIndex(index) || GameGridData[index] is null)
         {
             return string.Empty;
         }
 
-        return TextureUtils.TextureToBase64(GetTexture2d(index));
+        return TextureUtils.TextureToBase64(GameGridData[index].GameGridTexture);
     }
 
     public static void SetPixel(int index, int x, int y, int colorIndex = -1)
     {
-        if (index < 0 || index >= Constants.MaxGameGrids || GameGridData[index] is null ||
+        if (!IsValidIndex(index) || GameGridData[index] is null ||
             x < 0 || y < 0 || x >= GameGridData[index].Columns * GameGridData[index].Size || y >= GameGridData[index].Rows * GameGridData[index].Size)
         {
             return;
         }
 
-        GameGridData[index].GameGrid[y, x] = colorIndex;
+        GameGridData[index].SetPixel(x, y, colorIndex);
     }
 
     public static int GetPixel(int index, int x, int y)
     {
-        if (index < 0 || index >= Constants.MaxGameGrids || GameGridData[index] is null ||
+        if (!IsValidIndex(index) || GameGridData[index] is null ||
             x < 0 || y < 0 || x >= GameGridData[index].Columns * GameGridData[index].Size || y >= GameGridData[index].Rows * GameGridData[index].Size)
         {
             return -1;
@@ -112,12 +123,11 @@ public static class GameGrid
         int index, int n, int x, int y, int scale, Color color, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
-        var texture = GetTexture2d(index);
-
-        if (texture is null)
+        if (!IsValidIndex(index))
         {
             return;
         }
+
         var size = GameGridData[index].Size;
         var source = new Rectangle(
             (n % GameGridData[index].Columns) * size,
@@ -131,7 +141,7 @@ public static class GameGrid
         if (flipY) effects |= SpriteEffects.FlipVertically;
 
         GFW.SpriteBatch.Draw(
-            texture,
+            GameGridData[index].GameGridTexture,
             destination,
             source,
             color,

@@ -1,20 +1,17 @@
-﻿spriteeditor={}
-collorButtons = {}
-paintbuttons = {}
-paintbuttonselected = nil
+﻿spriteeditor,collorButtons,paintbuttons={},{},{}
 selectedcolor = 0
-
 gridIndex, cell, grid_w, grid_h = 0, 10 , 10, 10
 origin_x, origin_y = 100, 20  -- top-left of grid on screen
+eraserbutton = new_button(0,10,12,10,20,20,0,0,10,10)
+pixelbutton = new_button(0,11,12,10,30,20,0,0,10,10)
 
-function spriteeditor:init()
-    collorButtons = {}
+function createSpriteEditor()
     local x,y,size=270,20,10
     for i=0,15 do
-		local row = flr(i/4)
-		local col = i%4
-		local px = x + col*size
-		local py = y + row*size
+	    local row = flr(i/4)
+	    local col = i%4
+	    local px = x + col*size
+	    local py = y + row*size
         local cbtn = new_colorbutton(i,px,py,0,0,size,size)
         cbtn.clicked = function(o)
             if paintbuttonselected == eraserbutton then
@@ -23,11 +20,8 @@ function spriteeditor:init()
             selectedcolor = o.c  
         end 
         add(collorButtons,cbtn)
-	end
-    paintbuttons = {}
-    eraserbutton = new_button(0,10,12,10,20,20,0,0,10,10)
-    eraserbutton.clicked = function(o) paintbuttonselected = o selectedcolor = -1 end
-    pixelbutton = new_button(0,11,12,10,30,20,0,0,10,10)
+    end    
+    eraserbutton.clicked = function(o) paintbuttonselected = o selectedcolor = -1 end    
     pixelbutton.clicked = function(o) 
         paintbuttonselected = o
         if selectedcolor == -1 then
@@ -37,6 +31,12 @@ function spriteeditor:init()
     add(paintbuttons,eraserbutton)
     add(paintbuttons,pixelbutton)
     _creategrid(gridIndex)
+end
+
+createSpriteEditor()
+paintbuttonselected = pixelbutton
+
+function spriteeditor:init()
 end
 
 function spriteeditor:update()
