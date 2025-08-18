@@ -16,13 +16,26 @@ function spriteeditor:init()
 		local px = x + col*size
 		local py = y + row*size
         local cbtn = new_colorbutton(i,px,py,0,0,size,size)
-        cbtn.clicked = function(o) selectedcolor = o.c  end 
+        cbtn.clicked = function(o)
+            if paintbuttonselected == eraserbutton then
+                return
+            end
+            selectedcolor = o.c  
+        end 
         add(collorButtons,cbtn)
 	end
     paintbuttons = {}
     eraserbutton = new_button(0,10,12,10,20,20,0,0,10,10)
     eraserbutton.clicked = function(o) paintbuttonselected = o selectedcolor = -1 end
+    pixelbutton = new_button(0,11,12,10,30,20,0,0,10,10)
+    pixelbutton.clicked = function(o) 
+        paintbuttonselected = o
+        if selectedcolor == -1 then
+            selectedcolor = 0
+        end
+    end
     add(paintbuttons,eraserbutton)
+    add(paintbuttons,pixelbutton)
     _creategrid(gridIndex)
 end
 
@@ -45,6 +58,7 @@ function spriteeditor:draw()
     _rectfill(10,10,310,170,11)
     _rectfill(270-1,20-1,42,42,0)
     _rectfill(270-1,64-1,42,12,0)
+    _cspr(1,0,270,64,4,1)
     _rectfill(270,64,40,10,selectedcolor)
     foreach(collorButtons, function(o)
         o:draw()
@@ -54,7 +68,7 @@ function spriteeditor:draw()
     end)
 
     _rectfill(origin_x - 1, origin_y - 1,grid_w * cell + 2,grid_h * cell + 2, 0)    
-    _cspr(1,0,origin_x,origin_y)
+    _cspr(1,0,origin_x,origin_y,10,10)
     _cgridc(gridIndex,0,origin_x,origin_y,cell,-1,10,1,1,false,false)
 end
 

@@ -44,7 +44,7 @@ public static class ColorUtils
 
     public static Color GetColor(int Color, int transparency = 10)
     {
-        transparency = Math.Clamp(transparency, 0, 10);
+        transparency = Math.Clamp(transparency, -1, 10);
         switch (Color)
         {
             case 0:

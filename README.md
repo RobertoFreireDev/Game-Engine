@@ -37,6 +37,10 @@ add if else logic to frac()/loop image or not
 
 -  float2 distortedUV = frac(uv + float2(waveX, waveY));
 
+**Editor:**
+
+- use map to draw all the background instead of using texture base64
+
 ### Key Number
 
 | Key | Number | Description |
