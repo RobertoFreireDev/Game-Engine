@@ -6,6 +6,9 @@ local sprites_x, sprites_y = 15,135
 local origin_x, origin_y = 150, 5
 local pixelbutton = new_button(0,11,12,10,sprite_x,65,0,0,10,10)
 local eraserbutton = new_button(0,10,12,10,sprite_x+10,65,0,0,10,10)
+local sprites_w,sprites_h,sprites_cell=30,4,10
+local spriteNumber = 0
+
 function createSpriteEditor()
     local x,y,size=sprite_x,origin_y,10
     for i=0,15 do
@@ -48,9 +51,17 @@ function spriteeditor:update()
         o.b.c = paintbuttonselected == o and 13 or 12
     end)
 
-    local mousepos = screen_to_grid(_mousepos())
-    if _mouseclick(0) and mousepos.x and mousepos.y then
-        _spixel(mousepos.x,mousepos.y,selectedcolor)
+    if _mouseclick(0) then
+        local mousepos = _mousepos()
+        local gridpos = screen_to_grid(mousepos,origin_x, origin_y, grid_w, grid_h, cell)
+        if gridpos.x and gridpos.y then
+            _spixel(gridpos.x,gridpos.y,selectedcolor)
+        else
+            local spritespos = screen_to_grid(mousepos,sprites_x, sprites_y, sprites_w, sprites_h, sprites_cell)
+            if spritespos.x and spritespos.y then
+                spriteNumber = flr(spritespos.x + spritespos.y * sprites_w)
+            end
+        end
     end
 end
 
@@ -71,16 +82,24 @@ function spriteeditor:draw()
     _csprc(1,0,origin_x,origin_y,3,2,cell,cell)
     _cgridc(0,origin_x,origin_y,cell,-1,10,1,1,false,false)
 
-    _rectfill(sprites_x - 1, sprites_y - 1,300 + 2,40 + 2, 0)
-    _csprc(1,0,sprites_x,sprites_y,3,2,30,4)
-    _cgridc(0,sprites_x,sprites_y,1,-1,10,30,4,false,false)
+    _rectfill(sprites_x - 1, sprites_y - 1,sprites_w*sprites_cell + 2,sprites_h*sprites_cell + 2, 0)
+    _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)
+    _cgridc(0,sprites_x,sprites_y,1,-1,10,sprites_w,sprites_h,false,false)
+    _print(tostring(spriteNumber),origin_x,sprites_y - 8, 1)
+    drawrectsprite()
 end
 
-function screen_to_grid(p)
-    local gx = flr((p.x - origin_x) / cell)
-    local gy = flr((p.y - origin_y) / cell)
+function drawrectsprite()       
+    local x = (spriteNumber  % sprites_w) * sprites_cell
+    local y = flr(spriteNumber / sprites_w) * sprites_cell 
+    _rect(sprites_x + x,sprites_y + y,sprites_cell,sprites_cell,1)
+end
 
-    if gx < 0 or gx > grid_w or gy < 0 or gy > grid_h then
+function screen_to_grid(p,x,y,w,h,s) 
+    local gx = flr((p.x - x) / s)
+    local gy = flr((p.y - y) / s)
+
+    if gx < 0 or gx >= w or gy < 0 or gy >= h then
         return { x=nil, y=nil}
     end
 

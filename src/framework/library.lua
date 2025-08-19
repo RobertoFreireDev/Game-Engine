@@ -23,9 +23,5 @@ end
 -- Math functions
 
 function flr(x)
-    if x >= 0 then
-        return x - (x % 1)
-    else
-        return x - (1 + (x % 1)) % 1
-    end
+    return math.floor(x)
 end
