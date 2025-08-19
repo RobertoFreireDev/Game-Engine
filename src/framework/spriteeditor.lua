@@ -1,12 +1,13 @@
 ﻿local spriteeditor,collorButtons,paintbuttons={},{},{}
 local selectedcolor = 0
-local cell, grid_w, grid_h = 10 , 10, 10
-local origin_x, origin_y = 100, 20
-local eraserbutton = new_button(0,10,12,10,20,20,0,0,10,10)
-local pixelbutton = new_button(0,11,12,10,30,20,0,0,10,10)
-
+local cell, grid_w, grid_h = 12 , 10, 10
+local sprite_x = 275
+local sprites_x, sprites_y = 15,135
+local origin_x, origin_y = 150, 5
+local pixelbutton = new_button(0,11,12,10,sprite_x,65,0,0,10,10)
+local eraserbutton = new_button(0,10,12,10,sprite_x+10,65,0,0,10,10)
 function createSpriteEditor()
-    local x,y,size=270,20,10
+    local x,y,size=sprite_x,origin_y,10
     for i=0,15 do
 	    local row = flr(i/4)
 	    local col = i%4
@@ -54,11 +55,11 @@ function spriteeditor:update()
 end
 
 function spriteeditor:draw()
-    _rectfill(10,10,310,170,11)
-    _rectfill(270-1,20-1,42,42,0)
-    _rectfill(270-1,64-1,42,12,0)
-    _csprc(1,0,270,64,3,2,4,1)
-    _rectfill(270,64,40,10,selectedcolor)
+    _rectfill(10,0,310,180,11)
+    _rectfill(sprite_x-1,origin_y-1,42,42,0)
+    _rectfill(sprite_x-1,49-1,42,12,0)
+    _csprc(1,0,sprite_x,49,3,2,4,1)
+    _rectfill(sprite_x,49,40,10,selectedcolor)
     foreach(collorButtons, function(o)
         o:draw()
     end)
@@ -67,9 +68,12 @@ function spriteeditor:draw()
     end)
 
     _rectfill(origin_x - 1, origin_y - 1,grid_w * cell + 2,grid_h * cell + 2, 0)    
-    _csprc(1,0,origin_x,origin_y,3,2,10,10)
+    _csprc(1,0,origin_x,origin_y,3,2,cell,cell)
     _cgridc(0,origin_x,origin_y,cell,-1,10,1,1,false,false)
-    _print("Sprite Editor", 12, 2, 11)
+
+    _rectfill(sprites_x - 1, sprites_y - 1,300 + 2,40 + 2, 0)
+    _csprc(1,0,sprites_x,sprites_y,3,2,30,4)
+    _cgridc(0,sprites_x,sprites_y,1,-1,10,30,4,false,false)
 end
 
 function screen_to_grid(p)

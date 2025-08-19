@@ -17,29 +17,32 @@ public static class GameGrid
     public static void Create()
     {
         Data = new int[Columns * Size, Rows * Size];
-        ClearGrid(0, 0, Size, Size);
+        ClearGrid(0, 0, Columns * Size, Rows * Size);
     }
 
     public static void ClearGrid(int x, int y, int w, int h)
     {
-        int gridWidth = Data.GetLength(0);
-        int gridHeight = Data.GetLength(1);
+        var (x1, y1, x2, y2) = ClampToBounds(x, y, w, h);
 
-        // Clamp the rectangle to the grid bounds
-        int startX = Math.Max(0, x);
-        int startY = Math.Max(0, y);
-        int endX = Math.Min(gridWidth, x + w);
-        int endY = Math.Min(gridHeight, y + h);
-
-        for (int yy = startY; yy < endY; yy++)
+        for (int yy = y1; yy < y2; yy++)
         {
-            for (int xx = startX; xx < endX; xx++)
+            for (int xx = x1; xx < x2; xx++)
             {
                 Data[xx, yy] = -1;
             }
         }
 
         UpdateTexture2d();
+    }
+
+    public static (int x1, int y1, int x2, int y2) ClampToBounds(int x, int y, int w, int h)
+    {
+        return (
+                Math.Max(0, x),
+                Math.Max(0, y),
+                Math.Min(Columns * Size, x + w),
+                Math.Min(Rows * Size, y + h)
+            );
     }
 
     public static void SetPixel(int x, int y, int colorIndex)
@@ -81,12 +84,16 @@ public static class GameGrid
         int n, int x, int y, int scale, Color color, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
+        // TO DO: Clamp in boundaries
+
         var source = new Rectangle(
             (n % Columns) * Size,
             (n / Columns) * Size,
             w * Size,
             h * Size);
-        var destination = new Rectangle(x, y, w * Size * scale, h * Size * scale);
+        var destination = new Rectangle(x, y, 
+            w * Size * scale, 
+            h * Size * scale);
         SpriteEffects effects = SpriteEffects.None;
         if (flipX) effects |= SpriteEffects.FlipHorizontally;
         if (flipY) effects |= SpriteEffects.FlipVertically;
