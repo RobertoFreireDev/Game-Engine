@@ -1,6 +1,6 @@
 ﻿local spriteeditor,collorButtons,paintbuttons={},{},{}
 local selectedcolor = 0
-local gridIndex, cell, grid_w, grid_h = 0, 10 , 10, 10
+local cell, grid_w, grid_h = 10 , 10, 10
 local origin_x, origin_y = 100, 20
 local eraserbutton = new_button(0,10,12,10,20,20,0,0,10,10)
 local pixelbutton = new_button(0,11,12,10,30,20,0,0,10,10)
@@ -30,7 +30,6 @@ function createSpriteEditor()
     end
     add(paintbuttons,eraserbutton)
     add(paintbuttons,pixelbutton)
-    _creategrid(gridIndex)
 end
 
 createSpriteEditor()
@@ -50,7 +49,7 @@ function spriteeditor:update()
 
     local mousepos = screen_to_grid(_mousepos())
     if _mouseclick(0) and mousepos.x and mousepos.y then
-        _spixel(gridIndex,mousepos.x,mousepos.y,selectedcolor)
+        _spixel(mousepos.x,mousepos.y,selectedcolor)
     end
 end
 
@@ -69,7 +68,7 @@ function spriteeditor:draw()
 
     _rectfill(origin_x - 1, origin_y - 1,grid_w * cell + 2,grid_h * cell + 2, 0)    
     _csprc(1,0,origin_x,origin_y,3,2,10,10)
-    _cgridc(gridIndex,0,origin_x,origin_y,cell,-1,10,1,1,false,false)
+    _cgridc(0,origin_x,origin_y,cell,-1,10,1,1,false,false)
     _print("Sprite Editor", 12, 2, 11)
 end
 

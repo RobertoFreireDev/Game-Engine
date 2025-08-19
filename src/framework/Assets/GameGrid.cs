@@ -5,29 +5,25 @@ using System;
 
 namespace blackbox.Assets;
 
-public class GameGridData
+public static class GameGrid
 {
-    public int[,] GameGrid;
-    public Texture2D GameGridTexture;
-    public int Columns;
-    public int Rows;
-    public int Size;
-    public int Total;
+    public static int[,] Data;
+    public static Texture2D Texture;
+    public static int Columns = Constants.GameGridWidth;
+    public static int Rows = Constants.GameGridHeight;
+    public static int Size = Constants.GameGridSize;
+    public static int Total = Columns * Rows;
 
-    public GameGridData()
+    public static void Create()
     {
-        Size = Constants.GameGridSize;
-        Columns = Constants.GameGridWidth;
-        Rows = Constants.GameGridHeight;
-        Total = Columns * Rows;
-        GameGrid = new int[Columns * Size, Rows * Size];
+        Data = new int[Columns * Size, Rows * Size];
         ClearGrid(0, 0, Size, Size);
     }
 
-    public void ClearGrid(int x, int y, int w, int h)
+    public static void ClearGrid(int x, int y, int w, int h)
     {
-        int gridWidth = GameGrid.GetLength(0);
-        int gridHeight = GameGrid.GetLength(1);
+        int gridWidth = Data.GetLength(0);
+        int gridHeight = Data.GetLength(1);
 
         // Clamp the rectangle to the grid bounds
         int startX = Math.Max(0, x);
@@ -39,109 +35,64 @@ public class GameGridData
         {
             for (int xx = startX; xx < endX; xx++)
             {
-                GameGrid[xx, yy] = -1;
+                Data[xx, yy] = -1;
             }
         }
 
         UpdateTexture2d();
     }
 
-    public void SetPixel(int x, int y, int colorIndex = -1)
+    public static void SetPixel(int x, int y, int colorIndex)
     {
-        GameGrid[y, x] = colorIndex;
+        if (InvalidGridPos(x, y))
+        {
+            return;
+        }
+        Data[y, x] = colorIndex;
         UpdateTexture2d();
     }
 
-    public void UpdateTexture2d()
+    public static bool InvalidGridPos(int x, int y)
     {
-        GameGridTexture = TextureUtils.IntArrayToTexture2D(GameGrid);
-    }
-}
-
-public static class GameGrid
-{
-    public static GameGridData[] GameGridData = new GameGridData[Constants.MaxGameGrids];
-
-    public static void CreateGrid(int index)
-    {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GameGridData[index] = new GameGridData();
+        return x < 0 || y < 0 || x >= Columns * Size || y >= Rows * Size;
     }
 
-    public static void ClearGrid(int index, int x, int y, int w, int h)
+    public static void UpdateTexture2d()
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GameGridData[index].ClearGrid(x, y, w, h);
+        Texture = TextureUtils.IntArrayToTexture2D(Data);
     }
 
-    public static bool IsValidIndex(int index)
+    public static string GetBase64()
     {
-        return index >= 0 && index < Constants.MaxGameGrids;
+        return TextureUtils.TextureToBase64(Texture);
     }
 
-    public static string GetBase64(int index)
+    public static int GetPixel(int x, int y)
     {
-        if (!IsValidIndex(index) || GameGridData[index] is null)
-        {
-            return string.Empty;
-        }
-
-        return TextureUtils.TextureToBase64(GameGridData[index].GameGridTexture);
-    }
-
-    public static void SetPixel(int index, int x, int y, int colorIndex = -1)
-    {
-        if (!IsValidIndex(index) || GameGridData[index] is null ||
-            x < 0 || y < 0 || x >= GameGridData[index].Columns * GameGridData[index].Size || y >= GameGridData[index].Rows * GameGridData[index].Size)
-        {
-            return;
-        }
-
-        GameGridData[index].SetPixel(x, y, colorIndex);
-    }
-
-    public static int GetPixel(int index, int x, int y)
-    {
-        if (!IsValidIndex(index) || GameGridData[index] is null ||
-            x < 0 || y < 0 || x >= GameGridData[index].Columns * GameGridData[index].Size || y >= GameGridData[index].Rows * GameGridData[index].Size)
+        if (InvalidGridPos(x, y))
         {
             return -1;
         }
 
-        return GameGridData[index].GameGrid[y, x];
+        return Data[y, x];
     }
 
     public static void DrawCustomGrid(
-        int index, int n, int x, int y, int scale, Color color, int w = 1, int h = 1,
+        int n, int x, int y, int scale, Color color, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        var size = GameGridData[index].Size;
         var source = new Rectangle(
-            (n % GameGridData[index].Columns) * size,
-            (n / GameGridData[index].Columns) * size,
-        w * size,
-            h * size);
-        var destination = new Rectangle(x, y, w * size * scale, h * size * scale);
-
+            (n % Columns) * Size,
+            (n / Columns) * Size,
+            w * Size,
+            h * Size);
+        var destination = new Rectangle(x, y, w * Size * scale, h * Size * scale);
         SpriteEffects effects = SpriteEffects.None;
         if (flipX) effects |= SpriteEffects.FlipHorizontally;
         if (flipY) effects |= SpriteEffects.FlipVertically;
 
         GFW.SpriteBatch.Draw(
-            GameGridData[index].GameGridTexture,
+            Texture,
             destination,
             source,
             color,

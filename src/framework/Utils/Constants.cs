@@ -25,7 +25,6 @@ public static class Constants
     public const int SpeedDigits = 2; // Look at MaxSpeed
     public const float SpeedSfx = 0.02f;
     public const int MaxGameTextures = 256;
-    public const int MaxGameGrids = 64;
     public const int GameGridSize = 10;
     public const int GameGridWidth = 64;
     public const int GameGridHeight = 4;

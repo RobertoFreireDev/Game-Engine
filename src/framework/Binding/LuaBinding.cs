@@ -87,7 +87,6 @@ public class LuaBinding
         _lua.RegisterFunction("_gelapsedtime", this, GetType().GetMethod("GetElapsedTime"));
 
         // Grid
-        _lua.RegisterFunction("_creategrid", this, GetType().GetMethod("CreateGrid"));
         _lua.RegisterFunction("_cleargrid", this, GetType().GetMethod("ClearGrid"));
         _lua.RegisterFunction("_ggridbase64", this, GetType().GetMethod("GetBase64"));
         _lua.RegisterFunction("_spixel", this, GetType().GetMethod("SetPixel"));
@@ -96,6 +95,7 @@ public class LuaBinding
 
         try
         {
+            GameGrid.Create();
             _lua.DoString(script, _scriptName);
         }
         catch (Exception ex)
@@ -217,36 +217,31 @@ public class LuaBinding
     #endregion
 
     #region GridFunctions
-    public static void CreateGrid(int index)
+    public static void ClearGrid(int x, int y, int w, int h)
     {
-        GameGrid.CreateGrid(index);
+        GameGrid.ClearGrid(x, y, w, h);
     }
 
-    public static void ClearGrid(int index, int x, int y, int w, int h)
+    public static string GetBase64()
     {
-        GameGrid.ClearGrid(index, x, y, w, h);
+        return GameGrid.GetBase64();
     }
 
-    public static string GetBase64(int index)
+    public static void SetPixel(int x, int y, int colorIndex = -1)
     {
-        return GameGrid.GetBase64(index);
+        GameGrid.SetPixel(x,y,colorIndex);
     }
 
-    public static void SetPixel(int index, int x, int y, int colorIndex = -1)
+    public static int GetPixel(int x, int y)
     {
-        GameGrid.SetPixel(index,x,y,colorIndex);
-    }
-
-    public static int GetPixel(int index, int x, int y)
-    {
-        return GameGrid.GetPixel(index,x,y);
+        return GameGrid.GetPixel(x,y);
     }
 
     public static void DrawCustomGrid(
-        int index, int n, int x, int y, int scale, int colorIndex = 0, int transparency = 10, int w = 1, int h = 1,
+        int n, int x, int y, int scale, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
-        GameGrid.DrawCustomGrid(index,n,x,y, scale, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency), w,h,flipX,flipY);
+        GameGrid.DrawCustomGrid(n,x,y, scale, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency), w,h,flipX,flipY);
     }
     #endregion
 
