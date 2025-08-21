@@ -8,6 +8,7 @@ local pixelbutton = new_button(0,11,12,10,sprite_x,65,0,0,10,10)
 local eraserbutton = new_button(0,10,12,10,sprite_x+10,65,0,0,10,10)
 local sprites_w,sprites_h,sprites_cell=30,4,10
 local spriteNumber = 0
+local pageNumber = 0
 
 function createSpriteEditor()
     local x,y,size=sprite_x,origin_y,10
@@ -51,6 +52,13 @@ function spriteeditor:update()
         o.b.c = paintbuttonselected == o and 13 or 12
     end)
 
+    if _btnp(_keys.S) then
+        pageNumber = clamp(0,pageNumber + 1,6)
+    end
+    if _btnp(_keys.W) then
+        pageNumber = clamp(0,pageNumber - 1,6)
+    end
+
     if _mouseclick(0) then
         local mousepos = _mousepos()
         local gridpos = screen_to_grid(mousepos,origin_x, origin_y, grid_w, grid_h, cell)
@@ -62,7 +70,7 @@ function spriteeditor:update()
         else
             local spritespos = screen_to_grid(mousepos,sprites_x, sprites_y, sprites_w, sprites_h, sprites_cell)
             if spritespos.x and spritespos.y then
-                spriteNumber = flr(spritespos.x + spritespos.y * sprites_w)
+                spriteNumber = pageNumber*sprites_w*sprites_h + flr(spritespos.x + spritespos.y * sprites_w)
             end
         end
     end
@@ -83,18 +91,24 @@ function spriteeditor:draw()
 
     _rectfill(origin_x - 1, origin_y - 1,grid_w * cell + 2,grid_h * cell + 2, 0)    
     _csprc(1,0,origin_x,origin_y,3,2,cell,cell)
-    _cgridc(spriteNumber,origin_x,origin_y,cell,-1,10,1,1,false,false)
+    _cgridc(spriteNumber,origin_x,origin_y,cell,-1,10,1,1,false,false)    
 
+    
+    _print("SPR#:"..tostring(spriteNumber),origin_x,sprites_y - 8, 1)
+    _print("PAG#:"..tostring(pageNumber),origin_x + 40,sprites_y - 8, 1)
     _rectfill(sprites_x - 1, sprites_y - 1,sprites_w*sprites_cell + 2,sprites_h*sprites_cell + 2, 0)
-    _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)
-    _cgridc(0,sprites_x,sprites_y,1,-1,10,sprites_w,sprites_h,false,false)
-    _print(tostring(spriteNumber),origin_x,sprites_y - 8, 1)
-    drawrectsprite()
+    _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)     
+    _cgridc(pageNumber*sprites_w*sprites_h,sprites_x,sprites_y,1,-1,10,sprites_w,sprites_h,false,false)
+    drawSelectedRec()
 end
 
-function drawrectsprite()       
-    local x = (spriteNumber  % sprites_w) * sprites_cell
-    local y = flr(spriteNumber / sprites_w) * sprites_cell 
+function drawSelectedRec()
+    if spriteNumber < pageNumber*sprites_w*sprites_h or spriteNumber >= (pageNumber+1)*sprites_w*sprites_h  then
+        return
+    end
+    local sn = spriteNumber - pageNumber*sprites_w*sprites_h
+    local x = (sn  % sprites_w) * sprites_cell
+    local y = flr(sn / sprites_w) * sprites_cell
     _rect(sprites_x + x,sprites_y + y,sprites_cell,sprites_cell,1)
 end
 

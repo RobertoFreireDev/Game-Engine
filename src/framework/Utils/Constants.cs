@@ -27,5 +27,5 @@ public static class Constants
     public const int MaxGameTextures = 256;
     public const int GameGridSize = 10;
     public const int GameGridWidth = 30;
-    public const int GameGridHeight = 4;
+    public const int GameGridHeight = 32;
 }
