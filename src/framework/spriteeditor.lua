@@ -54,8 +54,11 @@ function spriteeditor:update()
     if _mouseclick(0) then
         local mousepos = _mousepos()
         local gridpos = screen_to_grid(mousepos,origin_x, origin_y, grid_w, grid_h, cell)
-        if gridpos.x and gridpos.y then
-            _spixel(gridpos.x,gridpos.y,selectedcolor)
+        if gridpos.x and gridpos.y then            
+            _spixel(
+                (spriteNumber  % sprites_w) * sprites_cell + gridpos.x,
+                flr(spriteNumber / sprites_w) * sprites_cell + gridpos.y,
+                selectedcolor)
         else
             local spritespos = screen_to_grid(mousepos,sprites_x, sprites_y, sprites_w, sprites_h, sprites_cell)
             if spritespos.x and spritespos.y then
@@ -80,7 +83,7 @@ function spriteeditor:draw()
 
     _rectfill(origin_x - 1, origin_y - 1,grid_w * cell + 2,grid_h * cell + 2, 0)    
     _csprc(1,0,origin_x,origin_y,3,2,cell,cell)
-    _cgridc(0,origin_x,origin_y,cell,-1,10,1,1,false,false)
+    _cgridc(spriteNumber,origin_x,origin_y,cell,-1,10,1,1,false,false)
 
     _rectfill(sprites_x - 1, sprites_y - 1,sprites_w*sprites_cell + 2,sprites_h*sprites_cell + 2, 0)
     _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)

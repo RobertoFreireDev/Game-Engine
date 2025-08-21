@@ -16,8 +16,8 @@ public static class GameGrid
 
     public static void Create()
     {
-        Data = new int[Columns * Size, Rows * Size];
-        ClearGrid(0, 0, Columns * Size, Rows * Size);
+        Data = new int[Rows * Size, Columns * Size];
+        ClearGrid(0, 0, Rows * Size, Columns * Size);
     }
 
     public static void ClearGrid(int x, int y, int w, int h)
@@ -28,7 +28,7 @@ public static class GameGrid
         {
             for (int xx = x1; xx < x2; xx++)
             {
-                Data[xx, yy] = -1;
+                Data[yy, xx] = -1;
             }
         }
 
@@ -40,8 +40,8 @@ public static class GameGrid
         return (
                 Math.Max(0, x),
                 Math.Max(0, y),
-                Math.Min(Columns * Size, x + w),
-                Math.Min(Rows * Size, y + h)
+                Math.Min(Columns * Size, y + h),
+                Math.Min(Rows * Size, x + w)    
             );
     }
 
