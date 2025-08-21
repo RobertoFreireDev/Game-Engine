@@ -12,17 +12,10 @@ function mapeditor:update()
     if _mouseclick(0) then
         local mousepos = _mousepos()
         local spritespos = screen_to_grid(mousepos,sprites_x, sprites_y, sprites_w, sprites_h, sprites_cell)
-        if spritespos.x and spritespos.y then
-            spriteNumber = pageNumber*sprites_w*sprites_h + flr(spritespos.x + spritespos.y * sprites_w)
-        end
+        spriteNumber = updateSpriteNumber(spritespos,spriteNumber,pageNumber,sprites_w,sprites_h)
     end
 
-    if _btnp(_keys.S) then
-        pageNumber = clamp(0,pageNumber + 1,6)
-    end
-    if _btnp(_keys.W) then
-        pageNumber = clamp(0,pageNumber - 1,6)
-    end
+    pageNumber = movepage(pageNumber)
 end
 
 function mapeditor:draw()

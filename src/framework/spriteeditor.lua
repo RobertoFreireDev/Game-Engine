@@ -52,12 +52,7 @@ function spriteeditor:update()
         o.b.c = paintbuttonselected == o and 13 or 12
     end)
 
-    if _btnp(_keys.S) then
-        pageNumber = clamp(0,pageNumber + 1,6)
-    end
-    if _btnp(_keys.W) then
-        pageNumber = clamp(0,pageNumber - 1,6)
-    end
+    pageNumber = movepage(pageNumber)
 
     if _mouseclick(0) then
         local mousepos = _mousepos()
@@ -69,9 +64,7 @@ function spriteeditor:update()
                 selectedcolor)
         else
             local spritespos = screen_to_grid(mousepos,sprites_x, sprites_y, sprites_w, sprites_h, sprites_cell)
-            if spritespos.x and spritespos.y then
-                spriteNumber = pageNumber*sprites_w*sprites_h + flr(spritespos.x + spritespos.y * sprites_w)
-            end
+            spriteNumber = updateSpriteNumber(spritespos,spriteNumber,pageNumber,sprites_w,sprites_h)
         end
     end
 end
@@ -99,6 +92,24 @@ function spriteeditor:draw()
     _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)     
     _cgridc(pageNumber*sprites_w*sprites_h,sprites_x,sprites_y,1,-1,10,sprites_w,sprites_h,false,false)
     drawSelectedRec(spriteNumber, pageNumber, sprites_w, sprites_h, sprites_x, sprites_y, sprites_cell)
+end
+
+function updateSpriteNumber(sp,sn,pn,w,h)
+    if sp.x and sp.y then
+        sn = pn*w*h + flr(sp.x + sp.y*w)
+    end
+    return sn
+end
+
+function movepage(pn)
+    if _btnp(_keys.S) then
+        pn = clamp(0,pn + 1,6)
+    end
+    if _btnp(_keys.W) then
+        pn = clamp(0,pn - 1,6)
+    end
+
+    return pn
 end
 
 function drawPageSpriteNumbers(sn,pn,x,y)
