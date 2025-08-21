@@ -93,15 +93,19 @@ function spriteeditor:draw()
     _csprc(1,0,origin_x,origin_y,3,2,cell,cell)
     _cgridc(spriteNumber,origin_x,origin_y,cell,-1,10,1,1,false,false)    
 
+    drawPageSpriteNumbers(spriteNumber,pageNumber,sprites_x,sprites_y)
     
-    _print("SPR#:",origin_x,sprites_y - 8, 12)
-    _print(tostring(spriteNumber),origin_x + 20,sprites_y - 8, 1)
-    _print("PAG#:",origin_x + 40,sprites_y - 8, 12)
-    _print(tostring(pageNumber),origin_x + 60,sprites_y - 8, 1)
     _rectfill(sprites_x - 1, sprites_y - 1,sprites_w*sprites_cell + 2,sprites_h*sprites_cell + 2, 0)
     _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)     
     _cgridc(pageNumber*sprites_w*sprites_h,sprites_x,sprites_y,1,-1,10,sprites_w,sprites_h,false,false)
     drawSelectedRec(spriteNumber, pageNumber, sprites_w, sprites_h, sprites_x, sprites_y, sprites_cell)
+end
+
+function drawPageSpriteNumbers(sn,pn,x,y)
+    _print("SPR#:",x,y - 8, 12)
+    _print(tostring(sn),x + 20,y - 8, 1)
+    _print("PAG#:",x + 40,y - 8, 12)
+    _print(tostring(pn),x + 60,y - 8, 1)
 end
 
 function drawSelectedRec(sn,pn,w,h,sx,sy,sc)

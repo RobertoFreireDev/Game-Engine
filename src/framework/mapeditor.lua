@@ -30,10 +30,7 @@ function mapeditor:draw()
     _rectfill(map_x - 1, map_y - 1,30*10 + 2,110 + 2, 0)
     _csprc(1,0,map_x,map_y,3,2,30,11)
     
-    _print("SPR#:",sprites_x,sprites_y - 8, 12)
-    _print(tostring(spriteNumber),sprites_x + 20,sprites_y - 8, 1)
-    _print("PAG#:",sprites_x + 40,sprites_y - 8, 12)
-    _print(tostring(pageNumber),sprites_x + 60,sprites_y - 8, 1)
+    drawPageSpriteNumbers(spriteNumber,pageNumber,sprites_x,sprites_y)
 
     _rectfill(sprites_x - 1, sprites_y - 1,sprites_w*10 + 2,sprites_h*10 + 2, 0)
     _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)
