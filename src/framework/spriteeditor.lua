@@ -94,22 +94,24 @@ function spriteeditor:draw()
     _cgridc(spriteNumber,origin_x,origin_y,cell,-1,10,1,1,false,false)    
 
     
-    _print("SPR#:"..tostring(spriteNumber),origin_x,sprites_y - 8, 1)
-    _print("PAG#:"..tostring(pageNumber),origin_x + 40,sprites_y - 8, 1)
+    _print("SPR#:",origin_x,sprites_y - 8, 12)
+    _print(tostring(spriteNumber),origin_x + 20,sprites_y - 8, 1)
+    _print("PAG#:",origin_x + 40,sprites_y - 8, 12)
+    _print(tostring(pageNumber),origin_x + 60,sprites_y - 8, 1)
     _rectfill(sprites_x - 1, sprites_y - 1,sprites_w*sprites_cell + 2,sprites_h*sprites_cell + 2, 0)
     _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)     
     _cgridc(pageNumber*sprites_w*sprites_h,sprites_x,sprites_y,1,-1,10,sprites_w,sprites_h,false,false)
-    drawSelectedRec()
+    drawSelectedRec(spriteNumber, pageNumber, sprites_w, sprites_h, sprites_x, sprites_y, sprites_cell)
 end
 
-function drawSelectedRec()
-    if spriteNumber < pageNumber*sprites_w*sprites_h or spriteNumber >= (pageNumber+1)*sprites_w*sprites_h  then
+function drawSelectedRec(sn,pn,w,h,sx,sy,sc)
+    if sn < pn*w*h or sn >= (pn+1)*w*h  then
         return
     end
-    local sn = spriteNumber - pageNumber*sprites_w*sprites_h
-    local x = (sn  % sprites_w) * sprites_cell
-    local y = flr(sn / sprites_w) * sprites_cell
-    _rect(sprites_x + x,sprites_y + y,sprites_cell,sprites_cell,1)
+    local sn = sn - pn*w*h
+    local x = (sn  % w) * sc
+    local y = flr(sn / w) * sc
+    _rect(sx + x,sy + y,sc,sc,1)
 end
 
 function screen_to_grid(p,x,y,w,h,s) 
