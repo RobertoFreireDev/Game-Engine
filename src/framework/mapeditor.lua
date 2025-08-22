@@ -13,7 +13,8 @@ function mapeditor:update()
         local mousepos = _mousepos()
         local spritespos = screen_to_grid(mousepos,sprites_x, sprites_y, sprites_w, sprites_h, sprites_cell)
         spriteNumber = updateSpriteNumber(spritespos,spriteNumber,pageNumber,sprites_w,sprites_h)
-    end
+        _stilemap(10,10,spriteNumber)
+    end        
 
     pageNumber = movepage(pageNumber)
 end
@@ -22,6 +23,7 @@ function mapeditor:draw()
     _rectfill(10,0,310,180,11)
     _rectfill(map_x - 1, map_y - 1,30*10 + 2,110 + 2, 0)
     _csprc(1,0,map_x,map_y,3,2,30,11)
+    _drawmap()
     
     drawPageSpriteNumbers(spriteNumber,pageNumber,sprites_x,sprites_y)
 

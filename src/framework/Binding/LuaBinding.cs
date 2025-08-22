@@ -93,9 +93,14 @@ public class LuaBinding
         _lua.RegisterFunction("_gpixel", this, GetType().GetMethod("GetPixel"));
         _lua.RegisterFunction("_cgridc", this, GetType().GetMethod("DrawCustomGrid"));
 
+        // Map
+        _lua.RegisterFunction("_stilemap", this, GetType().GetMethod("SetTileInMap"));
+        _lua.RegisterFunction("_drawmap", this, GetType().GetMethod("DrawMap"));
+        
         try
         {
             GameGrid.Create();
+            MapGrid.Create();
             _lua.DoString(script, _scriptName);
         }
         catch (Exception ex)
@@ -213,6 +218,18 @@ public class LuaBinding
         GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
         GFW.SpriteBatch.End();
         GFW.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
+    }
+    #endregion
+
+    #region MapFunctions
+    public static void SetTileInMap(int x, int y, int tileIndex = 0)
+    {
+        MapGrid.SetTile(x, y, tileIndex);
+    }
+    
+    public static void DrawMap()
+    {
+        MapGrid.Draw(Color.White);
     }
     #endregion
 
