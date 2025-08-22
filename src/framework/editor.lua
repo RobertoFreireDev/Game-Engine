@@ -1,5 +1,6 @@
 ﻿require("library")
 require("component")
+require("helperfunctions")
 local spriteeditor = require("spriteeditor")
 local mapeditor = require("mapeditor")
 

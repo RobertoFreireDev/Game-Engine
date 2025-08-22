@@ -26,6 +26,9 @@
     <PackageReference Include="NLua" Version="1.7.5" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="helperfunctions.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="library.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
