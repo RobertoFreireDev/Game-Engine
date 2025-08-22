@@ -34,7 +34,7 @@ public static class MapGrid
         Data[y, x] = tileIndex;
     }
 
-    public static void Draw(Color color)
+    public static void Draw(int px, int py, Color color)
     {
         for (int y = 0; y < Rows; y++)
         {
@@ -44,7 +44,7 @@ public static class MapGrid
                 if (tileIndex <= 0) continue;
 
                 Rectangle source = TileRects[tileIndex];
-                Rectangle dest = new Rectangle(x * Size, y * Size, Size, Size);
+                Rectangle dest = new Rectangle(px + x * Size, py + y * Size, Size, Size);
 
                 GFW.SpriteBatch.Draw(GameGrid.Texture, dest, source, color);
             }

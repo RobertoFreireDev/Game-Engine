@@ -227,9 +227,9 @@ public class LuaBinding
         MapGrid.SetTile(x, y, tileIndex);
     }
     
-    public static void DrawMap()
+    public static void DrawMap(int x, int y)
     {
-        MapGrid.Draw(Color.White);
+        MapGrid.Draw(x, y, Color.White);
     }
     #endregion
 
