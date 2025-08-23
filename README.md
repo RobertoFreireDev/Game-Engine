@@ -47,6 +47,11 @@ right now it draws again the image with offset in x and y. add more offsets from
 
 - use map to draw all the background instead of using texture base64
 
+other:
+
+- create restart function to load game or editor sprite again
+- put all key numbers in library.lua and remove from this readme file
+
 ### Key Number
 
 | Key | Number | Description |
