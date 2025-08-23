@@ -46,6 +46,7 @@ right now it draws again the image with offset in x and y. add more offsets from
 **Editor:**
 
 - use map to draw all the background instead of using texture base64
+- use a toggle key to expand/collapse map editor so whole page shows the map
 
 other:
 
