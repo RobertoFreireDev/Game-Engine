@@ -23,10 +23,10 @@ function movearrows(minX,minY,maxX,maxY,pos)
 end
 
 function movepage(min,pn, max)
-    if _btnp(_keys.Q) then
+    if _btnp(_keys.E) then
         pn = clamp(min,pn + 1,max)
     end
-    if _btnp(_keys.E) then
+    if _btnp(_keys.Q) then
         pn = clamp(min,pn - 1,max)
     end
 
@@ -36,8 +36,8 @@ end
 function drawPageSpriteNumbers(sn,pn,x,y)
     _print("SPR#:",x,y - 8, 12)
     _print(tostring(sn),x + 20,y - 8, 1)
-    _print("PAG#:",x + 40,y - 8, 12)
-    _print(tostring(pn),x + 60,y - 8, 1)
+    _print("PAG#:",x + 35,y - 8, 12)
+    _print(tostring(pn),x + 55,y - 8, 1)
 end
 
 function drawSelectedRec(sn,pn,w,h,sx,sy,sc)
