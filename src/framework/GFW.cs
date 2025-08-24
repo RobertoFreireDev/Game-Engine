@@ -25,7 +25,7 @@ namespace blackbox
         public static bool ApplyCRTshader = false;
         public static int BackgroundColor;
         private static bool Updated = false;
-        private LuaBinding game;
+        private static LuaBinding LuaProgram;
         public static bool GamePaused = false;
         public static Effect CustomEffect;
         private Effect crtEffect;
@@ -75,6 +75,17 @@ namespace blackbox
             Updated = true;
         }
 
+        public static void LoadMainFile()
+        {
+            // Load game
+            var script = string.Empty;
+            if (LuaFileIO.HasFile(Constants.Mainfilename))
+            {
+                script = LuaFileIO.Read(Constants.Mainfilename);
+            }
+            LuaProgram = new LuaBinding(script);
+        }
+
         private void OnResize(Object sender, EventArgs e)
         {
             if (sender is not GameWindow)
@@ -109,17 +120,7 @@ namespace blackbox
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice, SystemTextures["medium_font"]);
             MouseTextures = TextureUtils.GetTextures(SystemTextures["mouse"], 10, 32, 32);
-            // Load game
-            var script = string.Empty;
-            if (LuaFileIO.HasFile(Constants.Editorfilename))
-            {
-                script = LuaFileIO.Read(Constants.Editorfilename);
-            }
-            else if (LuaFileIO.HasFile(Constants.Gamefilename))
-            {
-                script = LuaFileIO.Read(Constants.Gamefilename);
-            }
-            game = new LuaBinding(script);
+            LoadMainFile();
             _graphics.SynchronizeWithVerticalRetrace = true;
             crtEffect = Content.Load<Effect>("CRT");
             CustomEffect = Content.Load<Effect>("CustomShader");
@@ -143,7 +144,7 @@ namespace blackbox
             ScreenUtils.UpdateIsFocused(IsActive, _graphics.IsFullScreen);
             InputStateManager.Update();
 
-            game.Update();
+            LuaProgram.Update();
 
             if (Updated)
             {
@@ -166,14 +167,12 @@ namespace blackbox
             GraphicsDevice.SetRenderTarget(sceneTarget);
             GraphicsDevice.Clear(ColorUtils.GetColor(BackgroundColor));
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
-            game.Draw();
+            LuaProgram.Draw();
             SpriteBatch.End();
 
-            // STEP 2: Reset back buffer and apply CRT shader
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);
 
-            // Pass Resolution to the shader (important!)
             crtEffect.Parameters["Resolution"].SetValue(new Vector2(
                 sceneTarget.Width,
                 sceneTarget.Height

@@ -28,6 +28,7 @@ public class LuaBinding
         _lua.RegisterFunction("_fps60", this, GetType().GetMethod("ConfigFps60"));
         _lua.RegisterFunction("_crtshader", this, GetType().GetMethod("EnableCRTshader"));
         _lua.RegisterFunction("_texture", this, GetType().GetMethod("LoadTextureFromBase64"));
+        _lua.RegisterFunction("_reboot", this, GetType().GetMethod("ResetMainFile"));        
 
         // Input
         _lua.RegisterFunction("_mouseshow", this, GetType().GetMethod("ShowHideMouse"));
@@ -445,6 +446,11 @@ public class LuaBinding
     public static bool IsFocused()
     {
         return ScreenUtils.IsFocused;
+    }
+
+    public static void ResetMainFile()
+    {
+        GFW.LoadMainFile();
     }
     #endregion
 

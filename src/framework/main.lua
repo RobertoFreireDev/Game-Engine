@@ -35,6 +35,10 @@ function _update()
         o:update()
         o.b.c = buttonSelected == o and 1 or 11
     end)
+
+    if _btnp(_keys.Escape) then
+        _reboot()
+    end
 end
 
 function _draw()

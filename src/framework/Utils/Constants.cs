@@ -8,8 +8,7 @@ public static class Constants
     public const string SpriteMapfilename = "blackboxspritesmap";
     public const string Mapfilename = "blackboxmap";
     public const string Sfxfilename = "blackboxsfx";
-    public const string Editorfilename = "editor";
-    public const string Gamefilename = "game";
+    public const string Mainfilename = "main";
     public const int CharsPerNote = 5;
     public const int ChannelQty = 4;
     public const int SfxQty = 256;
