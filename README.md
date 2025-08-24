@@ -2,7 +2,7 @@
 
 This engine starts as a blank canvas, giving Lua control over display and logic
 
-Developers can write Lua scripts to build custom tools, editors, or complete games.
+Developers can write Lua scripts to build custom tools, editors, or games.
 
 ## Legal
 
@@ -14,22 +14,10 @@ Developers can write Lua scripts to build custom tools, editors, or complete gam
 
 - music([n,] [fade_len,] [channel_mask])
 
-**Sprites:**
-
-- create function set pixel and get pixel to get/set pixel in srpitesAsSingleData. usefully for spriteeditor and also to change sprite during game
-
 **MAP:**
 
 - Implement LoadSpritesAndMap and SaveSpritesAndMap TextureFileIO functions
 - Test all map/flag functions
-
-**Math:**
-
-- using lua library
-
-**Table:**
-
-- using lua library
 
 **Shader:**
 
@@ -45,5 +33,4 @@ right now it draws again the image with offset in x and y. add more offsets from
 
 **Editor:**
 
-- use map to draw all the background instead of using texture base64
 - use a toggle key to expand/collapse map editor so whole page shows the map
