@@ -1,5 +1,5 @@
 ﻿local mapeditor={}
-local map_x, map_y = 15, 5
+local map_x, map_y, map_columns, map_rows = 15, 5, 30, 12
 local sprites_x, sprites_y = 15,135
 local sprites_w,sprites_h,sprites_cell=30,4,10
 local spriteNumber = 0
@@ -11,7 +11,7 @@ end
 function mapeditor:update()   
     if _mouseclick(0) then
         local mousepos = _mousepos()
-        local gridpos = screen_to_grid(mousepos,map_x, map_y, 30, 11, sprites_cell)
+        local gridpos = screen_to_grid(mousepos,map_x, map_y, map_columns, map_rows, sprites_cell)
         if gridpos.x and gridpos.y then
             _stilemap(gridpos.x,gridpos.y,spriteNumber)
         else
@@ -25,8 +25,8 @@ end
 
 function mapeditor:draw()
     _rectfill(10,0,310,180,11)
-    _rectfill(map_x - 1, map_y - 1,30*10 + 2,110 + 2, 0)
-    _csprc(1,0,map_x,map_y,3,2,30,11)
+    _rectfill(map_x - 1, map_y - 1,map_columns*10 + 2,map_rows*10 + 2, 0)
+    _csprc(1,0,map_x,map_y,3,2,map_columns,map_rows)
     _drawmap(map_x,map_y)
     
     drawPageSpriteNumbers(spriteNumber,pageNumber,sprites_x,sprites_y)

@@ -20,12 +20,12 @@ public static class LuaError
 
         if (!string.IsNullOrWhiteSpace(ex?.Source))
         {
-            message += "\n" + "Source:" + ex.Source;
+            message += "\n" + "Source: " + ex.Source;
         }
 
         if (!string.IsNullOrWhiteSpace(ex?.InnerException?.Message))
         {
-            message += "\n" + "Inner Ex:" + ex.InnerException.Message;
+            message += "\n" + "Inner Ex: " + ex.InnerException.Message;
         }
 
         SetError(message);

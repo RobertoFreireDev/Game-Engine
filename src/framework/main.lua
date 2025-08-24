@@ -17,8 +17,8 @@ function change_state(st)
 end
 
 function _init()   
-    _cmap(320,180,10)
     _cgrid(30,32,10)
+    _cmap(320,180,10)
     if _iohasfile(spriteFileName) then
         _sgrid(_ioread(spriteFileName))
     end

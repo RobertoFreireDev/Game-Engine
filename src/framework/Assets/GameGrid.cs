@@ -9,6 +9,7 @@ public static class GameGrid
 {
     public static int[,] Data;
     public static Texture2D Texture;
+    public static Rectangle[] TileRects;
     public static int Columns;
     public static int Rows;
     public static int Size;
@@ -20,6 +21,13 @@ public static class GameGrid
         Rows = rows;
         Size = size;
         Total = Columns * Rows;
+        TileRects = new Rectangle[Total];
+        for (int i = 0; i < Total; i++)
+        {
+            int x = (i % Columns) * Size;
+            int y = (i / Columns) * Size;
+            TileRects[i] = new Rectangle(x, y, Size, Size);
+        }
         Data = new int[Rows * Size, Columns * Size];
         ClearGrid(0, 0, Rows * Size, Columns * Size);
     }

@@ -6,7 +6,6 @@ namespace blackbox.Assets;
 public static class MapGrid
 {
     public static int[,] Data;
-    public static Rectangle[] TileRects;
     public static int Columns;
     public static int Rows;
     public static int Size;
@@ -19,14 +18,6 @@ public static class MapGrid
         Size = size;
         Total = Columns * Rows;
         Data = new int[Rows, Columns];
-        TileRects = new Rectangle[Total];
-
-        for (int i = 0; i < Total; i++)
-        {
-            int x = (i % Columns) * Size;
-            int y = (i / Columns) * Size;
-            TileRects[i] = new Rectangle(x, y, Size, Size);
-        }
     }
 
     public static void SetMap(string grid)
@@ -57,7 +48,7 @@ public static class MapGrid
                 int tileIndex = Data[y, x];
                 if (tileIndex <= 0) continue;
 
-                Rectangle source = TileRects[tileIndex];
+                Rectangle source = GameGrid.TileRects[tileIndex];
                 Rectangle dest = new Rectangle(px + x * Size, py + y * Size, Size, Size);
 
                 GFW.SpriteBatch.Draw(GameGrid.Texture, dest, source, color);
@@ -67,6 +58,6 @@ public static class MapGrid
 
     public static bool InvalidGridPos(int x, int y)
     {
-        return x < 0 || y < 0 || x >= Columns * Size || y >= Rows * Size;
+        return x < 0 || y < 0 || x >= Columns || y >= Rows;
     }
 }
