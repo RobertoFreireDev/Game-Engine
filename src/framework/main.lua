@@ -13,7 +13,6 @@ local spriteFileName, mapFileName = "spritedata", "mapData"
 function change_state(st)
     state=st
     state:init()
-    _crtshader(true)
     _fps30()
 end
 
