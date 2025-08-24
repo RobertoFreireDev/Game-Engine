@@ -8,7 +8,6 @@ namespace blackbox.Graphics;
 public static class Font
 {
     public static char DefaultKey = '?';
-    private static string Id = "medium_font";
     private static int Columns = 19;
     private static int CharWidth = 5;
     private static int CharHeight = 7;

@@ -29,3 +29,7 @@ after horizontal or vertical line, it draws pixel adding color and transparency 
 
 work on bloom effect.
 right now it draws again the image with offset in x and y. add more offsets from 1 until to offset number
+
+# Validations
+
+- Validate every single function/logic to avoid errors

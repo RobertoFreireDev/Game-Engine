@@ -102,8 +102,6 @@ public static class GameGrid
         int n, int x, int y, int scale, Color color, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
-        // TO DO: Clamp in boundaries
-
         var source = new Rectangle(
             (n % Columns) * Size,
             (n / Columns) * Size,
