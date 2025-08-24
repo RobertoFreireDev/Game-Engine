@@ -8,7 +8,7 @@ buttonSelected = nil
 buttons = {}
 state = {}
 
-local spriteFileName = "spritedata"
+local spriteFileName, mapFileName = "spritedata", "mapData"
 
 function change_state(st)
     state=st
@@ -16,8 +16,16 @@ function change_state(st)
     _fps30()
 end
 
-function _init()
-    _sgrid(_ioread(spriteFileName))
+function _init()   
+    _cmap(320,180,10)
+    _cgrid(30,32,10)
+    if _iohasfile(spriteFileName) then
+        _sgrid(_ioread(spriteFileName))
+    end
+    if _iohasfile(mapFileName) then
+        _smap(_ioread(mapFileName))
+    end    
+    
     buttons = {}
     _texture(0,10,10,"iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAAXNSR0IArs4c6QAAAGBQTFRFAAAAIiA0RSg8Zjkxj1Y733Em2aBm7sOa+/I2meVQar4wN5RuS2kvUkskMjw5Pz90MGCCW27hY5v/X83ky9v8////m623hH6HaWpqWVZSdkKKrDIy2Vdj13u6j5dKim8w+2O8zwAAACB0Uk5TAP////////////////////////////////////////+Smq12AAAAl0lEQVRoge3V0Q6AIAiFYV+C93/VNiUEvStwq/3funBecBJZtXaGdLouzdAUS0sP0ac2xJ+kJOJkSCsPsbvwc5aecpcuDPmV2aTQLYmz966XYnMlfsDm9lw+ThE7Qc8Qt+1C3n3dxluKlQrVkkK05eMQW7GskHiQpVZmiPV/LZV18f5nsr1u3ggDAAAAAAAAAAAAAIDvuQBw8w7vir6ICAAAAABJRU5ErkJggg==")
     _texture(1,10,10,"iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAAXNSR0IArs4c6QAAAGBQTFRFAAAAIiA0RSg8Zjkxj1Y733Em2aBm7sOa+/I2meVQar4wN5RuS2kvUkskMjw5Pz90MGCCW27hY5v/X83ky9v8////m623hH6HaWpqWVZSdkKKrDIy2Vdj13u6j5dKim8w+2O8zwAAACB0Uk5TAP////////////////////////////////////////+Smq12AAABAUlEQVR4nO3SMQ0AMAzAsJIof6oD0SPHLBPIkdnhYvIC/uZAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlQFoOpOVAWg6k5UBaDqTlwKMHvBM7COSTH1YAAAAASUVORK5CYII=")
@@ -45,6 +53,7 @@ function _update()
 
     if _btnp(_keys.Q) then
         _iocreateorupdate(spriteFileName,_ggrid())
+        _iocreateorupdate(mapFileName,_gmap())
     end
 end
 

@@ -7,22 +7,36 @@ public static class MapGrid
 {
     public static int[,] Data;
     public static Rectangle[] TileRects;
-    public static int Columns = Constants.MapGridWidth;
-    public static int Rows = Constants.MapGridHeight;
-    public static int Size = Constants.MapGridSize;
-    public static int Total = Columns * Rows;
+    public static int Columns;
+    public static int Rows;
+    public static int Size;
+    public static int Total;
 
-    public static void Create()
+    public static void Create(int columns, int rows, int size)
     {
+        Columns = columns;
+        Rows = rows;
+        Size = size;
+        Total = Columns * Rows;
         Data = new int[Rows, Columns];
         TileRects = new Rectangle[Total];
 
         for (int i = 0; i < Total; i++)
         {
-            int x = (i % Constants.GameGridWidth) * Size;
-            int y = (i / Constants.GameGridWidth) * Size;
+            int x = (i % Columns) * Size;
+            int y = (i / Columns) * Size;
             TileRects[i] = new Rectangle(x, y, Size, Size);
         }
+    }
+
+    public static void SetMap(string grid)
+    {
+        Data = ArrayUtils.StringToIntArray(grid);
+    }
+
+    public static string GetMap()
+    {
+        return ArrayUtils.IntArrayToString(Data);
     }
 
     public static void SetTile(int x, int y, int tileIndex)

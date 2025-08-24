@@ -1,5 +1,6 @@
 ﻿using blackbox.Binding;
 using blackbox.Utils;
+using System;
 
 namespace blackbox.Graphics;
 
@@ -11,6 +12,23 @@ public static class LuaError
     public static bool HasError()
     {
         return _error;
+    }
+
+    public static void SetError(Exception ex)
+    {
+        var message = ex.Message;
+
+        if (!string.IsNullOrWhiteSpace(ex?.Source))
+        {
+            message += "\n" + "Source:" + ex.Source;
+        }
+
+        if (!string.IsNullOrWhiteSpace(ex?.InnerException?.Message))
+        {
+            message += "\n" + "Inner Ex:" + ex.InnerException.Message;
+        }
+
+        SetError(message);
     }
 
     public static void SetError(string message)

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System;
+using blackbox.Graphics;
 
 namespace framework.Utils;
 
@@ -16,11 +17,11 @@ public static class FileUtils
         }
         catch (FileNotFoundException e)
         {
-            Console.WriteLine("File not found: " + e.Message);
+            LuaError.SetError("File not found: " + e.Message);
         }
         catch (IOException e)
         {
-            Console.WriteLine("Error reading file: " + e.Message);
+            LuaError.SetError("Error reading file: " + e.Message);
         }
 
         return string.Empty;

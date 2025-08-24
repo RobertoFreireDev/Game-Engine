@@ -9,13 +9,17 @@ public static class GameGrid
 {
     public static int[,] Data;
     public static Texture2D Texture;
-    public static int Columns = Constants.GameGridWidth;
-    public static int Rows = Constants.GameGridHeight;
-    public static int Size = Constants.GameGridSize;
-    public static int Total = Columns * Rows;
+    public static int Columns;
+    public static int Rows;
+    public static int Size;
+    public static int Total;
 
-    public static void Create()
+    public static void Create(int columns, int rows, int size)
     {
+        Columns = columns;
+        Rows = rows;
+        Size = size;
+        Total = Columns * Rows;
         Data = new int[Rows * Size, Columns * Size];
         ClearGrid(0, 0, Rows * Size, Columns * Size);
     }

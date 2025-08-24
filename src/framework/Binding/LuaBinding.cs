@@ -15,7 +15,7 @@ namespace blackbox.Binding;
 public class LuaBinding
 {
     private static Lua _lua = new Lua();
-    private string _scriptName = "game";
+    private string _scriptName = "main";
     private static SfxPlayer _player = new SfxPlayer();
 
     public LuaBinding(string script)
@@ -89,25 +89,27 @@ public class LuaBinding
 
         // Grid
         _lua.RegisterFunction("_cleargrid", this, GetType().GetMethod("ClearGrid"));
-        _lua.RegisterFunction("_sgrid", this, GetType().GetMethod("SetGameGrid"));
-        _lua.RegisterFunction("_ggrid", this, GetType().GetMethod("GetGameGrid"));
+        _lua.RegisterFunction("_cgrid", this, GetType().GetMethod("CreateGrid"));
+        _lua.RegisterFunction("_sgrid", this, GetType().GetMethod("SetGrid"));
+        _lua.RegisterFunction("_ggrid", this, GetType().GetMethod("GetGrid"));
         _lua.RegisterFunction("_spixel", this, GetType().GetMethod("SetPixel"));
         _lua.RegisterFunction("_gpixel", this, GetType().GetMethod("GetPixel"));
         _lua.RegisterFunction("_cgridc", this, GetType().GetMethod("DrawCustomGrid"));
 
         // Map
         _lua.RegisterFunction("_stilemap", this, GetType().GetMethod("SetTileInMap"));
+        _lua.RegisterFunction("_cmap", this, GetType().GetMethod("CreateMap"));
+        _lua.RegisterFunction("_gmap", this, GetType().GetMethod("GetMap"));
+        _lua.RegisterFunction("_smap", this, GetType().GetMethod("SetMap"));
         _lua.RegisterFunction("_drawmap", this, GetType().GetMethod("DrawMap"));
-        
+
         try
         {
-            GameGrid.Create();
-            MapGrid.Create();
             _lua.DoString(script, _scriptName);
         }
         catch (Exception ex)
         {
-            LuaError.SetError(ex.Message);
+            LuaError.SetError(ex);
         }
 
         if (LuaError.HasError())
@@ -125,7 +127,7 @@ public class LuaBinding
         }
         catch (Exception ex)
         {
-            LuaError.SetError(ex.Message);
+            LuaError.SetError(ex);
         }
     }
 
@@ -146,7 +148,7 @@ public class LuaBinding
         }
         catch (Exception ex)
         {
-            LuaError.SetError(ex.Message);
+            LuaError.SetError(ex);
         }
     }
 
@@ -169,21 +171,14 @@ public class LuaBinding
         }
         catch (Exception ex)
         {
-            LuaError.SetError(ex.Message);
+            LuaError.SetError(ex);
         }
     }
 
     #region TextureFunctions
     public static void LoadTextureFromBase64(int index, int tileWidth, int tileHeight, string spriteBase64)
     {
-        try
-        {
-            GameImage.LoadTexture(index, spriteBase64, tileWidth, tileHeight);
-        }
-        catch (Exception ex)
-        {
-            LuaError.SetError(ex.Message);
-        }
+        GameImage.LoadTexture(index, spriteBase64, tileWidth, tileHeight);
     }
 
     public static void DrawTexture(int index, int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
@@ -224,6 +219,11 @@ public class LuaBinding
     #endregion
 
     #region MapFunctions
+    public static void CreateMap(int columns, int rows, int size)
+    {
+        MapGrid.Create(columns, rows, size);
+    }
+
     public static void SetTileInMap(int x, int y, int tileIndex = 0)
     {
         MapGrid.SetTile(x, y, tileIndex);
@@ -233,20 +233,45 @@ public class LuaBinding
     {
         MapGrid.Draw(x, y, Color.White);
     }
+
+    public static string GetMap()
+    {
+        return MapGrid.GetMap();
+    }
+
+    public static void SetMap(string grid)
+    {
+        if (string.IsNullOrWhiteSpace(grid))
+        {
+            return;
+        }
+
+        MapGrid.SetMap(grid);
+    }
     #endregion
 
     #region GridFunctions
+    public static void CreateGrid(int columns, int rows, int size)
+    {
+        GameGrid.Create(columns, rows, size);
+    }
+
     public static void ClearGrid(int x, int y, int w, int h)
     {
         GameGrid.ClearGrid(x, y, w, h);
     }
 
-    public static void SetGameGrid(string gamegrid)
+    public static void SetGrid(string grid)
     {
-        GameGrid.SetGameGrid(gamegrid);
+        if (string.IsNullOrWhiteSpace(grid))
+        {
+            return;
+        }
+
+        GameGrid.SetGameGrid(grid);
     }
 
-    public static string GetGameGrid()
+    public static string GetGrid()
     {
         return GameGrid.GetGameGrid();
     }
@@ -570,16 +595,7 @@ public class LuaBinding
     #region Utils
     public static int SubstringToInt(string source, int start, int length)
     {
-        try
-        {
-            return int.Parse(source.AsSpan(start, length));
-        }
-        catch
-        {
-            LuaError.SetError($"Error Parsing string to int: {source}");
-        }
-
-        return 0;
+        return int.Parse(source.AsSpan(start, length));
     }
     #endregion
 }
