@@ -119,7 +119,7 @@ namespace blackbox
             PixelTexture.SetData(new Color[] { Color.White });
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice, SystemTextures["medium_font"]);
-            MouseTextures = TextureUtils.GetTextures(SystemTextures["mouse"], 10, 32, 32);
+            MouseTextures = TextureUtils.GetTextures(SystemTextures["mouse"], 2, 16, 16);
             LoadMainFile();
             _graphics.SynchronizeWithVerticalRetrace = true;
             crtEffect = Content.Load<Effect>("CRT");

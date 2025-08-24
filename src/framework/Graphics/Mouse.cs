@@ -8,6 +8,6 @@ public static class Mouse
 {
     public static void DrawMouse(this SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(GFW.MouseTextures[MouseInput.Current_Cursor], MouseInput.MouseToDrawPosition(), Color.White);
+        spriteBatch.Draw(GFW.MouseTextures[MouseInput.Current_Cursor], MouseInput.MouseVirtualPosition(4), Color.White);
     }
 }
