@@ -65,9 +65,15 @@ public static class GameGrid
         Texture = TextureUtils.IntArrayToTexture2D(Data);
     }
 
-    public static string GetBase64()
+    public static string GetGameGrid()
     {
-        return TextureUtils.TextureToBase64(Texture);
+        return ArrayUtils.IntArrayToString(Data);
+    }
+
+    public static void SetGameGrid(string gamegrid)
+    {
+        Data = ArrayUtils.StringToIntArray(gamegrid);
+        UpdateTexture2d();
     }
 
     public static int GetPixel(int x, int y)
