@@ -1,17 +1,27 @@
-﻿local spriteeditor,collorButtons,paintbuttons={},{},{}
-local selectedcolor = 0
-local cell, grid_w, grid_h = 12 , 10, 10
-local sprite_x = 275
-local sprites_x, sprites_y = 15,135
-local origin_x, origin_y = 100, 5
-local pixelbutton = new_button(0,11,12,10,sprite_x,65,0,0,10,10)
-local eraserbutton = new_button(0,10,12,10,sprite_x+10,65,0,0,10,10)
-local sprites_w,sprites_h,sprites_cell=30,4,10
-local spriteNumber = 0
-local pageNumber = 0
+﻿local spriteeditor = {
+    firsttime = true,
+    collorButtons = {},
+    paintbuttons = {},
+    selectedcolor = 0,
+    cell = 12,
+    grid_w = 10,
+    grid_h = 10,
+    sprite_x = 275,
+    sprites_x = 15,
+    sprites_y = 135,
+    origin_x = 100,
+    origin_y = 5,
+    pixelbutton = new_button(0,11,12,10,275,65,0,0,10,10),
+    eraserbutton = new_button(0,10,12,10,275+10,65,0,0,10,10),
+    sprites_w = 30,4,10,
+    sprites_h = 4,
+    sprites_cell = 10,
+    spriteNumber = 1,
+    pageNumber = 0
+}
 
-function createSpriteEditor()
-    local x,y,size=sprite_x,origin_y,10
+function spriteeditor:create()
+    local x,y,size=self.sprite_x,self.origin_y,10
     for i=0,15 do
 	    local row = flr(i/4)
 	    local col = i%4
@@ -19,79 +29,84 @@ function createSpriteEditor()
 	    local py = y + row*size
         local cbtn = new_colorbutton(i,px,py,0,0,size,size)
         cbtn.clicked = function(o)
-            if paintbuttonselected == eraserbutton then
+            if self.paintbuttonselected == self.eraserbutton then
                 return
             end
-            selectedcolor = o.c  
+            self.selectedcolor = o.c  
         end 
-        add(collorButtons,cbtn)
+        add(self.collorButtons,cbtn)
     end    
-    eraserbutton.clicked = function(o) paintbuttonselected = o selectedcolor = -1 end    
-    pixelbutton.clicked = function(o) 
-        paintbuttonselected = o
-        if selectedcolor == -1 then
-            selectedcolor = 0
+    self.eraserbutton.clicked = function(o) self.paintbuttonselected = o self.selectedcolor = -1 end    
+    self.pixelbutton.clicked = function(o) 
+        self.paintbuttonselected = o
+        if self.selectedcolor == -1 then
+            self.selectedcolor = 0
         end
     end
-    add(paintbuttons,eraserbutton)
-    add(paintbuttons,pixelbutton)
+    add(self.paintbuttons,self.eraserbutton)
+    add(self.paintbuttons,self.pixelbutton)
 end
 
-createSpriteEditor()
-paintbuttonselected = pixelbutton
-
 function spriteeditor:init()
+    if self.firsttime then
+        self:create()
+        self.paintbuttonselected = self.pixelbutton
+        self.firsttime = false
+    end
 end
 
 function spriteeditor:update()
-    foreach(collorButtons, function(o)
+    foreach(self.collorButtons, function(o)
         o:update()
     end)
-    foreach(paintbuttons, function(o)
+    foreach(self.paintbuttons, function(o)
         o:update()
-        o.b.c = paintbuttonselected == o and 13 or 12
+        o.b.c = self.paintbuttonselected == o and 13 or 12
     end)
 
-    pageNumber = movepage(pageNumber)
+    self.pageNumber = movepage(self.pageNumber)
 
     if _mouseclick(0) then
         local mousepos = _mousepos()
-        local gridpos = screen_to_grid(mousepos,origin_x, origin_y, grid_w, grid_h, cell)
-        if spriteNumber > 0  and gridpos.x and gridpos.y then            
+        local gridpos = screen_to_grid(mousepos,self.origin_x, self.origin_y, self.grid_w, self.grid_h, self.cell)
+        if gridpos.x and gridpos.y then            
             _spixel(
-                (spriteNumber  % sprites_w) * sprites_cell + gridpos.x,
-                flr(spriteNumber / sprites_w) * sprites_cell + gridpos.y,
-                selectedcolor)
+                (self.spriteNumber  % self.sprites_w) * self.sprites_cell + gridpos.x,
+                flr(self.spriteNumber / self.sprites_w) * self.sprites_cell + gridpos.y,
+                self.selectedcolor)
         else
-            local spritespos = screen_to_grid(mousepos,sprites_x, sprites_y, sprites_w, sprites_h, sprites_cell)
-            spriteNumber = updateSpriteNumber(spritespos,spriteNumber,pageNumber,sprites_w,sprites_h)
+            local spritespos = screen_to_grid(mousepos,self.sprites_x, self.sprites_y, self.sprites_w, self.sprites_h, self.sprites_cell)
+            local sn = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
+            if sn > 0 then
+                self.spriteNumber = sn
+            end
         end
     end
 end
 
 function spriteeditor:draw()
     _rectfill(10,0,310,180,11)
-    _rectfill(sprite_x-1,origin_y-1,42,42,0)
-    _rectfill(sprite_x-1,49-1,42,12,0)
-    _csprc(1,0,sprite_x,49,3,2,4,1)
-    _rectfill(sprite_x,49,40,10,selectedcolor)
-    foreach(collorButtons, function(o)
+    _rectfill(self.sprite_x-1,self.origin_y-1,42,42,0)
+    _rectfill(self.sprite_x-1,49-1,42,12,0)
+    _csprc(1,0,self.sprite_x,49,3,2,4,1)
+    _rectfill(self.sprite_x,49,40,10,self.selectedcolor)
+    foreach(self.collorButtons, function(o)
         o:draw()
     end)
-    foreach(paintbuttons, function(o)
+    foreach(self.paintbuttons, function(o)
         o:draw()
     end)
 
-    _rectfill(origin_x - 1, origin_y - 1,grid_w * cell + 2,grid_h * cell + 2, 0)    
-    _csprc(1,0,origin_x,origin_y,3,2,cell,cell)
-    _cgridc(spriteNumber,origin_x,origin_y,cell,-1,10,1,1,false,false)    
+    _rectfill(self.origin_x - 1, self.origin_y - 1,self.grid_w * self.cell + 2,self.grid_h * self.cell + 2, 0)    
+    _csprc(1,0,self.origin_x,self.origin_y,3,2,self.cell,self.cell)
+    _cgridc(self.spriteNumber,self.origin_x,self.origin_y,self.cell,-1,10,1,1,false,false)    
 
-    drawPageSpriteNumbers(spriteNumber,pageNumber,sprites_x,sprites_y)
+    drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
     
-    _rectfill(sprites_x - 1, sprites_y - 1,sprites_w*sprites_cell + 2,sprites_h*sprites_cell + 2, 0)
-    _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)     
-    _cgridc(pageNumber*sprites_w*sprites_h,sprites_x,sprites_y,1,-1,10,sprites_w,sprites_h,false,false)
-    drawSelectedRec(spriteNumber, pageNumber, sprites_w, sprites_h, sprites_x, sprites_y, sprites_cell)
+    _rectfill(self.sprites_x - 1, self.sprites_y - 1,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2, 0)
+    _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
+    _cgridc(self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
+    drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell)
 end
 
 return spriteeditor

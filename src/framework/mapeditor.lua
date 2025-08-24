@@ -1,40 +1,55 @@
-﻿local mapeditor={}
-local map_x, map_y, map_columns, map_rows = 15, 5, 30, 12
-local sprites_x, sprites_y = 15,135
-local sprites_w,sprites_h,sprites_cell=30,4,10
-local spriteNumber = 0
-local pageNumber = 0
+﻿local mapeditor={
+    firsttime = true,
+    map_x = 15, 
+    map_y = 5, 
+    map_columns = 30,
+    map_rows = 12,
+    sprites_x = 15, 
+    sprites_y = 135,
+    sprites_w = 30,
+    sprites_h = 4,
+    sprites_cell= 10,
+    spriteNumber = 0,
+    pageNumber = 0
+}
+
+function mapeditor:create()
+end
 
 function mapeditor:init()
+    if self.firsttime then
+        self:create()
+        self.firsttime = false
+    end
 end
 
 function mapeditor:update()   
     if _mouseclick(0) then
         local mousepos = _mousepos()
-        local gridpos = screen_to_grid(mousepos,map_x, map_y, map_columns, map_rows, sprites_cell)
+        local gridpos = screen_to_grid(mousepos,self.map_x, self.map_y, self.map_columns, self.map_rows, self.sprites_cell)
         if gridpos.x and gridpos.y then
-            _stilemap(gridpos.x,gridpos.y,spriteNumber)
+            _stilemap(gridpos.x,gridpos.y,self.spriteNumber)
         else
-            local spritespos = screen_to_grid(mousepos,sprites_x, sprites_y, sprites_w, sprites_h, sprites_cell)
-            spriteNumber = updateSpriteNumber(spritespos,spriteNumber,pageNumber,sprites_w,sprites_h)
+            local spritespos = screen_to_grid(mousepos,self.sprites_x, self.sprites_y, self.sprites_w, self.sprites_h, self.sprites_cell)
+            self.spriteNumber = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
         end
     end
 
-    pageNumber = movepage(pageNumber)
+    self.pageNumber = movepage(self.pageNumber)
 end
 
 function mapeditor:draw()
     _rectfill(10,0,310,180,11)
-    _rectfill(map_x - 1, map_y - 1,map_columns*10 + 2,map_rows*10 + 2, 0)
-    _csprc(1,0,map_x,map_y,3,2,map_columns,map_rows)
-    _drawmap(map_x,map_y)
+    _rectfill(self.map_x - 1, self.map_y - 1,self.map_columns*10 + 2,self.map_rows*10 + 2, 0)
+    _csprc(1,0,self.map_x,self.map_y,3,2,self.map_columns,self.map_rows)
+    _drawmap(self.map_x,self.map_y)
     
-    drawPageSpriteNumbers(spriteNumber,pageNumber,sprites_x,sprites_y)
+    drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
 
-    _rectfill(sprites_x - 1, sprites_y - 1,sprites_w*10 + 2,sprites_h*10 + 2, 0)
-    _csprc(1,0,sprites_x,sprites_y,3,2,sprites_w,sprites_h)
-    _cgridc(pageNumber*sprites_w*sprites_h,sprites_x,sprites_y,1,-1,10,sprites_w,sprites_h,false,false)
-    drawSelectedRec(spriteNumber, pageNumber, sprites_w, sprites_h, sprites_x, sprites_y, sprites_cell)
+    _rectfill(self.sprites_x - 1, self.sprites_y - 1,self.sprites_w*10 + 2,self.sprites_h*10 + 2, 0)
+    _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)
+    _cgridc(self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
+    drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell)
 end
 
 return mapeditor
