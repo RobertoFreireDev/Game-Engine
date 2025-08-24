@@ -485,24 +485,24 @@ public class LuaBinding
         TxtFileIO.CreateOrUpdate(fileName, content);
     }
 
-    public static void ReadSfx()
+    public static void ReadSfx(string sfxfilename)
     {
-        if (!HasFile(Constants.Sfxfilename))
+        if (!HasFile(sfxfilename))
         {
             return;
         }
-        var content = TxtFileIO.Read(Constants.Sfxfilename);
+        var content = TxtFileIO.Read(sfxfilename);
         _player.ConvertStringToData(content);
     }
 
-    public static void CreateOrUpdateSfx()
+    public static void CreateOrUpdateSfx(string sfxfilename)
     {
         var content = _player.ConvertDataToString();
         if (string.IsNullOrWhiteSpace(content))
         {
             return;
         }
-        TxtFileIO.CreateOrUpdate(Constants.Sfxfilename, content);
+        TxtFileIO.CreateOrUpdate(sfxfilename, content);
     }
     #endregion
 

@@ -57,7 +57,7 @@ function spriteeditor:update()
     if _mouseclick(0) then
         local mousepos = _mousepos()
         local gridpos = screen_to_grid(mousepos,origin_x, origin_y, grid_w, grid_h, cell)
-        if gridpos.x and gridpos.y then            
+        if spriteNumber > 0  and gridpos.x and gridpos.y then            
             _spixel(
                 (spriteNumber  % sprites_w) * sprites_cell + gridpos.x,
                 flr(spriteNumber / sprites_w) * sprites_cell + gridpos.y,
