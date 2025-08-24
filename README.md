@@ -16,8 +16,7 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 
 **MAP:**
 
-- Implement LoadSpritesAndMap and SaveSpritesAndMap TextureFileIO functions
-- Test all map/flag functions
+- Add flag functions
 
 **Shader:**
 
@@ -30,7 +29,3 @@ after horizontal or vertical line, it draws pixel adding color and transparency 
 
 work on bloom effect.
 right now it draws again the image with offset in x and y. add more offsets from 1 until to offset number
-
-**Editor:**
-
-- use a toggle key to expand/collapse map editor so whole page shows the map
