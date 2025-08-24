@@ -14,12 +14,14 @@ namespace blackbox.Binding;
 
 public class LuaBinding
 {
-    private static Lua _lua = new Lua();
+    private static Lua _lua;
     private string _scriptName = "main";
-    private static SfxPlayer _player = new SfxPlayer();
+    private static SfxPlayer _player;
 
     public LuaBinding(string script)
     {
+        _lua = new Lua();
+        _player = new SfxPlayer();
         _lua.UseTraceback = true;
 
         // Config
