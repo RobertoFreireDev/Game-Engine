@@ -64,7 +64,7 @@ function spriteeditor:update()
         o.b.c = self.paintbuttonselected == o and 13 or 12
     end)
 
-    self.pageNumber = movepage(self.pageNumber)
+    self.pageNumber = movepage(0,self.pageNumber,6)
 
     if _mouseclick(0) then
         local mousepos = _mousepos()

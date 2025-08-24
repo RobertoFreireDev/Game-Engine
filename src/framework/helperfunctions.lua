@@ -5,12 +5,29 @@
     return sn
 end
 
-function movepage(pn)
-    if _btnp(_keys.S) then
-        pn = clamp(0,pn + 1,6)
+function movearrows(minX,minY,maxX,maxY,pos)
+    if _btn(_keys.A) then
+        pos.x = clamp(minX,pos.x-1,maxX)
     end
-    if _btnp(_keys.W) then
-        pn = clamp(0,pn - 1,6)
+    if _btn(_keys.D) then
+        pos.x = clamp(minX,pos.x+1,maxX)
+    end
+    if _btn(_keys.W) then
+        pos.y = clamp(minY,pos.y-1,maxY)
+    end
+    if _btn(_keys.S) then
+        pos.y = clamp(minY,pos.y+1,maxY)
+    end
+
+    return pos
+end
+
+function movepage(min,pn, max)
+    if _btnp(_keys.Q) then
+        pn = clamp(min,pn + 1,max)
+    end
+    if _btnp(_keys.E) then
+        pn = clamp(min,pn - 1,max)
     end
 
     return pn

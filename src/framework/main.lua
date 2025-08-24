@@ -51,7 +51,7 @@ function _update()
         _reboot()
     end
 
-    if _btnp(_keys.Q) then
+    if (_btn(_keys.LeftControl) or _btn(_keys.RightControl)) and _btnp(_keys.R) then
         _iocreateorupdate(spriteFileName,_ggrid())
         _iocreateorupdate(mapFileName,_gmap())
     end

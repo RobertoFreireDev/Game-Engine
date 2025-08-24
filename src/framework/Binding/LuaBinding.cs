@@ -231,9 +231,12 @@ public class LuaBinding
         MapGrid.SetTile(x, y, tileIndex);
     }
     
-    public static void DrawMap(int x, int y)
+    public static void DrawMap(
+        int mapX, int mapY,
+        int x, int y,   
+        int width, int height)
     {
-        MapGrid.Draw(x, y, Color.White);
+        MapGrid.DrawMap(mapX, mapY, x, y, width, height, Color.White);
     }
 
     public static string GetMap()
