@@ -168,6 +168,10 @@ namespace blackbox
             GraphicsDevice.Clear(ColorUtils.GetColor(BackgroundColor));
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
             LuaProgram.Draw();
+            if (ShowMouse)
+            {
+                SpriteBatch.DrawMouse();
+            }
             SpriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
@@ -183,11 +187,7 @@ namespace blackbox
             SpriteBatch.Draw(sceneTarget, ScreenUtils.BoxToDraw, Color.White);
             SpriteBatch.End();
 
-            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            if (ShowMouse)
-            {
-                SpriteBatch.DrawMouse();
-            }            
+            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);                      
             DrawRectWithHole(ScreenUtils.ScaleRectangle(ScreenUtils.BaseBox), Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);

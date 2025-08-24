@@ -24,8 +24,8 @@
 		local b=self
 		local bx = b.x + b.box.x
 		local by = b.y + b.box.y
-		return p.x >= bx and p.x <= bx + b.box.w and
-		       p.y >= by and p.y <= by + b.box.h
+		return p.x >= bx and p.x < bx + b.box.w and
+		       p.y >= by and p.y < by + b.box.h
 	end
 		
 	function o:draw()

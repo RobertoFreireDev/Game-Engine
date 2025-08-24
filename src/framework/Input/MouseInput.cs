@@ -6,7 +6,7 @@ namespace blackbox.Input;
 
 internal static class MouseInput
 {
-    private static int offsetX = 10;
+    private static int offsetX = 9;
     public static int Current_Cursor = 0;    
 
     public static void UpdateCursor(int cursor)
@@ -19,9 +19,12 @@ internal static class MouseInput
         Current_Cursor = cursor;
     }
 
-    public static Vector2 MousePosition()
+    public static Vector2 MouseToDrawPosition()
     {
-        return new Vector2(InputStateManager.CurrentMouseState().Position.X - offsetX, InputStateManager.CurrentMouseState().Position.Y);
+        return new Vector2(
+                (int)((-ScreenUtils.BoxToDraw.X + InputStateManager.CurrentMouseState().Position.X - offsetX* ScreenUtils.ScaleX) / ScreenUtils.ScaleX),
+                (int)((-ScreenUtils.BoxToDraw.Y + InputStateManager.CurrentMouseState().Position.Y) / ScreenUtils.ScaleY)
+            );
     }
 
     public static Vector2 MouseVirtualPosition()
