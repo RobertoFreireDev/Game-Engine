@@ -12,7 +12,6 @@
     sprites_cell= 10,
     spriteNumber = 0,
     pageNumber = 0,
-    maxPage = 7,
 }
 
 function mapeditor:create()
@@ -37,7 +36,7 @@ function mapeditor:update()
         end
     end
 
-    self.pageNumber = movepage(0,self.pageNumber,self.maxPage)
+    self.pageNumber = movepage(0,self.pageNumber,const.maxPage)
     self.map_pos = movearrows(0,0,320-self.map_columns,180-self.map_rows,self.map_pos)
 end
 

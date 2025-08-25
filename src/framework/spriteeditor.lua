@@ -18,7 +18,6 @@
     sprites_cell = 10,
     spriteNumber = 1,
     pageNumber = 0,
-    maxPage = 7,
     zoom = 1,
     maxZoom = 4
 }
@@ -67,7 +66,7 @@ function spriteeditor:update()
         o.b.c = self.paintbuttonselected == o and 13 or 12
     end)
 
-    self.pageNumber = movepage(0,self.pageNumber,self.maxPage)
+    self.pageNumber = movepage(0,self.pageNumber,const.maxPage)
     self.zoom = mousescroll(1,self.zoom,self.maxZoom)
 
     if _mouseclick(0) then
