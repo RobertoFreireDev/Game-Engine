@@ -22,7 +22,7 @@ public static class MapGrid
 
     public static void SetMap(string grid)
     {
-        Data = ArrayUtils.StringToIntArray(grid);
+        ArrayUtils.StringToIntArray(Data, grid);
     }
 
     public static string GetMap()

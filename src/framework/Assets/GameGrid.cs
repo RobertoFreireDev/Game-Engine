@@ -14,6 +14,7 @@ public static class GameGrid
     public static int Rows;
     public static int Size;
     public static int Total;
+    public static int Margin = 1; // to avoid last column stretching issue
 
     public static void Create(int columns, int rows, int size)
     {
@@ -28,7 +29,7 @@ public static class GameGrid
             int y = (i / Columns) * Size;
             TileRects[i] = new Rectangle(x, y, Size, Size);
         }
-        Data = new int[Rows * Size, Columns * Size];
+        Data = new int[Rows * Size + Margin, Columns * Size + Margin];
         ClearGrid(0, 0, Rows * Size, Columns * Size);
     }
 
@@ -84,7 +85,7 @@ public static class GameGrid
 
     public static void SetGameGrid(string gamegrid)
     {
-        Data = ArrayUtils.StringToIntArray(gamegrid);
+        ArrayUtils.StringToIntArray(Data, gamegrid);
         UpdateTexture2d();
     }
 

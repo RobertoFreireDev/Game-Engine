@@ -28,12 +28,19 @@ public static class ArrayUtils
         return sb.ToString();
     }
 
-    public static int[,] StringToIntArray(string input)
+    public static void StringToIntArray(int[,] data, string input)
     {
+        int dataRows = data.GetLength(0);
+        int dataCols = data.GetLength(1);
         string[] rows = input.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
         int rowCount = rows.Length;
         int colCount = rows[0].Split(',').Length;
-        int[,] result = new int[rowCount, colCount];
+
+        if (dataRows != rowCount || dataCols != colCount)
+        {
+            return;
+        }
+
         for (int y = 0; y < rowCount; y++)
         {
             string[] cols = rows[y].Split(',');
@@ -42,10 +49,8 @@ public static class ArrayUtils
 
             for (int x = 0; x < colCount; x++)
             {
-                result[y, x] = int.Parse(cols[x]);
+                data[y, x] = int.Parse(cols[x]);
             }
         }
-
-        return result;
     }
 }

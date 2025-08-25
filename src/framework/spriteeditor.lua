@@ -18,7 +18,7 @@
     sprites_cell = 10,
     spriteNumber = 1,
     pageNumber = 0,
-    maxPage = 6,
+    maxPage = 7,
     zoom = 1,
     maxZoom = 4
 }
