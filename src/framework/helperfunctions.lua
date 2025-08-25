@@ -7,30 +7,41 @@ end
 
 function movearrows(minX,minY,maxX,maxY,pos)
     if _btn(_keys.A) then
-        pos.x = clamp(minX,pos.x-1,maxX)
+        pos.x = max(minX,pos.x-1)
     end
     if _btn(_keys.D) then
-        pos.x = clamp(minX,pos.x+1,maxX)
+        pos.x = min(pos.x+1,maxX)
     end
     if _btn(_keys.W) then
-        pos.y = clamp(minY,pos.y-1,maxY)
+        pos.y = max(minY,pos.y-1)
     end
     if _btn(_keys.S) then
-        pos.y = clamp(minY,pos.y+1,maxY)
+        pos.y = min(pos.y+1,maxY)
     end
 
     return pos
 end
 
-function movepage(min,pn, max)
+function movepage(a,pn,b)
     if _btnp(_keys.E) then
-        pn = clamp(min,pn + 1,max)
+        pn = min(pn + 1,b)
     end
     if _btnp(_keys.Q) then
-        pn = clamp(min,pn - 1,max)
+        pn = max(a,pn - 1)
     end
 
     return pn
+end
+
+function mousescroll(a,ms,b)
+    if _mousescroll(1) then
+        ms = max(a,ms - 1)
+    end
+    if _mousescroll(0) then
+        ms = min(ms + 1,b)
+    end
+
+    return ms
 end
 
 function drawPageSpriteNumbers(sn,pn,x,y)

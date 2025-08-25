@@ -193,3 +193,11 @@ end
 function clamp(low, b, high)
     return math.min(math.max(b, low), high)
 end
+
+function min(low, b)
+    return math.min(low,b)
+end
+
+function max(b, high)
+    return math.max(b,high)
+end

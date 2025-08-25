@@ -17,7 +17,10 @@
     sprites_h = 4,
     sprites_cell = 10,
     spriteNumber = 1,
-    pageNumber = 0
+    pageNumber = 0,
+    maxPage = 6,
+    zoom = 1,
+    maxZoom = 4
 }
 
 function spriteeditor:create()
@@ -64,11 +67,12 @@ function spriteeditor:update()
         o.b.c = self.paintbuttonselected == o and 13 or 12
     end)
 
-    self.pageNumber = movepage(0,self.pageNumber,6)
+    self.pageNumber = movepage(0,self.pageNumber,self.maxPage)
+    self.zoom = mousescroll(1,self.zoom,self.maxZoom)
 
     if _mouseclick(0) then
         local mousepos = _mousepos()
-        local gridpos = screen_to_grid(mousepos,self.origin_x, self.origin_y, self.grid_w, self.grid_h, self.cell)
+        local gridpos = screen_to_grid(mousepos,self.origin_x, self.origin_y, self.grid_w*self.zoom, self.grid_h*self.zoom, self.cell/self.zoom)
         if gridpos.x and gridpos.y then            
             _spixel(
                 (self.spriteNumber  % self.sprites_w) * self.sprites_cell + gridpos.x,
@@ -99,7 +103,7 @@ function spriteeditor:draw()
 
     _rectfill(self.origin_x - 1, self.origin_y - 1,self.grid_w * self.cell + 2,self.grid_h * self.cell + 2, 0)    
     _csprc(1,0,self.origin_x,self.origin_y,3,2,self.cell,self.cell)
-    _cgridc(self.spriteNumber,self.origin_x,self.origin_y,self.cell,-1,10,1,1,false,false)    
+    _cgridc(self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
     
