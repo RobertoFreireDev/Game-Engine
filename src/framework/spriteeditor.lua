@@ -11,8 +11,8 @@
     sprites_y = 135,
     origin_x = 100,
     origin_y = 5,
-    pixelbutton = new_button(0,11,12,10,275,65,0,0,10,10),
-    eraserbutton = new_button(0,10,12,10,275+10,65,0,0,10,10),
+    pixelbutton = new_button(0,11,12,10,275,105,0,0,10,10),
+    eraserbutton = new_button(0,10,12,10,275+10,105,0,0,10,10),
     sprites_w = 30,4,10,
     sprites_h = 4,
     sprites_cell = 10,
@@ -24,7 +24,7 @@
 
 function spriteeditor:create()
     local x,y,size=self.sprite_x,self.origin_y,10
-    for i=0,15 do
+    for i=0,31 do
 	    local row = flr(i/4)
 	    local col = i%4
 	    local px = x + col*size
@@ -89,10 +89,10 @@ end
 
 function spriteeditor:draw()
     _rectfill(10,0,310,180,11)
-    _rectfill(self.sprite_x-1,self.origin_y-1,42,42,0)
-    _rectfill(self.sprite_x-1,49-1,42,12,0)
-    _csprc(1,0,self.sprite_x,49,3,2,4,1)
-    _rectfill(self.sprite_x,49,40,10,self.selectedcolor)
+    _rectfill(self.sprite_x-1,self.origin_y-1,42,82,0)
+    _rectfill(self.sprite_x-1,89-1,42,12,0)
+    _csprc(1,0,self.sprite_x,89,3,2,4,1)
+    _rectfill(self.sprite_x,89,40,10,self.selectedcolor)
     foreach(self.collorButtons, function(o)
         o:draw()
     end)
