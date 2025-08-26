@@ -41,6 +41,9 @@ function _init()
 end
 
 function _update()
+    if not _isfocused() then
+        return
+    end
     state:update()
     foreach(buttons, function(o)
         o:update()
