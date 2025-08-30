@@ -11,19 +11,22 @@ public static class Shapes
         GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(x, y, 1, 1), color);
     }
 
-    public static void DrawLine(int x0, int y0, int x1, int y1, Color color)
+    public static void DrawLine(int ox, int oy, int x0, int y0, int x1, int y1, int scale, Color color)
     {
+        scale = Math.Max(scale, 1);
         int dx = Math.Abs(x1 - x0);
         int dy = Math.Abs(y1 - y0);
         int sx = x0 < x1 ? 1 : -1;
         int sy = y0 < y1 ? 1 : -1;
         int err = dx - dy;
+        int count = 0;
 
         while (true)
         {
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(x0, y0, 1, 1), color);
+            count++;
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + x0*scale, oy + y0 * scale, scale, scale), color);
 
-            if (x0 == x1 && y0 == y1)
+            if (x0 == x1 && y0 == y1 || count > 500)
                 break;
 
             int e2 = 2 * err;

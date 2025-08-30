@@ -13,6 +13,9 @@
     origin_y = 5,
     pixelbutton = new_button(0,11,12,10,275,105,0,0,10,10),
     eraserbutton = new_button(0,10,12,10,275+10,105,0,0,10,10),
+    linebutton = new_button(0,12,12,10,275+20,105,0,0,10,10),
+    rectbutton = new_button(0,13,12,10,275+30,105,0,0,10,10),
+    circlebutton = new_button(0,14,10,10,275,115,0,0,10,10),
     sprites_w = 30,4,10,
     sprites_h = 4,
     sprites_cell = 10,
@@ -20,7 +23,10 @@
     pageNumber = 0,
     zoom = 1,
     maxZoom = 4,    
-    gridIndex = 0
+    gridIndex = 0,
+    gridpos = { x= nil, y= nil},
+    drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil},
+    mousepos = { x= nil, y= nil}
 }
 
 function spriteeditor:create()
@@ -46,8 +52,15 @@ function spriteeditor:create()
             self.selectedcolor = 0
         end
     end
+    self.linebutton.clicked = function(o) self.paintbuttonselected = o end
+    self.rectbutton.clicked = function(o) self.paintbuttonselected = o end
+    self.circlebutton.clicked = function(o) self.paintbuttonselected = o end
+
     add(self.paintbuttons,self.eraserbutton)
     add(self.paintbuttons,self.pixelbutton)
+    add(self.paintbuttons,self.linebutton)
+    add(self.paintbuttons,self.rectbutton)
+    add(self.paintbuttons,self.circlebutton)
 end
 
 function spriteeditor:init()
@@ -69,22 +82,17 @@ function spriteeditor:update()
 
     self.pageNumber = movepage(0,self.pageNumber,const.maxPage)
     self.zoom = mousescroll(1,self.zoom,self.maxZoom)
+    self.mousepos = _mousepos()
+    self.gridpos = screen_to_grid(self.mousepos,self.origin_x, self.origin_y, self.grid_w*self.zoom, self.grid_h*self.zoom, self.cell/self.zoom)
 
-    if _mouseclick(0) then
-        local mousepos = _mousepos()
-        local gridpos = screen_to_grid(mousepos,self.origin_x, self.origin_y, self.grid_w*self.zoom, self.grid_h*self.zoom, self.cell/self.zoom)
-        if gridpos.x and gridpos.y then            
-            _spixel(
-                self.gridIndex,
-                (self.spriteNumber  % self.sprites_w) * self.sprites_cell + gridpos.x,
-                flr(self.spriteNumber / self.sprites_w) * self.sprites_cell + gridpos.y,
-                self.selectedcolor)
-        else
-            local spritespos = screen_to_grid(mousepos,self.sprites_x, self.sprites_y, self.sprites_w, self.sprites_h, self.sprites_cell)
-            local sn = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
-            if sn > 0 then
-                self.spriteNumber = sn
-            end
+    self:handleshape()
+    if self.gridpos.x and self.gridpos.y then 
+        
+    elseif _mouseclickp(0) then
+        local spritespos = screen_to_grid(self.mousepos,self.sprites_x, self.sprites_y, self.sprites_w, self.sprites_h, self.sprites_cell)
+        local sn = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
+        if sn > 0 then
+            self.spriteNumber = sn
         end
     end
 end
@@ -105,6 +113,7 @@ function spriteeditor:draw()
     _rectfill(self.origin_x - 1, self.origin_y - 1,self.grid_w * self.cell + 2,self.grid_h * self.cell + 2, 0)    
     _csprc(1,0,self.origin_x,self.origin_y,3,2,self.cell,self.cell)
     _cgridc(self.gridIndex,self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
+    self:drawtemporaryshape()
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
     
@@ -112,6 +121,59 @@ function spriteeditor:draw()
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
     _cgridc(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
     drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell)
+end
+
+function spriteeditor:drawtemporaryshape()
+    if self.paintbuttonselected == self.linebutton then
+        if self.drawshape.x0 and self.drawshape.y0 and self.drawshape.x1 and self.drawshape.y1 then
+            _line(
+                self.origin_x,
+                self.origin_y,
+                self.drawshape.x0,
+                self.drawshape.y0,
+                self.drawshape.x1,
+                self.drawshape.y1,
+                self.cell/self.zoom,
+                self.selectedcolor)
+        end
+    elseif self.paintbuttonselected == self.rectbutton then
+
+    elseif self.paintbuttonselected == self.circlebutton then
+
+    end
+end
+
+function spriteeditor:handleshape()
+    if not self.gridpos.x or not self.gridpos.y then
+        self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+        return
+    end
+
+    if self.paintbuttonselected == self.linebutton or 
+       self.paintbuttonselected == self.rectbutton or
+       self.paintbuttonselected == self.circlebutton then
+       if _mouseclickp(0) then
+            self.drawshape = { x0 = self.gridpos.x, y0 = self.gridpos.y, x1 = nil, y1 = nil}
+       end
+       self.drawshape.x1 = self.gridpos.x
+       self.drawshape.y1 = self.gridpos.y
+
+       if _mouseclickr(0) and self.drawshape.x0 and self.drawshape.y0 then
+            self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+       end
+    else
+        self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+    end 
+
+    if self.paintbuttonselected == self.pixelbutton or self.paintbuttonselected == self.eraserbutton then
+        if _mouseclick(0) then
+            _spixel(
+                self.gridIndex,
+                (self.spriteNumber  % self.sprites_w) * self.sprites_cell + self.gridpos.x,
+                flr(self.spriteNumber / self.sprites_w) * self.sprites_cell + self.gridpos.y,
+                self.selectedcolor)
+        end
+    end
 end
 
 return spriteeditor
