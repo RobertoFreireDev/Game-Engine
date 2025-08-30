@@ -141,7 +141,7 @@ function spriteeditor:drawtemporaryshape()
     elseif self.paintbuttonselected == self.rectbutton then
 
     elseif self.paintbuttonselected == self.circlebutton then
-        _circ2(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, self.cell/self.zoom, self.selectedcolor)
+        _circ(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, self.cell/self.zoom, self.selectedcolor)
     end
 end
 

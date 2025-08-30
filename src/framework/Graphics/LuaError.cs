@@ -40,7 +40,7 @@ public static class LuaError
 
     public static void Draw()
     {
-        LuaBinding.RectFill(
+        LuaBinding.DrawRectFill(
             ScreenUtils.BaseBox.X,
             ScreenUtils.BaseBox.Y,
             ScreenUtils.BaseBox.Width,

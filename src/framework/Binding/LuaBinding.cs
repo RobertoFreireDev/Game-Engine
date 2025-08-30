@@ -50,11 +50,10 @@ public class LuaBinding
         // Draw
         _lua.RegisterFunction("_bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
         _lua.RegisterFunction("_pal", this, GetType().GetMethod("Pal"));
-        _lua.RegisterFunction("_rect", this, GetType().GetMethod("Rect"));
-        _lua.RegisterFunction("_rectfill", this, GetType().GetMethod("RectFill"));
-        _lua.RegisterFunction("_circ", this, GetType().GetMethod("Circ"));
-        _lua.RegisterFunction("_circ2", this, GetType().GetMethod("Circ2"));        
-        _lua.RegisterFunction("_circfill", this, GetType().GetMethod("CircFill"));
+        _lua.RegisterFunction("_rect", this, GetType().GetMethod("DrawRect"));
+        _lua.RegisterFunction("_rectfill", this, GetType().GetMethod("DrawRectFill"));
+        _lua.RegisterFunction("_circ", this, GetType().GetMethod("DrawCirc"));      
+        _lua.RegisterFunction("_circfill", this, GetType().GetMethod("DrawCircFill"));
         _lua.RegisterFunction("_line", this, GetType().GetMethod("DrawLine"));
         _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
@@ -451,27 +450,22 @@ public class LuaBinding
         ColorUtils.SetPalette(palette);
     }
 
-    public static void Rect(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)
+    public static void DrawRect(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)
     {
         Shapes.DrawRectBorder(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex, transparency));
     }
 
-    public static void RectFill(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)
+    public static void DrawRectFill(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)
     {
         Shapes.DrawRectFill(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex, transparency));
     }
 
-    public static void Circ(int ox, int oy, int x, int y, int r, int scale = 1, int colorIndex = 0, int transparency = 10)
-    {
-        Shapes.DrawCirc(ox, oy, x, y, r, scale, ColorUtils.GetColor(colorIndex, transparency));
-    }
-
-    public static void Circ2(int ox, int oy, int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)
+    public static void DrawCirc(int ox, int oy, int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)
     {
         Shapes.DrawCirc(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
     }
 
-    public static void CircFill(int x, int y, int r, int colorIndex = 0, int transparency = 10)
+    public static void DrawCircFill(int x, int y, int r, int colorIndex = 0, int transparency = 10)
     {
         Shapes.DrawCircFill(x, y, r, ColorUtils.GetColor(colorIndex, transparency));
     }
