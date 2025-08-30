@@ -22,6 +22,7 @@
     spriteNumber = 1,
     pageNumber = 0,
     zoom = 1,
+    lastZoom = 1,
     maxZoom = 4,    
     gridIndex = 0,
     gridpos = { x= nil, y= nil},
@@ -81,6 +82,7 @@ function spriteeditor:update()
     end)
 
     self.pageNumber = movepage(0,self.pageNumber,const.maxPage)
+    self.lastZoom = self.zoom
     self.zoom = mousescroll(1,self.zoom,self.maxZoom)
     self.mousepos = _mousepos()
     self.gridpos = screen_to_grid(self.mousepos,self.origin_x, self.origin_y, self.grid_w*self.zoom, self.grid_h*self.zoom, self.cell/self.zoom)
@@ -162,6 +164,11 @@ function spriteeditor:handleshape()
         self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
         return
     end
+
+    if self.lastZoom > self.zoom then
+        self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+    end
+
     local offsetX, offsetY = (self.spriteNumber  % self.sprites_w) * self.sprites_cell, flr(self.spriteNumber / self.sprites_w) * self.sprites_cell
 
     if self.paintbuttonselected == self.linebutton or 
@@ -197,7 +204,8 @@ function spriteeditor:handleshape()
                     offsetY + self.drawshape.y0,
                     offsetX + self.drawshape.x1,
                     offsetY + self.drawshape.y1,
-                    self.selectedcolor)
+                    self.selectedcolor,
+                    _btn(_keys.LeftControl) or _btn(_keys.RightControl))
             end
 
             self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
