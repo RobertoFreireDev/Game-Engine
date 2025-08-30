@@ -27,6 +27,11 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 
 **Shader:**
 
+add if opengl else. learn from this video
+
+https://youtu.be/eANSPwD1SIE?si=zhQICIPkb4DIra0a
+
+
 add if else logic to frac()/loop image or not 
 
 -  float2 distortedUV = frac(uv + float2(waveX, waveY));
