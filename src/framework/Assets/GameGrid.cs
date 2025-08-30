@@ -128,13 +128,6 @@ public class GridData
             return;
         }
 
-        if (x0 == x1 && y0 == y1)
-        {
-            Data[y0, x0] = colorIndex;
-            UpdateTexture2d();
-            return;
-        }
-
         int rx0 = Math.Min(x0, x1);
         int ry0 = Math.Min(y0, y1);
         int rx1 = Math.Max(x0, x1);
@@ -145,17 +138,26 @@ public class GridData
         rx1 = bounds.Right;
         ry1 = bounds.Bottom;
 
+        if (rx1 - rx0 <= 1 && ry1 - ry0 <= 1)
+        {
+            for (int x = rx0; x <= rx1; x++)
+            {
+                for (int y = ry0; y <= ry1; y++)
+                {
+                    Data[y, x] = colorIndex;
+                }
+            }
+            UpdateTexture2d();
+            return;
+        }
+
         int xC = (int)Math.Ceiling((rx0 + rx1) / 2.0);
         int yC = (int)Math.Ceiling((ry0 + ry1) / 2.0);
-
         int evenX = (rx0 + rx1) % 2;
         int evenY = (ry0 + ry1) % 2;
-
         int rX = rx1 - xC;
         int rY = ry1 - yC;
-
         List<Point> pixels = new List<Point>();
-
         for (int x = rx0; x <= xC; x++)
         {
             double angle = Math.Acos((x - xC) / (double)rX);
