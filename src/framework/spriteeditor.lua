@@ -85,6 +85,14 @@ function spriteeditor:update()
     self.mousepos = _mousepos()
     self.gridpos = screen_to_grid(self.mousepos,self.origin_x, self.origin_y, self.grid_w*self.zoom, self.grid_h*self.zoom, self.cell/self.zoom)
 
+    if _btn(_keys.LeftControl) or _btn(_keys.RightControl) then
+        self.rectbutton:updatesprite(23)
+        self.circlebutton:updatesprite(16)
+    else
+        self.rectbutton:updatesprite(13)
+        self.circlebutton:updatesprite(14)
+    end
+
     self:handleshape()
     if self.gridpos.x and self.gridpos.y then 
         
@@ -141,7 +149,11 @@ function spriteeditor:drawtemporaryshape()
     elseif self.paintbuttonselected == self.rectbutton then
 
     elseif self.paintbuttonselected == self.circlebutton then
-        _circ(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, self.cell/self.zoom, self.selectedcolor)
+         if _btn(_keys.LeftControl) or _btn(_keys.RightControl) then
+            _circfill(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, self.cell/self.zoom, self.selectedcolor)
+         else
+            _circ(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, self.cell/self.zoom, self.selectedcolor)
+         end
     end
 end
 

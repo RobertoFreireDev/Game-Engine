@@ -45,6 +45,10 @@ function new_button(i,s,c,t,x,y,x1,y1,w,h)
 			o:clicked()
 		end
 	end
+
+	function o:updatesprite(s) 
+		o.b.s=s
+	end
 		
 	function o:draw()
 		o.b:draw()

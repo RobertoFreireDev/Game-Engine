@@ -105,28 +105,9 @@ public static class Shapes
         }
     }
 
-    public static void DrawCircFill(int xm, int ym, int r, Color color)
+    public static void DrawCircFill(int ox, int oy, int x0, int y0, int x1, int y1, int scale, Color color)
     {
-        if (r < 0)
-        {
-            return;
-        }
-
-        if (r == 0)
-        {
-            GFW.SpriteBatch.Draw(
-                GFW.PixelTexture,
-                new Rectangle(xm, ym, 1, 1),
-                color
-            );
-            return;
-        }
-
-        int x0 = xm - r;
-        int y0 = ym - r;
-        int x1 = xm + r;
-        int y1 = ym + r;
-
+        scale = Math.Max(scale, 1);
         int rx0 = Math.Min(x0, x1);
         int ry0 = Math.Min(y0, y1);
         int rx1 = Math.Max(x0, x1);
@@ -137,8 +118,14 @@ public static class Shapes
         rx1 = bounds.Right;
         ry1 = bounds.Bottom;
 
-        int xC = (int)Math.Round((rx0 + rx1) / 2.0);
-        int yC = (int)Math.Round((ry0 + ry1) / 2.0);
+        if (rx1 - rx0 <= 1 || ry1 - ry0 <= 1)
+        {
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * scale, oy + ry0 * scale, (rx1 + 1 - rx0) * scale, (ry1 + 1 - ry0) * scale), color);
+            return;
+        }
+
+        int xC = (int)Math.Ceiling((rx0 + rx1) / 2.0);
+        int yC = (int)Math.Ceiling((ry0 + ry1) / 2.0);
 
         int evenX = (rx0 + rx1) % 2;
         int evenY = (ry0 + ry1) % 2;
@@ -193,7 +180,14 @@ public static class Shapes
             int maxX = xs[xs.Count - 1];
             int width = maxX - minX + 1;
 
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(minX, y, width, 1), color);
+            if (minX < rx0 || minX > rx1 || y < ry0 || y > ry1)
+            {
+                continue;
+            }
+
+            GFW.SpriteBatch.Draw(GFW.PixelTexture,
+                new Rectangle(ox + minX * scale, oy + y * scale, width * scale, scale), 
+                color);
         }
     }
 
