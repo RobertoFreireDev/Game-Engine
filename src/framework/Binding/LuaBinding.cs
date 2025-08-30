@@ -221,81 +221,81 @@ public class LuaBinding
     #endregion
 
     #region MapFunctions
-    public static void CreateMap(int columns, int rows, int size)
+    public static void CreateMap(int index, int columns, int rows, int size)
     {
-        MapGrid.Create(columns, rows, size);
+        MapGrid.Create(index, columns, rows, size);
     }
 
-    public static void SetTileInMap(int x, int y, int tileIndex = 0)
+    public static void SetTileInMap(int index, int x, int y, int tileIndex = 0)
     {
-        MapGrid.SetTile(x, y, tileIndex);
+        MapGrid.SetTile(index, x, y, tileIndex);
     }
     
     public static void DrawMap(
-        int mapX, int mapY,
+        int index, int mapX, int mapY,
         int x, int y,   
         int width, int height)
     {
-        MapGrid.DrawMap(mapX, mapY, x, y, width, height, Color.White);
+        MapGrid.DrawMap(index, mapX, mapY, x, y, width, height, Color.White);
     }
 
-    public static string GetMap()
+    public static string GetMap(int index)
     {
-        return MapGrid.GetMap();
+        return MapGrid.GetMap(index);
     }
 
-    public static void SetMap(string grid)
+    public static void SetMap(int index, string grid)
     {
         if (string.IsNullOrWhiteSpace(grid))
         {
             return;
         }
 
-        MapGrid.SetMap(grid);
+        MapGrid.SetMap(index, grid);
     }
     #endregion
 
     #region GridFunctions
-    public static void CreateGrid(int columns, int rows, int size)
+    public static void CreateGrid(int gridIndex, int columns, int rows, int size)
     {
-        GameGrid.Create(columns, rows, size);
+        GameGrid.Create(gridIndex, columns, rows, size);
     }
 
-    public static void ClearGrid(int x, int y, int w, int h)
+    public static void ClearGrid(int gridIndex, int x, int y, int w, int h)
     {
-        GameGrid.ClearGrid(x, y, w, h);
+        GameGrid.ClearGrid(gridIndex, x, y, w, h);
     }
 
-    public static void SetGrid(string grid)
+    public static void SetGrid(int gridIndex, string grid)
     {
         if (string.IsNullOrWhiteSpace(grid))
         {
             return;
         }
 
-        GameGrid.SetGameGrid(grid);
+        GameGrid.SetGameGrid(gridIndex, grid);
     }
 
-    public static string GetGrid()
+    public static string GetGrid(int gridIndex)
     {
-        return GameGrid.GetGameGrid();
+        return GameGrid.GetGameGrid(gridIndex);
     }
 
-    public static void SetPixel(int x, int y, int colorIndex = -1)
+    public static void SetPixel(int gridIndex, int x, int y, int colorIndex = -1)
     {
-        GameGrid.SetPixel(x,y,colorIndex);
+        GameGrid.SetPixel(gridIndex, x, y,colorIndex);
     }
 
-    public static int GetPixel(int x, int y)
+    public static int GetPixel(int gridIndex, int x, int y)
     {
-        return GameGrid.GetPixel(x,y);
+        return GameGrid.GetPixel(gridIndex, x, y);
     }
 
     public static void DrawCustomGrid(
-        int n, int x, int y, int scale, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1,
+        int gridIndex, int n, int x, int y, int scale, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
-        GameGrid.DrawCustomGrid(n,x,y, scale, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency), w,h,flipX,flipY);
+        GameGrid.DrawCustomGrid(gridIndex, n, x,y, scale, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency), w,h,flipX,flipY);
     }
     #endregion
 

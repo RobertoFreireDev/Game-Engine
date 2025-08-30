@@ -18,13 +18,13 @@ function change_state(st)
 end
 
 function _init()   
-    _cgrid(30,(const.maxPage+1)*4,10)
-    _cmap(320,180,10)
+    _cgrid(0,30,(const.maxPage+1)*4,10)
+    _cmap(0,320,180,10)
     if _iohasfile(spriteFileName) then
-        _sgrid(_ioread(spriteFileName))
+        _sgrid(0,_ioread(spriteFileName))
     end
     if _iohasfile(mapFileName) then
-        _smap(_ioread(mapFileName))
+        _smap(0,_ioread(mapFileName))
     end    
     
     buttons = {}
@@ -55,8 +55,8 @@ function _update()
     end
 
     if (_btn(_keys.LeftControl) or _btn(_keys.RightControl)) and _btnp(_keys.R) then
-        _iocreateorupdate(spriteFileName,_ggrid())
-        _iocreateorupdate(mapFileName,_gmap())
+        _iocreateorupdate(spriteFileName,_ggrid(0))
+        _iocreateorupdate(mapFileName,_gmap(0))
     end
 end
 

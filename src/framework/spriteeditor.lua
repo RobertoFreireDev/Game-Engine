@@ -19,7 +19,8 @@
     spriteNumber = 1,
     pageNumber = 0,
     zoom = 1,
-    maxZoom = 4
+    maxZoom = 4,    
+    gridIndex = 0
 }
 
 function spriteeditor:create()
@@ -74,6 +75,7 @@ function spriteeditor:update()
         local gridpos = screen_to_grid(mousepos,self.origin_x, self.origin_y, self.grid_w*self.zoom, self.grid_h*self.zoom, self.cell/self.zoom)
         if gridpos.x and gridpos.y then            
             _spixel(
+                self.gridIndex,
                 (self.spriteNumber  % self.sprites_w) * self.sprites_cell + gridpos.x,
                 flr(self.spriteNumber / self.sprites_w) * self.sprites_cell + gridpos.y,
                 self.selectedcolor)
@@ -102,13 +104,13 @@ function spriteeditor:draw()
 
     _rectfill(self.origin_x - 1, self.origin_y - 1,self.grid_w * self.cell + 2,self.grid_h * self.cell + 2, 0)    
     _csprc(1,0,self.origin_x,self.origin_y,3,2,self.cell,self.cell)
-    _cgridc(self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
+    _cgridc(self.gridIndex,self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
     
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2, 0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
-    _cgridc(self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
+    _cgridc(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
     drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell)
 end
 
