@@ -259,7 +259,7 @@ function spriteeditor:handleshape()
     end
 
     if self.paintbuttonselected == self.paintbutton then
-        if _mouseclick(0) then
+        if _mouseclickp(0) then
             _bgrid(
                 self.gridIndex,
                 offsetX + self.gridpos.x,
