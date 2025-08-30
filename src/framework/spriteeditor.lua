@@ -16,7 +16,8 @@
     linebutton = new_button(0,12,12,10,275+20,105,0,0,10,10),
     rectbutton = new_button(0,13,12,10,275+30,105,0,0,10,10),
     circlebutton = new_button(0,14,10,10,275,115,0,0,10,10),
-    sprites_w = 30,4,10,
+    paintbutton = new_button(0,9,10,10,275+10,115,0,0,10,10),
+    sprites_w = 30,
     sprites_h = 4,
     sprites_cell = 10,
     spriteNumber = 1,
@@ -56,12 +57,14 @@ function spriteeditor:create()
     self.linebutton.clicked = function(o) self.paintbuttonselected = o end
     self.rectbutton.clicked = function(o) self.paintbuttonselected = o end
     self.circlebutton.clicked = function(o) self.paintbuttonselected = o end
+    self.paintbutton.clicked = function(o) self.paintbuttonselected = o end
 
     add(self.paintbuttons,self.eraserbutton)
     add(self.paintbuttons,self.pixelbutton)
     add(self.paintbuttons,self.linebutton)
     add(self.paintbuttons,self.rectbutton)
     add(self.paintbuttons,self.circlebutton)
+    add(self.paintbuttons,self.paintbutton)
 end
 
 function spriteeditor:init()
@@ -130,7 +133,7 @@ function spriteeditor:draw()
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,0,0,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2,1, 0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
     _cgridc(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
-    drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell)
+    drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell,self.zoom)
 end
 
 function spriteeditor:drawtemporaryshape()
@@ -243,6 +246,20 @@ function spriteeditor:handleshape()
                 self.gridIndex,
                 offsetX + self.gridpos.x,
                 offsetY + self.gridpos.y,
+                self.selectedcolor)
+        end
+    end
+
+    if self.paintbuttonselected == self.paintbutton then
+        if _mouseclick(0) then
+            _bgrid(
+                self.gridIndex,
+                offsetX + self.gridpos.x,
+                offsetY + self.gridpos.y,
+                offsetX,
+                offsetY,
+                self.sprites_cell*self.zoom,
+                self.sprites_cell*self.zoom,
                 self.selectedcolor)
         end
     end

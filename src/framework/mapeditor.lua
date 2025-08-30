@@ -53,7 +53,7 @@ function mapeditor:draw()
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,0,0,self.sprites_w*10 + 2,self.sprites_h*10 + 2, 1, 0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)
     _cgridc(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
-    drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell)
+    drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell,1)
 end
 
 return mapeditor

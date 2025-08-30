@@ -70,6 +70,42 @@ public class GridData
         UpdateTexture2d();
     }
 
+    public void PaintBucket(int startX, int startY, int x0, int y0, int w, int h, int newColorIndex)
+    {
+        if (InvalidGridPos(startX, startY))
+        {
+            return;
+        }
+            
+
+        int targetColor = Data[startY, startX];
+        if (targetColor == newColorIndex)
+        {
+            return;
+        } 
+
+        Queue<(int x, int y)> queue = new Queue<(int x, int y)>();
+        queue.Enqueue((startX, startY));
+
+        while (queue.Count > 0)
+        {
+            var (x, y) = queue.Dequeue();
+
+            if (x < x0 || x >= x0 + w || y < y0 || y >= y0 + h || Data[y, x] != targetColor)
+            {
+                continue;
+            }
+
+            Data[y, x] = newColorIndex;
+            queue.Enqueue((x + 1, y));
+            queue.Enqueue((x - 1, y));
+            queue.Enqueue((x, y + 1));
+            queue.Enqueue((x, y - 1));
+        }
+
+        UpdateTexture2d();
+    }
+
     public void SetLine(int x0, int y0, int x1, int y1, int colorIndex)
     {
         if (InvalidGridPos(x0, y0) || InvalidGridPos(x1, y1))
@@ -428,6 +464,16 @@ public static class GameGrid
         }
 
         GridList[index].SetPixel(x, y, colorIndex);
+    }
+
+    public static void PaintBucket(int index, int sx, int sy, int x, int y, int w, int h, int colorIndex)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+
+        GridList[index].PaintBucket(sx, sy, x, y, w, h, colorIndex);
     }
 
     public static void SetLine(int index, int x0, int y0, int x1, int y1, int colorIndex)

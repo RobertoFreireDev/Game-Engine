@@ -95,6 +95,7 @@ public class LuaBinding
         _lua.RegisterFunction("_cleargrid", this, GetType().GetMethod("ClearGrid"));
         _lua.RegisterFunction("_cgrid", this, GetType().GetMethod("CreateGrid"));
         _lua.RegisterFunction("_sgrid", this, GetType().GetMethod("SetGrid"));
+        _lua.RegisterFunction("_bgrid", this, GetType().GetMethod("PaintBucket"));
         _lua.RegisterFunction("_ggrid", this, GetType().GetMethod("GetGrid"));
         _lua.RegisterFunction("_spixel", this, GetType().GetMethod("SetPixel"));
         _lua.RegisterFunction("_slinegrid", this, GetType().GetMethod("SetLine"));
@@ -289,6 +290,11 @@ public class LuaBinding
     public static void SetPixel(int gridIndex, int x, int y, int colorIndex = -1)
     {
         GameGrid.SetPixel(gridIndex, x, y,colorIndex);
+    }
+
+    public static void PaintBucket(int gridIndex, int sx, int sy, int x, int y, int w, int h, int colorIndex = -1)
+    {
+        GameGrid.PaintBucket(gridIndex, sx, sy, x, y, w, h, colorIndex);
     }
 
     public static void SetLine(int gridIndex, int x0, int y0, int x1, int y1, int colorIndex = -1)
