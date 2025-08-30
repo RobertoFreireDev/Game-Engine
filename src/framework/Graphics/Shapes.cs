@@ -46,19 +46,11 @@ public static class Shapes
     public static void DrawCirc(int ox, int oy, int x0, int y0, int x1, int y1, int scale, Color color)
     {
         scale = Math.Max(scale, 1);
-        int rx0 = Math.Min(x0, x1);
-        int ry0 = Math.Min(y0, y1);
-        int rx1 = Math.Max(x0, x1);
-        int ry1 = Math.Max(y0, y1);        
-        var bounds = new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0);
-        rx0 = bounds.Left;
-        ry0 = bounds.Top;
-        rx1 = bounds.Right;
-        ry1 = bounds.Bottom;
+        var (rx0, ry0, rx1, ry1, w, h) = AdjustRect(x0, y0, x1, y1);
 
         if (rx1 - rx0 <= 1 && ry1 - ry0 <= 1)
         {
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * scale, oy + ry0 * scale, (rx1 + 1 - rx0) * scale,(ry1 + 1 - ry0) * scale), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * scale, oy + ry0 * scale, w * scale,h * scale), color);
             return;
         }
 
@@ -108,19 +100,11 @@ public static class Shapes
     public static void DrawCircFill(int ox, int oy, int x0, int y0, int x1, int y1, int scale, Color color)
     {
         scale = Math.Max(scale, 1);
-        int rx0 = Math.Min(x0, x1);
-        int ry0 = Math.Min(y0, y1);
-        int rx1 = Math.Max(x0, x1);
-        int ry1 = Math.Max(y0, y1);
-        var bounds = new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0);
-        rx0 = bounds.Left;
-        ry0 = bounds.Top;
-        rx1 = bounds.Right;
-        ry1 = bounds.Bottom;
+        var (rx0, ry0, rx1, ry1, w, h) = AdjustRect(x0, y0, x1, y1);
 
         if (rx1 - rx0 <= 1 || ry1 - ry0 <= 1)
         {
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * scale, oy + ry0 * scale, (rx1 + 1 - rx0) * scale, (ry1 + 1 - ry0) * scale), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * scale, oy + ry0 * scale, w * scale, h * scale), color);
             return;
         }
 
@@ -191,20 +175,29 @@ public static class Shapes
         }
     }
 
-    public static void DrawRectFill(Rectangle rect, Color color)
+    public static void DrawRectFill(int ox, int oy, int x, int y, int width, int height, int scale, Color color)
     {
-        GFW.SpriteBatch.Draw(GFW.PixelTexture, rect, color);
+        GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + x * scale, oy + y * scale, width * scale, height * scale), color);
     }
 
-    public static void DrawRectBorder(Rectangle rect, Color color, int thickness = 1)
+    public static void DrawRectBorder(int ox, int oy, int x, int y, int width, int height, int scale, Color color, int thickness = 1)
     {
         // Top
-        DrawRectFill(new Rectangle(rect.X, rect.Y, rect.Width, thickness), color);
+        DrawRectFill(ox, oy, x, y, width, thickness, scale, color);
         // Bottom
-        DrawRectFill(new Rectangle(rect.X, rect.Y + rect.Height - thickness, rect.Width, thickness), color);
+        DrawRectFill(ox, oy, x, y + height - thickness, width, thickness, scale, color);
         // Left
-        DrawRectFill(new Rectangle(rect.X, rect.Y + 1, thickness, rect.Height - 2), color);
+        DrawRectFill(ox, oy, x, y + 1, thickness, height - 2, scale, color);
         // Right
-        DrawRectFill(new Rectangle(rect.X + rect.Width - thickness, rect.Y + 1, thickness, rect.Height - 2), color);
+        DrawRectFill(ox, oy, x + width - thickness, y + 1, thickness, height - 2, scale, color);
+    }
+
+    public static (int rx0, int ry0, int rx1, int ry1, int w, int h) AdjustRect(int x0, int y0, int x1, int y1)
+    {
+        int rx0 = Math.Min(x0, x1);
+        int ry0 = Math.Min(y0, y1);
+        int rx1 = Math.Max(x0, x1);
+        int ry1 = Math.Max(y0, y1);
+        return (rx0, ry0, rx1, ry1, rx1 - rx0 + 1, ry1 - ry0 + 1);
     }
 }

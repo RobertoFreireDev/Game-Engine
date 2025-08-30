@@ -58,7 +58,7 @@ function drawSelectedRec(sn,pn,w,h,sx,sy,sc)
     local sn = sn - pn*w*h
     local x = (sn  % w) * sc
     local y = flr(sn / w) * sc
-    _rect(sx + x,sy + y,sc,sc,1)
+    _rect(sx,sy,x,y,sc,sc,1,1)
 end
 
 function screen_to_grid(p,x,y,w,h,s) 

@@ -74,7 +74,7 @@ function new_colorbutton(c,x,y,x1,y1,w,h)
 	end
 		
 	function o:draw()
-		_rectfill(o.x + o.box.x,o.y + o.box.y,o.box.w,o.box.h,o.c)
+		_rectfill(o.x,o.y,o.box.x,o.box.y,o.box.w,o.box.h,1,o.c)
 	end
 		
 	return o

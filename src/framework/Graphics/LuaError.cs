@@ -43,9 +43,10 @@ public static class LuaError
         LuaBinding.DrawRectFill(
             ScreenUtils.BaseBox.X,
             ScreenUtils.BaseBox.Y,
+            0,0,
             ScreenUtils.BaseBox.Width,
             ScreenUtils.BaseBox.Height,
-            0);
+            1,0);
         LuaBinding.Print(_message, 2, 2, 1, true);
     }
 }

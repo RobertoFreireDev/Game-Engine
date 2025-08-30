@@ -42,15 +42,15 @@ function mapeditor:update()
 end
 
 function mapeditor:draw()
-    _rectfill(10,0,310,180,11)
-    _rectfill(self.map_x - 1, self.map_y - 1,self.map_columns*10 + 2,self.map_rows*10 + 2, 0)
+    _rectfill(10,0,0,0,310,180,1,11)
+    _rectfill(self.map_x - 1, self.map_y - 1,0,0,self.map_columns*10 + 2,self.map_rows*10 + 2, 1,0)
     _csprc(1,0,self.map_x,self.map_y,3,2,self.map_columns,self.map_rows)
     _drawmap(self.gridIndex,self.map_pos.x, self.map_pos.y, self.map_x,self.map_y, self.map_columns, self.map_rows);
     _print("("..self.map_pos.x..","..self.map_pos.y..")",80,self.sprites_y - 8,12)
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
 
-    _rectfill(self.sprites_x - 1, self.sprites_y - 1,self.sprites_w*10 + 2,self.sprites_h*10 + 2, 0)
+    _rectfill(self.sprites_x - 1, self.sprites_y - 1,0,0,self.sprites_w*10 + 2,self.sprites_h*10 + 2, 1, 0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)
     _cgridc(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
     drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell)
