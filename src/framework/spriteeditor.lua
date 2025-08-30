@@ -90,12 +90,20 @@ function spriteeditor:update()
     self.mousepos = _mousepos()
     self.gridpos = screen_to_grid(self.mousepos,self.origin_x, self.origin_y, self.grid_w*self.zoom, self.grid_h*self.zoom, self.cell/self.zoom)
 
-    if _btn(_keys.LeftControl) or _btn(_keys.RightControl) then
+    if (_btn(_keys.LeftControl) or _btn(_keys.RightControl)) and (self.paintbuttonselected == self.rectbutton or self.paintbuttonselected == self.circlebutton) then
         self.rectbutton:updatesprite(23)
         self.circlebutton:updatesprite(16)
     else
         self.rectbutton:updatesprite(13)
         self.circlebutton:updatesprite(14)
+    end
+
+    if _btn(_keys.LeftControl) and _btnp(_keys.Z) then
+        _ugrid(self.gridIndex)
+    end
+
+    if _btn(_keys.LeftControl) and _btnp(_keys.Y) then
+        _rgrid(self.gridIndex)
     end
 
     self:handleshape()
@@ -125,14 +133,14 @@ function spriteeditor:draw()
 
     _rectfill(self.origin_x - 1, self.origin_y - 1,0,0,self.grid_w * self.cell + 2,self.grid_h * self.cell + 2, 1,0)    
     _csprc(1,0,self.origin_x,self.origin_y,3,2,self.cell,self.cell)
-    _cgridc(self.gridIndex,self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
+    _dgrid(self.gridIndex,self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
     self:drawtemporaryshape()
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
     
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,0,0,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2,1, 0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
-    _cgridc(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
+    _dgrid(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
     drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell,self.zoom)
 end
 

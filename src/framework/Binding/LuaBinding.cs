@@ -92,9 +92,10 @@ public class LuaBinding
         _lua.RegisterFunction("_gelapsedtime", this, GetType().GetMethod("GetElapsedTime"));
 
         // Grid
-        _lua.RegisterFunction("_cleargrid", this, GetType().GetMethod("ClearGrid"));
         _lua.RegisterFunction("_cgrid", this, GetType().GetMethod("CreateGrid"));
         _lua.RegisterFunction("_sgrid", this, GetType().GetMethod("SetGrid"));
+        _lua.RegisterFunction("_ugrid", this, GetType().GetMethod("UndoGrid"));
+        _lua.RegisterFunction("_rgrid", this, GetType().GetMethod("RedoGrid"));
         _lua.RegisterFunction("_bgrid", this, GetType().GetMethod("PaintBucket"));
         _lua.RegisterFunction("_ggrid", this, GetType().GetMethod("GetGrid"));
         _lua.RegisterFunction("_spixel", this, GetType().GetMethod("SetPixel"));
@@ -102,7 +103,7 @@ public class LuaBinding
         _lua.RegisterFunction("_srectgrid", this, GetType().GetMethod("SetRect"));
         _lua.RegisterFunction("_scircgrid", this, GetType().GetMethod("SetCirc"));
         _lua.RegisterFunction("_gpixel", this, GetType().GetMethod("GetPixel"));
-        _lua.RegisterFunction("_cgridc", this, GetType().GetMethod("DrawCustomGrid"));
+        _lua.RegisterFunction("_dgrid", this, GetType().GetMethod("DrawCustomGrid"));
 
         // Map
         _lua.RegisterFunction("_stilemap", this, GetType().GetMethod("SetTileInMap"));
@@ -262,14 +263,19 @@ public class LuaBinding
     #endregion
 
     #region GridFunctions
-    public static void CreateGrid(int gridIndex, int columns, int rows, int size)
+    public static void CreateGrid(int gridIndex, int columns, int rows, int size, bool enableUndoRedo = false)
     {
-        GameGrid.Create(gridIndex, columns, rows, size);
+        GameGrid.Create(gridIndex, columns, rows, size, enableUndoRedo);
     }
 
-    public static void ClearGrid(int gridIndex, int x, int y, int w, int h)
+    public static void UndoGrid(int gridIndex)
     {
-        GameGrid.ClearGrid(gridIndex, x, y, w, h);
+        GameGrid.Undo(gridIndex);
+    }
+
+    public static void RedoGrid(int gridIndex)
+    {
+        GameGrid.Redo(gridIndex);
     }
 
     public static void SetGrid(int gridIndex, string grid)

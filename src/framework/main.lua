@@ -22,7 +22,7 @@ function change_state(st)
 end
 
 function _init()   
-    _cgrid(0,30,(const.maxPage+1)*4,10)
+    _cgrid(0,30,(const.maxPage+1)*4,10,true)
     _cmap(0,320,180,10)
     if _iohasfile(spriteFileName) then
         _sgrid(0,_ioread(spriteFileName))

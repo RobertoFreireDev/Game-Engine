@@ -17,13 +17,56 @@ public class GridData
     public int Size;
     public int Total;
     public int Margin = 1; // to avoid last column stretching issue
+    private bool _enableUndoRedo = false;
 
-    public void Create(int columns, int rows, int size)
+    private Stack<int[,]> undoStack = new Stack<int[,]>();
+    private Stack<int[,]> redoStack = new Stack<int[,]>();
+
+    private void SaveSnapshot()
+    {
+        if (!_enableUndoRedo)
+        {
+            return;
+        }
+
+        int[,] copy = new int[Data.GetLength(0), Data.GetLength(1)];
+        Array.Copy(Data, copy, Data.Length);
+
+        undoStack.Push(copy);
+        redoStack.Clear();
+    }
+
+    public void Undo()
+    {
+        if (undoStack.Count == 0 || !_enableUndoRedo) return;
+
+        int[,] current = new int[Data.GetLength(0), Data.GetLength(1)];
+        Array.Copy(Data, current, Data.Length);
+
+        redoStack.Push(current);
+        Data = undoStack.Pop();
+        UpdateTexture2d();
+    }
+
+    public void Redo()
+    {
+        if (redoStack.Count == 0 || !_enableUndoRedo) return;
+
+        int[,] current = new int[Data.GetLength(0), Data.GetLength(1)];
+        Array.Copy(Data, current, Data.Length);
+
+        undoStack.Push(current);
+        Data = redoStack.Pop();
+        UpdateTexture2d();
+    }
+
+    public void Create(int columns, int rows, int size, bool enableUndoRedo)
     {
         Columns = columns;
         Rows = rows;
         Size = size;
         Total = Columns * Rows;
+        _enableUndoRedo = enableUndoRedo;
         TileRects = new Rectangle[Total];
         for (int i = 0; i < Total; i++)
         {
@@ -35,7 +78,7 @@ public class GridData
         ClearGrid(0, 0, Rows * Size, Columns * Size);
     }
 
-    public void ClearGrid(int x, int y, int w, int h)
+    private void ClearGrid(int x, int y, int w, int h)
     {
         var (x1, y1, x2, y2) = ClampToBounds(x, y, w, h);
 
@@ -66,6 +109,7 @@ public class GridData
         {
             return;
         }
+        SaveSnapshot();
         Data[y, x] = colorIndex;
         UpdateTexture2d();
     }
@@ -76,8 +120,8 @@ public class GridData
         {
             return;
         }
-            
 
+        SaveSnapshot();
         int targetColor = Data[startY, startX];
         if (targetColor == newColorIndex)
         {
@@ -113,6 +157,7 @@ public class GridData
             return;
         }
 
+        SaveSnapshot();
         int dx = Math.Abs(x1 - x0);
         int dy = Math.Abs(y1 - y0);
         int sx = x0 < x1 ? 1 : -1;
@@ -149,6 +194,7 @@ public class GridData
             return;
         }
 
+        SaveSnapshot();
         var (rx0, ry0, rx1, ry1, w, h) = Shapes.AdjustRect(x0, y0, x1, y1);
 
         for (int x = rx0; x <= rx1; x++)
@@ -182,6 +228,7 @@ public class GridData
             return;
         }
 
+        SaveSnapshot();
         var (rx0, ry0, rx1, ry1, w, h) = Shapes.AdjustRect(x0, y0, x1, y1);
 
         for (int x = rx0; x <= rx1; x++)
@@ -202,6 +249,7 @@ public class GridData
             return;
         }
 
+        SaveSnapshot();
         int rx0 = Math.Min(x0, x1);
         int ry0 = Math.Min(y0, y1);
         int rx1 = Math.Max(x0, x1);
@@ -273,6 +321,7 @@ public class GridData
             return;
         }
 
+        SaveSnapshot();
         int rx0 = Math.Min(x0, x1);
         int ry0 = Math.Min(y0, y1);
         int rx1 = Math.Max(x0, x1);
@@ -435,20 +484,28 @@ public static class GameGrid
 {
     public static GridData[] GridList = new GridData[Constants.MaxGameGrid];
 
-    public static void Create(int index, int columns, int rows, int size)
+    public static void Create(int index, int columns, int rows, int size, bool enableUndoRedo)
     {
         GridList[index] = new GridData();
-        GridList[index].Create(columns, rows, size);
+        GridList[index].Create(columns, rows, size, enableUndoRedo);
     }
 
-    public static void ClearGrid(int index, int x, int y, int w, int h)
+    public static void Undo(int index)
     {
         if (!IsValidIndex(index))
         {
             return;
         }
+        GridList[index].Undo();
+    }
 
-        GridList[index].ClearGrid(x, y, w, h);
+    public static void Redo(int index)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+        GridList[index].Redo();
     }
 
     private static bool IsValidIndex(int index)
