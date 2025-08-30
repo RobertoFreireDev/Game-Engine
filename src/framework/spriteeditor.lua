@@ -124,22 +124,24 @@ function spriteeditor:draw()
 end
 
 function spriteeditor:drawtemporaryshape()
+    if not self.drawshape.x0 or not self.drawshape.y0 or not self.drawshape.x1 or not self.drawshape.y1 then
+        return
+    end
+
     if self.paintbuttonselected == self.linebutton then
-        if self.drawshape.x0 and self.drawshape.y0 and self.drawshape.x1 and self.drawshape.y1 then
-            _line(
-                self.origin_x,
-                self.origin_y,
-                self.drawshape.x0,
-                self.drawshape.y0,
-                self.drawshape.x1,
-                self.drawshape.y1,
-                self.cell/self.zoom,
-                self.selectedcolor)
-        end
+        _line(
+            self.origin_x,
+            self.origin_y,
+            self.drawshape.x0,
+            self.drawshape.y0,
+            self.drawshape.x1,
+            self.drawshape.y1,
+            self.cell/self.zoom,
+            self.selectedcolor)
     elseif self.paintbuttonselected == self.rectbutton then
 
     elseif self.paintbuttonselected == self.circlebutton then
-
+        _circ2(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, self.cell/self.zoom, self.selectedcolor)
     end
 end
 
@@ -161,15 +163,32 @@ function spriteeditor:handleshape()
 
        if _mouseclickr(0) and self.drawshape.x0 and self.drawshape.y0 then
             if self.paintbuttonselected == self.linebutton then
-                _sline(
+                _slinegrid(
                     self.gridIndex,
                     offsetX + self.drawshape.x0,
                     offsetY + self.drawshape.y0,
                     offsetX + self.drawshape.x1,
                     offsetY + self.drawshape.y1,
                     self.selectedcolor)
-                self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+            elseif self.paintbuttonselected == self.rectbutton then
+                --_srectgrid(
+                --    self.gridIndex,
+                --    offsetX + self.drawshape.x0,
+                --    offsetY + self.drawshape.y0,
+                --    offsetX + self.drawshape.x1,
+                --   offsetY + self.drawshape.y1,
+                --    self.selectedcolor)
+            elseif self.paintbuttonselected == self.circlebutton then
+                _scircgrid(
+                    self.gridIndex,
+                    offsetX + self.drawshape.x0,
+                    offsetY + self.drawshape.y0,
+                    offsetX + self.drawshape.x1,
+                    offsetY + self.drawshape.y1,
+                    self.selectedcolor)
             end
+
+            self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
        end
     else
         self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }

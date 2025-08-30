@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace blackbox.Assets;
 
@@ -98,6 +99,180 @@ public class GridData
             {
                 err += dx;
                 y0 += sy;
+            }
+        }
+
+        UpdateTexture2d();
+    }
+
+    public void SetRect(int x0, int y0, int x1, int y1, int colorIndex)
+    {
+        if (InvalidGridPos(x0, y0) || InvalidGridPos(x1, y1))
+        {
+            return;
+        }
+    }
+
+    public void SetRectFill(int x0, int y0, int x1, int y1, int colorIndex)
+    {
+        if (InvalidGridPos(x0, y0) || InvalidGridPos(x1, y1))
+        {
+            return;
+        }
+    }
+
+    public void SetCirc(int x0, int y0, int x1, int y1, int colorIndex)
+    {
+        if (InvalidGridPos(x0, y0) || InvalidGridPos(x1, y1))
+        {
+            return;
+        }
+
+        if (x0 == x1 && y0 == y1)
+        {
+            Data[y0, x0] = colorIndex;
+            UpdateTexture2d();
+            return;
+        }
+
+        int rx0 = Math.Min(x0, x1);
+        int ry0 = Math.Min(y0, y1);
+        int rx1 = Math.Max(x0, x1);
+        int ry1 = Math.Max(y0, y1);
+        var bounds = new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0);
+        rx0 = bounds.Left;
+        ry0 = bounds.Top;
+        rx1 = bounds.Right;
+        ry1 = bounds.Bottom;
+
+        int xC = (int)Math.Ceiling((rx0 + rx1) / 2.0);
+        int yC = (int)Math.Ceiling((ry0 + ry1) / 2.0);
+
+        int evenX = (rx0 + rx1) % 2;
+        int evenY = (ry0 + ry1) % 2;
+
+        int rX = rx1 - xC;
+        int rY = ry1 - yC;
+
+        List<Point> pixels = new List<Point>();
+
+        for (int x = rx0; x <= xC; x++)
+        {
+            double angle = Math.Acos((x - xC) / (double)rX);
+            int y = (int)Math.Round(rY * Math.Sin(angle) + yC);
+
+            pixels.Add(new Point(x - evenX, y));
+            pixels.Add(new Point(x - evenX, 2 * yC - y - evenY));
+            pixels.Add(new Point(2 * xC - x, y));
+            pixels.Add(new Point(2 * xC - x, 2 * yC - y - evenY));
+        }
+        for (int y = ry0; y <= yC; y++)
+        {
+            double angle = Math.Asin((y - yC) / (double)rY);
+            int x = (int)Math.Round(rX * Math.Cos(angle) + xC);
+
+            pixels.Add(new Point(x, y - evenY));
+            pixels.Add(new Point(2 * xC - x - evenX, y - evenY));
+            pixels.Add(new Point(x, 2 * yC - y));
+            pixels.Add(new Point(2 * xC - x - evenX, 2 * yC - y));
+        }
+
+        foreach (var p in pixels)
+        {
+            if (InvalidGridPos(p.X, p.Y))
+            {
+                continue;
+            }
+
+            Data[p.Y, p.X] = colorIndex;
+        }
+        
+        UpdateTexture2d();
+    }
+
+    public void SetCircFill(int x0, int y0, int x1, int y1, int colorIndex)
+    {
+        if (InvalidGridPos(x0, y0) || InvalidGridPos(x1, y1))
+        {
+            return;
+        }
+
+        if (x0 == x1 && y0 == y1)
+        {
+            Data[y0, x0] = colorIndex;
+            UpdateTexture2d();
+            return;
+        }
+
+        int rx0 = Math.Min(x0, x1);
+        int ry0 = Math.Min(y0, y1);
+        int rx1 = Math.Max(x0, x1);
+        int ry1 = Math.Max(y0, y1);
+        var bounds = new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0);
+        rx0 = bounds.Left;
+        ry0 = bounds.Top;
+        rx1 = bounds.Right;
+        ry1 = bounds.Bottom;
+
+        int xC = (int)Math.Round((rx0 + rx1) / 2.0);
+        int yC = (int)Math.Round((ry0 + ry1) / 2.0);
+
+        int evenX = (rx0 + rx1) % 2;
+        int evenY = (ry0 + ry1) % 2;
+
+        int rX = rx1 - xC;
+        int rY = ry1 - yC;
+
+        // Dictionary keyed by y, value = list of x positions in that y line
+        var linePixels = new Dictionary<int, List<int>>();
+
+        // Helper to add points in linePixels dictionary
+        void AddPixel(int x, int y)
+        {
+            if (!linePixels.TryGetValue(y, out var xs))
+            {
+                xs = new List<int>();
+                linePixels[y] = xs;
+            }
+            xs.Add(x);
+        }
+
+        // Collect points on the circle border (top/bottom half and left/right half)
+        for (int x = rx0; x <= xC; x++)
+        {
+            double angle = Math.Acos((x - xC) / (double)rX);
+            int y = (int)Math.Round(rY * Math.Sin(angle) + yC);
+
+            AddPixel(x - evenX, y);
+            AddPixel(x - evenX, 2 * yC - y - evenY);
+            AddPixel(2 * xC - x, y);
+            AddPixel(2 * xC - x, 2 * yC - y - evenY);
+        }
+        for (int y = ry0; y <= yC; y++)
+        {
+            double angle = Math.Asin((y - yC) / (double)rY);
+            int x = (int)Math.Round(rX * Math.Cos(angle) + xC);
+
+            AddPixel(x, y - evenY);
+            AddPixel(2 * xC - x - evenX, y - evenY);
+            AddPixel(x, 2 * yC - y);
+            AddPixel(2 * xC - x - evenX, 2 * yC - y);
+        }
+
+        // For each line, find min and max x, then draw a rectangle spanning from min x to max x at y with height 1
+        foreach (var kvp in linePixels)
+        {
+            int y = kvp.Key;
+            List<int> xs = kvp.Value;
+            xs.Sort();
+
+            int minX = xs[0];
+            int maxX = xs[xs.Count - 1];
+            int width = maxX - minX + 1;
+
+            for (int x = minX; x <= width; x++)
+            {
+                Data[y, x] = colorIndex;
             }
         }
 
@@ -207,6 +382,40 @@ public static class GameGrid
         }
 
         GridList[index].SetLine(x0, y0, x1, y1, colorIndex);
+    }
+
+    public static void SetRect(int index, int x0, int y0, int x1, int y1, int colorIndex, bool fill)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+
+        if (fill)
+        {
+            GridList[index].SetRectFill(x0, y0, x1, y1, colorIndex);
+        }
+        else
+        {
+            GridList[index].SetRect(x0, y0, x1, y1, colorIndex);
+        }
+    }
+
+    public static void SetCirc(int index, int x0, int y0, int x1, int y1, int colorIndex, bool fill)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+
+        if (fill)
+        {
+            GridList[index].SetCircFill(x0, y0, x1, y1, colorIndex);
+        }
+        else
+        {
+            GridList[index].SetCirc(x0, y0, x1, y1, colorIndex);
+        }
     }
 
     public static string GetGameGrid(int index)

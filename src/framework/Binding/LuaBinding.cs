@@ -53,6 +53,7 @@ public class LuaBinding
         _lua.RegisterFunction("_rect", this, GetType().GetMethod("Rect"));
         _lua.RegisterFunction("_rectfill", this, GetType().GetMethod("RectFill"));
         _lua.RegisterFunction("_circ", this, GetType().GetMethod("Circ"));
+        _lua.RegisterFunction("_circ2", this, GetType().GetMethod("Circ2"));        
         _lua.RegisterFunction("_circfill", this, GetType().GetMethod("CircFill"));
         _lua.RegisterFunction("_line", this, GetType().GetMethod("DrawLine"));
         _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
@@ -95,7 +96,9 @@ public class LuaBinding
         _lua.RegisterFunction("_sgrid", this, GetType().GetMethod("SetGrid"));
         _lua.RegisterFunction("_ggrid", this, GetType().GetMethod("GetGrid"));
         _lua.RegisterFunction("_spixel", this, GetType().GetMethod("SetPixel"));
-        _lua.RegisterFunction("_sline", this, GetType().GetMethod("SetLine"));
+        _lua.RegisterFunction("_slinegrid", this, GetType().GetMethod("SetLine"));
+        _lua.RegisterFunction("_srectgrid", this, GetType().GetMethod("SetRect"));
+        _lua.RegisterFunction("_scircgrid", this, GetType().GetMethod("SetCirc"));
         _lua.RegisterFunction("_gpixel", this, GetType().GetMethod("GetPixel"));
         _lua.RegisterFunction("_cgridc", this, GetType().GetMethod("DrawCustomGrid"));
 
@@ -292,6 +295,16 @@ public class LuaBinding
         GameGrid.SetLine(gridIndex, x0, y0, x1, y1, colorIndex);
     }
 
+    public static void SetRect(int gridIndex, int x0, int y0, int x1, int y1, int colorIndex = -1, bool fill = false)
+    {
+        GameGrid.SetRect(gridIndex, x0, y0, x1, y1, colorIndex, fill);
+    }
+
+    public static void SetCirc(int gridIndex, int x0, int y0, int x1, int y1, int colorIndex = -1, bool fill = false)
+    {
+        GameGrid.SetCirc(gridIndex, x0, y0, x1, y1, colorIndex, fill);
+    }
+
     public static int GetPixel(int gridIndex, int x, int y)
     {
         return GameGrid.GetPixel(gridIndex, x, y);
@@ -448,9 +461,14 @@ public class LuaBinding
         Shapes.DrawRectFill(new Rectangle(x, y, width, height), ColorUtils.GetColor(colorIndex, transparency));
     }
 
-    public static void Circ(int x, int y, int r, int colorIndex = 0, int transparency = 10)
+    public static void Circ(int ox, int oy, int x, int y, int r, int scale = 1, int colorIndex = 0, int transparency = 10)
     {
-        Shapes.DrawCirc(x, y, r, ColorUtils.GetColor(colorIndex, transparency));
+        Shapes.DrawCirc(ox, oy, x, y, r, scale, ColorUtils.GetColor(colorIndex, transparency));
+    }
+
+    public static void Circ2(int ox, int oy, int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)
+    {
+        Shapes.DrawCirc(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
     }
 
     public static void CircFill(int x, int y, int r, int colorIndex = 0, int transparency = 10)

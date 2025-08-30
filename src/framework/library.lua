@@ -201,3 +201,7 @@ end
 function max(b, high)
     return math.max(b,high)
 end
+
+function abs(a)
+    return math.abs(a)
+end

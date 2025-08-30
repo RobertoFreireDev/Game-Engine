@@ -43,8 +43,9 @@ public static class Shapes
         }
     }
 
-    public static void DrawCirc(int xm, int ym, int r, Color color)
+    public static void DrawCirc(int ox, int oy, int xm, int ym, int r, int scale, Color color)
     {
+        scale = Math.Max(scale, 1);
         if (r < 0)
         {
             return;
@@ -54,7 +55,7 @@ public static class Shapes
         {
             GFW.SpriteBatch.Draw(
                 GFW.PixelTexture,
-                new Rectangle(xm, ym, 1, 1),
+                new Rectangle(ox + xm* scale, oy + ym * scale, scale, scale),
                 color
             );
             return;
@@ -75,8 +76,8 @@ public static class Shapes
         rx1 = bounds.Right;
         ry1 = bounds.Bottom;
 
-        int xC = (int)Math.Round((rx0 + rx1) / 2.0);
-        int yC = (int)Math.Round((ry0 + ry1) / 2.0);
+        int xC = (int)Math.Ceiling((rx0 + rx1) / 2.0);
+        int yC = (int)Math.Ceiling((ry0 + ry1) / 2.0);
 
         int evenX = (rx0 + rx1) % 2;
         int evenY = (ry0 + ry1) % 2;
@@ -109,7 +110,69 @@ public static class Shapes
 
         foreach (var p in pixels)
         {
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(p.X, p.Y, 1, 1), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + p.X * scale, oy + p.Y * scale, scale, scale), color);
+        }
+    }
+
+    public static void DrawCirc(int ox, int oy, int x0, int y0, int x1, int y1, int scale, Color color)
+    {
+        scale = Math.Max(scale, 1);
+        int rx0 = Math.Min(x0, x1);
+        int ry0 = Math.Min(y0, y1);
+        int rx1 = Math.Max(x0, x1);
+        int ry1 = Math.Max(y0, y1);        
+        var bounds = new Rectangle(rx0, ry0, rx1 - rx0, ry1 - ry0);
+        rx0 = bounds.Left;
+        ry0 = bounds.Top;
+        rx1 = bounds.Right;
+        ry1 = bounds.Bottom;
+
+        if (rx1 - rx0 <= 1 && ry1 - ry0 <= 1)
+        {
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * scale, oy + ry0 * scale, (rx1 + 1 - rx0) * scale,(ry1 + 1 - ry0) * scale), color);
+            return;
+        }
+
+        int xC = (int)Math.Ceiling((rx0 + rx1) / 2.0);
+        int yC = (int)Math.Ceiling((ry0 + ry1) / 2.0);
+
+        int evenX = (rx0 + rx1) % 2;
+        int evenY = (ry0 + ry1) % 2;
+
+        int rX = rx1 - xC;
+        int rY = ry1 - yC;
+
+        List<Point> pixels = new List<Point>();
+
+        for (int x = rx0; x <= xC; x++)
+        {
+            double angle = Math.Acos((x - xC) / (double)rX);
+            int y = (int)Math.Round(rY * Math.Sin(angle) + yC);
+
+            pixels.Add(new Point(x - evenX, y));
+            pixels.Add(new Point(x - evenX, 2 * yC - y - evenY));
+            pixels.Add(new Point(2 * xC - x, y));
+            pixels.Add(new Point(2 * xC - x, 2 * yC - y - evenY));
+        }
+        for (int y = ry0; y <= yC; y++)
+        {
+            double angle = Math.Asin((y - yC) / (double)rY);
+            int x = (int)Math.Round(rX * Math.Cos(angle) + xC);
+
+            pixels.Add(new Point(x, y - evenY));
+            pixels.Add(new Point(2 * xC - x - evenX, y - evenY));
+            pixels.Add(new Point(x, 2 * yC - y));
+            pixels.Add(new Point(2 * xC - x - evenX, 2 * yC - y));
+        }
+
+        foreach (var p in pixels)
+        {
+            if (p.X < rx0 || p.X > rx1 || p.Y < ry0 || p.Y > ry1)
+            {
+                continue;
+            }
+
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + p.X * scale, oy + p.Y * scale, scale, scale), color);
         }
     }
 
