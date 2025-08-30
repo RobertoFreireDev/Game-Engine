@@ -17,6 +17,7 @@ local spriteFileName, mapFileName = "spritedata", "mapData"
 function change_state(st)
     state=st
     state:init()
+    _title("Black Box Editor")
     _fps30()
 end
 
