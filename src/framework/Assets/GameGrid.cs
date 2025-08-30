@@ -68,6 +68,42 @@ public class GridData
         UpdateTexture2d();
     }
 
+    public void SetLine(int x0, int y0, int x1, int y1, int colorIndex)
+    {
+        if (InvalidGridPos(x0, y0) || InvalidGridPos(x1, y1))
+        {
+            return;
+        }
+
+        int dx = Math.Abs(x1 - x0);
+        int dy = Math.Abs(y1 - y0);
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+        int err = dx - dy;
+        int count = 0;
+        while (true)
+        {
+            count++;
+            Data[y0,x0] = colorIndex;
+
+            if (x0 == x1 && y0 == y1 || count > 500)
+                break;
+            int e2 = 2 * err;
+            if (e2 > -dy)
+            {
+                err -= dy;
+                x0 += sx;
+            }
+            if (e2 < dx)
+            {
+                err += dx;
+                y0 += sy;
+            }
+        }
+
+        UpdateTexture2d();
+    }
+
     public bool InvalidGridPos(int x, int y)
     {
         return x < 0 || y < 0 || x >= Columns * Size || y >= Rows * Size;
@@ -161,6 +197,16 @@ public static class GameGrid
         }
 
         GridList[index].SetPixel(x, y, colorIndex);
+    }
+
+    public static void SetLine(int index, int x0, int y0, int x1, int y1, int colorIndex)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+
+        GridList[index].SetLine(x0, y0, x1, y1, colorIndex);
     }
 
     public static string GetGameGrid(int index)

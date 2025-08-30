@@ -143,11 +143,12 @@ function spriteeditor:drawtemporaryshape()
     end
 end
 
-function spriteeditor:handleshape()
+function spriteeditor:handleshape() 
     if not self.gridpos.x or not self.gridpos.y then
         self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
         return
     end
+    local offsetX, offsetY = (self.spriteNumber  % self.sprites_w) * self.sprites_cell, flr(self.spriteNumber / self.sprites_w) * self.sprites_cell
 
     if self.paintbuttonselected == self.linebutton or 
        self.paintbuttonselected == self.rectbutton or
@@ -159,7 +160,16 @@ function spriteeditor:handleshape()
        self.drawshape.y1 = self.gridpos.y
 
        if _mouseclickr(0) and self.drawshape.x0 and self.drawshape.y0 then
-            self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+            if self.paintbuttonselected == self.linebutton then
+                _sline(
+                    self.gridIndex,
+                    offsetX + self.drawshape.x0,
+                    offsetY + self.drawshape.y0,
+                    offsetX + self.drawshape.x1,
+                    offsetY + self.drawshape.y1,
+                    self.selectedcolor)
+                self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+            end
        end
     else
         self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
@@ -169,8 +179,8 @@ function spriteeditor:handleshape()
         if _mouseclick(0) then
             _spixel(
                 self.gridIndex,
-                (self.spriteNumber  % self.sprites_w) * self.sprites_cell + self.gridpos.x,
-                flr(self.spriteNumber / self.sprites_w) * self.sprites_cell + self.gridpos.y,
+                offsetX + self.gridpos.x,
+                offsetY + self.gridpos.y,
                 self.selectedcolor)
         end
     end
