@@ -1,4 +1,5 @@
-﻿using blackbox.Utils;
+﻿using blackbox.Graphics;
+using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -111,6 +112,31 @@ public class GridData
         {
             return;
         }
+
+        var (rx0, ry0, rx1, ry1, w, h) = Shapes.AdjustRect(x0, y0, x1, y1);
+
+        for (int x = rx0; x <= rx1; x++)
+        {
+            Data[ry0, x] = colorIndex;
+        }
+
+        for (int x = rx0; x <= rx1; x++)
+        {
+            Data[ry1, x] = colorIndex;
+        }
+
+        for (int y = ry0; y <= ry1; y++)
+        {
+            Data[y, rx0] = colorIndex;
+        }
+
+        for (int y = ry0; y <= ry1; y++)
+        {
+            Data[y, rx1] = colorIndex;
+        }
+
+        UpdateTexture2d();
+        return;
     }
 
     public void SetRectFill(int x0, int y0, int x1, int y1, int colorIndex)
@@ -119,6 +145,18 @@ public class GridData
         {
             return;
         }
+
+        var (rx0, ry0, rx1, ry1, w, h) = Shapes.AdjustRect(x0, y0, x1, y1);
+
+        for (int x = rx0; x <= rx1; x++)
+        {
+            for (int y = ry0; y <= ry1; y++)
+            {
+                Data[y, x] = colorIndex;
+            }
+        }
+        UpdateTexture2d();
+        return;
     }
 
     public void SetCirc(int x0, int y0, int x1, int y1, int colorIndex)
