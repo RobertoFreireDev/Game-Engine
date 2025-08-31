@@ -51,12 +51,7 @@ function drawPageSpriteNumbers(sn,pn,x,y)
     _print(tostring(pn),x + 55,y - 8, 1)
 end
 
-function drawSelectedRec(sn,pn,w,h,sx,sy,sc,scale)
-     -- check if sprite number is within this page
-    if sn < pn*w*h or sn >= (pn+1)*w*h then
-        return
-    end
-
+function getSelectedRec(sn,pn,w,h,sc,scale)
     -- sprite index inside this page
     local sn = sn - pn*w*h
     local x = (sn % w) * sc
@@ -72,8 +67,7 @@ function drawSelectedRec(sn,pn,w,h,sx,sy,sc,scale)
     if x + sw > maxw then sw = maxw - x end
     if y + sh > maxh then sh = maxh - y end
 
-    -- draw rectangle
-    _rect(sx, sy, x, y, sw, sh, 1, 1)
+    return {x=x,y=y,sw=sw,sh=sh}
 end
 
 function screen_to_grid(p,x,y,w,h,s) 

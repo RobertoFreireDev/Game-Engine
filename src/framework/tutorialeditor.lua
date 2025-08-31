@@ -9,6 +9,8 @@
     Sprite Editor
     control Z  -> undo
     control Y  -> redo
+    control C  -> copy
+    control V  -> paste
     control -> draw full circle/rect
    _mouse scroll -> zoom in sprite editor
 

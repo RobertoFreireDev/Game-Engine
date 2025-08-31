@@ -29,7 +29,8 @@
     gridpos = { x= nil, y= nil},
     drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil},
     mousepos = { x= nil, y= nil},
-    setpixel = { i = nil, x = nil, y = nil, c = nil }
+    setpixel = { i = nil, x = nil, y = nil, c = nil },
+    selectedRec = {}
 }
 
 function spriteeditor:create()
@@ -99,24 +100,125 @@ function spriteeditor:update()
         self.circlebutton:updatesprite(14)
     end
 
-    if _btn(_keys.LeftControl) and _btnp(_keys.Z) then
-        _ugrid(self.gridIndex)
+    local offsetX, offsetY = (self.spriteNumber  % self.sprites_w) * self.sprites_cell, flr(self.spriteNumber / self.sprites_w) * self.sprites_cell
+    
+    if _btn(_keys.LeftControl) then
+        if _btnp(_keys.Z) then
+            _ugrid(self.gridIndex)
+        elseif _btnp(_keys.Y) then
+            _rgrid(self.gridIndex)
+        elseif _btnp(_keys.C) then
+            _cgrid(self.gridIndex,
+                offsetX,
+                offsetY,
+                self.selectedRec.sw,
+                self.selectedRec.sh)
+        elseif _btnp(_keys.V) then
+            _pgrid(self.gridIndex,
+                offsetX,
+                offsetY)
+        end
     end
 
-    if _btn(_keys.LeftControl) and _btnp(_keys.Y) then
-        _rgrid(self.gridIndex)
+    if not self.gridpos.x or not self.gridpos.y then
+        self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+    else
+
+        if self.lastZoom > self.zoom then
+            self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+        end
+
+        if self.paintbuttonselected == self.linebutton or 
+           self.paintbuttonselected == self.rectbutton or
+           self.paintbuttonselected == self.circlebutton then
+           if _mouseclickp(0) then
+                self.drawshape = { x0 = self.gridpos.x, y0 = self.gridpos.y, x1 = nil, y1 = nil}
+           end
+           self.drawshape.x1 = self.gridpos.x
+           self.drawshape.y1 = self.gridpos.y
+
+           if _mouseclickr(0) and self.drawshape.x0 and self.drawshape.y0 then
+                if self.paintbuttonselected == self.linebutton then
+                    _slinegrid(
+                        self.gridIndex,
+                        offsetX + self.drawshape.x0,
+                        offsetY + self.drawshape.y0,
+                        offsetX + self.drawshape.x1,
+                        offsetY + self.drawshape.y1,
+                        self.selectedcolor)
+                elseif self.paintbuttonselected == self.rectbutton then
+                    _srectgrid(
+                        self.gridIndex,
+                        offsetX + self.drawshape.x0,
+                        offsetY + self.drawshape.y0,
+                        offsetX + self.drawshape.x1,
+                        offsetY + self.drawshape.y1,
+                        self.selectedcolor,
+                        _btn(_keys.LeftControl) or _btn(_keys.RightControl))
+                elseif self.paintbuttonselected == self.circlebutton then
+                    _scircgrid(
+                        self.gridIndex,
+                        offsetX + self.drawshape.x0,
+                        offsetY + self.drawshape.y0,
+                        offsetX + self.drawshape.x1,
+                        offsetY + self.drawshape.y1,
+                        self.selectedcolor,
+                        _btn(_keys.LeftControl) or _btn(_keys.RightControl))
+                end
+
+                self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+           end
+        else
+            self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
+        end 
+
+        if self.paintbuttonselected == self.pixelbutton or self.paintbuttonselected == self.eraserbutton then
+            if _mouseclick(0) and 
+                (
+                    self.setpixel.i ~= self.gridIndex or
+                    self.setpixel.x ~= offsetX + self.gridpos.x or
+                    self.setpixel.y ~= offsetY + self.gridpos.y or
+                    self.setpixel.c ~= self.selectedcolor
+                ) then
+                _spixel(
+                    self.gridIndex,
+                    offsetX + self.gridpos.x,
+                    offsetY + self.gridpos.y,
+                    self.selectedcolor)
+                -- to avoid unnecessary setpixel and add to history
+                self.setpixel = { 
+                    i = self.gridIndex, 
+                    x = offsetX + self.gridpos.x, 
+                    y = offsetY + self.gridpos.y, 
+                    c = self.selectedcolor 
+                }
+            end
+        end
+
+        if self.paintbuttonselected == self.paintbutton then
+            if _mouseclickp(0) then
+                _bgrid(
+                    self.gridIndex,
+                    offsetX + self.gridpos.x,
+                    offsetY + self.gridpos.y,
+                    offsetX,
+                    offsetY,
+                    self.sprites_cell*self.zoom,
+                    self.sprites_cell*self.zoom,
+                    self.selectedcolor)
+            end
+        end
     end
 
-    self:handleshape()
-    if self.gridpos.x and self.gridpos.y then 
-        
-    elseif _mouseclickp(0) then
+    if (not self.gridpos.x or not self.gridpos.y) and _mouseclickp(0) then 
         local spritespos = screen_to_grid(self.mousepos,self.sprites_x, self.sprites_y, self.sprites_w, self.sprites_h, self.sprites_cell)
         local sn = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
         if sn > 0 then
             self.spriteNumber = sn
         end
     end
+
+    self.selectedRec = getSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_cell,self.zoom)
 end
 
 function spriteeditor:draw()
@@ -142,7 +244,10 @@ function spriteeditor:draw()
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,0,0,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2,1, 0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
     _dgrid(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
-    drawSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_x, self.sprites_y, self.sprites_cell,self.zoom)
+    -- check if sprite number is within this page
+    if self.spriteNumber >= self.pageNumber*self.sprites_w*self.sprites_h and self.spriteNumber < (self.pageNumber+1)*self.sprites_w*self.sprites_h then
+        _rect(self.sprites_x, self.sprites_y, self.selectedRec.x, self.selectedRec.y, self.selectedRec.sw, self.selectedRec.sh, 1, 1)
+    end
 end
 
 function spriteeditor:drawtemporaryshape()
@@ -190,100 +295,6 @@ function spriteeditor:drawtemporaryshape()
          else
             _circ(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, scale, self.selectedcolor)
          end
-    end
-end
-
-function spriteeditor:handleshape() 
-    if not self.gridpos.x or not self.gridpos.y then
-        self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
-        return
-    end
-
-    if self.lastZoom > self.zoom then
-        self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
-    end
-
-    local offsetX, offsetY = (self.spriteNumber  % self.sprites_w) * self.sprites_cell, flr(self.spriteNumber / self.sprites_w) * self.sprites_cell
-
-    if self.paintbuttonselected == self.linebutton or 
-       self.paintbuttonselected == self.rectbutton or
-       self.paintbuttonselected == self.circlebutton then
-       if _mouseclickp(0) then
-            self.drawshape = { x0 = self.gridpos.x, y0 = self.gridpos.y, x1 = nil, y1 = nil}
-       end
-       self.drawshape.x1 = self.gridpos.x
-       self.drawshape.y1 = self.gridpos.y
-
-       if _mouseclickr(0) and self.drawshape.x0 and self.drawshape.y0 then
-            if self.paintbuttonselected == self.linebutton then
-                _slinegrid(
-                    self.gridIndex,
-                    offsetX + self.drawshape.x0,
-                    offsetY + self.drawshape.y0,
-                    offsetX + self.drawshape.x1,
-                    offsetY + self.drawshape.y1,
-                    self.selectedcolor)
-            elseif self.paintbuttonselected == self.rectbutton then
-                _srectgrid(
-                    self.gridIndex,
-                    offsetX + self.drawshape.x0,
-                    offsetY + self.drawshape.y0,
-                    offsetX + self.drawshape.x1,
-                    offsetY + self.drawshape.y1,
-                    self.selectedcolor,
-                    _btn(_keys.LeftControl) or _btn(_keys.RightControl))
-            elseif self.paintbuttonselected == self.circlebutton then
-                _scircgrid(
-                    self.gridIndex,
-                    offsetX + self.drawshape.x0,
-                    offsetY + self.drawshape.y0,
-                    offsetX + self.drawshape.x1,
-                    offsetY + self.drawshape.y1,
-                    self.selectedcolor,
-                    _btn(_keys.LeftControl) or _btn(_keys.RightControl))
-            end
-
-            self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
-       end
-    else
-        self.drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil }
-    end 
-
-    if self.paintbuttonselected == self.pixelbutton or self.paintbuttonselected == self.eraserbutton then
-        if _mouseclick(0) and 
-            (
-                self.setpixel.i ~= self.gridIndex or
-                self.setpixel.x ~= offsetX + self.gridpos.x or
-                self.setpixel.y ~= offsetY + self.gridpos.y or
-                self.setpixel.c ~= self.selectedcolor
-            ) then
-            _spixel(
-                self.gridIndex,
-                offsetX + self.gridpos.x,
-                offsetY + self.gridpos.y,
-                self.selectedcolor)
-            -- to avoid unnecessary setpixel and add to history
-            self.setpixel = { 
-                i = self.gridIndex, 
-                x = offsetX + self.gridpos.x, 
-                y = offsetY + self.gridpos.y, 
-                c = self.selectedcolor 
-            }
-        end
-    end
-
-    if self.paintbuttonselected == self.paintbutton then
-        if _mouseclickp(0) then
-            _bgrid(
-                self.gridIndex,
-                offsetX + self.gridpos.x,
-                offsetY + self.gridpos.y,
-                offsetX,
-                offsetY,
-                self.sprites_cell*self.zoom,
-                self.sprites_cell*self.zoom,
-                self.selectedcolor)
-        end
     end
 end
 

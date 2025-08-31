@@ -11,6 +11,7 @@ namespace blackbox.Assets;
 public class GridData
 {
     public int[,] Data;
+    public int[,] Copy;
     public Texture2D Texture;
     public Rectangle[] TileRects;
     public int Columns;
@@ -69,6 +70,45 @@ public class GridData
         UpdateTexture2d();
     }
 
+    public void CopyRegion(int x, int y, int w, int h)
+    {
+        var (x1, y1, x2, y2) = ClampToBounds(x, y, w, h);
+
+        int copyWidth = x2 - x1;
+        int copyHeight = y2 - y1;
+
+        Copy = new int[copyHeight, copyWidth];
+
+        for (int yy = 0; yy < copyHeight; yy++)
+        {
+            for (int xx = 0; xx < copyWidth; xx++)
+            {
+                Copy[yy, xx] = Data[y1 + yy, x1 + xx];
+            }
+        }
+    }
+
+    public void PasteRegion(int x, int y)
+    {
+        if (Copy == null) return;
+
+        SaveSnapshot();
+        int copyHeight = Copy.GetLength(0);
+        int copyWidth = Copy.GetLength(1);
+
+        var (x1, y1, x2, y2) = ClampToBounds(x, y, copyWidth, copyHeight);
+
+        for (int yy = 0; yy < y2 - y1; yy++)
+        {
+            for (int xx = 0; xx < x2 - x1; xx++)
+            {
+                Data[y1 + yy, x1 + xx] = Copy[yy, xx];
+            }
+        }
+
+        UpdateTexture2d();
+    }
+
     public void Create(int columns, int rows, int size, bool enableUndoRedo)
     {
         Columns = columns;
@@ -84,7 +124,7 @@ public class GridData
             TileRects[i] = new Rectangle(x, y, Size, Size);
         }
         Data = new int[Rows * Size + Margin, Columns * Size + Margin];
-        ClearGrid(0, 0, Rows * Size, Columns * Size);
+        ClearGrid(0, 0, Columns * Size, Rows * Size);
     }
 
     private void ClearGrid(int x, int y, int w, int h)
@@ -107,8 +147,8 @@ public class GridData
         return (
                 Math.Max(0, x),
                 Math.Max(0, y),
-                Math.Min(Columns * Size, y + h),
-                Math.Min(Rows * Size, x + w)
+                Math.Min(Rows * Size, x + w),
+                Math.Min(Columns * Size, y + h)
             );
     }
 
@@ -515,6 +555,24 @@ public static class GameGrid
             return;
         }
         GridList[index].Redo();
+    }
+
+    public static void Copy(int index, int x, int y, int w, int h)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+        GridList[index].CopyRegion(x, y, w, h);
+    }
+
+    public static void Paste(int index, int x, int y)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+        GridList[index].PasteRegion(x, y);
     }
 
     private static bool IsValidIndex(int index)

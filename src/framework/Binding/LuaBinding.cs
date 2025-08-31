@@ -92,7 +92,9 @@ public class LuaBinding
         _lua.RegisterFunction("_gelapsedtime", this, GetType().GetMethod("GetElapsedTime"));
 
         // Grid
-        _lua.RegisterFunction("_cgrid", this, GetType().GetMethod("CreateGrid"));
+        _lua.RegisterFunction("_ngrid", this, GetType().GetMethod("CreateGrid"));
+        _lua.RegisterFunction("_cgrid", this, GetType().GetMethod("CopyGrid"));
+        _lua.RegisterFunction("_pgrid", this, GetType().GetMethod("PasteGrid"));
         _lua.RegisterFunction("_sgrid", this, GetType().GetMethod("SetGrid"));
         _lua.RegisterFunction("_ugrid", this, GetType().GetMethod("UndoGrid"));
         _lua.RegisterFunction("_rgrid", this, GetType().GetMethod("RedoGrid"));
@@ -276,6 +278,16 @@ public class LuaBinding
     public static void RedoGrid(int gridIndex)
     {
         GameGrid.Redo(gridIndex);
+    }
+
+    public static void CopyGrid(int gridIndex, int x, int y, int w, int h)
+    {
+        GameGrid.Copy(gridIndex, x, y, w, h);
+    }
+
+    public static void PasteGrid(int gridIndex, int x, int y)
+    {
+        GameGrid.Paste(gridIndex, x, y);
     }
 
     public static void SetGrid(int gridIndex, string grid)
