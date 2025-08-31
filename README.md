@@ -10,13 +10,6 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 - Make sure there is no copyright issue with Name and/or Product/Game Engine.
 - What else?
 
-**Tutorial:**
-
-- Create a tutorial screen with pages
-- IsAltF4Pressed -> Exit
-- IsF2Released -> ToggleFullScreen
-- Explain all functions
-
 **SFX:**
 
 - music([n,] [fade_len,] [channel_mask])

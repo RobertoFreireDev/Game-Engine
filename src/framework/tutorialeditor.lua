@@ -2,6 +2,19 @@
     firsttime = true,
 }
 
+--[[
+    Alt F4 -> Exit
+    F2 -> ToggleFullScreen
+
+    Sprite Editor
+    control Z  -> undo
+    control Y  -> redo
+    control -> draw full circle/rect
+   _mouse scroll -> zoom in sprite editor
+
+    Explain All LuaBinding Functions
+]]
+
 function tutorialeditor:create()
 end
 
