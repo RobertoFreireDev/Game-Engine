@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace blackbox.Assets;
 
@@ -18,6 +19,7 @@ public class GridData
     public int Total;
     public int Margin = 1; // to avoid last column stretching issue
     private bool _enableUndoRedo = false;
+    private int maxUndo = 50;
 
     private Stack<int[,]> undoStack = new Stack<int[,]>();
     private Stack<int[,]> redoStack = new Stack<int[,]>();
@@ -34,6 +36,13 @@ public class GridData
 
         undoStack.Push(copy);
         redoStack.Clear();
+
+        if (undoStack.Count > maxUndo)
+        {
+            var temp = undoStack.ToArray();       // note: ToArray returns reversed order
+            Array.Reverse(temp);                  // oldest is now first
+            undoStack = new Stack<int[,]>(temp.Skip(1));
+        }
     }
 
     public void Undo()

@@ -28,7 +28,8 @@
     gridIndex = 0,
     gridpos = { x= nil, y= nil},
     drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil},
-    mousepos = { x= nil, y= nil}
+    mousepos = { x= nil, y= nil},
+    setpixel = { i = nil, x = nil, y = nil, c = nil }
 }
 
 function spriteeditor:create()
@@ -249,12 +250,25 @@ function spriteeditor:handleshape()
     end 
 
     if self.paintbuttonselected == self.pixelbutton or self.paintbuttonselected == self.eraserbutton then
-        if _mouseclick(0) then
+        if _mouseclick(0) and 
+            (
+                self.setpixel.i ~= self.gridIndex or
+                self.setpixel.x ~= offsetX + self.gridpos.x or
+                self.setpixel.y ~= offsetY + self.gridpos.y or
+                self.setpixel.c ~= self.selectedcolor
+            ) then
             _spixel(
                 self.gridIndex,
                 offsetX + self.gridpos.x,
                 offsetY + self.gridpos.y,
                 self.selectedcolor)
+            -- to avoid unnecessary setpixel and add to history
+            self.setpixel = { 
+                i = self.gridIndex, 
+                x = offsetX + self.gridpos.x, 
+                y = offsetY + self.gridpos.y, 
+                c = self.selectedcolor 
+            }
         end
     end
 
