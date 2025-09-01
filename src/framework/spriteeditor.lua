@@ -101,7 +101,8 @@ function spriteeditor:update()
     end
 
     local offsetX, offsetY = (self.spriteNumber  % self.sprites_w) * self.sprites_cell, flr(self.spriteNumber / self.sprites_w) * self.sprites_cell
-    
+    self.selectedRec = getSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_cell,self.zoom)
+        
     if _btn(_keys.LeftControl) then
         if _btnp(_keys.Z) then
             _ugrid(self.gridIndex)
@@ -219,8 +220,6 @@ function spriteeditor:update()
             self.spriteNumber = sn
         end
     end
-
-    self.selectedRec = getSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_cell,self.zoom)
 end
 
 function spriteeditor:draw()
@@ -246,8 +245,8 @@ function spriteeditor:draw()
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,0,0,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2,1, 0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
     _dgrid(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
-    -- check if sprite number is within this page
-    if self.spriteNumber >= self.pageNumber*self.sprites_w*self.sprites_h and self.spriteNumber < (self.pageNumber+1)*self.sprites_w*self.sprites_h then
+    
+    if self.selectedRec.x and self.spriteNumber >= self.pageNumber*self.sprites_w*self.sprites_h and self.spriteNumber < (self.pageNumber+1)*self.sprites_w*self.sprites_h then
         _rect(self.sprites_x, self.sprites_y, self.selectedRec.x, self.selectedRec.y, self.selectedRec.sw, self.selectedRec.sh, 1, 1)
     end
 end

@@ -40,6 +40,7 @@ function mapeditor:update()
 
     self.pageNumber = movepage(0,self.pageNumber,const.maxPage)
     self.map_pos = movearrows(0,0,320-self.map_columns,180-self.map_rows,self.map_pos)
+    self.selectedRec = getSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_cell,1)
 end
 
 function mapeditor:draw()
@@ -54,9 +55,8 @@ function mapeditor:draw()
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,0,0,self.sprites_w*10 + 2,self.sprites_h*10 + 2, 1, 0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)
     _dgrid(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
-    self.selectedRec = getSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_cell,1)
-    -- check if sprite number is within this page
-    if self.spriteNumber >= self.pageNumber*self.sprites_w*self.sprites_h and self.spriteNumber < (self.pageNumber+1)*self.sprites_w*self.sprites_h then    
+    
+    if self.selectedRec.x and self.spriteNumber >= self.pageNumber*self.sprites_w*self.sprites_h and self.spriteNumber < (self.pageNumber+1)*self.sprites_w*self.sprites_h then    
         _rect(self.sprites_x, self.sprites_y, self.selectedRec.x, self.selectedRec.y, self.selectedRec.sw, self.selectedRec.sh, 1, 1)  
     end
 end

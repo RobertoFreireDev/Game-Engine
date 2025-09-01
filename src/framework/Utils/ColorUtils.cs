@@ -10,7 +10,8 @@ public static class ColorUtils
 
     private static Color[] Colors = new Color[Qty];
 
-    private static string defaultPalette = "#000000,#dfe9f5,#f7aaa8,#697594,#d4689a,#782c96,#e83562,#f2825c,#ffc76e,#88c44d,#3f9e59,#373461,#4854a8,#7199d9,#9e5252,#4d2536,#0a080d,#6f6776,#9a9a97,#c5ccb8,#8b5580,#c38890,#a593a5,#666092,#9a4f50,#c28d75,#7ca1c0,#416aa3,#8d6268,#be955c,#68aca9,#387080,#6e6962,#93a167,#6eaa78,#557064,#9d9f7f,#7e9e99,#5d6872,#433455";
+    private static string defaultPalette = "#000000,#ffffff,#f7aaa8,#697594,#d4689a,#782c96,#e83562,#f2825c,#ffc76e,#88c44d,#3f9e59,#373461,#4854a8,#7199d9,#9e5252,#4d2536," +
+        "#1a1c2c,#5d275d,#b13e53,#ffa300,#ffec27,#a7f070,#38b764,#257179,#29366f,#3b5dc9,#41a6f6,#73eff7,#f4f4f4,#94b0c2,#566c86,#333c57";
 
     private static readonly Regex HexColorRegex = new Regex(@"^#[0-9a-fA-F]{6}$", RegexOptions.Compiled);
 

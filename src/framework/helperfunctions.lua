@@ -51,23 +51,33 @@ function drawPageSpriteNumbers(sn,pn,x,y)
     _print(tostring(pn),x + 55,y - 8, 1)
 end
 
+function table_to_string(tbl, sep, kvsep)
+    sep = sep or ", "
+    kvsep = kvsep or "="
+    local parts = {}
+    for k, v in pairs(tbl) do
+        table.insert(parts, tostring(k) .. kvsep .. tostring(v))
+    end
+    return table.concat(parts, sep)
+end
+
 function getSelectedRec(sn,pn,w,h,sc,scale)
     -- sprite index inside this page
     local sn = sn - pn*w*h
-    local x = (sn % w) * sc
-    local y = flr(sn / w) * sc
+    local px = (sn % w) * sc
+    local py = flr(sn / w) * sc
 
     -- calculate scaled size
-    local sw = sc * scale
-    local sh = sc * scale
+    local psw = sc * scale
+    local psh = sc * scale
 
     -- clamp so it never exceeds page width/height
     local maxw = w * sc
     local maxh = h * sc
-    if x + sw > maxw then sw = maxw - x end
-    if y + sh > maxh then sh = maxh - y end
+    if px + psw > maxw then psw = maxw - px end
+    if py + psh > maxh then psh = maxh - py end
 
-    return {x=x,y=y,sw=sw,sh=sh}
+    return {x=px,y=py,sw=psw,sh=psh}
 end
 
 function screen_to_grid(p,x,y,w,h,s) 
