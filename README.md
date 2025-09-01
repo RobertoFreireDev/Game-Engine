@@ -10,6 +10,10 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 - Make sure there is no copyright issue with Name and/or Product/Game Engine.
 - What else?
 
+**fixes:**
+
+- Adjust all rect circ functions
+
 **SFX:**
 
 - music([n,] [fade_len,] [channel_mask])
