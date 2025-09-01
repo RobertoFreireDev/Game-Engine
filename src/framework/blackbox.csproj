@@ -38,6 +38,9 @@
     <None Update="component.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="game.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sfxeditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

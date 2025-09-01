@@ -7,6 +7,7 @@ local mapeditor = require("mapeditor")
 local sfxeditor = require("sfxeditor")
 local musiceditor = require("musiceditor")
 local tutorialeditor = require("tutorialeditor")
+local game = require("game")
 
 buttonSelected = nil
 buttons = {}
@@ -44,12 +45,16 @@ function _init()
     musicbutton.clicked = function(o) change_state(musiceditor) buttonSelected = o end
     tutorialbutton = new_button(0,27,11,10,0,40,0,0,10,10)
     tutorialbutton.clicked = function(o) change_state(tutorialeditor) buttonSelected = o end
+    gamebutton = new_button(0,18,11,10,0,50,0,0,10,10)
+    gamebutton.clicked = function(o) change_state(game) buttonSelected = o end
 
     add(buttons,spritebutton)
     add(buttons,mapbutton)
     add(buttons,sfxbutton)
     add(buttons,musicbutton)
     add(buttons,tutorialbutton)
+    add(buttons,gamebutton)
+
     buttonSelected = spritebutton
     change_state(spriteeditor)
 end

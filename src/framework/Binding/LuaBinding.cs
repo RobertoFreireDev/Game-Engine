@@ -56,6 +56,8 @@ public class LuaBinding
         _lua.RegisterFunction("_rectfill2", this, GetType().GetMethod("DrawRectFill2"));
         _lua.RegisterFunction("_circ", this, GetType().GetMethod("DrawCirc"));      
         _lua.RegisterFunction("_circfill", this, GetType().GetMethod("DrawCircFill"));
+        _lua.RegisterFunction("_circ2", this, GetType().GetMethod("DrawCirc2"));
+        _lua.RegisterFunction("_circfill2", this, GetType().GetMethod("DrawCircFill2"));
         _lua.RegisterFunction("_line", this, GetType().GetMethod("DrawLine"));
         _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
@@ -506,6 +508,28 @@ public class LuaBinding
     public static void DrawCircFill(int ox, int oy, int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)
     {
         Shapes.DrawCircFill(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
+    }
+
+    public static void DrawCirc2(int x, int y, int r, int scale = 1, int colorIndex = 0, int transparency = 10)
+    {
+        CircleToRect(x, y, r, out int ox, out int oy, out int x0, out int y0, out int x1, out int y1);
+        Shapes.DrawCirc(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
+    }
+
+    public static void DrawCircFill2(int x, int y, int r, int scale = 1, int colorIndex = 0, int transparency = 10)
+    {
+        CircleToRect(x, y, r, out int ox, out int oy, out int x0, out int y0, out int x1, out int y1);
+        Shapes.DrawCircFill(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
+    }
+
+    private static void CircleToRect(int x, int y, int r, out int ox, out int oy, out int x0, out int y0, out int x1, out int y1)
+    {
+        ox = 0;
+        oy = 0;
+        x0 = x - r;
+        y0 = y - r;
+        x1 = x + r;
+        y1 = y + r;
     }
 
     public static void DrawLine(int ox, int oy, int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)

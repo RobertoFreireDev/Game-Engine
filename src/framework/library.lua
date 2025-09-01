@@ -175,6 +175,31 @@ function add(t, v, i)
   return v
 end
 
+function del(t, v)
+  assert(type(t) == "table", "del: first argument must be a table")
+  for i = 1, #t do
+    if t[i] == v then
+      table.remove(t, i)
+      t.__del_i = i
+      return v
+    end
+  end
+end
+
+function all(t)
+  assert(type(t) == "table", "all: first argument must be a table")
+  local i = 0
+  return function()
+    if t.__del_i then
+      if t.__del_i <= i then i = i - 1 end
+      t.__del_i = nil
+    end
+
+    i = i + 1
+    return t[i]
+  end
+end
+
 function foreach(t, f)
   assert(type(t) == "table", "foreach: first argument must be a table")
   assert(type(f) == "function", "foreach: second argument must be a function")
@@ -204,4 +229,12 @@ end
 
 function abs(a)
     return math.abs(a)
+end
+
+function mid(x, a, b)
+  -- ensure a <= b
+  if a > b then a, b = b, a end
+  if x < a then return a end
+  if x > b then return b end
+  return x
 end
