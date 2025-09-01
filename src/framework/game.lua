@@ -1,15 +1,15 @@
 ﻿-- screen
-screen={x0=80,y0=10,x1=80+174,y1=150}
+screen={sx=80,sy=10,x0=0,y0=0,w=174,h=160,x1=254,y1=170}
 
 -- paddle
 pw=24
 ph=3
-px=(screen.x0+screen.x1)/2-pw/2
-py=screen.y1-6
+px=(screen.sx+screen.x1)/2-pw/2
+py=screen.y1-20
 
 -- ball
-bx=(screen.x0+screen.x1)/2
-by=(screen.y0+screen.y1)/2
+bx=(screen.sx+screen.x1)/2
+by=(screen.sy+screen.y1)/2
 br=2
 bvx=1
 bvy=-1
@@ -26,8 +26,8 @@ function game:init()
         for j=0,3 do
             local bw=20
             local bh=8
-            local bxpos=screen.x0+8+i*bw
-            local bypos=screen.y0+8+j*bh
+            local bxpos=screen.sx+8+i*bw
+            local bypos=screen.sy+8+j*bh
             add(bricks,{x=bxpos,y=bypos,w=bw-2,h=bh-2,alive=true})
         end
     end
@@ -36,19 +36,19 @@ end
 function game:update()   
     if _btn(_keys.A) then px=px-2 end
     if _btn(_keys.D) then px=px+2 end
-    px=mid(screen.x0+1,px,screen.x1-pw - 1)
+    px=mid(screen.sx+1,px,screen.x1-pw - 1)
 
     -- move ball
     bx=bx+bvx
     by=by+bvy
 
     -- wall bounce
-    if bx<br+screen.x0 then bvx=abs(bvx)
+    if bx<br+screen.sx then bvx=abs(bvx)
     elseif bx>screen.x1-br-1 then bvx=-abs(bvx) end
-    if by<br+screen.y0 then bvy=abs(bvy) end
+    if by<br+screen.sy then bvy=abs(bvy) end
 
     -- paddle bounce
-    if by+br>=py and bx>px and bx<px+pw then
+    if by+br>=py and by+br <= py + 2 and bx>px and bx<px+pw then
         bvy=-abs(bvy)
         bx=bx+(bx-(px+pw/2))/12 -- add angle
     end
@@ -65,15 +65,15 @@ function game:update()
 
     -- lose
     if by>screen.y1 then
-        bx=(screen.x0+screen.x1)/2
-        by=(screen.y0+screen.y1)/2
+        bx=(screen.sx+screen.x1)/2
+        by=(screen.sy+screen.y1)/2
         bvx=1 bvy=-1
     end
 end
 
 function game:draw()
     -- draw playfield
-    _rect2(0,0,screen.x0,screen.y0,screen.x1,screen.y1,1,1)
+    _rect2(screen.sx,screen.sy,screen.x0,screen.y0,screen.w,screen.h,1,1)
 
     -- paddle
     _rectfill2(px,py,0,0,pw,ph,1,13)
@@ -94,7 +94,7 @@ function game:draw()
         if b.alive then win=false end
     end
     if win then
-        _print("you win!",(screen.x0+screen.x1)/2-20,(screen.y0+screen.y1)/2,11)
+        _print("you win!",(screen.sx+screen.x1)/2-20,(screen.sy+screen.y1)/2,11)
     end
 end
 
