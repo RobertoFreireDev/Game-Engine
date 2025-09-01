@@ -13,6 +13,15 @@ public static class TimeUtils
     private static int _fps = 0;
     private static double[] Timers = new double[16];
 
+    public static void Reset()
+    {
+        ElapsedTime = 0;
+        _frameCounter = 0;
+        _elapsedTime = 0;
+        _fps = 0;
+        Timers = new double[16];
+    }
+
     public static void Update(GameTime gameTime)
     {
         Delta = gameTime.ElapsedGameTime.TotalSeconds;

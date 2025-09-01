@@ -83,7 +83,8 @@ namespace blackbox
             {
                 script = LuaFileIO.Read(Constants.Mainfilename);
             }
-            LuaProgram = new LuaBinding(script);
+            LuaProgram = new LuaBinding(script); 
+            TimeUtils.Reset();
         }
 
         private void OnResize(Object sender, EventArgs e)
