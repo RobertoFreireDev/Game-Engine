@@ -1,5 +1,5 @@
 ﻿-- screen
-screen={x0=80,y0=10,x1=178,y1=150}
+screen={x0=80,y0=10,x1=80+174,y1=150}
 
 -- paddle
 pw=24
@@ -36,7 +36,7 @@ end
 function game:update()   
     if _btn(_keys.A) then px=px-2 end
     if _btn(_keys.D) then px=px+2 end
-    px=mid(screen.x0,px,screen.x0+screen.x1-pw - 1)
+    px=mid(screen.x0+1,px,screen.x1-pw - 1)
 
     -- move ball
     bx=bx+bvx
@@ -44,7 +44,7 @@ function game:update()
 
     -- wall bounce
     if bx<br+screen.x0 then bvx=abs(bvx)
-    elseif bx>screen.x0+screen.x1-br then bvx=-abs(bvx) end
+    elseif bx>screen.x1-br-1 then bvx=-abs(bvx) end
     if by<br+screen.y0 then bvy=abs(bvy) end
 
     -- paddle bounce
@@ -73,7 +73,7 @@ end
 
 function game:draw()
     -- draw playfield
-    _rect(screen.x0,screen.y0,0,0,screen.x1,screen.y1,1,1)
+    _rect2(0,0,screen.x0,screen.y0,screen.x1,screen.y1,1,1)
 
     -- paddle
     _rectfill2(px,py,0,0,pw,ph,1,13)
