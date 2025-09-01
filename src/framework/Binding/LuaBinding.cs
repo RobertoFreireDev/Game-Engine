@@ -285,9 +285,9 @@ public class LuaBinding
         GameGrid.Copy(gridIndex, x, y, w, h);
     }
 
-    public static void PasteGrid(int gridIndex, int x, int y)
+    public static void PasteGrid(int gridIndex, int x, int y, int w, int h)
     {
-        GameGrid.Paste(gridIndex, x, y);
+        GameGrid.Paste(gridIndex, x, y, w, h);
     }
 
     public static void SetGrid(int gridIndex, string grid)

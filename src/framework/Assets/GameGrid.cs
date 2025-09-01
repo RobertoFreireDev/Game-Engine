@@ -88,15 +88,13 @@ public class GridData
         }
     }
 
-    public void PasteRegion(int x, int y)
+    public void PasteRegion(int x, int y, int w, int h)
     {
         if (Copy == null) return;
 
         SaveSnapshot();
-        int copyHeight = Copy.GetLength(0);
-        int copyWidth = Copy.GetLength(1);
 
-        var (x1, y1, x2, y2) = ClampToBounds(x, y, copyWidth, copyHeight);
+        var (x1, y1, x2, y2) = ClampToBounds(x, y, Math.Min(Copy.GetLength(1), w), Math.Min(Copy.GetLength(0),h));
 
         for (int yy = 0; yy < y2 - y1; yy++)
         {
@@ -566,13 +564,13 @@ public static class GameGrid
         GridList[index].CopyRegion(x, y, w, h);
     }
 
-    public static void Paste(int index, int x, int y)
+    public static void Paste(int index, int x, int y, int w, int h)
     {
         if (!IsValidIndex(index))
         {
             return;
         }
-        GridList[index].PasteRegion(x, y);
+        GridList[index].PasteRegion(x, y, w, h);
     }
 
     private static bool IsValidIndex(int index)

@@ -116,7 +116,9 @@ function spriteeditor:update()
         elseif _btnp(_keys.V) then
             _pgrid(self.gridIndex,
                 offsetX,
-                offsetY)
+                offsetY,
+                self.selectedRec.sw,
+                self.selectedRec.sh)
         end
     end
 
