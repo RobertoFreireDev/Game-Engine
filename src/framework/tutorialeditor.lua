@@ -3,18 +3,37 @@
 }
 
 --[[
+    Split tutorial into categories
+    Each category have pages
+
+    Categoy -> Game Engine:
+    Explain this tutorial buttons. Example: buttons to navigate through pages
+    explain monogame, structure and overall idea
     Alt F4 -> Exit
     F2 -> ToggleFullScreen
 
-    Sprite Editor
+    Categoy -> Explain All LuaBinding Functions
+    Use this category to test each function
+    Use this category to explain each function
+    Also, filter and validate each and every parameter of lua functions
+
+    Categoy -> Sprite Editor
     control Z  -> undo
     control Y  -> redo
     control C  -> copy
     control V  -> paste
     control -> draw full circle/rect
-   _mouse scroll -> zoom in sprite editor
+    _mouse scroll -> zoom in sprite editor
 
-    Explain All LuaBinding Functions
+    Add show pos x and y to validate shapes and draw logic
+
+    Categoy -> Map Editor
+
+    Categoy -> Sfx editor
+
+    Categoy -> Music editor
+
+    Categoy -> Game
 ]]
 
 function tutorialeditor:create()
