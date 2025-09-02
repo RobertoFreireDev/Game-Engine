@@ -6,9 +6,12 @@
     Split tutorial into categories
     Each category have pages
 
-    Categoy -> Game Engine:
+    Categoy -> Game Engine
     Explain this tutorial buttons. Example: buttons to navigate through pages
     explain monogame, structure and overall idea
+    explain main file
+    explain restart using esc
+    explain save using control R
     Alt F4 -> Exit
     F2 -> ToggleFullScreen
 
@@ -34,6 +37,8 @@
     Categoy -> Music editor
 
     Categoy -> Game
+    Use this category to show case all game engine features and capabilities
+    Use this category to test every thing. Example: Pause game, restart game
 ]]
 
 function tutorialeditor:create()
