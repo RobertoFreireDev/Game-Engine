@@ -286,9 +286,9 @@ function spriteeditor:drawtemporaryshape()
          end
     elseif self.paintbuttonselected == self.circlebutton then
          if _btn(_keys.LeftControl) or _btn(_keys.RightControl) then
-            _circfill(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, scale, self.selectedcolor)
+            _circfill2(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, self.selectedcolor, 10, scale)
          else
-            _circ(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, scale, self.selectedcolor)
+            _circ2(self.origin_x, self.origin_y,self.drawshape.x0,self.drawshape.y0,self.drawshape.x1,self.drawshape.y1, self.selectedcolor, 10, scale)
          end
     end
 end

@@ -10,7 +10,7 @@ py=screen.y1-20
 -- ball
 bx=(screen.sx+screen.x1)/2
 by=(screen.sy+screen.y1)/2
-br=2
+br=3
 bvx=1
 bvy=-1
 
@@ -79,7 +79,7 @@ function game:draw()
     _rectfill(px,py,pw,ph,13)
 
     -- ball
-    _circfill2(bx,by,br,1,8)
+    _circ(bx,by,br,1,8)
 
     -- bricks
     for b in all(bricks) do

@@ -486,26 +486,26 @@ public class LuaBinding
         Shapes.DrawRectFill(x, y, width, height, ColorUtils.GetColor(colorIndex, transparency));
     }
 
-    public static void DrawCirc(int ox, int oy, int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)
-    {
-        Shapes.DrawCirc(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
-    }
-
-    public static void DrawCircFill(int ox, int oy, int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)
-    {
-        Shapes.DrawCircFill(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
-    }
-
-    public static void DrawCirc2(int x, int y, int r, int scale = 1, int colorIndex = 0, int transparency = 10)
+    public static void DrawCirc(int x, int y, int r, int colorIndex = 0, int transparency = 10)
     {
         CircleToRect(x, y, r, out int ox, out int oy, out int x0, out int y0, out int x1, out int y1);
-        Shapes.DrawCirc(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
+        Shapes.DrawCirc(ox, oy, x0, y0, x1, y1, ColorUtils.GetColor(colorIndex, transparency));
     }
 
-    public static void DrawCircFill2(int x, int y, int r, int scale = 1, int colorIndex = 0, int transparency = 10)
+    public static void DrawCircFill(int x, int y, int r, int colorIndex = 0, int transparency = 10)
     {
         CircleToRect(x, y, r, out int ox, out int oy, out int x0, out int y0, out int x1, out int y1);
-        Shapes.DrawCircFill(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
+        Shapes.DrawCircFill(ox, oy, x0, y0, x1, y1, ColorUtils.GetColor(colorIndex, transparency));
+    }
+
+    public static void DrawCirc2(int ox, int oy, int x0, int y0, int x1, int y1, int colorIndex = 0, int transparency = 10, int thickness = 1)
+    {
+        Shapes.DrawCirc(ox, oy, x0, y0, x1, y1, ColorUtils.GetColor(colorIndex, transparency), thickness);
+    }
+
+    public static void DrawCircFill2(int ox, int oy, int x0, int y0, int x1, int y1, int colorIndex = 0, int transparency = 10, int thickness = 1)
+    {
+        Shapes.DrawCircFill(ox, oy, x0, y0, x1, y1, ColorUtils.GetColor(colorIndex, transparency), thickness);
     }
 
     private static void CircleToRect(int x, int y, int r, out int ox, out int oy, out int x0, out int y0, out int x1, out int y1)

@@ -45,14 +45,14 @@ public static class Shapes
         }
     }
 
-    public static void DrawCirc(int ox, int oy, int x0, int y0, int x1, int y1, int scale, Color color)
+    public static void DrawCirc(int ox, int oy, int x0, int y0, int x1, int y1, Color color, int thickness = 1)
     {
-        scale = Math.Max(scale, 1);
+        thickness = Math.Max(thickness, 1);
         var (rx0, ry0, rx1, ry1, w, h) = AdjustRect(x0, y0, x1, y1);
 
         if (rx1 - rx0 <= 1 && ry1 - ry0 <= 1)
         {
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * scale, oy + ry0 * scale, w * scale,h * scale), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * thickness, oy + ry0 * thickness, w * thickness,h * thickness), color);
             return;
         }
 
@@ -95,18 +95,18 @@ public static class Shapes
                 continue;
             }
 
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + p.X * scale, oy + p.Y * scale, scale, scale), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + p.X * thickness, oy + p.Y * thickness, thickness, thickness), color);
         }
     }
 
-    public static void DrawCircFill(int ox, int oy, int x0, int y0, int x1, int y1, int scale, Color color)
+    public static void DrawCircFill(int ox, int oy, int x0, int y0, int x1, int y1, Color color, int thickness = 1)
     {
-        scale = Math.Max(scale, 1);
+        thickness = Math.Max(thickness, 1);
         var (rx0, ry0, rx1, ry1, w, h) = AdjustRect(x0, y0, x1, y1);
 
         if (rx1 - rx0 <= 1 || ry1 - ry0 <= 1)
         {
-            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * scale, oy + ry0 * scale, w * scale, h * scale), color);
+            GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + rx0 * thickness, oy + ry0 * thickness, w * thickness, h * thickness), color);
             return;
         }
 
@@ -172,7 +172,7 @@ public static class Shapes
             }
 
             GFW.SpriteBatch.Draw(GFW.PixelTexture,
-                new Rectangle(ox + minX * scale, oy + y * scale, width * scale, scale), 
+                new Rectangle(ox + minX * thickness, oy + y * thickness, width * thickness, thickness), 
                 color);
         }
     }
