@@ -518,9 +518,9 @@ public class LuaBinding
         y1 = y + r;
     }
 
-    public static void DrawLine(int ox, int oy, int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)
+    public static void DrawLine(int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)
     {
-        Shapes.DrawLine(ox, oy, x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
+        Shapes.DrawLine(x0, y0, x1, y1, scale, ColorUtils.GetColor(colorIndex, transparency));
     }
 
     public static void DrawPixel(int x, int y, int colorIndex = 0, int transparency = 10)

@@ -11,8 +11,10 @@ public static class Shapes
         GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(x, y, 1, 1), color);
     }
 
-    public static void DrawLine(int ox, int oy, int x0, int y0, int x1, int y1, int scale, Color color)
+    public static void DrawLine(int ox, int oy, int x1, int y1, int scale, Color color)
     {
+        int x0 = 0; 
+        int y0 = 0;
         scale = Math.Max(scale, 1);
         int dx = Math.Abs(x1 - x0);
         int dy = Math.Abs(y1 - y0);

@@ -260,12 +260,10 @@ function spriteeditor:drawtemporaryshape()
 
     if self.paintbuttonselected == self.linebutton then
         _line(
-            self.origin_x,
-            self.origin_y,
-            self.drawshape.x0,
-            self.drawshape.y0,
-            self.drawshape.x1,
-            self.drawshape.y1,
+            self.origin_x + self.drawshape.x0*scale,
+            self.origin_y + self.drawshape.y0*scale,
+            self.drawshape.x1 - self.drawshape.x0,
+            self.drawshape.y1 - self.drawshape.y0,
             scale,
             self.selectedcolor)
     elseif self.paintbuttonselected == self.rectbutton then
