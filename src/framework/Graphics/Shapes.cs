@@ -175,21 +175,21 @@ public static class Shapes
         }
     }
 
-    public static void DrawRectFill(int ox, int oy, int x, int y, int width, int height, int scale, Color color)
+    public static void DrawRectFill(int x, int y, int width, int height, Color color)
     {
-        GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + x * scale, oy + y * scale, width * scale, height * scale), color);
+        GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(x, y, width, height), color);
     }
 
-    public static void DrawRectBorder(int ox, int oy, int x, int y, int width, int height, int scale, Color color, int thickness = 1)
+    public static void DrawRectBorder(int x, int y, int width, int height, Color color, int thickness = 1)
     {
         // Top
-        DrawRectFill(ox, oy, x, y, width, thickness, scale, color);
+        DrawRectFill(x, y, width, thickness, color);
         // Bottom
-        DrawRectFill(ox, oy, x, y + height - thickness, width, thickness, scale, color);
+        DrawRectFill(x, y + height - thickness, width, thickness, color);
         // Left
-        DrawRectFill(ox, oy, x, y + 1, thickness, height - 2, scale, color);
+        DrawRectFill(x, y + 1, thickness, height - 2, color);
         // Right
-        DrawRectFill(ox, oy, x + width - thickness, y + 1, thickness, height - 2, scale, color);
+        DrawRectFill(x + width - thickness, y + 1, thickness, height - 2, color);
     }
 
     public static (int rx0, int ry0, int rx1, int ry1, int w, int h) AdjustRect(int x0, int y0, int x1, int y1)

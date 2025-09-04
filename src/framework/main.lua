@@ -81,7 +81,7 @@ end
 
 function _draw()
     state:draw()
-    _rectfill(0,0,0,0,10,180,1,12)
+    _rectfill(0,0,10,180,12)
     foreach(buttons, function(o)
         o.b:draw()
     end)

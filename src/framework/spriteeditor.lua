@@ -223,11 +223,11 @@ function spriteeditor:update()
 end
 
 function spriteeditor:draw()
-    _rectfill(10,0,0,0,310,180,1,11)
-    _rectfill(self.sprite_x-1,self.origin_y-1,0,0,42,82,1,0)
-    _rectfill(self.sprite_x-1,89-1,0,0,42,12,1,0)
+    _rectfill(10,0,310,180,11)
+    _rectfill(self.sprite_x-1,self.origin_y-1,42,82,0)
+    _rectfill(self.sprite_x-1,89-1,42,12,0)
     _csprc(1,0,self.sprite_x,89,3,2,4,1)
-    _rectfill(self.sprite_x,89,0,0,40,10,1,self.selectedcolor)
+    _rectfill(self.sprite_x,89,40,10,self.selectedcolor)
     foreach(self.collorButtons, function(o)
         o:draw()
     end)
@@ -235,19 +235,19 @@ function spriteeditor:draw()
         o:draw()
     end)
 
-    _rectfill(self.origin_x - 1, self.origin_y - 1,0,0,self.grid_w * self.cell + 2,self.grid_h * self.cell + 2, 1,0)    
+    _rectfill(self.origin_x - 1, self.origin_y - 1,self.grid_w * self.cell + 2,self.grid_h * self.cell + 2,0)    
     _csprc(1,0,self.origin_x,self.origin_y,3,2,self.cell,self.cell)
     _dgrid(self.gridIndex,self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
     self:drawtemporaryshape()
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
     
-    _rectfill(self.sprites_x - 1, self.sprites_y - 1,0,0,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2,1, 0)
+    _rectfill(self.sprites_x - 1, self.sprites_y - 1,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2,0)
     _csprc(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
     _dgrid(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
     
     if self.selectedRec.x and self.spriteNumber >= self.pageNumber*self.sprites_w*self.sprites_h and self.spriteNumber < (self.pageNumber+1)*self.sprites_w*self.sprites_h then
-        _rect(self.sprites_x, self.sprites_y, self.selectedRec.x, self.selectedRec.y, self.selectedRec.sw, self.selectedRec.sh, 1, 1)
+        _rect(self.sprites_x + self.selectedRec.x, self.sprites_y + self.selectedRec.y, self.selectedRec.sw, self.selectedRec.sh, 1)
     end
 end
 
@@ -269,26 +269,22 @@ function spriteeditor:drawtemporaryshape()
             scale,
             self.selectedcolor)
     elseif self.paintbuttonselected == self.rectbutton then
+         local rx0, ry0, rx1, ry1, w, h = rect_bounds(self.drawshape.x0, self.drawshape.y0, self.drawshape.x1, self.drawshape.y1)
          if _btn(_keys.LeftControl) or _btn(_keys.RightControl) then
-            _rectfill2(
-                self.origin_x,
-                self.origin_y,
-                self.drawshape.x0,
-                self.drawshape.y0,
-                self.drawshape.x1,
-                self.drawshape.y1,
-                scale,
+            _rectfill(
+                self.origin_x + rx0*scale,
+                self.origin_y + ry0*scale,
+                w*scale,
+                h*scale,
                 self.selectedcolor)
          else
-            _rect2(
-                self.origin_x,
-                self.origin_y,
-                self.drawshape.x0,
-                self.drawshape.y0,
-                self.drawshape.x1,
-                self.drawshape.y1,
-                scale,
-                self.selectedcolor)
+            _rect(
+                self.origin_x + rx0*scale,
+                self.origin_y + ry0*scale,
+                w*scale,
+                h*scale,
+                self.selectedcolor,
+                10,scale)
          end
     elseif self.paintbuttonselected == self.circlebutton then
          if _btn(_keys.LeftControl) or _btn(_keys.RightControl) then

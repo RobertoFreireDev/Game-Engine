@@ -73,10 +73,10 @@ end
 
 function game:draw()
     -- draw playfield
-    _rect2(screen.sx,screen.sy,screen.x0,screen.y0,screen.w,screen.h,1,1)
+    _rect(screen.sx + screen.x0,screen.sy + screen.y0,screen.w,screen.h,1)
 
     -- paddle
-    _rectfill2(px,py,0,0,pw,ph,1,13)
+    _rectfill(px,py,pw,ph,13)
 
     -- ball
     _circfill2(bx,by,br,1,8)
@@ -84,7 +84,7 @@ function game:draw()
     -- bricks
     for b in all(bricks) do
         if b.alive then
-            _rectfill2(b.x,b.y,0,0,b.w,b.h,1,6)
+            _rectfill(b.x,b.y,b.w,b.h,6)
         end
     end
 

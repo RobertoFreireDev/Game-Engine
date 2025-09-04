@@ -90,3 +90,11 @@ function screen_to_grid(p,x,y,w,h,s)
 
     return { x=gx, y=gy}
 end
+
+function rect_bounds(x0, y0, x1, y1)
+    local rx0 = min(x0, x1)
+    local ry0 = min(y0, y1)
+    local rx1 = max(x0, x1)
+    local ry1 = max(y0, y1)
+    return rx0, ry0, rx1, ry1, rx1 - rx0 + 1, ry1 - ry0 + 1
+end
