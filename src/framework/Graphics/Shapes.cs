@@ -28,7 +28,7 @@ public static class Shapes
             count++;
             GFW.SpriteBatch.Draw(GFW.PixelTexture, new Rectangle(ox + x0*scale, oy + y0 * scale, scale, scale), color);
 
-            if (x0 == x1 && y0 == y1 || count > 500)
+            if (x0 == x1 && y0 == y1 || count > 2000)
                 break;
 
             int e2 = 2 * err;

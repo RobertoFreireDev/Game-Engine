@@ -79,7 +79,7 @@ function game:draw()
     _rectfill(px,py,pw,ph,13)
 
     -- ball
-    _circ(bx,by,br,1,8)
+    _circ(bx,by,br,8)
 
     -- bricks
     for b in all(bricks) do
