@@ -109,11 +109,6 @@ public class GridData
 
     public void MoveGrid(int x, int y, int w, int h, int deltaX, int deltaY)
     {
-        if (InvalidGridPos(x, y) || InvalidGridPos(x + w -1, y + h - 1))
-        {
-            return;
-        }
-
         SaveSnapshot();
 
         var (x1, y1, x2, y2) = ClampToBounds(x, y, w, h);

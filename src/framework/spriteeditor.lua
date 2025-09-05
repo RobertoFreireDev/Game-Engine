@@ -102,7 +102,8 @@ function spriteeditor:update()
 
     local offsetX, offsetY = (self.spriteNumber  % self.sprites_w) * self.sprites_cell, flr(self.spriteNumber / self.sprites_w) * self.sprites_cell
     self.selectedRec = getSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_cell,self.zoom)
-        
+    local scale = self.sprites_cell*self.zoom
+    
     if _btn(_keys.LeftControl) then
         if _btnp(_keys.Z) then
             _ugrid(self.gridIndex)
@@ -112,14 +113,14 @@ function spriteeditor:update()
             _cgrid(self.gridIndex,
                 offsetX,
                 offsetY,
-                self.selectedRec.sw,
-                self.selectedRec.sh)
+                scale,
+                scale)
         elseif _btnp(_keys.V) then
             _pgrid(self.gridIndex,
                 offsetX,
                 offsetY,
-                self.selectedRec.sw,
-                self.selectedRec.sh)
+                scale,
+                scale)
         end
     end
 
@@ -240,8 +241,8 @@ function spriteeditor:update()
             self.gridIndex,
             offsetX,
             offsetY,
-            self.selectedRec.sw,
-            self.selectedRec.sh,
+            scale,
+            scale,
             mvg.x,
             mvg.y)
     end
