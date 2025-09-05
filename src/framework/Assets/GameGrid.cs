@@ -107,6 +107,46 @@ public class GridData
         UpdateTexture2d();
     }
 
+    public void MoveGrid(int x, int y, int w, int h, int deltaX, int deltaY)
+    {
+        if (InvalidGridPos(x, y) || InvalidGridPos(x + w -1, y + h - 1))
+        {
+            return;
+        }
+
+        SaveSnapshot();
+
+        var (x1, y1, x2, y2) = ClampToBounds(x, y, w, h);
+
+        int regionW = x2 - x1;
+        int regionH = y2 - y1;
+
+        int[,] temp = new int[regionH, regionW];
+
+        // shift values into temp
+        for (int row = 0; row < regionH; row++)
+        {
+            for (int col = 0; col < regionW; col++)
+            {
+                int newRow = (row + deltaY + regionH) % regionH;
+                int newCol = (col + deltaX + regionW) % regionW;
+
+                temp[newRow, newCol] = Data[y1 + row, x1 + col];
+            }
+        }
+
+        // copy back to Data
+        for (int row = 0; row < regionH; row++)
+        {
+            for (int col = 0; col < regionW; col++)
+            {
+                Data[y1 + row, x1 + col] = temp[row, col];
+            }
+        }
+
+        UpdateTexture2d();
+    }
+
     public void Create(int columns, int rows, int size, bool enableUndoRedo)
     {
         Columns = columns;
@@ -145,8 +185,8 @@ public class GridData
         return (
                 Math.Max(0, x),
                 Math.Max(0, y),
-                Math.Min(Rows * Size, x + w),
-                Math.Min(Columns * Size, y + h)
+                Math.Min(Columns * Size, x + w),
+                Math.Min(Rows * Size, y + h)
             );
     }
 
@@ -571,6 +611,15 @@ public static class GameGrid
             return;
         }
         GridList[index].PasteRegion(x, y, w, h);
+    }
+
+    public static void MoveGrid(int index, int x, int y, int w, int h, int deltaX, int deltaY)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+        GridList[index].MoveGrid(x, y, w, h, deltaX, deltaY);
     }
 
     private static bool IsValidIndex(int index)

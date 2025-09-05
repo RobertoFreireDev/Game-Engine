@@ -183,7 +183,7 @@ function spriteeditor:update()
                     self.setpixel.y ~= offsetY + self.gridpos.y or
                     self.setpixel.c ~= self.selectedcolor
                 ) then
-                _spixel(
+                _spixelgrid(
                     self.gridIndex,
                     offsetX + self.gridpos.x,
                     offsetY + self.gridpos.y,
@@ -219,6 +219,31 @@ function spriteeditor:update()
         if sn > 0 then
             self.spriteNumber = sn
         end
+    end
+
+    local mvg = { x= 0, y = 0}
+    if _btnp(_keys.A) then     
+        mvg.x = mvg.x - 1
+    end
+    if _btnp(_keys.D) then
+        mvg.x = mvg.x + 1
+    end
+    if _btnp(_keys.W) then
+        mvg.y = mvg.y - 1
+    end
+    if _btnp(_keys.S) then
+        mvg.y = mvg.y + 1
+    end
+
+    if mvg.x ~=0 or mvg.y ~=0 then
+        _mgrid(
+            self.gridIndex,
+            offsetX,
+            offsetY,
+            self.selectedRec.sw,
+            self.selectedRec.sh,
+            mvg.x,
+            mvg.y)
     end
 end
 

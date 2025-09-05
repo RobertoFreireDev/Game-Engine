@@ -92,19 +92,20 @@ public class LuaBinding
         _lua.RegisterFunction("_gelapsedtime", this, GetType().GetMethod("GetElapsedTime"));
 
         // Grid
-        _lua.RegisterFunction("_ngrid", this, GetType().GetMethod("CreateGrid"));
+        _lua.RegisterFunction("_ngrid", this, GetType().GetMethod("NewGrid"));
+        _lua.RegisterFunction("_ggrid", this, GetType().GetMethod("GetGrid"));
         _lua.RegisterFunction("_cgrid", this, GetType().GetMethod("CopyGrid"));
         _lua.RegisterFunction("_pgrid", this, GetType().GetMethod("PasteGrid"));
+        _lua.RegisterFunction("_mgrid", this, GetType().GetMethod("MoveGrid"));        
         _lua.RegisterFunction("_sgrid", this, GetType().GetMethod("SetGrid"));
         _lua.RegisterFunction("_ugrid", this, GetType().GetMethod("UndoGrid"));
         _lua.RegisterFunction("_rgrid", this, GetType().GetMethod("RedoGrid"));
         _lua.RegisterFunction("_bgrid", this, GetType().GetMethod("PaintBucket"));
-        _lua.RegisterFunction("_ggrid", this, GetType().GetMethod("GetGrid"));
-        _lua.RegisterFunction("_spixel", this, GetType().GetMethod("SetPixel"));
+        _lua.RegisterFunction("_gpixelgrid", this, GetType().GetMethod("GetPixel"));
+        _lua.RegisterFunction("_spixelgrid", this, GetType().GetMethod("SetPixel"));
         _lua.RegisterFunction("_slinegrid", this, GetType().GetMethod("SetLine"));
         _lua.RegisterFunction("_srectgrid", this, GetType().GetMethod("SetRect"));
         _lua.RegisterFunction("_scircgrid", this, GetType().GetMethod("SetCirc"));
-        _lua.RegisterFunction("_gpixel", this, GetType().GetMethod("GetPixel"));
         _lua.RegisterFunction("_dgrid", this, GetType().GetMethod("DrawCustomGrid"));
 
         // Map
@@ -265,7 +266,7 @@ public class LuaBinding
     #endregion
 
     #region GridFunctions
-    public static void CreateGrid(int gridIndex, int columns, int rows, int size, bool enableUndoRedo = false)
+    public static void NewGrid(int gridIndex, int columns, int rows, int size, bool enableUndoRedo = false)
     {
         GameGrid.Create(gridIndex, columns, rows, size, enableUndoRedo);
     }
@@ -289,6 +290,11 @@ public class LuaBinding
     {
         GameGrid.Paste(gridIndex, x, y, w, h);
     }
+
+    public static void MoveGrid(int gridIndex, int x, int y, int w, int h, int deltaX, int deltaY)
+    {
+        GameGrid.MoveGrid(gridIndex, x, y, w, h, deltaX, deltaY); ;
+    }    
 
     public static void SetGrid(int gridIndex, string grid)
     {
