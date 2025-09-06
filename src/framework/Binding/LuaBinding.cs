@@ -491,9 +491,9 @@ public class LuaBinding
     #endregion
 
     #region DrawFunctions
-    public static void ShowHideMouse(bool value)
+    public static void ShowHideMouse(bool show)
     {
-        GFW.ShowHideMouse(value);
+        GFW.ShowHideMouse(show);
     }
 
     public static void Pal(string palette)

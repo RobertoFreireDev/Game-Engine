@@ -10,7 +10,7 @@ internal static class MouseInput
 
     public static void UpdateCursor(int cursor)
     {
-        if (cursor < 0 || cursor > 47)
+        if (cursor < 0 || cursor > 1)
         {
             return;
         }

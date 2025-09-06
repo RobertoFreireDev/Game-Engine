@@ -34,14 +34,21 @@
 ]]
 
 function drawtutorialtext(text,x,y)
-    _print(text,20 + x,20 + y,1,true)
+    _print(text,20 + x,20 + y,12,true)
 end
 
-function drawfunctiontext(o,x,y)
+function drawfunctiontext(o,px,ln,x,y)
     local txt = ""
-    foreach(o, function(i)
-        txt = txt.."Lua - "..i.l.." -> C# - "..i.c.."\n"
-    end)
+    for i = px, px + ln do
+        local item = o[i]
+        if item then
+            if item.t then
+                txt = txt..item.t.."\n"
+            else
+                txt = txt.."Lua - "..item.l.." -> C# - "..item.c.."\n"
+            end
+        end
+    end
     drawtutorialtext(txt,x,y)
 end
 
@@ -55,22 +62,141 @@ function tutorialeditor:create()
 
     local hotkeystutorial = { category = "Global hotkeys" }
     function hotkeystutorial:draw()
-        drawtutorialtext("BlackBox:\n- main.lua file: Entry point. In this case, we are using it for both editor and game.\n- Exit: Press Alt + F4 to quit.\n- Toggle Fullscreen: Press F2 to switch between fullscreen/window.\nmain.lua:\n- Restart: Press Esc to restart the game.\n- Save: Press Ctrl + R to save progress.",0,0)
+        drawtutorialtext("BlackBox:\n- main.lua file: Entry point. In this case, we are using it for both editor and game.\n- Exit: Press Alt + F4 to quit.\n- Toggle Fullscreen: Press F2 to switch between fullscreen/window.\nmain.lua:\n- Restart: Press Esc to restart the game.\n- Save: Press Ctrl + R to save progress.\n- A,W,D,S arrow keys if page allows",0,0)
     end
 
-    local luafunctions = { category = "Functions/configurations"}
+    local luafunctions = { category = "Lua functions", px = 1, len = 10}
     function luafunctions:init()
-        self.func={}
+        -- Existing Config
+        self.func = {}
+        add(self.func,{ t = "-- Configurations --"})
         add(self.func,{ l = "_title", c = "void ConfigTitle(string text)"})
         add(self.func,{ l = "_fps30", c = "void ConfigFps30()"})
         add(self.func,{ l = "_fps60", c = "void ConfigFps60()"})
         add(self.func,{ l = "_reboot", c = "void ResetMainFile()"})
+        add(self.func,{ t = ""})
+
+        -- Texture
+        add(self.func,{ t = "-- Texture --"})
+        add(self.func,{ l = "_texture", c = "void LoadTextureFromBase64(int index, int tileWidth, int tileHeight, string spriteBase64)"})
+        add(self.func,{ t = ""})
+
+        -- Input
+        add(self.func,{ t = "-- Input Mouse --"})
+        add(self.func,{ l = "_mouseshow", c = "void ShowHideMouse(bool show)"})
+        add(self.func,{ l = "_mousepos", c = "LuaTable GetMousePos()"}) -- {x,y}
+        add(self.func,{ l = "_mouseclick", c = "bool MouseButtonPressed(int i)"}) -- i == 1 right else left
+        add(self.func,{ l = "_mouseclickp", c = "bool MouseButtonJustPressed(int i)"}) -- i == 1 right else left
+        add(self.func,{ l = "_mouseclickr", c = "bool MouseButtonReleased(int i)"}) -- i == 1 right else left
+        add(self.func,{ l = "_mousescroll", c = "bool Scroll(int i)"}) -- i == 1 up else down
+        add(self.func,{ l = "_mousecursor", c = "void UpdateCursor(int i)"}) -- i -> 0 pointer i --> 1 hand
+        add(self.func,{ t = ""})
+        add(self.func,{ t = "-- Input Keyboard --"})
+        add(self.func,{ l = "_btn", c = "bool Pressed(int keyNumber)"})
+        add(self.func,{ l = "_btnp", c = "bool JustPressed(int keyNumber)"})
+        add(self.func,{ l = "_btnr", c = "bool Released(int keyNumber)"})
+        add(self.func,{ t = ""})
+
+        -- Draw
+        add(self.func,{ t = "-- Draw --"})
+        add(self.func,{ l = "_crtshader", c = "void EnableCRTshader(bool value, int inner = 85, int outer = 110)"})
+        add(self.func,{ l = "_bckgdclr", c = "void ConfigBackGroundColor(int colorIndex)"}) -- colorIndex 0 until 31
+        add(self.func,{ l = "_pal", c = "void Pal(string palette)"}) -- "#000000,#ffffff,#f7aaa8,#697594,#d4689a,#782c96,#e83562,#f2825c,#ffc76e,#88c44d,#3f9e59,#373461,#4854a8,#7199d9,#9e5252,#4d2536,#1a1c2c,#5d275d,#b13e53,#ffa300,#ffec27,#a7f070,#38b764,#257179,#29366f,#3b5dc9,#41a6f6,#73eff7,#f4f4f4,#94b0c2,#566c86,#333c57";
+        add(self.func,{ l = "_rect", c = "void DrawRect(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10, int thickness = 1)"})
+        add(self.func,{ l = "_rectfill", c = "void DrawRectFill(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)"})
+        add(self.func,{ l = "_circ", c = "void DrawCirc(int x, int y, int r, int colorIndex = 0, int transparency = 10)"})
+        add(self.func,{ l = "_circfill", c = "void DrawCircFill(int x, int y, int r, int colorIndex = 0, int transparency = 10)"})
+        add(self.func,{ l = "_circ2", c = "void DrawCirc2(int ox, int oy, int x0, int y0, int x1, int y1, int colorIndex = 0, int transparency = 10, int thickness = 1)"})
+        add(self.func,{ l = "_circfill2", c = "void DrawCircFill2(int ox, int oy, int x0, int y0, int x1, int y1, int colorIndex = 0, int transparency = 10, int thickness = 1)"})
+        add(self.func,{ l = "_line", c = "void DrawLine(int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)"})
+        add(self.func,{ l = "_pixel", c = "void DrawPixel(int x, int y, int colorIndex = 0, int transparency = 10)"})
+        add(self.func,{ l = "_print", c = "void Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)"})
+        add(self.func,{ l = "_cspr", c = "void DrawTexture(int index, int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ l = "_csprc", c = "void DrawTextureWithColor(int index, int i, int x, int y, int colorIndex = 0, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ l = "_cspre", c = "void  DrawTextureWithEffect(int index, int i, int x, int y, double time, string parameters = '00000000', int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ l = "_camera", c = "void Camera(float x = 0.0f, float y = 0.0f)"})        
+        add(self.func,{ t = ""})
+
+        -- Status
+        add(self.func,{ t = "-- Status --"})
+        add(self.func,{ l = "_sysfps", c = "int GetFps()"})        
+        add(self.func,{ l = "_isfocused", c = "bool IsFocused()"})
+        add(self.func,{ t = ""})
+
+        -- File
+        add(self.func,{ t = "-- File --"})
+        add(self.func,{ l = "_iohasfile", c = "bool HasFile(string fileName)"})
+        add(self.func,{ l = "_ioread", c = "string ReadFile(string fileName)"})
+        add(self.func,{ l = "_iocreate", c = " void CreateFile(string fileName, string content)"})
+        add(self.func,{ l = "_ioupdate", c = "void UpdateFile(string fileName, string content)"})
+        add(self.func,{ l = "_iocreateorupdate", c = "void CreateOrUpdateFile(string fileName, string content)"})
+        add(self.func,{ l = "_iodelete", c = "void DeleteFile(string fileName)"})
+        add(self.func,{ l = "_loadsfx", c = "void ReadSfx(string sfxfilename)"})
+        add(self.func,{ l = "_savesfx", c = "void CreateOrUpdateSfx(string sfxfilename)"})
+        add(self.func,{ t = ""})
+
+        -- Sfx
+        add(self.func,{ t = "-- Sfx --"})
+        add(self.func,{ l = "_configsfx", c = "void ConfigSfx(int index, int speed, string sound)"})
+        add(self.func,{ l = "_playsfx", c = "void PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)"})
+        add(self.func,{ l = "_stopsfx", c = "void StopSfx(int index)"})
+        add(self.func,{ l = "_validfx", c = "bool ValidSfx(string sound)"})
+        add(self.func,{ t = ""})
+
+        -- Time
+        add(self.func,{ t = "-- Time --"})
+        add(self.func,{ l = "_stimer", c = "void StartTimer(int i = 0)"})
+        add(self.func,{ l = "_gtimer", c = "double GetTimer(int i = 0, int d = 4)"})
+        add(self.func,{ l = "_pgame", c = "void PauseGame(bool value)"})
+        add(self.func,{ l = "_gtime", c = "string GetDateTime(int i = 0)"})
+        add(self.func,{ l = "_gdeltatime", c = "double GetDeltaTime()"}) 
+        add(self.func,{ l = "_gelapsedtime", c = "double GetElapsedTime()"})
+        add(self.func,{ t = ""})
+
+        -- Grid
+        add(self.func,{ t = "-- Grid --"})
+        add(self.func,{ l = "_ngrid", c = "void NewGrid(int gridIndex, int columns, int rows, int size, bool enableUndoRedo = false)"})
+        add(self.func,{ l = "_ggrid", c = "string GetGrid(int gridIndex)"})
+        add(self.func,{ l = "_ggrid64", c = "string GetGridAsBase64(int gridIndex)"})
+        add(self.func,{ l = "_cgrid", c = "void CopyGrid(int gridIndex, int x, int y, int w, int h)"})
+        add(self.func,{ l = "_pgrid", c = "void PasteGrid(int gridIndex, int x, int y, int w, int h)"})
+        add(self.func,{ l = "_mgrid", c = "void MoveGrid(int gridIndex, int x, int y, int w, int h, int deltaX, int deltaY)"})
+        add(self.func,{ l = "_sgrid", c = "void SetGrid(int gridIndex, string grid)"})
+        add(self.func,{ l = "_ugrid", c = "void UndoGrid(int gridIndex)"})
+        add(self.func,{ l = "_rgrid", c = "void RedoGrid(int gridIndex)"})
+        add(self.func,{ l = "_bgrid", c = "void PaintBucket(int gridIndex, int sx, int sy, int x, int y, int w, int h, int colorIndex = -1)"})
+        add(self.func,{ l = "_gpixelgrid", c = "int GetPixel(int gridIndex, int x, int y)"})
+        add(self.func,{ l = "_spixelgrid", c = "void SetPixel(int gridIndex, int x, int y, int colorIndex = -1)"})
+        add(self.func,{ l = "_slinegrid", c = "void SetLine(int gridIndex, int x0, int y0, int x1, int y1, int colorIndex = -1)"})
+        add(self.func,{ l = "_srectgrid", c = "void SetRect(int gridIndex, int x0, int y0, int x1, int y1, int colorIndex = -1, bool fill = false)"})
+        add(self.func,{ l = "_scircgrid", c = "void SetCirc(int gridIndex, int x0, int y0, int x1, int y1, int colorIndex = -1, bool fill = false)"})
+        add(self.func,{ l = "_dgrid", c = "void DrawCustomGrid(int gridIndex, int n, int x, int y, int scale, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ t = ""})
+
+        -- Map
+        add(self.func,{ t = "-- Map --"})
+        add(self.func,{ l = "_stilemap", c = "void SetTileInMap(int index, int x, int y, int tileIndex = 0)"})
+        add(self.func,{ l = "_cmap", c = "void CreateMap(int index, int columns, int rows, int size)"})
+        add(self.func,{ l = "_gmap", c = "string GetMap(int index)"}) 
+        add(self.func,{ l = "_smap", c = "void SetMap(int index, string grid)"})
+        add(self.func,{ l = "_drawmap", c = "void DrawMap(int index, int mapX, int mapY,int x, int y, int width, int height)"})
+        add(self.func,{ t = ""})
     end
 
     luafunctions:init();
 
+    function luafunctions:update()
+        if _btn(_keys.W) then     
+            self.px = self.px - 1
+        end
+        if _btn(_keys.S) then
+            self.px = self.px + 1
+        end
+        self.px = clamp(1,self.px,#self.func)
+    end
+
     function luafunctions:draw()
-        drawfunctiontext(self.func,0,0)
+        drawfunctiontext(self.func,self.px,self.len,0,0)
     end
 
     add(tutorialeditor.tutorialpages,firstpage)
@@ -103,7 +229,7 @@ end
 function tutorialeditor:draw()
    local page=self.tutorialpages[self.currenttutorialpage]
    if page.draw then
-        _print("PAG#: "..self.currenttutorialpage.." ".."("..page.category..")",12,2, 12)
+        _print("PAG#: "..self.currenttutorialpage.." ".."("..page.category..")",12,2, 13)
         page:draw()
     end
 end
