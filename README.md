@@ -21,20 +21,3 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 **MAP:**
 
 - Add flag functions
-
-**Shader:**
-
-add if opengl else. learn from this video
-
-https://youtu.be/eANSPwD1SIE?si=zhQICIPkb4DIra0a
-
-
-add if else logic to frac()/loop image or not 
-
--  float2 distortedUV = frac(uv + float2(waveX, waveY));
-
-add new shader:
-after horizontal or vertical line, it draws pixel adding color and transparency including the possibility of 100%. basically it changes the color or doesn't draw image after x or y line.
-
-work on bloom effect.
-right now it draws again the image with offset in x and y. add more offsets from 1 until to offset number
