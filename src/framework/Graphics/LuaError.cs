@@ -33,6 +33,7 @@ public static class LuaError
 
     public static void SetError(string message)
     {
+        ColorUtils.SetDefaultalette();
         LuaBinding.EnableCRTshader(false);
         _error = true;
         _message = message;

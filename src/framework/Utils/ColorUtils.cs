@@ -27,11 +27,16 @@ public static class ColorUtils
         return Colors[colorIndex] * (transparency / 10.0f);
     }
 
+    public static void SetDefaultalette()
+    {
+        SetColor(defaultPalette);
+    }
+
     public static void SetPalette(string palette = "")
     {
         if (string.IsNullOrWhiteSpace(palette) || !ValidateHexColorList(palette))
         {
-            SetColor(defaultPalette);
+            SetDefaultalette();
             return;
         }
 
@@ -40,7 +45,7 @@ public static class ColorUtils
             SetColor(palette);
         }
         catch (Exception ex) {
-            SetColor(defaultPalette);
+            SetDefaultalette();
         }        
     }
 
