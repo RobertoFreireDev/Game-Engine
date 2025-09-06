@@ -56,7 +56,7 @@ function mapeditor:update()
             self.spriteNumber = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
         end
     end
-
+    _print("("..self.map_pos.x..","..self.map_pos.y..")",80,self.sprites_y - 8,12)
     self.pageNumber = movepage(0,self.pageNumber,const.maxPage)
     self.map_pos = movearrows(0,0,320-self.map_columns,180-self.map_rows,self.map_pos)
     self.selectedRec = getSelectedRec(self.spriteNumber, self.pageNumber, self.sprites_w, self.sprites_h, self.sprites_cell,1)

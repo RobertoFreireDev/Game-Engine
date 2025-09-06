@@ -8,6 +8,7 @@ public class SafeSpriteBatch
 {
     private SpriteBatch _spriteBatch;
     private bool _begun;
+    private const string Draw_has_not_begun = "Invalid draw call. Draw has not begun.\nHints: \n- You probably tried to draw outside _draw() function.";
 
     public SafeSpriteBatch(SpriteBatch spriteBatch)
     {
@@ -46,31 +47,61 @@ public class SafeSpriteBatch
 
     public void Draw(Texture2D texture, Rectangle destination, Rectangle source, Color color, SpriteEffects effects)
     {
+        if (!_begun)
+        {
+            LuaError.SetError(Draw_has_not_begun);
+            return;
+        }
         _spriteBatch.Draw(texture, destination, source, color, 0f, Vector2.Zero, effects, 0f);
     }
 
     public void Draw(Texture2D texture, Rectangle dest, Rectangle source, Color color)
     {
+        if (!_begun)
+        {
+            LuaError.SetError(Draw_has_not_begun);
+            return;
+        }
         _spriteBatch.Draw(texture, dest, source, color);
     }
 
     public void Draw(RenderTarget2D sceneTarget, Rectangle boxToDraw, Color white)
     {
+        if (!_begun)
+        {
+            LuaError.SetError(Draw_has_not_begun);
+            return;
+        }
         _spriteBatch.Draw(sceneTarget, boxToDraw, white);
     }
 
     public void Draw(Texture2D pixelTexture, Rectangle rectangle, Color color)
     {
+        if (!_begun)
+        {
+            LuaError.SetError(Draw_has_not_begun);
+            return;
+        }
         _spriteBatch.Draw(pixelTexture, rectangle, color);
     }
 
     public void Draw(Texture2D charTexture, Vector2 vector, Color color)
     {
+        if (!_begun)
+        {
+            LuaError.SetError(Draw_has_not_begun);
+            return;
+        }
         _spriteBatch.Draw(charTexture, vector, null, color, 0f, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0f);
     }
 
     public void DrawMouse()
     {
+        if (!_begun)
+        {
+            LuaError.SetError(Draw_has_not_begun);
+            return;
+        }
         _spriteBatch.Draw(GFW.MouseTextures[MouseInput.Current_Cursor], MouseInput.MouseVirtualPosition(4), Color.White);
     }
 }
