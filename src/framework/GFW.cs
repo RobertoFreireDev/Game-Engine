@@ -18,7 +18,7 @@ namespace blackbox
         public static Dictionary<char, Texture2D> MediumFontTextures;
         public static List<Texture2D> MouseTextures;
         public static Texture2D PixelTexture;
-        public static SpriteBatch SpriteBatch;
+        public static SafeSpriteBatch SpriteBatch;
         public static string Title;
         public static int FPS;
         public static bool ShowMouse = true;
@@ -118,7 +118,7 @@ namespace blackbox
             SystemTextures = Images.GetAllImages();
             PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             PixelTexture.SetData(new Color[] { Color.White });
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SafeSpriteBatch(new SpriteBatch(GraphicsDevice));
             MediumFontTextures = Font.GetCharacterTextures(GraphicsDevice, SystemTextures["medium_font"]);
             MouseTextures = TextureUtils.GetTextures(SystemTextures["mouse"], 2, 16, 16);
             LoadMainFile();
@@ -167,7 +167,7 @@ namespace blackbox
             TimeUtils.Update(gameTime);
             GraphicsDevice.SetRenderTarget(sceneTarget);
             GraphicsDevice.Clear(ColorUtils.GetColor(BackgroundColor));
-            SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
+            SpriteBatch.Begin();
             LuaProgram.Draw();
             if (ShowMouse)
             {
@@ -183,12 +183,11 @@ namespace blackbox
                 sceneTarget.Height
             ));
 
-            SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp,
-                              null, null, effect: ApplyCRTshader ? crtEffect : null);
+            SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, effect: ApplyCRTshader ? crtEffect : null);
             SpriteBatch.Draw(sceneTarget, ScreenUtils.BoxToDraw, Color.White);
             SpriteBatch.End();
 
-            SpriteBatch.Begin(samplerState: SamplerState.PointClamp);                      
+            SpriteBatch.Begin(SamplerState.PointClamp);                      
             DrawRectWithHole(ScreenUtils.ScaleRectangle(ScreenUtils.BaseBox), Color.Black);
             SpriteBatch.End();
             base.Draw(gameTime);

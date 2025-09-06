@@ -65,10 +65,7 @@ public static class GameImage
             destination,
             source,
             color,
-            0f,
-            Vector2.Zero,
-            effects,
-            0f
+            effects
         );
     }
 }

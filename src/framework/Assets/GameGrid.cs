@@ -545,10 +545,7 @@ public class GridData
             destination,
             source,
             color,
-            0f,
-            Vector2.Zero,
-            effects,
-            0f
+            effects
         );
     }
 }

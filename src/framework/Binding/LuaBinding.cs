@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace blackbox.Binding;
 
@@ -224,10 +223,10 @@ public class LuaBinding
         GFW.CustomEffect.Parameters["ColorMode"].SetValue(SubstringToInt(parameters, 8, 1));
         GFW.CustomEffect.Parameters["Color"].SetValue(color);
 
-        GFW.SpriteBatch.Begin(effect: GFW.CustomEffect, samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
+        GFW.SpriteBatch.Begin(effect: GFW.CustomEffect);
         GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
         GFW.SpriteBatch.End();
-        GFW.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
+        GFW.SpriteBatch.Begin();
     }
 
     private static string FixLength(string input, int x)

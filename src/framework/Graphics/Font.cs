@@ -91,13 +91,7 @@ public static class Font
                 GFW.SpriteBatch.Draw(
                     charTexture,
                     new Vector2((int)position.X, (int)position.Y),
-                    null,
-                    color,
-                    0f,
-                    new Vector2(0, 0),
-                    1.0f,
-                    SpriteEffects.None,
-                    0f);
+                    color);
 
                 position += new Vector2((charTexture.Width - 1), 0);
             }
