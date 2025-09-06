@@ -1,20 +1,10 @@
 ﻿local tutorialeditor={
     firsttime = true,
+    tutorialpages = {},
+    currenttutorialpage = 1,
 }
 
 --[[
-    Split tutorial into categories
-    Each category have pages
-
-    Categoy -> Game Engine
-    Explain this tutorial buttons. Example: buttons to navigate through pages
-    explain monogame, structure and overall idea
-    explain main file
-    explain restart using esc
-    explain save using control R
-    Alt F4 -> Exit
-    F2 -> ToggleFullScreen
-
     Categoy -> Explain All LuaBinding Functions
     Use this category to test each function
     Use this category to explain each function
@@ -34,7 +24,7 @@
     Categoy -> Map Editor
     control A,W,S,D  -> move map
 
-    Categoy -> Sfx editor
+    Categoy -> Sfx editor   
 
     Categoy -> Music editor
 
@@ -43,7 +33,25 @@
     Use this category to test every thing. Example: Pause game, restart game
 ]]
 
+function drawtutorialtext(text,x,y)
+    _print(text,20 + x,20 + y,1,true)
+end
+
 function tutorialeditor:create()
+    local firstpage = { category = "BlackBox game engine" }
+    function firstpage:draw()
+        drawtutorialtext("Use 'Q' and 'E' to navigate pages",0,0)
+        drawtutorialtext("BlackBox game engine uses NLua for Lua scripting integration and MonoGame as the game framework.",0,20)
+        drawtutorialtext("- NLua --version 1.7.5\n- MonoGame.Framework.DesktopGL --version 3.8.4\n- Mix of ANB16 and Sweetie 16 palettes. Ref: lospec.com ",0,40)
+    end
+
+    local hotkeystutorial = { category = "BlackBox game engine" }
+    function hotkeystutorial:draw()
+        drawtutorialtext("BlackBox:\n- main.lua file: Entry point. In this case, we are using it for both editor and game.\n- Exit: Press Alt + F4 to quit.\n- Toggle Fullscreen: Press F2 to switch between fullscreen/window.\nmain.lua:\n- Restart: Press Esc to restart the game.\n- Save: Press Ctrl + R to save progress.",0,0)
+    end
+
+    add(tutorialeditor.tutorialpages,firstpage)
+    add(tutorialeditor.tutorialpages,hotkeystutorial)
 end
 
 function tutorialeditor:init()
@@ -53,12 +61,27 @@ function tutorialeditor:init()
     end
 end
 
-function tutorialeditor:update()   
-    
+function tutorialeditor:update()
+    if _btnp(_keys.Q) then     
+        self.currenttutorialpage = self.currenttutorialpage - 1
+    end
+    if _btnp(_keys.E) then
+        self.currenttutorialpage = self.currenttutorialpage + 1
+    end
+
+    self.currenttutorialpage = clamp(1, self.currenttutorialpage, #self.tutorialpages)
+    local page=self.tutorialpages[self.currenttutorialpage]
+    if page.update then
+        page:update()
+    end
 end
 
 function tutorialeditor:draw()
-   _print("Tutorial",10,2,1)
+   local page=self.tutorialpages[self.currenttutorialpage]
+   if page.draw then
+        _print("PAG#: "..self.currenttutorialpage.." ".."("..page.category..")",12,2, 12)
+        page:draw()
+    end
 end
 
 return tutorialeditor
