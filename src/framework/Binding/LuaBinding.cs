@@ -28,9 +28,10 @@ public class LuaBinding
         _lua.RegisterFunction("_title", this, GetType().GetMethod("ConfigTitle"));
         _lua.RegisterFunction("_fps30", this, GetType().GetMethod("ConfigFps30"));
         _lua.RegisterFunction("_fps60", this, GetType().GetMethod("ConfigFps60"));
-        _lua.RegisterFunction("_crtshader", this, GetType().GetMethod("EnableCRTshader"));
+        _lua.RegisterFunction("_reboot", this, GetType().GetMethod("ResetMainFile"));
+
+        // Texture
         _lua.RegisterFunction("_texture", this, GetType().GetMethod("LoadTextureFromBase64"));
-        _lua.RegisterFunction("_reboot", this, GetType().GetMethod("ResetMainFile"));        
 
         // Input
         _lua.RegisterFunction("_mouseshow", this, GetType().GetMethod("ShowHideMouse"));
@@ -48,6 +49,7 @@ public class LuaBinding
         _lua.RegisterFunction("_isfocused", this, GetType().GetMethod("IsFocused"));
 
         // Draw
+        _lua.RegisterFunction("_crtshader", this, GetType().GetMethod("EnableCRTshader"));
         _lua.RegisterFunction("_bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
         _lua.RegisterFunction("_pal", this, GetType().GetMethod("Pal"));
         _lua.RegisterFunction("_rect", this, GetType().GetMethod("DrawRect"));
@@ -67,7 +69,7 @@ public class LuaBinding
         // Status
         _lua.RegisterFunction("_sysfps", this, GetType().GetMethod("GetFps"));
 
-        // File        
+        // File 
         _lua.RegisterFunction("_iohasfile", this, GetType().GetMethod("HasFile"));
         _lua.RegisterFunction("_ioread", this, GetType().GetMethod("ReadFile"));
         _lua.RegisterFunction("_iocreate", this, GetType().GetMethod("CreateFile"));
@@ -94,6 +96,7 @@ public class LuaBinding
         // Grid
         _lua.RegisterFunction("_ngrid", this, GetType().GetMethod("NewGrid"));
         _lua.RegisterFunction("_ggrid", this, GetType().GetMethod("GetGrid"));
+        _lua.RegisterFunction("_ggrid64", this, GetType().GetMethod("GetGridAsBase64"));
         _lua.RegisterFunction("_cgrid", this, GetType().GetMethod("CopyGrid"));
         _lua.RegisterFunction("_pgrid", this, GetType().GetMethod("PasteGrid"));
         _lua.RegisterFunction("_mgrid", this, GetType().GetMethod("MoveGrid"));        
@@ -320,6 +323,11 @@ public class LuaBinding
     public static string GetGrid(int gridIndex)
     {
         return GameGrid.GetGameGrid(gridIndex);
+    }
+
+    public static string GetGridAsBase64(int gridIndex)
+    {
+        return GameGrid.GetGameGridAsBase64(gridIndex);
     }
 
     public static void SetPixel(int gridIndex, int x, int y, int colorIndex = -1)
