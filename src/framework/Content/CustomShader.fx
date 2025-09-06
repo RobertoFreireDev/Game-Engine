@@ -25,30 +25,46 @@ float OutlineThickness;
 // Noise intensity
 float NoiseAmount; // e.g., 0.05
 
-// Simple pseudo-random function
+// ------------------------------
+// Helpers
+// ------------------------------
 float rand(float2 co)
 {
     return frac(sin(dot(co.xy, float2(12.9898, 78.233))) * 43758.5453);
 }
 
-float4 main(float2 uv : TEXCOORD0) : COLOR0
+// ------------------------------
+// Effects
+// ------------------------------
+
+// Distortion + scroll
+float2 ApplyDistortionScroll(float2 uv)
 {
-    // Distortion + scroll
     float waveX = sin(uv.y * WaveFreq + Time * WaveSpeed) * DistortX + frac(Time * ScrollX);
     float waveY = cos(uv.x * WaveFreq + Time * WaveSpeed) * DistortY + frac(Time * ScrollY);
-    float2 distortedUV = frac(uv + float2(waveX, waveY));
+    return frac(uv + float2(waveX, waveY));
+}
 
-    // Sample base texture
-    float4 baseColor = tex2D(TextureSampler, distortedUV) * TintColor;
+// Tint
+float4 ApplyTint(float4 color)
+{
+    return color * TintColor;
+}
 
-    // Apply noise
+// Noise
+float4 ApplyNoise(float4 color, float2 uv)
+{
     if (NoiseAmount > 0)
     {
-        float n = rand(distortedUV + Time);
-        baseColor.rgb += (n - 0.5) * NoiseAmount; // center noise around 0
+        float n = rand(uv + Time);
+        color.rgb += (n - 0.5) * NoiseAmount;
     }
-    
-    // If pixel has alpha, return it directly
+    return color;
+}
+
+// Outline
+float4 ApplyOutline(float4 baseColor, float2 uv)
+{
     if (baseColor.a > 0.1)
     {
         if (OutlineThickness > 0)
@@ -61,16 +77,29 @@ float4 main(float2 uv : TEXCOORD0) : COLOR0
         }
     }
 
-    // Otherwise, check surrounding pixels for outline
     float4 neighbor =
-        tex2D(TextureSampler, distortedUV + float2(OutlineThickness, 0)) +
-        tex2D(TextureSampler, distortedUV + float2(-OutlineThickness, 0)) +
-        tex2D(TextureSampler, distortedUV + float2(0, OutlineThickness * 3)) +
-        tex2D(TextureSampler, distortedUV + float2(0, -OutlineThickness * 3));
+        tex2D(TextureSampler, uv + float2(OutlineThickness, 0)) +
+        tex2D(TextureSampler, uv + float2(-OutlineThickness, 0)) +
+        tex2D(TextureSampler, uv + float2(0, OutlineThickness * 3)) +
+        tex2D(TextureSampler, uv + float2(0, -OutlineThickness * 3));
 
-    // If any neighbor has alpha, draw outline
     if (neighbor.a > 0.1)
         return OutlineColor;
+
+    return baseColor;
+}
+
+// ------------------------------
+// Main
+// ------------------------------
+float4 main(float2 uv : TEXCOORD0) : COLOR0
+{
+    float2 distortedUV = ApplyDistortionScroll(uv);
+
+    float4 baseColor = tex2D(TextureSampler, distortedUV);
+    baseColor = ApplyTint(baseColor);
+    baseColor = ApplyNoise(baseColor, distortedUV);
+    baseColor = ApplyOutline(baseColor, distortedUV);
 
     return baseColor;
 }

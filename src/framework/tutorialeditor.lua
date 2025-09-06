@@ -21,6 +21,7 @@
     Also, filter and validate each and every parameter of lua functions
 
     Categoy -> Sprite Editor
+    control A,W,S,D  -> move sprite 
     control Z  -> undo
     control Y  -> redo
     control C  -> copy
@@ -31,6 +32,7 @@
     Add show pos x and y to validate shapes and draw logic
 
     Categoy -> Map Editor
+    control A,W,S,D  -> move map
 
     Categoy -> Sfx editor
 

@@ -205,10 +205,7 @@ public class LuaBinding
 
     public static void DrawTextureWithEffect(int index, int i, int x, int y, double time, string parameters = "00000000", int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        if (string.IsNullOrWhiteSpace(parameters) || parameters.Length < 8)
-        {
-            return;
-        }
+        parameters = FixLength(parameters, 8);
         GFW.SpriteBatch.End();
         var color = colorIndex < 0 ? new Vector4(1, 1, 1, 1) : ColorUtils.GetColor(colorIndex, transparency).ToVector4();
         GFW.CustomEffect.Parameters["Time"].SetValue((float)time);
@@ -227,6 +224,20 @@ public class LuaBinding
         GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
         GFW.SpriteBatch.End();
         GFW.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera2D.GetViewMatrix());
+    }
+
+    private static string FixLength(string input, int x)
+    {
+        if (input.Length > x)
+        {
+            return input.Substring(0, x);
+        }
+        else if (input.Length < x)
+        {
+            return input.PadRight(x, '0');
+        }
+
+        return input;
     }
     #endregion
 
