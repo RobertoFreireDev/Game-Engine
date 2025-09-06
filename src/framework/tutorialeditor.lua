@@ -101,10 +101,13 @@ function tutorialeditor:create()
         add(self.func,{ l = "_line", c = "void DrawLine(int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)"})
         add(self.func,{ l = "_pixel", c = "void DrawPixel(int x, int y, int colorIndex = 0, int transparency = 10)"})
         add(self.func,{ l = "_print", c = "void Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)"})
-        add(self.func,{ l = "_cspr", c = "void DrawTexture(int index, int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
-        add(self.func,{ l = "_csprc", c = "void DrawTextureWithColor(int index, int i, int x, int y, int colorIndex = 0, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
-        add(self.func,{ l = "_cspre", c = "void  DrawTextureWithEffect(int index, int i, int x, int y, double time, string parameters = '00000000', int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ l = "_cspr", c = "void DrawTexture(int index, int i, int x, int y, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
         add(self.func,{ l = "_camera", c = "void Camera(float x = 0.0f, float y = 0.0f)"})        
+        add(self.func,{ t = ""})
+
+        -- Effects
+        add(self.func,{ l = "_bfx", c = "void BeginEffect(double time, string parameters = '000000000', int colorIndex = -1, int transparency = 10)"})
+        add(self.func,{ l = "_efx", c = "void EndEffect()"})        
         add(self.func,{ t = ""})
 
         -- Status

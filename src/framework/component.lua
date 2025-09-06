@@ -30,7 +30,7 @@
 		
 	function o:draw()
 		local b=self
-		_csprc(b.i,b.s,b.x,b.y,b.c,b.t, 1, 1, false, false)
+		_cspr(b.i,b.s,b.x,b.y,b.c,b.t, 1, 1, false, false)
 	end
 		
 	return o

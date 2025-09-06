@@ -61,9 +61,11 @@ public class LuaBinding
         _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
         _lua.RegisterFunction("_cspr", this, GetType().GetMethod("DrawTexture"));
-        _lua.RegisterFunction("_csprc", this, GetType().GetMethod("DrawTextureWithColor"));
-        _lua.RegisterFunction("_cspre", this, GetType().GetMethod("DrawTextureWithEffect"));
         _lua.RegisterFunction("_camera", this, GetType().GetMethod("Camera"));
+
+        // Effects
+        _lua.RegisterFunction("_bfx", this, GetType().GetMethod("BeginEffect"));
+        _lua.RegisterFunction("_efx", this, GetType().GetMethod("EndEffect"));
 
         // Status
         _lua.RegisterFunction("_sysfps", this, GetType().GetMethod("GetFps"));
@@ -195,18 +197,13 @@ public class LuaBinding
     {
         GameImage.LoadTexture(index, spriteBase64, tileWidth, tileHeight);
     }
-
-    public static void DrawTexture(int index, int i, int x, int y, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
-    {
-        GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
-    }
    
-    public static void DrawTextureWithColor(int index, int i, int x, int y, int colorIndex = 0, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void DrawTexture(int index, int i, int x, int y, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
-        GameImage.DrawCustomSprite(index, i, x, y, ColorUtils.GetColor(colorIndex, transparency), w, h, flipX, flipY);
+        GameImage.DrawCustomSprite(index, i, x, y, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency), w, h, flipX, flipY);
     }
 
-    public static void DrawTextureWithEffect(int index, int i, int x, int y, double time, string parameters = "000000000", int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
+    public static void BeginEffect(double time, string parameters = "000000000", int colorIndex = -1, int transparency = 10)
     {
         parameters = FixLength(parameters, 9);
         GFW.SpriteBatch.End();
@@ -223,8 +220,11 @@ public class LuaBinding
         GFW.CustomEffect.Parameters["ColorMode"].SetValue(SubstringToInt(parameters, 8, 1));
         GFW.CustomEffect.Parameters["Color"].SetValue(color);
 
-        GFW.SpriteBatch.Begin(effect: GFW.CustomEffect);
-        GameImage.DrawCustomSprite(index, i, x, y, Color.White, w, h, flipX, flipY);
+        GFW.SpriteBatch.Begin(effect: GFW.CustomEffect);        
+    }
+
+    public static void EndEffect()
+    {
         GFW.SpriteBatch.End();
         GFW.SpriteBatch.Begin();
     }
