@@ -116,6 +116,7 @@ public class LuaBinding
         _lua.RegisterFunction("_cmap", this, GetType().GetMethod("CreateMap"));
         _lua.RegisterFunction("_gmap", this, GetType().GetMethod("GetMap"));
         _lua.RegisterFunction("_smap", this, GetType().GetMethod("SetMap"));
+        _lua.RegisterFunction("_bmap", this, GetType().GetMethod("UpdateTileInMap"));
         _lua.RegisterFunction("_drawmap", this, GetType().GetMethod("DrawMap"));
 
         try
@@ -255,12 +256,14 @@ public class LuaBinding
         MapGrid.SetTile(index, x, y, tileIndex);
     }
     
-    public static void DrawMap(
-        int index, int mapX, int mapY,
-        int x, int y,   
-        int width, int height)
+    public static void DrawMap(int index, int mapX, int mapY,int x, int y, int width, int height)
     {
         MapGrid.DrawMap(index, mapX, mapY, x, y, width, height, Color.White);
+    }
+
+    public static void UpdateTileInMap(int index, int x0, int y0, int x1, int y1, int tileIndex = 0)
+    {
+        MapGrid.UpdateTileInMap(index, x0, y0, x1, y1, tileIndex);
     }
 
     public static string GetMap(int index)

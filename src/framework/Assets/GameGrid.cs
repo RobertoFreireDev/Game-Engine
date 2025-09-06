@@ -72,8 +72,7 @@ public class GridData
 
     public void CopyRegion(int x, int y, int w, int h)
     {
-        var (x1, y1, x2, y2) = ClampToBounds(x, y, w, h);
-
+        var (x1, y1, x2, y2) = Shapes.ClampToBounds(x, y, w, h, Columns * Size, Rows * Size);
         int copyWidth = x2 - x1;
         int copyHeight = y2 - y1;
 
@@ -94,7 +93,7 @@ public class GridData
 
         SaveSnapshot();
 
-        var (x1, y1, x2, y2) = ClampToBounds(x, y, Math.Min(Copy.GetLength(1), w), Math.Min(Copy.GetLength(0),h));
+        var (x1, y1, x2, y2) = Shapes.ClampToBounds(x, y, Math.Min(Copy.GetLength(1), w), Math.Min(Copy.GetLength(0), h), Columns * Size, Rows * Size);
 
         for (int yy = 0; yy < y2 - y1; yy++)
         {
@@ -111,11 +110,9 @@ public class GridData
     {
         SaveSnapshot();
 
-        var (x1, y1, x2, y2) = ClampToBounds(x, y, w, h);
-
+        var (x1, y1, x2, y2) = Shapes.ClampToBounds(x, y, w, h, Columns * Size, Rows * Size);
         int regionW = x2 - x1;
         int regionH = y2 - y1;
-
         int[,] temp = new int[regionH, regionW];
 
         // shift values into temp
@@ -162,8 +159,7 @@ public class GridData
 
     private void ClearGrid(int x, int y, int w, int h)
     {
-        var (x1, y1, x2, y2) = ClampToBounds(x, y, w, h);
-
+        var (x1, y1, x2, y2) = Shapes.ClampToBounds(x, y, w, h, Columns * Size, Rows * Size);
         for (int yy = y1; yy < y2; yy++)
         {
             for (int xx = x1; xx < x2; xx++)
@@ -173,16 +169,6 @@ public class GridData
         }
 
         UpdateTexture2d();
-    }
-
-    public (int x1, int y1, int x2, int y2) ClampToBounds(int x, int y, int w, int h)
-    {
-        return (
-                Math.Max(0, x),
-                Math.Max(0, y),
-                Math.Min(Columns * Size, x + w),
-                Math.Min(Rows * Size, y + h)
-            );
     }
 
     public void SetPixel(int x, int y, int colorIndex)

@@ -1,5 +1,7 @@
-﻿using blackbox.Utils;
+﻿using blackbox.Graphics;
+using blackbox.Utils;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace blackbox.Assets;
 
@@ -37,6 +39,20 @@ public class MapGridData
             return;
         }
         Data[y, x] = tileIndex;
+    }
+
+    public void UpdateTiles(int x0, int y0, int x1, int y1, int tileIndex)
+    {
+        var (rx0, ry0, rx1, ry1, w, h) = Shapes.AdjustRect(x0, y0, x1, y1);
+        (rx0, ry0, rx1, ry1) = Shapes.ClampToBounds(rx0, ry0, w, h, Columns * Size, Rows * Size);
+
+        for (int x = rx0; x < rx1; x++)
+        {
+            for (int y = ry0; y < ry1; y++)
+            {
+                Data[y, x] = tileIndex;
+            }
+        }
     }
 
     public void DrawMap(
@@ -119,6 +135,16 @@ public static class MapGrid
         }
 
         GridList[index].SetTile(x, y, tileIndex);
+    }
+
+    public static void UpdateTileInMap(int index, int x0, int y0, int x1, int y1, int tileIndex)
+    {
+        if (!IsValidIndex(index))
+        {
+            return;
+        }
+
+        GridList[index].UpdateTiles(x0, y0, x1, y1, tileIndex);
     }
 
     public static void DrawMap(

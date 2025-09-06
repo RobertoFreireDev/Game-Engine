@@ -202,4 +202,14 @@ public static class Shapes
         int ry1 = Math.Max(y0, y1);
         return (rx0, ry0, rx1, ry1, rx1 - rx0 + 1, ry1 - ry0 + 1);
     }
+
+    public static (int x1, int y1, int x2, int y2) ClampToBounds(int x, int y, int w, int h, int c, int r)
+    {
+        return (
+                Math.Max(0, x),
+                Math.Max(0, y),
+                Math.Min(c, x + w),
+                Math.Min(r, y + h)
+            );
+    }
 }

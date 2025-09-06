@@ -6,7 +6,7 @@
 
 --[[
     -> Sprite Editor
-    control A,W,S,D  -> move sprite 
+    control A,W,S,D  -> translate sprite 
     control Z  -> undo
     control Y  -> redo
     control C  -> copy
@@ -15,7 +15,8 @@
     _mouse scroll -> zoom in sprite editor
 
     -> Map Editor
-    control A,W,S,D  -> move map
+    control A,W,S,D  -> move view on map
+    control mouse -> draw sprites as rectangle
 
     -> Sfx editor   
 
@@ -54,7 +55,7 @@ function tutorialeditor:create()
         drawtutorialtext("BlackBox:\n- main.lua file: Entry point. In this case, we are using it for both editor and game.\n- Exit: Press Alt + F4 to quit.\n- Toggle Fullscreen: Press F2 to switch between fullscreen/window.\nmain.lua:\n- Restart: Press Esc to restart the game.\n- Save: Press Ctrl + R to save progress.\n- A,W,D,S arrow keys if page allows",0,0)
     end
 
-    local luafunctions = { category = "Lua functions", px = 1, len = 10}
+    local luafunctions = { category = "Lua functions", px = 1, len = 20}
     function luafunctions:init()
         -- Existing Config
         self.func = {}
@@ -168,6 +169,7 @@ function tutorialeditor:create()
         add(self.func,{ l = "_cmap", c = "void CreateMap(int index, int columns, int rows, int size)"})
         add(self.func,{ l = "_gmap", c = "string GetMap(int index)"}) 
         add(self.func,{ l = "_smap", c = "void SetMap(int index, string grid)"})
+        add(self.func,{ l = "_bmap", c = "void UpdateTileInMap(int index, int mapX, int mapY,int width, int height, int tileIndex = 0)"})
         add(self.func,{ l = "_drawmap", c = "void DrawMap(int index, int mapX, int mapY,int x, int y, int width, int height)"})
         add(self.func,{ t = ""})
     end

@@ -13,7 +13,8 @@
     spriteNumber = 0,
     pageNumber = 0,
     gridIndex = 0,
-    selectedRec = {}
+    selectedRec = {},
+    drawshape = { x0 = nil, y0 = nil},
 }
 
 function mapeditor:create()
@@ -27,11 +28,29 @@ function mapeditor:init()
 end
 
 function mapeditor:update()   
-    if _mouseclick(0) then
+    if _mouseclick(0) or _mouseclickr(0) then
         local mousepos = _mousepos()
         local gridpos = screen_to_grid(mousepos,self.map_x, self.map_y, self.map_columns, self.map_rows, self.sprites_cell)
         if gridpos.x and gridpos.y then
-            _stilemap(self.gridIndex,self.map_pos.x + gridpos.x,self.map_pos.y + gridpos.y,self.spriteNumber)
+            if _btn(_keys.LeftControl) then
+                if _mouseclickp(0) then
+                    self.drawshape = { x0 = gridpos.x, y0 = gridpos.y}
+                elseif _mouseclickr(0) then
+                    if self.drawshape.x0 and self.drawshape.y0 then
+                        _bmap(
+                            self.gridIndex, 
+                            self.map_pos.x + self.drawshape.x0,
+                            self.map_pos.y + self.drawshape.y0,
+                            self.map_pos.x + gridpos.x,
+                            self.map_pos.y + gridpos.y,
+                            self.spriteNumber)
+                    end                    
+                    self.drawshape = { x0 = nil, y0 = nil}
+                end
+            else
+                self.drawshape = { x0 = nil, y0 = nil}
+                _stilemap(self.gridIndex,self.map_pos.x + gridpos.x,self.map_pos.y + gridpos.y,self.spriteNumber)
+            end
         else
             local spritespos = screen_to_grid(mousepos,self.sprites_x, self.sprites_y, self.sprites_w, self.sprites_h, self.sprites_cell)
             self.spriteNumber = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
