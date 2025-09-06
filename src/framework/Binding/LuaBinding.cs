@@ -30,7 +30,8 @@ public class LuaBinding
         _lua.RegisterFunction("_reboot", this, GetType().GetMethod("ResetMainFile"));
 
         // Texture
-        _lua.RegisterFunction("_texture", this, GetType().GetMethod("LoadTextureFromBase64"));
+        _lua.RegisterFunction("_loadtexture", this, GetType().GetMethod("LoadTextureFromBase64"));
+        _lua.RegisterFunction("_drawtexture", this, GetType().GetMethod("DrawTexture"));
 
         // Input
         _lua.RegisterFunction("_mouseshow", this, GetType().GetMethod("ShowHideMouse"));
@@ -60,7 +61,6 @@ public class LuaBinding
         _lua.RegisterFunction("_line", this, GetType().GetMethod("DrawLine"));
         _lua.RegisterFunction("_pixel", this, GetType().GetMethod("DrawPixel"));
         _lua.RegisterFunction("_print", this, GetType().GetMethod("Print"));
-        _lua.RegisterFunction("_cspr", this, GetType().GetMethod("DrawTexture"));
         _lua.RegisterFunction("_camera", this, GetType().GetMethod("Camera"));
 
         // Effects

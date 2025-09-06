@@ -85,14 +85,24 @@ public class SafeSpriteBatch
         _spriteBatch.Draw(pixelTexture, rectangle, color);
     }
 
-    public void Draw(Texture2D charTexture, Vector2 vector, Color color)
+    public void Draw(Texture2D texture, Vector2 vector, Color color)
     {
         if (!_begun)
         {
             LuaError.SetError(Draw_has_not_begun);
             return;
         }
-        _spriteBatch.Draw(charTexture, vector, null, color, 0f, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0f);
+        _spriteBatch.Draw(texture, vector, null, color, 0f, new Vector2(0, 0), 1.0f, SpriteEffects.None, 0f);
+    }
+
+    public void Draw(Texture2D texture, Vector2 vector, Color color, SpriteEffects effects)
+    {
+        if (!_begun)
+        {
+            LuaError.SetError(Draw_has_not_begun);
+            return;
+        }
+        _spriteBatch.Draw(texture, vector, null, color, 0f, new Vector2(0, 0), 1.0f, effects, 0f);
     }
 
     public void DrawMouse()
