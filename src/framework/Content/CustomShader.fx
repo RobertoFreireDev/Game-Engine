@@ -16,10 +16,10 @@ float ScrollX; // pixels per second or normalized speed
 float ScrollY;
 
 // Color & Transparency
-float4 TintColor; // RGBA (1,1,1,1 = no change)
+int ColorMode;
+float4 Color; // RGBA (1,1,1,1 = no change)
 
 // Outline
-float4 OutlineColor;
 float OutlineThickness;
 
 // Noise intensity
@@ -48,7 +48,7 @@ float2 ApplyDistortionScroll(float2 uv)
 // Tint
 float4 ApplyTint(float4 color)
 {
-    return color * TintColor;
+    return color * Color;
 }
 
 // Noise
@@ -63,9 +63,9 @@ float4 ApplyNoise(float4 color, float2 uv)
 }
 
 // Outline
-float4 ApplyOutline(float4 baseColor, float2 uv)
+float4 ApplyOutline(float4 color, float2 uv)
 {
-    if (baseColor.a > 0.1)
+    if (color.a > 0.1)
     {
         if (OutlineThickness > 0)
         {
@@ -73,7 +73,7 @@ float4 ApplyOutline(float4 baseColor, float2 uv)
         }
         else
         {
-            return baseColor;
+            return color;
         }
     }
 
@@ -84,9 +84,24 @@ float4 ApplyOutline(float4 baseColor, float2 uv)
         tex2D(TextureSampler, uv + float2(0, -OutlineThickness * 3));
 
     if (neighbor.a > 0.1)
-        return OutlineColor;
+        return Color;
 
-    return baseColor;
+    return color;
+}
+
+// Outline
+float4 ApplyColorScale(float4 color)
+{
+    float intensity = dot(color.rgb, Color.rgb);
+    color.rgb = intensity.xxx;
+    return color * Color;
+}
+
+float4 ApplyGrayScale(float4 color)
+{
+    float intensity = dot(color.rgb, Color.rgb);
+    color.rgb = intensity.xxx;
+    return color;
 }
 
 // ------------------------------
@@ -95,12 +110,23 @@ float4 ApplyOutline(float4 baseColor, float2 uv)
 float4 main(float2 uv : TEXCOORD0) : COLOR0
 {
     float2 distortedUV = ApplyDistortionScroll(uv);
-
     float4 baseColor = tex2D(TextureSampler, distortedUV);
-    baseColor = ApplyTint(baseColor);
+    if (ColorMode == 1)
+    {
+        baseColor = ApplyTint(baseColor);
+    }
+    else if(ColorMode == 2)
+    {
+        baseColor = ApplyColorScale(baseColor);
+    }
+    else if (ColorMode == 3)
+    {
+        baseColor = ApplyGrayScale(baseColor);
+    }
+    
     baseColor = ApplyNoise(baseColor, distortedUV);
     baseColor = ApplyOutline(baseColor, distortedUV);
-
+    
     return baseColor;
 }
 
