@@ -203,9 +203,9 @@ public class LuaBinding
         GameImage.DrawCustomSprite(index, i, x, y, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency), w, h, flipX, flipY);
     }
 
-    public static void BeginEffect(double time, string parameters = "000000000", int colorIndex = -1, int transparency = 10)
+    public static void BeginEffect(double time, string parameters, int colorIndex = -1, int transparency = 10)
     {
-        parameters = FixLength(parameters, 9);
+        parameters = FixLength(parameters, 10);
         GFW.SpriteBatch.End();
         var color = colorIndex < 0 ? new Vector4(1, 1, 1, 1) : ColorUtils.GetColor(colorIndex, transparency).ToVector4();
         GFW.CustomEffect.Parameters["Time"].SetValue((float)time);
@@ -218,6 +218,7 @@ public class LuaBinding
         GFW.CustomEffect.Parameters["OutlineThickness"].SetValue(SubstringToInt(parameters, 6, 1) * 0.001f);
         GFW.CustomEffect.Parameters["NoiseAmount"].SetValue(SubstringToInt(parameters, 7, 1) * 0.05f);
         GFW.CustomEffect.Parameters["ColorMode"].SetValue(SubstringToInt(parameters, 8, 1));
+        GFW.CustomEffect.Parameters["DistortMode"].SetValue(SubstringToInt(parameters, 9, 1));
         GFW.CustomEffect.Parameters["Color"].SetValue(color);
 
         GFW.SpriteBatch.Begin(effect: GFW.CustomEffect);        

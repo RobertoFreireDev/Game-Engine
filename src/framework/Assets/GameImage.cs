@@ -45,7 +45,7 @@ public static class GameImage
         int index, int n, int x, int y, Color color, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
-        if (n < 0 || n >= GameImageData[index].Total || index < 0 || index >= Constants.MaxGameTextures)
+        if (GameImageData[index] is null || n < 0 || n >= GameImageData[index].Total || index < 0 || index >= Constants.MaxGameTextures)
         {
             return;
         }

@@ -106,7 +106,7 @@ function tutorialeditor:create()
         add(self.func,{ t = ""})
 
         -- Effects
-        add(self.func,{ l = "_bfx", c = "void BeginEffect(double time, string parameters = '000000000', int colorIndex = -1, int transparency = 10)"})
+        add(self.func,{ l = "_bfx", c = "void BeginEffect(double time, string parameters, int colorIndex = -1, int transparency = 10)"})
         add(self.func,{ l = "_efx", c = "void EndEffect()"})        
         add(self.func,{ t = ""})
 

@@ -6,6 +6,7 @@ sampler2D TextureSampler : register(s0);
 float DistortX; // e.g., 0.05
 float DistortY; // e.g., 0.05
 float Time; // time in seconds
+int DistortMode;
 
 // Wave parameters
 float WaveFreq; // e.g., 20
@@ -40,9 +41,22 @@ float rand(float2 co)
 // Distortion + scroll
 float2 ApplyDistortionScroll(float2 uv)
 {
-    float waveX = sin(uv.y * WaveFreq + Time * WaveSpeed) * DistortX + frac(Time * ScrollX);
-    float waveY = cos(uv.x * WaveFreq + Time * WaveSpeed) * DistortY + frac(Time * ScrollY);
-    return frac(uv + float2(waveX, waveY));
+    if (DistortMode == 1)
+    {
+        float waveX = sin(uv.y * WaveFreq + Time * WaveSpeed) * DistortX + Time * ScrollX;
+        float waveY = cos(uv.x * WaveFreq + Time * WaveSpeed) * DistortY + Time * ScrollY;
+        return uv + float2(waveX, waveY);
+    }
+    
+    if (DistortMode == 2)
+    {
+        float waveX = sin(uv.y * WaveFreq + Time * WaveSpeed) * DistortX + frac(Time * ScrollX);
+        float waveY = cos(uv.x * WaveFreq + Time * WaveSpeed) * DistortY + frac(Time * ScrollY);
+        return frac(uv + float2(waveX, waveY));
+    }
+    
+    return uv;
+
 }
 
 // Tint
