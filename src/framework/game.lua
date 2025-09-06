@@ -25,16 +25,16 @@ end
 function game:draw()
     local color = 6
     local index = 2
-    _bfx(_gelapsedtime(),"4411000001", color, 4)
+    _bfx(_gelapsedtime(),"44110000010000", color, 4)
         _drawtexture(index, 0, 20, 20, 1, 1, false, false)
     _efx()
-    _bfx(_gelapsedtime(),"4411000002", color, 4)
+    _bfx(_gelapsedtime(),"44110000020000", color, 4)
         _drawtexture(index, 0, 20, 100, 1, 1, false, false)
     _efx()
-    _bfx(_gelapsedtime(),"0000550001", color, 4)
+    _bfx(_gelapsedtime(),"00005500010000", color, 4)
         _drawtexture(index, 0, 100, 20, 1, 1, false, false)
     _efx()
-    _bfx(_gelapsedtime(),"0000550002", color, 4)
+    _bfx(_gelapsedtime(),"00005500020000", color, 4)
         _drawtexture(index, 0, 100, 100, 1, 1, false, false)
     _efx()
 end

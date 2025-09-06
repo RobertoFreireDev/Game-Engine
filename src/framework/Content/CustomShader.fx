@@ -26,6 +26,9 @@ float OutlineThickness;
 // Noise intensity
 float NoiseAmount; // e.g., 0.05
 
+// border 
+float4 Border;
+
 // ------------------------------
 // Helpers
 // ------------------------------
@@ -123,6 +126,12 @@ float4 ApplyGrayScale(float4 color)
 // ------------------------------
 float4 main(float2 uv : TEXCOORD0) : COLOR0
 {
+    // Discard pixels near edges
+    if (uv.x < Border.x || uv.x > 1.0 - Border.y || uv.y < Border.z || uv.y > 1.0 - Border.w)
+    {
+        return float4(0, 0, 0, 0); // Transparent (or background color)
+    }
+    
     float2 distortedUV = ApplyDistortionScroll(uv);
     float4 baseColor = tex2D(TextureSampler, distortedUV);
     if (ColorMode == 1)

@@ -205,7 +205,7 @@ public class LuaBinding
 
     public static void BeginEffect(double time, string parameters, int colorIndex = -1, int transparency = 10)
     {
-        parameters = FixLength(parameters, 10);
+        parameters = FixLength(parameters, 14);
         GFW.SpriteBatch.End();
         var color = colorIndex < 0 ? new Vector4(1, 1, 1, 1) : ColorUtils.GetColor(colorIndex, transparency).ToVector4();
         GFW.CustomEffect.Parameters["Time"].SetValue((float)time);
@@ -219,6 +219,12 @@ public class LuaBinding
         GFW.CustomEffect.Parameters["NoiseAmount"].SetValue(SubstringToInt(parameters, 7, 1) * 0.05f);
         GFW.CustomEffect.Parameters["ColorMode"].SetValue(SubstringToInt(parameters, 8, 1));
         GFW.CustomEffect.Parameters["DistortMode"].SetValue(SubstringToInt(parameters, 9, 1));
+        var border = new Vector4(
+            (float)(SubstringToInt(parameters, 10, 1) * 0.12),
+            (float)(SubstringToInt(parameters, 11, 1) * 0.12),
+            (float)(SubstringToInt(parameters, 12, 1) * 0.12),
+            (float)(SubstringToInt(parameters, 13, 1) * 0.12));
+        GFW.CustomEffect.Parameters["Border"].SetValue(border);       
         GFW.CustomEffect.Parameters["Color"].SetValue(color);
 
         GFW.SpriteBatch.Begin(effect: GFW.CustomEffect);        
