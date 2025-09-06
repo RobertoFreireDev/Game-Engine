@@ -14,6 +14,10 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 
 - implement to dos written in tutorialeditor.lua
 
+**Game:**
+
+- implement to dos written in game.lua
+
 **SFX:**
 
 - music([n,] [fade_len,] [channel_mask])
