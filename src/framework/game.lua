@@ -1,4 +1,11 @@
-﻿-- screen
+﻿--[[
+    Use this to test each and every function
+    Filter and validate each and every parameter of lua functions
+    Use this category to show case all game engine features and capabilities
+    Test every thing!. Example: Pause game, restart game, initial variables, edge cases for every function
+]]
+
+-- screen
 screen={sx=80,sy=10,x0=0,y0=0,w=174,h=160,x1=254,y1=170}
 
 -- paddle

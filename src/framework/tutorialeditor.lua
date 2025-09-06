@@ -5,12 +5,7 @@
 }
 
 --[[
-    Categoy -> Explain All LuaBinding Functions
-    Use this category to test each function
-    Use this category to explain each function
-    Also, filter and validate each and every parameter of lua functions
-
-    Categoy -> Sprite Editor
+    -> Sprite Editor
     control A,W,S,D  -> move sprite 
     control Z  -> undo
     control Y  -> redo
@@ -19,18 +14,12 @@
     control -> draw full circle/rect
     _mouse scroll -> zoom in sprite editor
 
-    Add show pos x and y to validate shapes and draw logic
-
-    Categoy -> Map Editor
+    -> Map Editor
     control A,W,S,D  -> move map
 
-    Categoy -> Sfx editor   
+    -> Sfx editor   
 
-    Categoy -> Music editor
-
-    Categoy -> Game
-    Use this category to show case all game engine features and capabilities
-    Use this category to test every thing. Example: Pause game, restart game
+    -> Music editor
 ]]
 
 function drawtutorialtext(text,x,y)
