@@ -255,10 +255,10 @@ public class LuaBinding
     {
         MapGrid.SetTile(index, x, y, tileIndex);
     }
-    
-    public static void DrawMap(int index, int mapX, int mapY,int x, int y, int width, int height)
+
+    public static void DrawMap(int index, int mapX, int mapY, int x, int y, int width, int height, int colorIndex = -1, int transparency = 10)
     {
-        MapGrid.DrawMap(index, mapX, mapY, x, y, width, height, Color.White);
+        MapGrid.DrawMap(index, mapX, mapY, x, y, width, height, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency));
     }
 
     public static void UpdateTileInMap(int index, int x0, int y0, int x1, int y1, int tileIndex = 0)
