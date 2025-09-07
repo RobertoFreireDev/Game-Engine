@@ -15,7 +15,8 @@
 local game={
     loaded = false,
     loaded2 = false,
-    loaded3 = false
+    loaded3 = false,
+    timer = 0
 }
 
 function game:init()
@@ -34,6 +35,10 @@ function game:loadsplitedtextures()
    end
 
    self.loaded = self.loaded2 and self.loaded3
+
+   if self.loaded then
+        _stimer(0)
+   end
 end
 
 function game:update()
@@ -41,6 +46,8 @@ function game:update()
         self:loadsplitedtextures()
         return
     end
+
+    self.timer = _gtimer(0)
 end
 
 function game:draw()
@@ -51,17 +58,17 @@ function game:draw()
 
     local color = 6
     local index = 3
-
-    _bfx(_gelapsedtime(),"44110000010000", color, 4)
+    
+    _bfx(self.timer,"44110000010000", color, 4)
         _drawtexture(index, 0, 20, 20, 1, 1, false, false)
     _efx()
-    _bfx(_gelapsedtime(),"44110000020000", color, 4)
+    _bfx(self.timer,"44110000020000", color, 4)
         _drawtexture(index, 0, 20, 100, 1, 1, false, false)
     _efx()
-    _bfx(_gelapsedtime(),"00005500010000", color, 4)
+    _bfx(self.timer,"00005500010000", color, 4)
         _drawtexture(index, 0, 100, 20, 1, 1, false, false)
     _efx()
-    _bfx(_gelapsedtime(),"00005500020000", color, 4)
+    _bfx(self.timer,"00005500020000", color, 4)
         _drawtexture(index, 0, 100, 100, 1, 1, false, false)
     _efx()
 end
