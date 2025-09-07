@@ -224,7 +224,7 @@ public class LuaBinding
         GFW.CustomEffect.Parameters["WaveSpeed"].SetValue(SubstringToInt(parameters, 3, 1) * 1f);
         GFW.CustomEffect.Parameters["ScrollX"].SetValue(SubstringToInt(parameters, 4, 1) * 0.02f);
         GFW.CustomEffect.Parameters["ScrollY"].SetValue(SubstringToInt(parameters, 5, 1) * 0.02f);
-        GFW.CustomEffect.Parameters["OutlineThickness"].SetValue(SubstringToInt(parameters, 6, 1) * 0.001f);
+        GFW.CustomEffect.Parameters["OutlineThickness"].SetValue(SubstringToInt(parameters, 6, 1) * 0.03f);
         GFW.CustomEffect.Parameters["NoiseAmount"].SetValue(SubstringToInt(parameters, 7, 1) * 0.05f);
         GFW.CustomEffect.Parameters["ColorMode"].SetValue(SubstringToInt(parameters, 8, 1));
         GFW.CustomEffect.Parameters["DistortMode"].SetValue(SubstringToInt(parameters, 9, 1));

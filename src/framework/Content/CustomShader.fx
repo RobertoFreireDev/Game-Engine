@@ -97,8 +97,8 @@ float4 ApplyOutline(float4 color, float2 uv)
     float4 neighbor =
         tex2D(TextureSampler, uv + float2(OutlineThickness, 0)) +
         tex2D(TextureSampler, uv + float2(-OutlineThickness, 0)) +
-        tex2D(TextureSampler, uv + float2(0, OutlineThickness * 3)) +
-        tex2D(TextureSampler, uv + float2(0, -OutlineThickness * 3));
+        tex2D(TextureSampler, uv + float2(0, OutlineThickness)) +
+        tex2D(TextureSampler, uv + float2(0, -OutlineThickness));
 
     if (neighbor.a > 0.1)
         return Color;
