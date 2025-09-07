@@ -194,6 +194,10 @@ public class LuaBinding
     #region TextureFunctions
     public static void LoadTextureFromBase64(int index, int tileWidth, int tileHeight, string spriteBase64)
     {
+        if (string.IsNullOrWhiteSpace(spriteBase64))
+        {
+            return;
+        }
         GameImage.LoadTexture(index, spriteBase64, tileWidth, tileHeight);
     }
 
@@ -204,6 +208,10 @@ public class LuaBinding
 
     public static void LoadSingleImageFromBase64(int index, string spriteBase64)
     {
+        if (string.IsNullOrWhiteSpace(spriteBase64))
+        {
+            return;
+        }
         GameSingleImage.LoadTexture(index, spriteBase64);
     }
 

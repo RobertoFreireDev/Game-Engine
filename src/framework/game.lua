@@ -17,12 +17,14 @@ local game={
 }
 
 function game:init()
-   _lsimg(2,_ggrid64(0,10,0,20,20))
-   _lsimg(3,_ggrid64(0,30,0,20,20))
-   _lsimg(4,_ggrid64(0,50,0,20,20))
-   _lsimg(5,_ggrid64(0,70,0,20,20))
-   _lsimg(6,_ggrid64(0,90,0,20,20))
-   _lsimg(7,"iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAAXNSR0IArs4c6QAAAGBQTFRFAAAAIiA0RSg8Zjkxj1Y733Em2aBm7sOa+/I2meVQar4wN5RuS2kvUkskMjw5Pz90MGCCW27hY5v/X83ky9v8////m623hH6HaWpqWVZSdkKKrDIy2Vdj13u6j5dKim8w+2O8zwAAACB0Uk5TAP////////////////////////////////////////+Smq12AAAAUElEQVRYhe3VsQkAIBQDUbELiIKt7j+n/AXSpJO7NvDaNIU1bZs0bQW4vYBhAgAAAAAA+BFIzzW+9xg4NunaClimAroJAAAAAADgRyA917AH9ry8jfwre4oAAAAASUVORK5CYII=")
+   _lsimg(0,_ggrid64(0,10,0,20,20))
+   _lsimg(1,_ggrid64(0,30,0,20,20))
+   _lsimg(2,_ggrid64(0,50,0,20,20))
+   _lsimg(3,_ggrid64(0,70,0,20,20))
+   _lsimg(4,_ggrid64(0,90,0,20,20))
+   _lsimg(5,_ggrid64(0,110,0,20,20))
+   _limg(2,10,10,_ggrid64(0,0,0,30*10-1,4*8*10-1))
+   _lsimg(6,"iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAAXNSR0IArs4c6QAAAGBQTFRFAAAAIiA0RSg8Zjkxj1Y733Em2aBm7sOa+/I2meVQar4wN5RuS2kvUkskMjw5Pz90MGCCW27hY5v/X83ky9v8////m623hH6HaWpqWVZSdkKKrDIy2Vdj13u6j5dKim8w+2O8zwAAACB0Uk5TAP////////////////////////////////////////+Smq12AAAAUElEQVRYhe3VsQkAIBQDUbELiIKt7j+n/AXSpJO7NvDaNIU1bZs0bQW4vYBhAgAAAAAA+BFIzzW+9xg4NunaClimAroJAAAAAADgRyA917AH9ry8jfwre4oAAAAASUVORK5CYII=")
    _stimer(0)
 end
 
@@ -32,12 +34,13 @@ end
 
 function game:draw()
     local color = 6
-
-    _dsimgfx(5, 20, 20, self.timer,"00001000020000", color, 10, false, false)
-    _dsimgfx(4, 20, 20, self.timer,"00002000020000", color, 10, false, false)
-    _dsimgfx(3, 20, 20, self.timer,"00003000020000", color, 10, false, false)
-    _dsimgfx(2, 20, 20, self.timer,"00004000020000", color, 10, false, false)
-    _dsimgfx(6, 40, 20, self.timer,"03330000010000", color, 10, false, false)
+    _dsimgfx(3, 20, 20, self.timer,"00001000020000", color, 10, false, false)
+    _dsimgfx(2, 20, 20, self.timer,"00002000020000", color, 10, false, false)
+    _dsimgfx(1, 20, 20, self.timer,"00003000020000", color, 10, false, false)
+    _dsimgfx(0, 20, 20, self.timer,"00004000020000", color, 10, false, false)
+    _dsimgfx(4, 40, 20, self.timer,"03330000010000", color, 10, false, false)
+    _dimg(2, 13, 60, 20, -1, 10, 2, 2)
+    _dsimgfx(5, 60, 20, self.timer,"33110000010000", color, 10, false, false)
 end
 
 return game
