@@ -166,12 +166,12 @@ function tutorialeditor:create()
 
         -- Map
         add(self.func,{ t = "-- Map --"})
-        add(self.func,{ l = "_stilemap", c = "void SetTileInMap(int index, int x, int y, int tileIndex = 0)"})
+        add(self.func,{ l = "_lmap", c = "void SetMap(int index, string grid)"})
         add(self.func,{ l = "_cmap", c = "void CreateMap(int index, int columns, int rows, int size)"})
         add(self.func,{ l = "_gmap", c = "string GetMap(int index)"}) 
-        add(self.func,{ l = "_smap", c = "void SetMap(int index, string grid)"})
+        add(self.func,{ l = "_smap", c = "void SetTileInMap(int index, int x, int y, int tileIndex = 0)"})
         add(self.func,{ l = "_bmap", c = "void UpdateTileInMap(int index, int mapX, int mapY,int width, int height, int tileIndex = 0)"})
-        add(self.func,{ l = "_drawmap", c = "void DrawMap(int index, int mapX, int mapY, int x, int y, int width, int height, int colorIndex = -1, int transparency = 10)"})
+        add(self.func,{ l = "_dmap", c = "void DrawMap(int index, int mapX, int mapY, int x, int y, int width, int height, int colorIndex = -1, int transparency = 10)"})
         add(self.func,{ t = ""})
     end
 

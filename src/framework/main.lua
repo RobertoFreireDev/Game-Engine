@@ -30,7 +30,7 @@ function _init()
         _sgrid(0,_ioread(spriteFileName))
     end
     if _iohasfile(mapFileName) then
-        _smap(0,_ioread(mapFileName))
+        _lmap(0,_ioread(mapFileName))
     end    
     
     buttons = {}

@@ -112,12 +112,12 @@ public class LuaBinding
         _lua.RegisterFunction("_dgrid", this, GetType().GetMethod("DrawCustomGrid"));
 
         // Map
-        _lua.RegisterFunction("_stilemap", this, GetType().GetMethod("SetTileInMap"));
+        _lua.RegisterFunction("_lmap", this, GetType().GetMethod("SetMap"));
         _lua.RegisterFunction("_cmap", this, GetType().GetMethod("CreateMap"));
         _lua.RegisterFunction("_gmap", this, GetType().GetMethod("GetMap"));
-        _lua.RegisterFunction("_smap", this, GetType().GetMethod("SetMap"));
+        _lua.RegisterFunction("_smap", this, GetType().GetMethod("SetTileInMap"));
         _lua.RegisterFunction("_bmap", this, GetType().GetMethod("UpdateTileInMap"));
-        _lua.RegisterFunction("_drawmap", this, GetType().GetMethod("DrawMap"));
+        _lua.RegisterFunction("_dmap", this, GetType().GetMethod("DrawMap"));
 
         try
         {
