@@ -505,7 +505,7 @@ public class GridData
 
     public string GetBase64(int x, int y, int w, int h)
     {
-        if (InvalidGridPos(x, y) || InvalidGridPos(x + w, y + h))
+        if (InvalidGridPos(x, y) || InvalidGridPos(x + w -1, y + h - 1))
         {
             return string.Empty;
         }
