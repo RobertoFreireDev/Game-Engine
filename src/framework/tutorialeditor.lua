@@ -69,7 +69,6 @@ function tutorialeditor:create()
         -- Texture
         add(self.func,{ t = "-- Texture --"})
         add(self.func,{ l = "_loadtexture", c = "void LoadTextureFromBase64(int index, int tileWidth, int tileHeight, string spriteBase64)"})
-        add(self.func,{ l = "_loadnextsplitedtexture", c = "bool LoadNextSplitedTexture(int index)"})
         add(self.func,{ l = "_drawtexture", c = "void DrawTexture(int index, int i, int x, int y, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
         add(self.func,{ t = ""})
 
