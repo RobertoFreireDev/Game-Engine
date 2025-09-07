@@ -1,6 +1,7 @@
 ﻿using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace blackbox.Assets;
@@ -9,11 +10,13 @@ public class GameImageData
 {
     public Texture2D GameTexture;
     public List<Texture2D> GameTextures = new List<Texture2D>();
+    private IEnumerator<Texture2D> _textureEnumerator;
     public int Columns;
     public int Rows;
     public int TileWidth;
     public int TileHeight;
     public int Total;
+    public int Loaded = 0;
 
     public GameImageData(Texture2D texture, int width, int height)
     {
@@ -23,9 +26,22 @@ public class GameImageData
         Columns = GameTexture.Width / TileWidth;
         Rows = GameTexture.Height / TileHeight;
         Total = Columns * Rows;
-        GameTextures = TextureUtils.GetTextures(GameTexture, Columns, TileWidth, TileHeight);
+        _textureEnumerator = TextureUtils.GetTexturesOneAtATime(GameTexture, Columns, TileWidth, TileHeight).GetEnumerator();
+    }
+
+    public bool LoadNextTexture()
+    {
+        if (_textureEnumerator.MoveNext())
+        {
+            GameTextures.Add(_textureEnumerator.Current);
+            Loaded++;
+            return true;
+        }
+
+        return false;
     }
 }
+
 public static class GameImage
 {
     public static GameImageData[] GameImageData = new GameImageData[Constants.MaxGameTextures];
@@ -42,6 +58,16 @@ public static class GameImage
                 width,
                 height
             );
+    }
+
+    public static bool LoadNextSplitedTexture(int index)
+    {
+        if (index < 0 || index >= Constants.MaxGameTextures || GameImageData[index] is null)
+        {
+            return false;
+        }
+
+        return GameImageData[index].LoadNextTexture();
     }
 
     public static void DrawCustomSprite(
@@ -64,7 +90,7 @@ public static class GameImage
 
     private static void DrawSingleSprite(int index, int n, int x, int y, Color color, bool flipX = false, bool flipY = false)
     {
-        if (GameImageData[index] is null || n < 0 || n >= GameImageData[index].Total || index < 0 || index >= Constants.MaxGameTextures)
+        if (n > GameImageData[index].Loaded || n >= GameImageData[index].GameTextures.Count)
         {
             return;
         }

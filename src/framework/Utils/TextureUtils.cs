@@ -8,6 +8,29 @@ namespace blackbox.Utils;
 
 public static class TextureUtils
 {
+    public static IEnumerable<Texture2D> GetTexturesOneAtATime(
+        Texture2D texture,
+        int columns,
+        int width,
+        int height)
+    {
+        int rows = texture.Height / height;
+
+        for (int y = 0; y < rows; y++)
+        {
+            for (int x = 0; x < columns; x++)
+            {
+                var subTexture = new Texture2D(texture.GraphicsDevice, width, height);
+
+                Color[] data = new Color[width * height];
+                texture.GetData(0, new Rectangle(x * width, y * height, width, height), data, 0, data.Length);
+                subTexture.SetData(data);
+
+                yield return subTexture; // Return one texture at a time
+            }
+        }
+    }
+
     public static List<Texture2D> GetTextures(
         Texture2D texture,
         int columns,

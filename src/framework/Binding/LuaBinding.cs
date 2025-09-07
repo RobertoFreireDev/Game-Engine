@@ -31,6 +31,7 @@ public class LuaBinding
 
         // Texture
         _lua.RegisterFunction("_loadtexture", this, GetType().GetMethod("LoadTextureFromBase64"));
+        _lua.RegisterFunction("_loadnextsplitedtexture", this, GetType().GetMethod("LoadNextSplitedTexture"));
         _lua.RegisterFunction("_drawtexture", this, GetType().GetMethod("DrawTexture"));
 
         // Input
@@ -197,7 +198,12 @@ public class LuaBinding
     {
         GameImage.LoadTexture(index, spriteBase64, tileWidth, tileHeight);
     }
-   
+
+    public static bool LoadNextSplitedTexture(int index)
+    {
+        return GameImage.LoadNextSplitedTexture(index);
+    }
+
     public static void DrawTexture(int index, int i, int x, int y, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)
     {
         GameImage.DrawCustomSprite(index, i, x, y, colorIndex < 0 ? Color.White : ColorUtils.GetColor(colorIndex, transparency), w, h, flipX, flipY);

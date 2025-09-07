@@ -12,6 +12,9 @@ local game = require("game")
 buttonSelected = nil
 buttons = {}
 state = {}
+textureloaded = false
+texture0loaded = false
+texture1loaded = false
 
 local spriteFileName, mapFileName = "spritedata", "mapData"
 
@@ -59,10 +62,26 @@ function _init()
     change_state(spriteeditor)
 end
 
+function loadsplitedtextures()
+   if not texture0loaded and not _loadnextsplitedtexture(0) then
+       texture0loaded = true
+   end
+   if not texture1loaded and not _loadnextsplitedtexture(1) then
+       texture1loaded = true
+   end
+
+   textureloaded = texture0loaded and texture1loaded
+end
+
 function _update()
     if not _isfocused() then
         return
     end
+
+    if not textureloaded then
+        loadsplitedtextures()
+    end
+
     state:update()
     foreach(buttons, function(o)
         o:update()
