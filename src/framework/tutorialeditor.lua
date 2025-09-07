@@ -68,8 +68,11 @@ function tutorialeditor:create()
 
         -- Texture
         add(self.func,{ t = "-- Texture --"})
-        add(self.func,{ l = "_loadtexture", c = "void LoadTextureFromBase64(int index, int tileWidth, int tileHeight, string spriteBase64)"})
-        add(self.func,{ l = "_drawtexture", c = "void DrawTexture(int index, int i, int x, int y, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ l = "_limg", c = "void LoadTextureFromBase64(int index, int tileWidth, int tileHeight, string spriteBase64)"})
+        add(self.func,{ l = "_dimg", c = "void DrawTexture(int index, int i, int x, int y, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ l = "_lsimg", c = "void LoadSingleImageFromBase64(int index, string spriteBase64)"})
+        add(self.func,{ l = "_dsimg", c = "void DrawSingleImage(int index, int x, int y, int colorIndex = -1, int transparency = 10, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ l = "_dsimgfx", c = "void DrawSingleImageWithEffect(int index, int x, int y, double time, string parameters, int colorIndex = -1, int transparency = 10, bool flipX = false, bool flipY = false)"})
         add(self.func,{ t = ""})
 
         -- Input
@@ -103,11 +106,6 @@ function tutorialeditor:create()
         add(self.func,{ l = "_pixel", c = "void DrawPixel(int x, int y, int colorIndex = 0, int transparency = 10)"})
         add(self.func,{ l = "_print", c = "void Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)"})
         add(self.func,{ l = "_camera", c = "void Camera(float x = 0.0f, float y = 0.0f)"})        
-        add(self.func,{ t = ""})
-
-        -- Effects
-        add(self.func,{ l = "_bfx", c = "void BeginEffect(double time, string parameters, int colorIndex = -1, int transparency = 10)"})
-        add(self.func,{ l = "_efx", c = "void EndEffect()"})        
         add(self.func,{ t = ""})
 
         -- Status
