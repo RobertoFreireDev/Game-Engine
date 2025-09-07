@@ -503,9 +503,14 @@ public class GridData
         return ArrayUtils.IntArrayToString(Data);
     }
 
-    public string GetBase64()
+    public string GetBase64(int x, int y, int w, int h)
     {
-        return TextureUtils.TextureToBase64(Texture);
+        if (InvalidGridPos(x, y) || InvalidGridPos(x + w, y + h))
+        {
+            return string.Empty;
+        }
+
+        return TextureUtils.TextureToBase64(TextureUtils.GetSubTexture(Texture, x, y, w, h));
     }
 
     public void SetGameGrid(string gamegrid)
@@ -690,14 +695,14 @@ public static class GameGrid
     }
 
 
-    public static string GetGameGridAsBase64(int index)
+    public static string GetGameGridAsBase64(int index, int x, int y, int w, int h)
     {
         if (!IsValidIndex(index))
         {
             return string.Empty;
         }
 
-        return GridList[index].GetBase64();
+        return GridList[index].GetBase64(x, y, w, h);
     }
 
     public static void SetGameGrid(int index, string gamegrid)

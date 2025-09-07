@@ -17,7 +17,7 @@ local game={
 }
 
 function game:init()
-   _limg(2,10,10,_ggrid64(0))
+   _lsimg(2,_ggrid64(0,10,10,10,10))
    _lsimg(3,"iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAAXNSR0IArs4c6QAAAGBQTFRFAAAAIiA0RSg8Zjkxj1Y733Em2aBm7sOa+/I2meVQar4wN5RuS2kvUkskMjw5Pz90MGCCW27hY5v/X83ky9v8////m623hH6HaWpqWVZSdkKKrDIy2Vdj13u6j5dKim8w+2O8zwAAACB0Uk5TAP////////////////////////////////////////+Smq12AAAAUElEQVRYhe3VsQkAIBQDUbELiIKt7j+n/AXSpJO7NvDaNIU1bZs0bQW4vYBhAgAAAAAA+BFIzzW+9xg4NunaClimAroJAAAAAADgRyA917AH9ry8jfwre4oAAAAASUVORK5CYII=")
    _stimer(0)
 end
@@ -28,7 +28,7 @@ end
 
 function game:draw()
     local color = 6
-    local index = 3
+    local index = 2
 
     _dsimgfx(index,  20,  20, self.timer,"44110000011000", color, 4, false, false)
     _dsimgfx(index,  20, 100, self.timer,"44110000020100", color, 4, false, false)

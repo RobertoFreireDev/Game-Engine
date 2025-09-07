@@ -340,9 +340,9 @@ public class LuaBinding
         return GameGrid.GetGameGrid(gridIndex);
     }
 
-    public static string GetGridAsBase64(int gridIndex)
+    public static string GetGridAsBase64(int gridIndex, int x, int y, int w, int h)
     {
-        return GameGrid.GetGameGridAsBase64(gridIndex);
+        return GameGrid.GetGameGridAsBase64(gridIndex, x, y, w, h);
     }
 
     public static void SetPixel(int gridIndex, int x, int y, int colorIndex = -1)

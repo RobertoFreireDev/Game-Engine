@@ -26,9 +26,18 @@ public static class TextureUtils
                 texture.GetData(0, new Rectangle(x * width, y * height, width, height), data, 0, data.Length);
                 subTexture.SetData(data);
 
-                yield return subTexture; // Return one texture at a time
+                yield return subTexture;
             }
         }
+    }
+
+    public static Texture2D GetSubTexture(Texture2D texture, int x, int y, int w, int h)
+    {
+        Color[] data = new Color[w * h];
+        texture.GetData(0, new Rectangle(x, y, w, h), data, 0, data.Length);
+        Texture2D subTexture = new Texture2D(texture.GraphicsDevice, w, h);
+        subTexture.SetData(data);
+        return subTexture;
     }
 
     public static List<Texture2D> GetTextures(
