@@ -76,10 +76,10 @@ public class LuaBinding
         _lua.RegisterFunction("_ioupdate", this, GetType().GetMethod("UpdateFile"));
         _lua.RegisterFunction("_iocreateorupdate", this, GetType().GetMethod("CreateOrUpdateFile"));
         _lua.RegisterFunction("_iodelete", this, GetType().GetMethod("DeleteFile"));
-        _lua.RegisterFunction("_loadsfx", this, GetType().GetMethod("ReadSfx"));
-        _lua.RegisterFunction("_savesfx", this, GetType().GetMethod("CreateOrUpdateSfx"));
 
         //Sfx
+        _lua.RegisterFunction("_loadsfx", this, GetType().GetMethod("ReadSfx"));
+        _lua.RegisterFunction("_savesfx", this, GetType().GetMethod("CreateOrUpdateSfx"));
         _lua.RegisterFunction("_configsfx", this, GetType().GetMethod("ConfigSfx"));
         _lua.RegisterFunction("_playsfx", this, GetType().GetMethod("PlaySfx"));
         _lua.RegisterFunction("_stopsfx", this, GetType().GetMethod("StopSfx"));
