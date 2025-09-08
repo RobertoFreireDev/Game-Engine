@@ -33,9 +33,9 @@ function drawfunctiontext(o,px,ln,x,y)
         local item = o[i]
         if item then
             if item.t then
-                txt = txt..item.t.."\n"
+                txt = txt.."[c01]"..item.t.."\n[c12]"
             else
-                txt = txt.."Lua - "..item.l.." -> C# - "..item.c.."\n"
+                txt = txt.."[c03]"..item.l.." -> [c04]"..item.c.."\n[c12]"
             end
         end
     end
@@ -43,16 +43,16 @@ function drawfunctiontext(o,px,ln,x,y)
 end
 
 function tutorialeditor:create()
-    local firstpage = { category = "BlackBox overview" }
+    local firstpage = { category = "BlackBox" }
     function firstpage:draw()
-        drawtutorialtext("Use 'Q' and 'E' to navigate pages",0,0)
-        drawtutorialtext("BlackBox game engine uses NLua for Lua scripting integration and MonoGame as the game framework.",0,20)
-        drawtutorialtext("- NLua --version 1.7.5\n- MonoGame.Framework.DesktopGL --version 3.8.4\n- Mix of ANB16 and Sweetie 16 palettes. Ref: lospec.com ",0,40)
+        drawtutorialtext("[c04]Use 'Q' and 'E' to navigate pages[c12]",0,0)
+        drawtutorialtext("[c03]BlackBox[c12] starts as a blank canvas.\nUse Lua scripts to build custom tools, editors and games.",0,20)
+        drawtutorialtext("- [c03]NLua[c12] --version 1.7.5\n- [c03]MonoGame.Framework.DesktopGL[c12] --version 3.8.4\n- Mix of [c03]ANB16[c12] and [c03]Sweetie 16[c12] palettes. Ref: lospec.com ",0,60)
     end
 
     local hotkeystutorial = { category = "Global hotkeys" }
     function hotkeystutorial:draw()
-        drawtutorialtext("BlackBox:\n- main.lua file: Entry point. In this case, we are using it for both editor and game.\n- Exit: Press Alt + F4 to quit.\n- Toggle Fullscreen: Press F2 to switch between fullscreen/window.\nmain.lua:\n- Restart: Press Esc to restart the game.\n- Save: Press Ctrl + R to save progress.\n- A,W,D,S arrow keys if page allows",0,0)
+        drawtutorialtext("BlackBox:\n- [c03]main.lua[c12] file: Entry point.\n- Exit: [c04]Alt + F4[c12].\n- Toggle Fullscreen: [c04]F2[c12].\nmain.lua:\n- Restart: [c04]Esc[c12].\n- Save: [c04]Ctrl + R[c12].\n- Arrow keys [c04]A,W,D,S[c12] if page allows",0,0)
     end
 
     local luafunctions = { category = "Lua functions", px = 1, len = 20}

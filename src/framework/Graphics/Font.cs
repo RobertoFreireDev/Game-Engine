@@ -67,8 +67,23 @@ public static class Font
         for (int i = 0; i < lines.Length; i++)
         {
             position = new Vector2(copyPos.X, copyPos.Y + (i + additionalLines) * 9);
-            foreach (char key in lines[i])
+
+            for (int j = 0; j < lines[i].Length; j++)
             {
+                char key = lines[i][j];
+
+                // Check for color code "[cXX]"
+                if (key == '[' && j + 4 < lines[i].Length && lines[i][j + 1] == 'c')
+                {
+                    string numStr = lines[i].Substring(j + 2, 2);
+                    if (int.TryParse(numStr, out int colorIndex) && colorIndex >= 0 && colorIndex <= 31 && lines[i][j + 4] == ']')
+                    {
+                        color = ColorUtils.GetColor(colorIndex);
+                        j += 4; // skip over "[cXX]"
+                        continue;
+                    }
+                }
+
                 var charTexture = keyBoardKeys.ContainsKey(key) ? keyBoardKeys[key] : keyBoardKeys[DefaultKey];
 
                 if (wraptext && position.X >= wrapLimit)
