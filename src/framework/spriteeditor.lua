@@ -249,7 +249,7 @@ function spriteeditor:update()
 end
 
 function spriteeditor:draw()
-    _rectfill(10,0,310,180,11)
+    _rectfill(0,0,320,180,11)
     _rectfill(self.sprite_x-1,self.origin_y-1,42,82,0)
     _rectfill(self.sprite_x-1,89-1,42,12,0)
     _dimg(1,0,self.sprite_x,89,3,2,4,1)

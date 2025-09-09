@@ -12,6 +12,7 @@ local game = require("game")
 buttonSelected = nil
 buttons = {}
 state = {}
+showmenu = true
 
 local spriteFileName, mapFileName = "spritedata", "mapData"
 
@@ -66,10 +67,6 @@ function _update()
     end
 
     state:update()
-    foreach(buttons, function(o)
-        o:update()
-        o.b.c = buttonSelected == o and 1 or 11
-    end)
 
     if _btnp(_keys.Escape) then
         _reboot()
@@ -79,10 +76,26 @@ function _update()
         _iocreateorupdate(spriteFileName,_ggrid(0))
         _iocreateorupdate(mapFileName,_gmap(0))
     end
+
+    if _btnp(_keys.F3) then        
+        showmenu = not showmenu
+    end
+
+    if not showmenu then
+        return
+    end
+    
+    foreach(buttons, function(o)
+        o:update()
+        o.b.c = buttonSelected == o and 1 or 11
+    end)
 end
 
 function _draw()
     state:draw()
+    if not showmenu then
+        return
+    end
     _rectfill(0,0,10,180,12)
     foreach(buttons, function(o)
         o.b:draw()

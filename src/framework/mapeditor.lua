@@ -63,7 +63,7 @@ function mapeditor:update()
 end
 
 function mapeditor:draw()
-    _rectfill(10,0,310,180,11)
+    _rectfill(0,0,320,180,11)
     _rectfill(self.map_x - 1, self.map_y - 1,self.map_columns*10 + 2,self.map_rows*10 + 2, 0)
     _dimg(1,0,self.map_x,self.map_y,3,2,self.map_columns,self.map_rows)
     _dmap(self.gridIndex,self.map_pos.x, self.map_pos.y, self.map_x,self.map_y, self.map_columns, self.map_rows);
