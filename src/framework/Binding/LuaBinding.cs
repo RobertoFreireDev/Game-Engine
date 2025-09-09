@@ -49,8 +49,6 @@ public class LuaBinding
         _lua.RegisterFunction("_btnp", this, GetType().GetMethod("JustPressed"));
         _lua.RegisterFunction("_btnr", this, GetType().GetMethod("Released"));
 
-        _lua.RegisterFunction("_isfocused", this, GetType().GetMethod("IsFocused"));
-
         // Draw
         _lua.RegisterFunction("_crtshader", this, GetType().GetMethod("EnableCRTshader"));
         _lua.RegisterFunction("_bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
@@ -68,6 +66,7 @@ public class LuaBinding
 
         // Status
         _lua.RegisterFunction("_sysfps", this, GetType().GetMethod("GetFps"));
+        _lua.RegisterFunction("_isfocused", this, GetType().GetMethod("IsFocused"));
 
         // File 
         _lua.RegisterFunction("_iohasfile", this, GetType().GetMethod("HasFile"));

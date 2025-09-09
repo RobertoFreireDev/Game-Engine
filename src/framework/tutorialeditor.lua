@@ -47,12 +47,12 @@ function tutorialeditor:create()
     function firstpage:draw()
         drawtutorialtext("[c04]Use 'Q' and 'E' to navigate pages[c12]",0,0)
         drawtutorialtext("[c03]BlackBox[c12] starts as a blank canvas.\nUse Lua scripts to build custom tools, editors and games.",0,20)
-        drawtutorialtext("- [c03]NLua[c12] --version 1.7.5\n- [c03]MonoGame.Framework.DesktopGL[c12] --version 3.8.4\n- Mix of [c03]ANB16[c12] and [c03]Sweetie 16[c12] palettes. Ref: lospec.com ",0,60)
+        drawtutorialtext("- [c03]NLua[c12] --version 1.7.5\n- [c03]MonoGame.Framework.DesktopGL[c12] --version 3.8.4\n- Mix of [c03]ANB16[c12] and [c03]Sweetie 16[c12] palettes. Ref: lospec.com ",0,50)
     end
 
     local hotkeystutorial = { category = "Global hotkeys" }
     function hotkeystutorial:draw()
-        drawtutorialtext("BlackBox:\n- [c03]main.lua[c12] file: Entry point.\n- Exit: [c04]Alt + F4[c12].\n- Toggle Fullscreen: [c04]F2[c12].\nmain.lua:\n- Restart: [c04]Esc[c12].\n- Save: [c04]Ctrl + R[c12].\n- Arrow keys [c04]A,W,D,S[c12] if page allows",0,0)
+        drawtutorialtext("BlackBox:\n- [c03]main.lua[c12] file: Entry point.\n- Exit: [c04]Alt + F4[c12].\n- Toggle Fullscreen: [c04]F2[c12].\nmain.lua:\n- Toggle Menu: [c04]F3[c12].\n- Restart: [c04]Esc[c12].\n- Save: [c04]Ctrl + R[c12].\n- Arrow keys [c04]A,W,D,S[c12] if page allows",0,0)
     end
 
     local luafunctions = { category = "Lua functions", px = 1, len = 20}
