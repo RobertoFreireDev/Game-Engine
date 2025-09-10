@@ -1,6 +1,4 @@
-﻿require("Sfx")
-
-local sfxeditor={
+﻿local sfxeditor={
     firsttime = true,
     sounds = {}
 }

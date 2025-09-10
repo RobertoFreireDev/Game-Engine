@@ -26,37 +26,40 @@
     <PackageReference Include="NLua" Version="1.7.5" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="constants.lua">
+    <None Update="Scripts\imports.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="helperfunctions.lua">
+    <None Update="Scripts\constants.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="library.lua">
+    <None Update="Scripts\helperfunctions.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="component.lua">
+    <None Update="Scripts\library.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="game.lua">
+    <None Update="Scripts\component.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sfx.lua">
+    <None Update="Scripts\game.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sfxeditor.lua">
+    <None Update="Scripts\sfx.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="musiceditor.lua">
+    <None Update="Scripts\sfxeditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="tutorialeditor.lua">
+    <None Update="Scripts\musiceditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="mapeditor.lua">
+    <None Update="Scripts\tutorialeditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="spriteeditor.lua">
+    <None Update="Scripts\mapeditor.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\spriteeditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="main.lua">
