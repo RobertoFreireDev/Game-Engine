@@ -12,38 +12,6 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 - Make sure there is no copyright issue with Name and/or Product/Game Engine.
 - What else?
 
-**Functions:**
-
-Create Area functions and use it instead of new_body lua function
-
-- void Delete(index)
-- bool Collided(x,y,w=1,h=1)
-- bool Hasvalue(index) return bool
-- bool Update(index,x,y,w,h)
-- int Add (x, y,w,h, usenextnullobject false)
-- void Clearlist()
-- int Count(includingnull = false)
-
-Validate first if it is possible to Store lua object/table reference in c# and then in Lua use that reference value to manipulate as a object
-
-```lua
--- global variables
-
-local myTable = {a = 123}
-local ref = "myTable"
-print(_G[ref].a) -- 123
-
--- local variables
-local registry = {}
-registry["player"] = {hp = 100, name = "hero"}
-local ref = "player"
-print(registry[ref].hp) -- 100
-```
-
-- Stack
-- Queue
-- Tree
-
 **Tutorial:**
 
 - implement to dos written in tutorialeditor.lua
