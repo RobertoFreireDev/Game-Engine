@@ -26,7 +26,7 @@ Create Area functions and use it instead of new_body lua function
 
 Validate first if it is possible to Store lua object/table reference in c# and then in Lua use that reference value to manipulate as a object
 
-- - Stack
+- Stack
 - Queue
 - Tree
 
