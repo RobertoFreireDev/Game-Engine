@@ -26,6 +26,20 @@ Create Area functions and use it instead of new_body lua function
 
 Validate first if it is possible to Store lua object/table reference in c# and then in Lua use that reference value to manipulate as a object
 
+```lua
+-- global variables
+
+local myTable = {a = 123}
+local ref = "myTable"
+print(_G[ref].a) -- 123
+
+-- local variables
+local registry = {}
+registry["player"] = {hp = 100, name = "hero"}
+local ref = "player"
+print(registry[ref].hp) -- 100
+```
+
 - Stack
 - Queue
 - Tree
