@@ -1,9 +1,11 @@
 ﻿local sfxeditor={
     firsttime = true,
     sfxIndex = 0,
+    notes = {}
 }
 
 function sfxeditor:create()
+    add(self.notes,new_verticalbar(20,140,13,10,5))
 end
 
 function sfxeditor:init()
@@ -19,14 +21,25 @@ function sfxeditor:update()
     end
 
     if _btnp(_keys.Q) then
-        _setnotesfx(self.sfxIndex, 2, "64110")
+        
+    end
+
+    if _mouseclick(0) then
+        for i = 1, #self.notes do
+            local v = self.notes[i]:update(_mousepos())
+            if v == 0 then
+                _setnotesfx(self.sfxIndex, i-1, "36100") -- empty note
+            elseif v > 0 then
+                _setnotesfx(self.sfxIndex, i-1, tostring(35+v).."110")
+            end
+        end
     end
 end
 
 function sfxeditor:draw()
-    _print("Sfx",10,2,1)
-    local sound = _getsfx(self.sfxIndex)
-    _print(sound,10,12,1)
+    foreach(self.notes, function(n)
+        n:draw()
+    end)
 end
 
 return sfxeditor
