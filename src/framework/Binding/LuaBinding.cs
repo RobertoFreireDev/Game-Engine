@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
+using System.Text;
 
 namespace blackbox.Binding;
 
@@ -79,6 +80,7 @@ public class LuaBinding
         //Sfx
         _lua.RegisterFunction("_loadsfx", this, GetType().GetMethod("ReadSfx"));
         _lua.RegisterFunction("_savesfx", this, GetType().GetMethod("CreateOrUpdateSfx"));
+        _lua.RegisterFunction("_getsfx", this, GetType().GetMethod("GetSfx"));        
         _lua.RegisterFunction("_setnotesfx", this, GetType().GetMethod("SetNoteSfx"));
         _lua.RegisterFunction("_playsfx", this, GetType().GetMethod("PlaySfx"));
         _lua.RegisterFunction("_stopsfx", this, GetType().GetMethod("StopSfx"));
@@ -659,6 +661,13 @@ public class LuaBinding
     public static void SetNoteSfx(int index, int noteIndex, string note)
     {
         _player.SetNote(index, noteIndex, note);
+    }
+
+    public static string GetSfx(int index)
+    {
+        var sb = new StringBuilder();
+        sb = _player.GetSfx(index, sb);
+        return sb.ToString();
     }
 
     public static bool ValidSfx(string sound)

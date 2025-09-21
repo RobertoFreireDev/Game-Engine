@@ -152,39 +152,40 @@ public class SfxPlayer
         }
     }
 
+    public StringBuilder GetSfx(int i, StringBuilder sb)
+    {
+        for (int j = 0; j < Constants.MaxNotes; j++)
+        {
+            if (Data[i]?.Notes?[j] is not null)
+            {
+                var note = Data[i].Notes[j];
+
+                int pitch = note.Pitch;
+                int wave = (int)note.Wave;
+                int volume = (int)Math.Round(note.Volume * 10f);
+
+                sb.Append(pitch.ToString("D2"));
+                sb.Append(wave);
+                sb.Append(volume.ToString("D2"));
+            }
+
+            sb.Append(Data[i].Speed.ToString("D2"));
+        }
+
+        return sb;
+    }
+
     public string ConvertDataToString()
     {
         var sb = new StringBuilder();
-
         for (int i = 0; i < Data.Length; i++)
         {
-            for (int j = 0; j < Constants.MaxNotes; j++)
-            {
-                if (Data[i]?.Notes?[j] is not null)
-                {
-                    var note = Data[i].Notes[j];
-
-                    int pitch = note.Pitch;
-                    int wave = (int)note.Wave;
-                    int volume = (int)Math.Round(note.Volume * 10f);
-
-                    sb.Append(pitch.ToString("D2"));
-                    sb.Append(wave);
-                    sb.Append(volume.ToString("D2"));
-                }
-            }
-
-            if (Data[i]?.Speed is not null)
-            {
-                sb.Append(Data[i].Speed.ToString("D2"));
-            }
-
+            sb = GetSfx(i, sb);
             if (i < Data.Length - 1)
             {
                 sb.Append("\n");
             }
         }
-
         return sb.ToString();
     }
 

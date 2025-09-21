@@ -25,6 +25,8 @@ end
 
 function sfxeditor:draw()
     _print("Sfx",10,2,1)
+    local sound = _getsfx(self.sfxIndex)
+    _print(sound,10,12,1)
 end
 
 return sfxeditor
