@@ -1,11 +1,14 @@
 ﻿local sfxeditor={
     firsttime = true,
     sfxIndex = 0,
-    notes = {}
+    notes = {},
+    notepos = { x = 40, y = 75 }
 }
 
 function sfxeditor:create()
-    add(self.notes,new_verticalbar(20,140,13,10,5))
+    for i=1,24 do
+        add(self.notes,new_verticalbar(self.notepos.x + (i-1)*10,self.notepos.y,13,10,5))
+    end
 end
 
 function sfxeditor:init()
@@ -37,6 +40,8 @@ function sfxeditor:update()
 end
 
 function sfxeditor:draw()
+    _rectfill(0,0,320,180,11)
+    _rectfill(self.notepos.x-2,self.notepos.y-2 - 12*5,24*10+4,12*5+4,12)
     foreach(self.notes, function(n)
         n:draw()
     end)
