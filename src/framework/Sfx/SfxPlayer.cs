@@ -168,9 +168,9 @@ public class SfxPlayer
                 sb.Append(wave);
                 sb.Append(volume.ToString("D2"));
             }
-
-            sb.Append(Data[i].Speed.ToString("D2"));
         }
+
+        sb.Append(Data[i].Speed.ToString("D2"));
 
         return sb;
     }

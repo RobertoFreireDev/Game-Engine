@@ -6,9 +6,11 @@
 }
 
 function sfxeditor:create()
+    local sound = _getsfx(self.sfxIndex)
     for i=1,24 do
         add(self.notes,new_verticalbar(self.notepos.x + (i-1)*10,self.notepos.y,13,10,5))
     end
+    self:loadsfx(sound)
 end
 
 function sfxeditor:init()
@@ -36,6 +38,15 @@ function sfxeditor:update()
                 _setnotesfx(self.sfxIndex, i-1, tostring(35+v).."110")
             end
         end
+    end
+end
+
+function sfxeditor:loadsfx(str)
+    local len = #str - 2
+    local count = 1
+    for i = 1, len, 5 do
+        self.notes[count].value = (tonumber(str:sub(i, i+1)) - 35) or 35
+        count = count + 1
     end
 end
 
