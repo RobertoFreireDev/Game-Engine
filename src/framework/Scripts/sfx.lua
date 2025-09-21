@@ -9,12 +9,12 @@ function newSfx(speed)
          speed = speed
     }
 
-    function o:addNote(pitch, wave, volume)
-        add(self.notes, {
+    function o:updateNote(index, pitch, wave, volume)
+        self.notes[index] = {
             pitch = clamp(36, pitch, 71),
             wave  = clamp(0, wave, 4),
             volume= clamp(0, volume, 10)
-        })
+        }
     end
 
     function o:toString()

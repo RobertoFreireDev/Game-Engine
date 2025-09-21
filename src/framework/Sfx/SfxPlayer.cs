@@ -34,7 +34,7 @@ public class SfxPlayer
 
     public void SetNote(int index, int noteIndex, string note)
     {
-        if (!ValidIndex(index) || !IsValidNoteString(note) || Data[index] is null)
+        if (!IsValidIndex(index) || !IsValidNoteIndex(noteIndex) || !IsValidNoteString(note) || Data[index] is null)
         {
             return;
         }
@@ -58,7 +58,7 @@ public class SfxPlayer
     public void SetSfx(int index, string sound)
     {
         sound = CleanNotes(sound);
-        if (!ValidIndex(index) || !IsValidSoundString(sound))
+        if (!IsValidIndex(index) || !IsValidSoundString(sound))
         {
             return;
         }
@@ -188,14 +188,19 @@ public class SfxPlayer
         return sb.ToString();
     }
 
-    private bool ValidIndex(int index)
+    private bool IsValidIndex(int index)
     {
         return index >= 0 && index < channels.Length;
     }
 
+    private bool IsValidNoteIndex(int index)
+    {
+        return index >= 0 && index < Constants.SfxQty;
+    }
+
     public void PlaySfx(int index, int speed = 1,int channel = -1, int offset = 0)
     {
-        if (!ValidIndex(index))
+        if (!IsValidIndex(index))
         {
             return;
         }

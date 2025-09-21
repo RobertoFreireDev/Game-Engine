@@ -79,7 +79,7 @@ public class LuaBinding
         //Sfx
         _lua.RegisterFunction("_loadsfx", this, GetType().GetMethod("ReadSfx"));
         _lua.RegisterFunction("_savesfx", this, GetType().GetMethod("CreateOrUpdateSfx"));
-        _lua.RegisterFunction("_configsfx", this, GetType().GetMethod("ConfigSfx"));
+        _lua.RegisterFunction("_setsfx", this, GetType().GetMethod("SetSfx"));
         _lua.RegisterFunction("_playsfx", this, GetType().GetMethod("PlaySfx"));
         _lua.RegisterFunction("_stopsfx", this, GetType().GetMethod("StopSfx"));
         _lua.RegisterFunction("_validfx", this, GetType().GetMethod("ValidSfx"));
@@ -656,7 +656,7 @@ public class LuaBinding
     #endregion
 
     #region SfxFunctions
-    public static void ConfigSfx(int index, int speed, string sound)
+    public static void SetSfx(int index, int speed, string sound)
     {
         sound += Math.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed).ToString("D2");
         _player.SetSfx(index, sound);
