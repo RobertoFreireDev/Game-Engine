@@ -52,7 +52,7 @@ end
 
 function sfxeditor:draw()
     _rectfill(0,0,320,180,11)
-    _rectfill(self.notepos.x-2,self.notepos.y-2 - 12*5,24*10+4,12*5+4,12)
+    _rectfill(self.notepos.x-2,self.notepos.y-2 - 13*5,24*10+4,13*5+4,12)
     foreach(self.notes, function(n)
         n:draw()
     end)
