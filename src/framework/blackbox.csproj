@@ -44,9 +44,6 @@
     <None Update="Scripts\game.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\sfx.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Scripts\sfxeditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
