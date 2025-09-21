@@ -664,7 +664,7 @@ public class LuaBinding
 
     public static bool ValidSfx(string sound)
     {
-        return _player.ValidateSoundString(sound);
+        return _player.IsValidSoundString(sound);
     }
 
     public static void PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)

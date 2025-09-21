@@ -4,13 +4,13 @@
 }
 
 function sfxeditor:create()
-    local s = newSfx(2)
+    local s = newSfx(8)
     s:addNote(64, 1, 10)
     s:addNote(36, 0, 00)
     s:addNote(64, 1, 10)
     s:addNote(65, 1, 10)
     s:addNote(67, 1, 10)
-    s:addNote(36, 1, 10)
+    s:addNote(67, 1, 10)
     add(self.sounds,s)
 end
 
