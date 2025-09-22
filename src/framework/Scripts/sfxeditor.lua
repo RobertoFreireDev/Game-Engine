@@ -2,7 +2,7 @@
     firsttime = true,
     sfxIndex = 0,
     notes = {},
-    notepos = { x = 20, y = 75, r = 12 },
+    notepos = { x = 20, y = 80, r = 12 },
     octaves = {},
     octpos = { x = 20, y = 105, r = 3 },
     waves = {},
@@ -93,7 +93,8 @@ function sfxeditor:updatenote()
 end
 
 function sfxeditor:setnote(i,n,o,e,v)
-    _setnotesfx(self.sfxIndex, i-1, tostring(36+n + o*12)..tostring(e+1)..tostring(v*2))
+    v = v == 5 and "10" or "0"..tostring(v*2)
+    _setnotesfx(self.sfxIndex, i-1, tostring(36+n + o*12)..tostring(e+1)..v)
 end
 
 function sfxeditor:loadsfx(str)
