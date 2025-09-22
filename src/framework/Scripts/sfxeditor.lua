@@ -2,16 +2,20 @@
     firsttime = true,
     sfxIndex = 0,
     notes = {},
-    notepos = { x = 35, y = 75 },
+    notepos = { x = 20, y = 60, r = 12 },
     octaves = {},
-    octpos = { x = 35, y = 100 },
+    octpos = { x = 20, y = 82, r = 3 },
+    waves = {},
+    wavepos = { x = 20, y = 108, r = 4 },
+    step = { x = 12, y = 4 } 
 }
 
 function sfxeditor:create()
     local sound = _getsfx(self.sfxIndex)
     for i=1,24 do
-        add(self.notes,new_verticalbar(self.notepos.x + (i-1)*10,self.notepos.y,12,10,5))
-        add(self.octaves,new_verticalbar(self.octpos.x + (i-1)*10,self.octpos.y,3,10,5))
+        add(self.notes,new_verticalbar(self.notepos.x + (i-1)*self.step.x,self.notepos.y,self.notepos.r,self.step.x,self.step.y))
+        add(self.octaves,new_verticalbar(self.octpos.x + (i-1)*self.step.x,self.octpos.y,self.octpos.r,self.step.x,self.step.y))
+        add(self.waves,new_verticalbar(self.wavepos.x + (i-1)*self.step.x,self.wavepos.y,self.wavepos.r,self.step.x,self.step.y))
     end
     self:loadsfx(sound)
 end
@@ -45,7 +49,7 @@ function sfxeditor:updatenote()
                 i,
                 self.notes[i].value,
                 o,
-                1,
+                self.waves[i].value,
                 10)
             return
         end
@@ -56,7 +60,18 @@ function sfxeditor:updatenote()
                 i,
                 n,
                 self.octaves[i].value,
-                1,
+                self.waves[i].value,
+                10)
+            return
+        end
+
+        local e = self.waves[i]:update(_mousepos())
+        if e >= 0 then
+            self:setnote(
+                i,
+                self.notes[i].value,
+                self.octaves[i].value,
+                e,
                 10)
             return
         end
@@ -64,7 +79,7 @@ function sfxeditor:updatenote()
 end
 
 function sfxeditor:setnote(i,n,o,e,v)
-    _setnotesfx(self.sfxIndex, i-1, tostring(36+n + o*12)..tostring(e)..tostring(v))
+    _setnotesfx(self.sfxIndex, i-1, tostring(36+n + o*12)..tostring(e+1)..tostring(v))
 end
 
 function sfxeditor:loadsfx(str)
@@ -84,17 +99,33 @@ end
 
 function sfxeditor:draw()
     _rectfill(0,0,320,180,11)
-    _print("Notes",self.notepos.x,self.notepos.y -12*5 -8,12)
-    _rectfill(self.notepos.x-2,self.notepos.y-2 - 12*5,24*10+4,12*5+4,3)
-    _rectfill(self.notepos.x-1,self.notepos.y-1 - 12*5,24*10+2,12*5+2,12)
-    _print("Octaves",self.octpos.x,self.octpos.y -3*5 -8,12)
-    _rectfill(self.octpos.x-2,self.octpos.y-2 - 3*5,24*10+4,3*5+4,3)
-    _rectfill(self.octpos.x-1,self.octpos.y-1 - 3*5,24*10+2,3*5+2,12)
+    self:drawSection("Notes", self.notepos)
+    self:drawSection("Octaves", self.octpos)
+    self:drawSection("Wave", self.wavepos)
 
     for i = 1, #self.notes do
         self.notes[i]:draw()
         self.octaves[i]:draw()
+        self.waves[i]:draw()
     end
+end
+
+function sfxeditor:drawSection(label, pos)
+    _print(label, pos.x, pos.y - pos.r*self.step.y - 8, 12)
+    _rectfill(
+        pos.x-2,
+        pos.y-2 - pos.r*self.step.y,
+        24*self.step.x+4,
+        pos.r*self.step.y+4,
+        3
+    )
+    _rectfill(
+        pos.x-1,
+        pos.y-1 - pos.r*self.step.y,
+        24*self.step.x+2,
+        pos.r*self.step.y+2,
+        12
+    )
 end
 
 return sfxeditor
