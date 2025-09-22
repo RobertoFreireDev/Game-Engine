@@ -7,7 +7,7 @@ public static class Constants
     public const string Mainfilename = "main";
     public const int CharsPerNote = 5;
     public const int ChannelQty = 4;
-    public const int SfxQty = 256;
+    public const int SfxQty = 64;
     public const int MaxNotes = 24;
     public const int MinPitch = 36;
     public const int MaxPitch = 71;

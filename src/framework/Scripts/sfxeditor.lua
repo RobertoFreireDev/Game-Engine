@@ -1,6 +1,7 @@
 ﻿local sfxeditor={
     firsttime = true,
     sfxIndex = 0,
+    speed = 8,
     notes = {},
     notepos = { x = 20, y = 80, r = 12 },
     octaves = {},
@@ -32,16 +33,15 @@ end
 
 function sfxeditor:update()   
     if _btnp(_keys.Space) then
-        _playsfx(0,8)    
-    end
-
-    if _btnp(_keys.Q) then
-        
+        _playsfx(0,self.speed)    
     end
 
     if _mouseclick(0) then        
         self:updatenote()
     end
+
+    self:changespeed()
+    self:changesfx()
 end
 
 function sfxeditor:updatenote()
@@ -92,6 +92,24 @@ function sfxeditor:updatenote()
     end
 end
 
+function sfxeditor:changesfx()
+    if _btn(_keys.W) then
+        self.sfxIndex = max(1,self.sfxIndex-1)
+    end
+    if _btn(_keys.S) then
+        self.sfxIndex = min(self.sfxIndex+1,64)
+    end
+end
+
+function sfxeditor:changespeed()
+    if _btnp(_keys.E) then
+        self.speed = min(self.speed + 1,32)
+    end
+    if _btnp(_keys.Q) then
+        self.speed = max(1,self.speed - 1)
+    end
+end
+
 function sfxeditor:setnote(i,n,o,e,v)
     v = v == 5 and "10" or "0"..tostring(v*2)
     _setnotesfx(self.sfxIndex, i-1, tostring(36+n + o*12)..tostring(e+1)..v)
@@ -116,6 +134,7 @@ end
 
 function sfxeditor:draw()
     _rectfill(0,0,320,180,11)
+    _print("Spd: "..self.speed.." Sfx: "..self.sfxIndex, self.notepos.x, 2, 1)
     self:drawSection("Notes", self.notepos)
     self:drawSection("Octaves", self.octpos)
     self:drawSection("Wave", self.wavepos)
