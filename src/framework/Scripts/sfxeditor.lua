@@ -2,12 +2,14 @@
     firsttime = true,
     sfxIndex = 0,
     notes = {},
-    notepos = { x = 20, y = 60, r = 12 },
+    notepos = { x = 20, y = 75, r = 12 },
     octaves = {},
-    octpos = { x = 20, y = 82, r = 3 },
+    octpos = { x = 20, y = 105, r = 3 },
     waves = {},
-    wavepos = { x = 20, y = 108, r = 4 },
-    step = { x = 12, y = 4 } 
+    wavepos = { x = 20, y = 135, r = 4 },
+    vol = {},
+    volpos = { x = 20, y = 175, r = 6 },
+    step = { x = 12, y = 5 } 
 }
 
 function sfxeditor:create()
@@ -16,6 +18,7 @@ function sfxeditor:create()
         add(self.notes,new_verticalbar(self.notepos.x + (i-1)*self.step.x,self.notepos.y,self.notepos.r,self.step.x,self.step.y))
         add(self.octaves,new_verticalbar(self.octpos.x + (i-1)*self.step.x,self.octpos.y,self.octpos.r,self.step.x,self.step.y))
         add(self.waves,new_verticalbar(self.wavepos.x + (i-1)*self.step.x,self.wavepos.y,self.wavepos.r,self.step.x,self.step.y))
+        add(self.vol,new_verticalbar(self.volpos.x + (i-1)*self.step.x,self.volpos.y,self.volpos.r,self.step.x,self.step.y))
     end
     self:loadsfx(sound)
 end
@@ -43,17 +46,6 @@ end
 
 function sfxeditor:updatenote()
     for i = 1, #self.notes do        
-        local o = self.octaves[i]:update(_mousepos())
-        if o >= 0 then
-            self:setnote(
-                i,
-                self.notes[i].value,
-                o,
-                self.waves[i].value,
-                10)
-            return
-        end
-        
         local n = self.notes[i]:update(_mousepos())
         if n >= 0 then
             self:setnote(
@@ -61,7 +53,18 @@ function sfxeditor:updatenote()
                 n,
                 self.octaves[i].value,
                 self.waves[i].value,
-                10)
+                self.vol[i].value)
+            return
+        end
+
+        local o = self.octaves[i]:update(_mousepos())
+        if o >= 0 then
+            self:setnote(
+                i,
+                self.notes[i].value,
+                o,
+                self.waves[i].value,
+                self.vol[i].value)
             return
         end
 
@@ -72,14 +75,25 @@ function sfxeditor:updatenote()
                 self.notes[i].value,
                 self.octaves[i].value,
                 e,
-                10)
+                self.vol[i].value)
+            return
+        end
+
+        local v = self.vol[i]:update(_mousepos())
+        if v >= 0 then
+            self:setnote(
+                i,
+                self.notes[i].value,
+                self.octaves[i].value,
+                self.waves[i].value,
+                v)
             return
         end
     end
 end
 
 function sfxeditor:setnote(i,n,o,e,v)
-    _setnotesfx(self.sfxIndex, i-1, tostring(36+n + o*12)..tostring(e+1)..tostring(v))
+    _setnotesfx(self.sfxIndex, i-1, tostring(36+n + o*12)..tostring(e+1)..tostring(v*2))
 end
 
 function sfxeditor:loadsfx(str)
@@ -93,6 +107,8 @@ function sfxeditor:loadsfx(str)
         local vol   = tonumber(str:sub(i+3, i+4)) or 0
         self.notes[count].value = pitch 
         self.octaves[count].value = octave
+        self.waves[count].value = wave 
+        self.vol[count].value = flr(vol/2)
         count = count + 1
     end
 end
@@ -102,11 +118,13 @@ function sfxeditor:draw()
     self:drawSection("Notes", self.notepos)
     self:drawSection("Octaves", self.octpos)
     self:drawSection("Wave", self.wavepos)
+    self:drawSection("Volume", self.volpos)
 
     for i = 1, #self.notes do
         self.notes[i]:draw()
         self.octaves[i]:draw()
         self.waves[i]:draw()
+        self.vol[i]:draw()
     end
 end
 
