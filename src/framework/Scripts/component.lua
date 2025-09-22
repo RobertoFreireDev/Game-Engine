@@ -80,15 +80,14 @@ function new_colorbutton(c,x,y,x1,y1,w,h)
 	return o
 end
 
-function new_verticalbar(x,y,steps,w,h,dz)
+function new_verticalbar(x,y,steps,w,h)
     local bar = {
         x=x,
         y=y,
         steps=steps or 10,
         w=w or 10,
         h=h or 5,
-        value=0,
-		drawzero = dz or false
+        value=0
     }
 
     function bar:update(p)
@@ -111,9 +110,6 @@ function new_verticalbar(x,y,steps,w,h,dz)
     end
 
     function bar:draw()
-		if self.value == 0 and self.drawzero == false then
-			return
-		end
 		_rectfill(self.x,self.y - (self.value+1)*self.h,self.w,self.h,self.value%10+1)
     end
 

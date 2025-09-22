@@ -4,14 +4,14 @@
     notes = {},
     notepos = { x = 35, y = 75 },
     octaves = {},
-    octpos = { x = 35, y = 120 },
+    octpos = { x = 35, y = 100 },
 }
 
 function sfxeditor:create()
     local sound = _getsfx(self.sfxIndex)
     for i=1,24 do
-        add(self.notes,new_verticalbar(self.notepos.x + (i-1)*10,self.notepos.y,13,10,5,false))
-        add(self.octaves,new_verticalbar(self.octpos.x + (i-1)*10,self.octpos.y,3,10,5,true))
+        add(self.notes,new_verticalbar(self.notepos.x + (i-1)*10,self.notepos.y,12,10,5))
+        add(self.octaves,new_verticalbar(self.octpos.x + (i-1)*10,self.octpos.y,3,10,5))
     end
     self:loadsfx(sound)
 end
@@ -64,25 +64,30 @@ function sfxeditor:updatenote()
 end
 
 function sfxeditor:setnote(i,n,o,e,v)
-    if n == 0 then
-        _setnotesfx(self.sfxIndex, i-1, "36100")
-    end
-    _setnotesfx(self.sfxIndex, i-1, tostring(35+n + o*12)..tostring(e)..tostring(v))
+    _setnotesfx(self.sfxIndex, i-1, tostring(36+n + o*12)..tostring(e)..tostring(v))
 end
 
 function sfxeditor:loadsfx(str)
     local len = #str - 2
     local count = 1
     for i = 1, len, 5 do
-        self.notes[count].value = (tonumber(str:sub(i, i+1)) - 35) or 35
+        local note = (tonumber(str:sub(i, i+1)) or 0) - 36
+        local octave = flr(note/12)
+        local pitch = note % 12
+        local wave  = tonumber(str:sub(i+2, i+2)) or 0
+        local vol   = tonumber(str:sub(i+3, i+4)) or 0
+        self.notes[count].value = pitch 
+        self.octaves[count].value = octave
         count = count + 1
     end
 end
 
 function sfxeditor:draw()
     _rectfill(0,0,320,180,11)
-    _rectfill(self.notepos.x-2,self.notepos.y-2 - 13*5,24*10+4,13*5+4,3)
-    _rectfill(self.notepos.x-1,self.notepos.y-1 - 13*5,24*10+2,13*5+2,12)
+    _print("Notes",self.notepos.x,self.notepos.y -12*5 -8,12)
+    _rectfill(self.notepos.x-2,self.notepos.y-2 - 12*5,24*10+4,12*5+4,3)
+    _rectfill(self.notepos.x-1,self.notepos.y-1 - 12*5,24*10+2,12*5+2,12)
+    _print("Octaves",self.octpos.x,self.octpos.y -3*5 -8,12)
     _rectfill(self.octpos.x-2,self.octpos.y-2 - 3*5,24*10+4,3*5+4,3)
     _rectfill(self.octpos.x-1,self.octpos.y-1 - 3*5,24*10+2,3*5+2,12)
 
