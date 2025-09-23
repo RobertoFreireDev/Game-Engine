@@ -191,7 +191,7 @@ public class SfxPlayer
 
     private bool IsValidIndex(int index)
     {
-        return index >= 0 && index < channels.Length;
+        return index >= 0 && index < Constants.SfxQty;
     }
 
     private bool IsValidNoteIndex(int index)

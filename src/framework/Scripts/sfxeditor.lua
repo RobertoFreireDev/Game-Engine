@@ -177,12 +177,12 @@ function sfxeditor:update()
     end
 
     if _btnp(_keys.W) then
-        self.sounds[self.sfxIndex]:load()
         self.sfxIndex = max(1,self.sfxIndex-1)
+        self.sounds[self.sfxIndex]:load()
     end
     if _btnp(_keys.S) then
-        self.sounds[self.sfxIndex]:load()
         self.sfxIndex = min(self.sfxIndex+1,64)
+        self.sounds[self.sfxIndex]:load()
     end
 end
 
