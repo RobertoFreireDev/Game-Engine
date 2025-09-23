@@ -311,13 +311,13 @@ public class SfxPlayer
         switch (wave)
         {
             case Waveform.Square:
-                return (phase < 0.5 ? 1f : -1f) * volume * 0.5f;
+                return (phase < 0.5 ? 1f : -1f) * volume;
             case Waveform.Triangle:
-                return (float)(4f * volume * Math.Abs(2 * phase - 1) - 1f);
+                return (float)((2 * Math.Abs(2 * phase - 1) - 1) * volume);
             case Waveform.Saw:
-                return (float)((phase * 2 - 1) * volume) * 0.8f;
+                return (float)((2 * phase - 1) * volume);
             case Waveform.Noise:
-                return ((float)(new Random().NextDouble() * 2 - 1) * volume);
+                return (float)((new Random().NextDouble() * 2 - 1) * volume);
             default:
                 return 0;
         }
