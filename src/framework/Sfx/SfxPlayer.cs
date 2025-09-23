@@ -196,7 +196,7 @@ public class SfxPlayer
 
     private bool IsValidNoteIndex(int index)
     {
-        return index >= 0 && index < Constants.SfxQty;
+        return index >= 0 && index < Constants.MaxNotes;
     }
 
     public void PlaySfx(int index, int speed = 1,int channel = -1, int offset = 0)
