@@ -19,7 +19,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR0
     float VignettePower = 1.25;
 
     // --- Curvature ---
-    float CurveStrength = 0.01; // barrel distortion
+    float CurveStrength = 0.03; // barrel distortion
 
     // --- Chromatic Aberration ---
     float CAAmount = 0.0001; // RGB channel offset
