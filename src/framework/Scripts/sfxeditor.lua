@@ -37,11 +37,11 @@ function new_sfx()
             local note = (tonumber(str:sub(i, i+1)) or 0) - 36
             local octave = flr(note/12)
             local pitch = note % 12
-            local wave  = tonumber(str:sub(i+2, i+2)) or 0
-            local vol   = tonumber(str:sub(i+3, i+4)) or 0
+            local wave  = tonumber(str:sub(i+2, i+2))
+            local vol   = tonumber(str:sub(i+3, i+4))
             self.notes[count].value = pitch 
             self.octaves[count].value = octave < 0 and 0 or octave
-            self.waves[count].value = wave 
+            self.waves[count].value = wave == 0 and 0 or (wave - 1)
             self.vol[count].value = flr(vol/2)
             count = count + 1
         end

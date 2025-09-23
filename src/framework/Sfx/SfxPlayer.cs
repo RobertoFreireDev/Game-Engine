@@ -50,7 +50,7 @@ public class SfxPlayer
         Data[index].Notes[noteIndex] = new Note
         {
             Pitch = pitchDigit,
-            Wave = volumeDigit == 0 ? Waveform.None : (Waveform)waveDigit,
+            Wave = (Waveform)waveDigit,
             Volume = volumeDigit / 10f
         };
     }
