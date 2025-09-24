@@ -128,8 +128,6 @@ public static class AudioLib
         {
             case Waveform.Square:
                 return (phase < 0.5 ? 1f : -1f) * volume * 0.577f;
-            case Waveform.Triangle:
-                return (float)((4 * Math.Abs(phase - 0.5)) * volume);
             case Waveform.Saw:
                 return (float)((2 * phase - 1) * volume);
             case Waveform.Noise:

@@ -41,7 +41,7 @@ function new_sfx()
             local vol   = tonumber(str:sub(i+3, i+4))
             self.notes[count].value = pitch 
             self.octaves[count].value = octave < 0 and 0 or octave
-            self.waves[count].value = wave == 0 and 0 or (wave - 1)
+            self.waves[count].value = wave
             self.vol[count].value = flr(vol/2)
             count = count + 1
         end
@@ -79,13 +79,13 @@ function new_sfx()
                 return
             end
 
-            local e = self.waves[i]:update(_mousepos())
-            if e >= 0 then
+            local w = self.waves[i]:update(_mousepos())
+            if w >= 0 then
                 self:setnote(
                     i,
                     self.notes[i].value,
                     self.octaves[i].value,
-                    e,
+                    w,
                     self.vol[i].value)
                 return
             end
@@ -112,9 +112,9 @@ function new_sfx()
         end
     end
 
-    function sfx:setnote(i,n,o,e,v)
+    function sfx:setnote(i,n,o,w,v)
         v = v == 5 and "10" or "0"..tostring(v*2)
-        _setnotesfx(sfxeditor.sfxIndex-1, i-1, tostring(36+n + o*12)..tostring(e+1)..v)
+        _setnotesfx(sfxeditor.sfxIndex-1, i-1, tostring(36+n + o*12)..tostring(w)..v)
     end
 
     function sfx:draw()

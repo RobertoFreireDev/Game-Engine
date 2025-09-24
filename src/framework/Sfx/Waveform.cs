@@ -4,7 +4,6 @@ public enum Waveform
 { 
     None = 0,
     Square = 1,
-    Triangle = 2,
-    Saw = 3,
-    Noise = 4,
+    Saw = 2,
+    Noise = 3,
 }

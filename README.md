@@ -22,7 +22,6 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 
 **SFX:**
 
-- Use library to generate audio like Naudio https://github.com/naudio/NAudio/blob/master/Docs/PlaySineWave.md
 - music([n,] [fade_len,] [channel_mask])
 
 **MAP:**
