@@ -22,7 +22,7 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 
 **SFX:**
 
-- Use source code/library like SoundMaker https://github.com/AutumnSky1010/SoundMaker?tab=readme-ov-file#overview or https://github.com/BleuBleu/FamiStudio
+- Use library to generate audio like Naudio https://github.com/naudio/NAudio/blob/master/Docs/PlaySineWave.md
 - music([n,] [fade_len,] [channel_mask])
 
 **MAP:**
