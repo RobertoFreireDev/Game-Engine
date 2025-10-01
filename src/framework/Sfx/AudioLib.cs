@@ -25,7 +25,7 @@ public static class AudioLib
 
     public static void Play(SfxData sfx, int channel = -1, int offset = 0)
     {
-        channel = Math.Clamp(channel, 0, Constants.ChannelQty);
+        channel = Math.Clamp(channel, 0, Constants.ChannelQty - 1);
         var ch = Channels[channel];
         ch.CurrentSfx = sfx;
         ch.Position = offset;
