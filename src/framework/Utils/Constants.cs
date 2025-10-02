@@ -6,7 +6,7 @@ public static class Constants
     public const int ResolutionY = 180;
     public const string Mainfilename = "main";
     public const int CharsPerNote = 5;
-    public const int ChannelQty = 8;
+    public const int ChannelQty = 4;
     public const int SfxQty = 64;
     public const int MaxNotes = 24;
     public const int MinPitch = 36;

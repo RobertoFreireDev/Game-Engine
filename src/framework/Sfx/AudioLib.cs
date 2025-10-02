@@ -97,23 +97,31 @@ public static class AudioLib
 
                 float sample = GenerateWave(note.Wave, ch.Phase, note.Volume);
 
-                // Calculate fade-in and fade-out gain multiplier
+                // Fade-in / fade-out
                 float gain = 1f;
                 int fadeInSamples = (int)(FadeInSeconds * SampleRate);
                 int fadeOutSamples = (int)(FadeOutSeconds * SampleRate);
 
                 if (ch.CurrentSample < fadeInSamples)
-                {
-                    gain = ch.CurrentSample / (float)fadeInSamples; // ramp up 0->1
-                }
+                    gain = ch.CurrentSample / (float)fadeInSamples;
                 else if (ch.CurrentSample > ch.TotalSamples - fadeOutSamples)
-                {
-                    gain = (ch.TotalSamples - ch.CurrentSample) / (float)fadeOutSamples; // ramp down 1->0
-                    gain = Math.Clamp(gain, 0f, 1f);
-                }
+                    gain = (ch.TotalSamples - ch.CurrentSample) / (float)fadeOutSamples;
 
                 buffer[i] += sample * gain;
             }
+        }
+
+        // 2. Find max absolute value
+        float max = 0f;
+        for (int i = 0; i < samples; i++)
+            max = Math.Max(max, Math.Abs(buffer[i]));
+
+        // 3. If needed, scale down to fit [-1, 1]
+        if (max > 1f)
+        {
+            float scale = 1f / max;
+            for (int i = 0; i < samples; i++)
+                buffer[i] *= scale;
         }
     }
 
