@@ -20,7 +20,6 @@ function change_state(st)
     state:init()
     _title("Black Box Editor")
     _fps30()
-    _crtshader(true,99,102)
 end
 
 function changepage(p, o)
