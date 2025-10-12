@@ -4,21 +4,6 @@
     currenttutorialpage = 1,
 }
 
---[[
-    -> Sprite Editor
-    control A,W,S,D  -> translate sprite 
-    control Z  -> undo
-    control Y  -> redo
-    control C  -> copy
-    control V  -> paste
-    control -> draw full circle/rect
-    _mouse scroll -> zoom in sprite editor
-
-    -> Map Editor
-    control A,W,S,D  -> move view on map
-    control mouse -> draw sprites as rectangle
-]]
-
 function drawtutorialtext(text,x,y)
     _print(text,20 + x,20 + y,12,true)
 end
