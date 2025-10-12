@@ -82,7 +82,7 @@ function spriteeditor:update()
     end)
     foreach(self.paintbuttons, function(o)
         o:update()
-        o.b.c = self.paintbuttonselected == o and 13 or _colors.secondary
+        o.b.c = self.paintbuttonselected == o and _colors.tertiary or _colors.secondary
     end)
 
     self.pageNumber = movepage(0,self.pageNumber,const.maxPage)

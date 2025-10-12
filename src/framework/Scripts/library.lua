@@ -1,6 +1,7 @@
 ﻿_colors = {
     primary = 11,
     secondary = 12,
+    tertiary = 13,
 }
 
 _keys = {

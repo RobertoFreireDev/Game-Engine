@@ -65,7 +65,7 @@ end
 function tutorialeditor:draw()
    local page=self.tutorialpages[self.currenttutorialpage]
    if page.draw then
-        _print("PAG#: "..self.currenttutorialpage.." ".."("..page.category..")",12,2, 13)
+        _print("PAG#: "..self.currenttutorialpage.." ".."("..page.category..")",12,2, _colors.tertiary)
         page:draw()
     end
 end
