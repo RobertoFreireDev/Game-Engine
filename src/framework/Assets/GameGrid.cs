@@ -557,183 +557,106 @@ public class GridData
 
 public static class GameGrid
 {
-    public static GridData[] GridList = new GridData[Constants.MaxGameGrid];
+    public static GridData Data = new GridData();
 
-    public static void Create(int index, int columns, int rows, int size, bool enableUndoRedo)
+    public static void Create(int columns, int rows, int size, bool enableUndoRedo)
     {
-        if (index < 0 && index >= Constants.MaxGameGrid)
-        {
-            return;
-        }
-
-        GridList[index] = new GridData();
-        GridList[index].Create(columns, rows, size, enableUndoRedo);
+        Data.Create(columns, rows, size, enableUndoRedo);
     }
 
-    public static void Undo(int index)
+    public static void Undo()
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-        GridList[index].Undo();
+        Data.Undo();
     }
 
-    public static void Redo(int index)
+    public static void Redo()
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-        GridList[index].Redo();
+        Data.Redo();
     }
 
-    public static void Copy(int index, int x, int y, int w, int h)
+    public static void Copy(int x, int y, int w, int h)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-        GridList[index].CopyRegion(x, y, w, h);
+        Data.CopyRegion(x, y, w, h);
     }
 
-    public static void Paste(int index, int x, int y, int w, int h)
+    public static void Paste(int x, int y, int w, int h)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-        GridList[index].PasteRegion(x, y, w, h);
+        Data.PasteRegion(x, y, w, h);
     }
 
-    public static void MoveGrid(int index, int x, int y, int w, int h, int deltaX, int deltaY)
+    public static void MoveGrid(int x, int y, int w, int h, int deltaX, int deltaY)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-        GridList[index].MoveGrid(x, y, w, h, deltaX, deltaY);
+        Data.MoveGrid(x, y, w, h, deltaX, deltaY);
     }
 
-    private static bool IsValidIndex(int index)
+    public static void SetPixel(int x, int y, int colorIndex)
     {
-        return index >= 0 && index < Constants.MaxGameGrid && GridList[index] is not null;
+        Data.SetPixel(x, y, colorIndex);
     }
 
-    public static void SetPixel(int index, int x, int y, int colorIndex)
+    public static void PaintBucket(int sx, int sy, int x, int y, int w, int h, int colorIndex)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GridList[index].SetPixel(x, y, colorIndex);
+        Data.PaintBucket(sx, sy, x, y, w, h, colorIndex);
     }
 
-    public static void PaintBucket(int index, int sx, int sy, int x, int y, int w, int h, int colorIndex)
+    public static void SetLine(int x0, int y0, int x1, int y1, int colorIndex)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GridList[index].PaintBucket(sx, sy, x, y, w, h, colorIndex);
+        Data.SetLine(x0, y0, x1, y1, colorIndex);
     }
 
-    public static void SetLine(int index, int x0, int y0, int x1, int y1, int colorIndex)
+    public static void SetRect(int x0, int y0, int x1, int y1, int colorIndex, bool fill)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GridList[index].SetLine(x0, y0, x1, y1, colorIndex);
-    }
-
-    public static void SetRect(int index, int x0, int y0, int x1, int y1, int colorIndex, bool fill)
-    {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
         if (fill)
         {
-            GridList[index].SetRectFill(x0, y0, x1, y1, colorIndex);
+            Data.SetRectFill(x0, y0, x1, y1, colorIndex);
         }
         else
         {
-            GridList[index].SetRect(x0, y0, x1, y1, colorIndex);
+            Data.SetRect(x0, y0, x1, y1, colorIndex);
         }
     }
 
-    public static void SetCirc(int index, int x0, int y0, int x1, int y1, int colorIndex, bool fill)
+    public static void SetCirc(int x0, int y0, int x1, int y1, int colorIndex, bool fill)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
         if (fill)
         {
-            GridList[index].SetCircFill(x0, y0, x1, y1, colorIndex);
+            Data.SetCircFill(x0, y0, x1, y1, colorIndex);
         }
         else
         {
-            GridList[index].SetCirc(x0, y0, x1, y1, colorIndex);
+            Data.SetCirc(x0, y0, x1, y1, colorIndex);
         }
     }
 
-    public static string GetGameGrid(int index)
+    public static string GetGameGrid()
     {
-        if (!IsValidIndex(index))
-        {
-            return string.Empty;
-        }
-
-        return GridList[index].GetGameGrid();
+        return Data.GetGameGrid();
     }
 
 
-    public static string GetGameGridAsBase64(int index, int x, int y, int w, int h)
+    public static string GetGameGridAsBase64(int x, int y, int w, int h)
     {
-        if (!IsValidIndex(index))
-        {
-            return string.Empty;
-        }
-
-        return GridList[index].GetBase64(x, y, w, h);
+        return Data.GetBase64(x, y, w, h);
     }
 
-    public static void SetGameGrid(int index, string gamegrid)
+    public static void SetGameGrid(string gamegrid)
     {
-        if (!IsValidIndex(index))
+        if (string.IsNullOrWhiteSpace(gamegrid))
         {
             return;
         }
-
-        GridList[index].SetGameGrid(gamegrid);
+        Data.SetGameGrid(gamegrid);
     }
 
-    public static int GetPixel(int index, int x, int y)
+    public static int GetPixel(int x, int y)
     {
-        if (!IsValidIndex(index))
-        {
-            return -1;
-        }
-
-        return GridList[index].GetPixel(x, y);
+        return Data.GetPixel(x, y);
     }
 
     public static void DrawCustomGrid(
-        int index, int n, int x, int y, int scale, Color color, int w = 1, int h = 1,
+        int n, int x, int y, int scale, Color color, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GridList[index].DrawCustomGrid(n, x, y, scale, color, w, h, flipX, flipY);
+        Data.DrawCustomGrid(n, x, y, scale, color, w, h, flipX, flipY);
     }
 }

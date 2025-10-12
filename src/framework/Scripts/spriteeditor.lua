@@ -24,12 +24,11 @@
     pageNumber = 0,
     zoom = 1,
     lastZoom = 1,
-    maxZoom = 4,    
-    gridIndex = 0,
+    maxZoom = 4,
     gridpos = { x= nil, y= nil},
     drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil},
     mousepos = { x= nil, y= nil},
-    setpixel = { i = nil, x = nil, y = nil, c = nil },
+    setpixel = { x = nil, y = nil, c = nil },
     selectedRec = {}
 }
 
@@ -106,17 +105,17 @@ function spriteeditor:update()
     
     if _btn(_keys.LeftControl) then
         if _btnp(_keys.Z) then
-            _ugrid(self.gridIndex)
+            _ugrid()
         elseif _btnp(_keys.Y) then
-            _rgrid(self.gridIndex)
+            _rgrid()
         elseif _btnp(_keys.C) then
-            _cgrid(self.gridIndex,
+            _cgrid(
                 offsetX,
                 offsetY,
                 scale,
                 scale)
         elseif _btnp(_keys.V) then
-            _pgrid(self.gridIndex,
+            _pgrid(
                 offsetX,
                 offsetY,
                 scale,
@@ -144,7 +143,6 @@ function spriteeditor:update()
            if _mouseclickr(0) and self.drawshape.x0 and self.drawshape.y0 then
                 if self.paintbuttonselected == self.linebutton then
                     _slinegrid(
-                        self.gridIndex,
                         offsetX + self.drawshape.x0,
                         offsetY + self.drawshape.y0,
                         offsetX + self.drawshape.x1,
@@ -152,7 +150,6 @@ function spriteeditor:update()
                         self.selectedcolor)
                 elseif self.paintbuttonselected == self.rectbutton then
                     _srectgrid(
-                        self.gridIndex,
                         offsetX + self.drawshape.x0,
                         offsetY + self.drawshape.y0,
                         offsetX + self.drawshape.x1,
@@ -161,7 +158,6 @@ function spriteeditor:update()
                         _btn(_keys.LeftControl) or _btn(_keys.RightControl))
                 elseif self.paintbuttonselected == self.circlebutton then
                     _scircgrid(
-                        self.gridIndex,
                         offsetX + self.drawshape.x0,
                         offsetY + self.drawshape.y0,
                         offsetX + self.drawshape.x1,
@@ -179,19 +175,16 @@ function spriteeditor:update()
         if self.paintbuttonselected == self.pixelbutton or self.paintbuttonselected == self.eraserbutton then
             if _mouseclick(0) and 
                 (
-                    self.setpixel.i ~= self.gridIndex or
                     self.setpixel.x ~= offsetX + self.gridpos.x or
                     self.setpixel.y ~= offsetY + self.gridpos.y or
                     self.setpixel.c ~= self.selectedcolor
                 ) then
                 _spixelgrid(
-                    self.gridIndex,
                     offsetX + self.gridpos.x,
                     offsetY + self.gridpos.y,
                     self.selectedcolor)
                 -- to avoid unnecessary setpixel and add to history
                 self.setpixel = { 
-                    i = self.gridIndex, 
                     x = offsetX + self.gridpos.x, 
                     y = offsetY + self.gridpos.y, 
                     c = self.selectedcolor 
@@ -202,7 +195,6 @@ function spriteeditor:update()
         if self.paintbuttonselected == self.paintbutton then
             if _mouseclickp(0) then
                 _bgrid(
-                    self.gridIndex,
                     offsetX + self.gridpos.x,
                     offsetY + self.gridpos.y,
                     offsetX,
@@ -238,7 +230,6 @@ function spriteeditor:update()
 
     if mvg.x ~=0 or mvg.y ~=0 then
         _mgrid(
-            self.gridIndex,
             offsetX,
             offsetY,
             scale,
@@ -263,14 +254,14 @@ function spriteeditor:draw()
 
     _rectfill(self.origin_x - 1, self.origin_y - 1,self.grid_w * self.cell + 2,self.grid_h * self.cell + 2,0)    
     _dimg(1,0,self.origin_x,self.origin_y,3,2,self.cell,self.cell)
-    _dgrid(self.gridIndex,self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
+    _dgrid(self.spriteNumber,self.origin_x,self.origin_y,self.cell/self.zoom,-1,10,self.zoom,self.zoom,false,false)    
     self:drawtemporaryshape()
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
     
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,self.sprites_w*self.sprites_cell + 2,self.sprites_h*self.sprites_cell + 2,0)
     _dimg(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)     
-    _dgrid(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
+    _dgrid(self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
     
     if self.selectedRec.x and self.spriteNumber >= self.pageNumber*self.sprites_w*self.sprites_h and self.spriteNumber < (self.pageNumber+1)*self.sprites_w*self.sprites_h then
         _rect(self.sprites_x + self.selectedRec.x, self.sprites_y + self.selectedRec.y, self.selectedRec.sw, self.selectedRec.sh, 1)

@@ -1,7 +1,6 @@
 ﻿using blackbox.Graphics;
 using blackbox.Utils;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace blackbox.Assets;
 
@@ -94,70 +93,39 @@ public class MapGridData
 
 public static class MapGrid
 {
-    public static MapGridData[] GridList = new MapGridData[Constants.MaxGameGrid];
+    public static MapGridData Data = new MapGridData();
 
-    public static void Create(int index, int columns, int rows, int size)
+    public static void Create(int columns, int rows, int size)
     {
-        GridList[index] = new MapGridData();
-        GridList[index].Create(columns, rows, size);
+        Data.Create(columns, rows, size);
     }
 
-    public static void SetMap(int index, string grid)
+    public static void SetMap(string grid)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GridList[index].SetMap(grid);
+        Data.SetMap(grid);
     }
 
-    private static bool IsValidIndex(int index)
+    public static string GetMap()
     {
-        return index >= 0 && index < Constants.MaxGameGrid && GridList[index] is not null && GameGrid.GridList[index] is not null;
+        return Data.GetMap();
     }
 
-    public static string GetMap(int index)
+    public static void SetTile(int x, int y, int tileIndex)
     {
-        if (!IsValidIndex(index))
-        {
-            return string.Empty;
-        }
-
-        return GridList[index].GetMap();
+        Data.SetTile(x, y, tileIndex);
     }
 
-    public static void SetTile(int index, int x, int y, int tileIndex)
+    public static void UpdateTileInMap(int x0, int y0, int x1, int y1, int tileIndex)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GridList[index].SetTile(x, y, tileIndex);
-    }
-
-    public static void UpdateTileInMap(int index, int x0, int y0, int x1, int y1, int tileIndex)
-    {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GridList[index].UpdateTiles(x0, y0, x1, y1, tileIndex);
+        Data.UpdateTiles(x0, y0, x1, y1, tileIndex);
     }
 
     public static void DrawMap(
-        int index, int mapX, int mapY,   // starting tile in map
+        int mapX, int mapY,   // starting tile in map
         int px, int py,       // screen position to draw at
         int width, int height, // how many tiles wide/tall to draw
         Color color)
     {
-        if (!IsValidIndex(index))
-        {
-            return;
-        }
-
-        GridList[index].DrawMap(GameGrid.GridList[index], mapX, mapY, px, py, width, height, color);
+        Data.DrawMap(GameGrid.Data, mapX, mapY, px, py, width, height, color);
     }
 }

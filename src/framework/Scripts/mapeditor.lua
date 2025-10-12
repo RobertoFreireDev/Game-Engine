@@ -12,7 +12,6 @@
     sprites_cell= 10,
     spriteNumber = 0,
     pageNumber = 0,
-    gridIndex = 0,
     selectedRec = {},
     drawshape = { x0 = nil, y0 = nil},
 }
@@ -38,7 +37,6 @@ function mapeditor:update()
                 elseif _mouseclickr(0) then
                     if self.drawshape.x0 and self.drawshape.y0 then
                         _bmap(
-                            self.gridIndex, 
                             self.map_pos.x + self.drawshape.x0,
                             self.map_pos.y + self.drawshape.y0,
                             self.map_pos.x + gridpos.x,
@@ -49,7 +47,7 @@ function mapeditor:update()
                 end
             else
                 self.drawshape = { x0 = nil, y0 = nil}
-                _smap(self.gridIndex,self.map_pos.x + gridpos.x,self.map_pos.y + gridpos.y,self.spriteNumber)
+                _smap(self.map_pos.x + gridpos.x,self.map_pos.y + gridpos.y,self.spriteNumber)
             end
         else
             local spritespos = screen_to_grid(mousepos,self.sprites_x, self.sprites_y, self.sprites_w, self.sprites_h, self.sprites_cell)
@@ -66,14 +64,14 @@ function mapeditor:draw()
     _rectfill(0,0,320,180,11)
     _rectfill(self.map_x - 1, self.map_y - 1,self.map_columns*10 + 2,self.map_rows*10 + 2, 0)
     _dimg(1,0,self.map_x,self.map_y,3,2,self.map_columns,self.map_rows)
-    _dmap(self.gridIndex,self.map_pos.x, self.map_pos.y, self.map_x,self.map_y, self.map_columns, self.map_rows);
+    _dmap(self.map_pos.x, self.map_pos.y, self.map_x,self.map_y, self.map_columns, self.map_rows);
     _print("("..self.map_pos.x..","..self.map_pos.y..")",80,self.sprites_y - 8,12)
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
 
     _rectfill(self.sprites_x - 1, self.sprites_y - 1,self.sprites_w*10 + 2,self.sprites_h*10 + 2, 0)
     _dimg(1,0,self.sprites_x,self.sprites_y,3,2,self.sprites_w,self.sprites_h)
-    _dgrid(self.gridIndex,self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
+    _dgrid(self.pageNumber*self.sprites_w*self.sprites_h,self.sprites_x,self.sprites_y,1,-1,10,self.sprites_w,self.sprites_h,false,false)
     
     if self.selectedRec.x and self.spriteNumber >= self.pageNumber*self.sprites_w*self.sprites_h and self.spriteNumber < (self.pageNumber+1)*self.sprites_w*self.sprites_h then    
         _rect(self.sprites_x + self.selectedRec.x, self.sprites_y + self.selectedRec.y, self.selectedRec.sw, self.selectedRec.sh, 1)  

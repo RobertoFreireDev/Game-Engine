@@ -24,13 +24,13 @@ function change_state(st)
 end
 
 function _init()   
-    _ngrid(0,30,(const.maxPage+1)*4,10,true)
-    _cmap(0,320,180,10)
+    _ngrid(30,(const.maxPage+1)*4,10,true)
+    _cmap(320,180,10)
     if _iohasfile(spriteFileName) then
-        _sgrid(0,_ioread(spriteFileName))
+        _sgrid(_ioread(spriteFileName))
     end
     if _iohasfile(mapFileName) then
-        _lmap(0,_ioread(mapFileName))
+        _lmap(_ioread(mapFileName))
     end
     if _iohasfile(sfxFileName) then
         _loadsfx(sfxFileName)
@@ -69,8 +69,8 @@ function _update()
     end
 
     if (_btn(_keys.LeftControl) or _btn(_keys.RightControl)) and _btnp(_keys.R) then
-        _iocreateorupdate(spriteFileName,_ggrid(0))
-        _iocreateorupdate(mapFileName,_gmap(0))
+        _iocreateorupdate(spriteFileName,_ggrid())
+        _iocreateorupdate(mapFileName,_gmap())
         _savesfx(sfxFileName)
     end
 
