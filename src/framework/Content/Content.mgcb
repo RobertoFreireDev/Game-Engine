@@ -25,3 +25,9 @@
 /processorParam:DebugMode=Auto
 /build:CustomShader.fx
 
+#begin sfx/Jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/Jump.wav
+

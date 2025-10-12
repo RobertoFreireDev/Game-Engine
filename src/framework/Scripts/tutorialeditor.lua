@@ -17,10 +17,6 @@
     -> Map Editor
     control A,W,S,D  -> move view on map
     control mouse -> draw sprites as rectangle
-
-    -> Sfx editor   
-
-    -> Music editor
 ]]
 
 function drawtutorialtext(text,x,y)
@@ -126,13 +122,7 @@ function tutorialeditor:create()
 
         -- Sfx
         add(self.func,{ t = "-- Sfx --"})
-        add(self.func,{ l = "_loadsfx", c = "void ReadSfx(string sfxfilename)"})
-        add(self.func,{ l = "_savesfx", c = "void CreateOrUpdateSfx(string sfxfilename)"})
-        add(self.func,{ l = "_getsfx", c = "string GetSfx(int index)"})        
-        add(self.func,{ l = "_setnotesfx", c = "void SetNoteSfx(int index, int noteIndex, string note)"})
-        add(self.func,{ l = "_playsfx", c = "void PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)"})
-        add(self.func,{ l = "_stopsfx", c = "void StopSfx(int index)"})
-        add(self.func,{ l = "_validfx", c = "bool ValidSfx(string sound)"})
+        add(self.func,{ l = "_psfx", c = "void PlaySfx(string index"})
         add(self.func,{ t = ""})
 
         -- Time

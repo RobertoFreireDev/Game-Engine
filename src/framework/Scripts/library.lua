@@ -162,6 +162,10 @@ _keys = {
     OemEnlW            = 244 -- OEM Enlarge Window key
 }
 
+_sfx = {
+    jump = "jump",
+} 
+
 -- Table functions
 
 function add(t, v, i)

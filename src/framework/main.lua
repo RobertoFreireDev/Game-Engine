@@ -5,8 +5,6 @@ require("Scripts/helperfunctions")
 
 local spriteeditor = require("Scripts/spriteeditor")
 local mapeditor = require("Scripts/mapeditor")
-local sfxeditor = require("Scripts/sfxeditor")
-local musiceditor = require("Scripts/musiceditor")
 local tutorialeditor = require("Scripts/tutorialeditor")
 local game = require("Scripts/game")
 
@@ -45,19 +43,13 @@ function _init()
     spritebutton.clicked = function(o) change_state(spriteeditor) buttonSelected = o end
     mapbutton = new_button(0,1,11,10,0,10,0,0,10,10)
     mapbutton.clicked = function(o) change_state(mapeditor) buttonSelected = o end
-    sfxbutton = new_button(0,2,11,10,0,20,0,0,10,10)
-    sfxbutton.clicked = function(o) change_state(sfxeditor) buttonSelected = o end
-    musicbutton = new_button(0,3,11,10,0,30,0,0,10,10)
-    musicbutton.clicked = function(o) change_state(musiceditor) buttonSelected = o end
-    tutorialbutton = new_button(0,27,11,10,0,40,0,0,10,10)
+    tutorialbutton = new_button(0,27,11,10,0,20,0,0,10,10)
     tutorialbutton.clicked = function(o) change_state(tutorialeditor) buttonSelected = o end
-    gamebutton = new_button(0,18,11,10,0,50,0,0,10,10)
+    gamebutton = new_button(0,18,11,10,0,30,0,0,10,10)
     gamebutton.clicked = function(o) change_state(game) buttonSelected = o end
 
     add(buttons,spritebutton)
     add(buttons,mapbutton)
-    add(buttons,sfxbutton)
-    add(buttons,musicbutton)
     add(buttons,tutorialbutton)
     add(buttons,gamebutton)
 
