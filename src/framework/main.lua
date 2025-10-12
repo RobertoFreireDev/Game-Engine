@@ -13,7 +13,7 @@ buttons = {}
 state = {}
 showmenu = true
 
-local spriteFileName, mapFileName, sfxFileName = "spritedata", "mapData", "sfxData"
+local spriteFileName, mapFileName = "spritedata", "mapData"
 
 function change_state(st)
     state=st
@@ -31,9 +31,6 @@ function _init()
     end
     if _iohasfile(mapFileName) then
         _lmap(_ioread(mapFileName))
-    end
-    if _iohasfile(sfxFileName) then
-        _loadsfx(sfxFileName)
     end
     
     buttons = {}
@@ -71,7 +68,6 @@ function _update()
     if (_btn(_keys.LeftControl) or _btn(_keys.RightControl)) and _btnp(_keys.R) then
         _iocreateorupdate(spriteFileName,_ggrid())
         _iocreateorupdate(mapFileName,_gmap())
-        _savesfx(sfxFileName)
     end
 
     if _btnp(_keys.F3) then        
