@@ -31,3 +31,9 @@
 /processorParam:Quality=Best
 /build:sfx/Jump.wav
 
+#begin sfx/Menu_Select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/Menu_Select.wav
+

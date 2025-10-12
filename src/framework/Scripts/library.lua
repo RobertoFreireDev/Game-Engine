@@ -163,7 +163,12 @@ _keys = {
 }
 
 _sfx = {
-    jump = "jump",
+    action = {
+        jump = "jump",
+    },
+    menu = {
+        select = "menu_select"
+    }
 } 
 
 -- Table functions

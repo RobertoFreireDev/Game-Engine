@@ -20,7 +20,11 @@ end
 
 function game:update()
     if _btnp(_keys.A) then
-        _psfx(_sfx.jump)
+        _psfx(_sfx.action.jump)
+    end
+
+     if _btnp(_keys.S) then
+        _psfx(_sfx.menu.select)
     end
 end
 
