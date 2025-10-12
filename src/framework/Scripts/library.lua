@@ -1,4 +1,7 @@
-﻿-- Keys
+﻿_colors = {
+    primary = 11,
+    secondary = 12,
+}
 
 _keys = {
     Back     = 8,  -- BACKSPACE key

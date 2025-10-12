@@ -5,7 +5,7 @@
 }
 
 function drawtutorialtext(text,x,y)
-    _print(text,20 + x,20 + y,12,true)
+    _print(text,20 + x,20 + y,_colors.secondary,true)
 end
 
 function tutorialeditor:create()

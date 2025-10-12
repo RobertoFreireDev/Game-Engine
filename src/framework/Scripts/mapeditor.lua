@@ -61,11 +61,11 @@ function mapeditor:update()
 end
 
 function mapeditor:draw()
-    _rectfill(0,0,320,180,11)
+    _rectfill(0,0,320,180,_colors.primary)
     _rectfill(self.map_x - 1, self.map_y - 1,self.map_columns*10 + 2,self.map_rows*10 + 2, 0)
     _dimg(1,0,self.map_x,self.map_y,3,2,self.map_columns,self.map_rows)
     _dmap(self.map_pos.x, self.map_pos.y, self.map_x,self.map_y, self.map_columns, self.map_rows);
-    _print("("..self.map_pos.x..","..self.map_pos.y..")",80,self.sprites_y - 8,12)
+    _print("("..self.map_pos.x..","..self.map_pos.y..")",80,self.sprites_y - 8,_colors.secondary)
 
     drawPageSpriteNumbers(self.spriteNumber,self.pageNumber,self.sprites_x,self.sprites_y)
 

@@ -131,7 +131,7 @@ function game:update()
 end
 
 function game:draw()
-    _print(self.flat_sfx_list[self.sfxidx], 20, 20, 12, true)
+    _print(self.flat_sfx_list[self.sfxidx], 20, 20, _colors.secondary, true)
 end
 
 return game

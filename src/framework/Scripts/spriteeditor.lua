@@ -11,12 +11,12 @@
     sprites_y = 135,
     origin_x = 100,
     origin_y = 5,
-    pixelbutton = new_button(0,11,12,10,275,105,0,0,10,10),
-    eraserbutton = new_button(0,10,12,10,275+10,105,0,0,10,10),
-    linebutton = new_button(0,12,12,10,275+20,105,0,0,10,10),
-    rectbutton = new_button(0,13,12,10,275+30,105,0,0,10,10),
-    circlebutton = new_button(0,14,12,10,275,115,0,0,10,10),
-    paintbutton = new_button(0,9,12,10,275+10,115,0,0,10,10),
+    pixelbutton = new_button(0,11,_colors.secondary,10,275,105,0,0,10,10),
+    eraserbutton = new_button(0,10,_colors.secondary,10,275+10,105,0,0,10,10),
+    linebutton = new_button(0,12,_colors.secondary,10,275+20,105,0,0,10,10),
+    rectbutton = new_button(0,13,_colors.secondary,10,275+30,105,0,0,10,10),
+    circlebutton = new_button(0,14,_colors.secondary,10,275,115,0,0,10,10),
+    paintbutton = new_button(0,9,_colors.secondary,10,275+10,115,0,0,10,10),
     sprites_w = 30,
     sprites_h = 4,
     sprites_cell = 10,
@@ -82,7 +82,7 @@ function spriteeditor:update()
     end)
     foreach(self.paintbuttons, function(o)
         o:update()
-        o.b.c = self.paintbuttonselected == o and 13 or 12
+        o.b.c = self.paintbuttonselected == o and 13 or _colors.secondary
     end)
 
     self.pageNumber = movepage(0,self.pageNumber,const.maxPage)
@@ -240,7 +240,7 @@ function spriteeditor:update()
 end
 
 function spriteeditor:draw()
-    _rectfill(0,0,320,180,11)
+    _rectfill(0,0,320,180,_colors.primary)
     _rectfill(self.sprite_x-1,self.origin_y-1,42,82,0)
     _rectfill(self.sprite_x-1,89-1,42,12,0)
     _dimg(1,0,self.sprite_x,89,3,2,4,1)
