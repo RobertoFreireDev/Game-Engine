@@ -69,7 +69,7 @@ public static class TextureUtils
     {
         byte[] imageBytes = Convert.FromBase64String(imageBase64);
         using var ms = new MemoryStream(imageBytes);
-        return Texture2D.FromStream(GrapUtils.GraphicsDevice, ms);
+        return Texture2D.FromStream(GraphUtils.GraphicsDevice, ms);
     }
 
     public static string TextureToBase64(Texture2D texture)
@@ -87,7 +87,7 @@ public static class TextureUtils
         int width = pixels.GetLength(1);
         int height = pixels.GetLength(0);
 
-        Texture2D texture = new Texture2D(GrapUtils.GraphicsDevice, width, height);
+        Texture2D texture = new Texture2D(GraphUtils.GraphicsDevice, width, height);
         Color[] data = new Color[width * height];
 
         for (int y = 0; y < height; y++)

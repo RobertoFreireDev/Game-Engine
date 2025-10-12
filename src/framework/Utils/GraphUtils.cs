@@ -2,7 +2,7 @@
 
 namespace blackbox.Utils;
 
-public static class GrapUtils
+public static class GraphUtils
 {
     public static GraphicsDevice GraphicsDevice;
 }

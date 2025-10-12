@@ -114,7 +114,7 @@ public class GFW : Game
     protected override void LoadContent()
     {
         ScreenUtils.SetResolution(_graphics, GraphicsDevice);
-        GrapUtils.GraphicsDevice = GraphicsDevice;
+        GraphUtils.GraphicsDevice = GraphicsDevice;
         Window.Position = new Point(0, 35);
         SystemTextures = Images.GetAllImages();
         PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
