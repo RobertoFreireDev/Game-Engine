@@ -152,7 +152,7 @@ function tutorialeditor:create()
         add(self.func,{ l = "_slinegrid", c = "void SetLine(int x0, int y0, int x1, int y1, int colorIndex = -1)"})
         add(self.func,{ l = "_srectgrid", c = "void SetRect(int x0, int y0, int x1, int y1, int colorIndex = -1, bool fill = false)"})
         add(self.func,{ l = "_scircgrid", c = "void SetCirc(int x0, int y0, int x1, int y1, int colorIndex = -1, bool fill = false)"})
-        add(self.func,{ l = "_dgrid", c = "void DrawCustomGrid(int n, int x, int y, int scale, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
+        add(self.func,{ l = "_dgrid", c = "void DrawGrid(int n, int x, int y, int scale, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)"})
         add(self.func,{ t = ""})
 
         -- Map

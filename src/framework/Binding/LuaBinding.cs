@@ -101,7 +101,7 @@ public class LuaBinding
         _lua.RegisterFunction("_slinegrid", this, GetType().GetMethod("SetLine"));
         _lua.RegisterFunction("_srectgrid", this, GetType().GetMethod("SetRect"));
         _lua.RegisterFunction("_scircgrid", this, GetType().GetMethod("SetCirc"));
-        _lua.RegisterFunction("_dgrid", this, GetType().GetMethod("DrawCustomGrid"));
+        _lua.RegisterFunction("_dgrid", this, GetType().GetMethod("DrawGrid"));
 
         // Map
         _lua.RegisterFunction("_lmap", this, GetType().GetMethod("SetMap"));
@@ -370,7 +370,7 @@ public class LuaBinding
         return GameGrid.GetPixel(x, y);
     }
 
-    public static void DrawCustomGrid(
+    public static void DrawGrid(
         int n, int x, int y, int scale, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
