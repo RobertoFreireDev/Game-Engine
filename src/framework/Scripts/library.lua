@@ -1,7 +1,7 @@
 ﻿_colors = {
-    primary = 11,
-    secondary = 12,
-    tertiary = 13,
+    primary = 10,
+    secondary = 9,
+    tertiary = 22,
 }
 
 _keys = {

@@ -5,39 +5,39 @@
 }
 
 function drawtutorialtext(text,x,y)
-    _print(text,20 + x,20 + y,_colors.secondary,true)
+    _print(text,20 + x,20 + y,_colors.primary,true)
 end
 
 function tutorialeditor:create()
     local firstpage = { category = "BlackBox" }
     function firstpage:draw()
-        drawtutorialtext("[c04]Use 'Q' and 'E' to navigate pages[c12]",0,0)
-        drawtutorialtext("[c03]BlackBox[c12] starts as a blank canvas\nUse Lua scripts to build custom tools, editors and games",0,20)
-        drawtutorialtext("- [c03]NLua[c12] --version 1.7.5\n- [c03]MonoGame.Framework.DesktopGL[c12] --version 3.8.4\n- Mix of [c03]ANB16[c12] and [c03]Sweetie 16[c12] palettes. Ref: lospec.com \n- Sfx from hunteraudio.itch.io/8bit-sfx-and-music-pack",0,50)
+        drawtutorialtext("[c10]Use 'Q' and 'E' to navigate pages[c10]",0,0)
+        drawtutorialtext("[c09]BlackBox[c10] starts as a blank canvas\nUse Lua scripts to build custom tools, editors and games",0,20)
+        drawtutorialtext("- [c09]NLua[c10] --version 1.7.5\n- [c09]MonoGame.Framework.DesktopGL[c10] --version 3.8.4\n- Mix of [c09]ANB16[c10] and [c09]Sweetie 16[c10] palettes. Ref: lospec.com \n- Sfx from hunteraudio.itch.io/8bit-sfx-and-music-pack",0,50)
     end
 
     local hotkeystutorial = { category = "Global hotkeys" }
     function hotkeystutorial:draw()
-        drawtutorialtext("BlackBox:\n- [c03]main.lua[c12] file: Entry point\n- Exit: [c04]Alt + F4[c12]\n- Toggle Fullscreen: [c04]F2[c12]\nmain.lua:\n- Toggle Menu: [c04]F3[c12]\n- Restart: [c04]Esc[c12]\n- Save: [c04]Ctrl + R[c12]",0,0)
+        drawtutorialtext("BlackBox:\n- [c09]main.lua[c10] file: Entry point\n- Exit: [c10]Alt + F4[c10]\n- Toggle Fullscreen: [c10]F2[c10]\nmain.lua:\n- Toggle Menu: [c10]F3[c10]\n- Restart: [c10]Esc[c10]\n- Save: [c10]Ctrl + R[c10]",0,0)
     end
 
     local spriteeditor = { category = "Sprite Editor" }
     function spriteeditor:draw()
         drawtutorialtext("Sprite Editor Controls:",0,0)
-        drawtutorialtext("- [c04]A,W,S,D[c12] -> translate sprite",0,10)
-        drawtutorialtext("- [c04]Ctrl + Z[c12] -> undo",0,20)
-        drawtutorialtext("- [c04]Ctrl + Y[c12] -> redo",0,30)
-        drawtutorialtext("- [c04]Ctrl + C[c12] -> copy",0,40)
-        drawtutorialtext("- [c04]Ctrl + V[c12] -> paste",0,50)
-        drawtutorialtext("- [c04]Hold Ctrl + click[c12] -> draw full circle/rect",0,60)
-        drawtutorialtext("- [c04]Mouse scroll[c12] -> zoom in sprite editor",0,70)
+        drawtutorialtext("- [c10]A,W,S,D[c10] -> translate sprite",0,10)
+        drawtutorialtext("- [c10]Ctrl + Z[c10] -> undo",0,20)
+        drawtutorialtext("- [c10]Ctrl + Y[c10] -> redo",0,30)
+        drawtutorialtext("- [c10]Ctrl + C[c10] -> copy",0,40)
+        drawtutorialtext("- [c10]Ctrl + V[c10] -> paste",0,50)
+        drawtutorialtext("- [c10]Hold Ctrl + click[c10] -> draw full circle/rect",0,60)
+        drawtutorialtext("- [c10]Mouse scroll[c10] -> zoom in sprite editor",0,70)
     end
 
     local mapeditor = { category = "Map Editor" }
     function mapeditor:draw()
         drawtutorialtext("Map Editor Controls:",0,0)
-        drawtutorialtext("- [c04]A,W,S,D[c12] -> move view on map",0,10)
-        drawtutorialtext("- [c04]Hold Ctrl + click[c12] -> draw block of sprites",0,20)
+        drawtutorialtext("- [c10]A,W,S,D[c10] -> move view on map",0,10)
+        drawtutorialtext("- [c10]Hold Ctrl + click[c10] -> draw block of sprites",0,20)
     end
 
     -- Add all pages
