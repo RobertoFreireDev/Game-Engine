@@ -5,3 +5,13 @@ This engine starts as a blank canvas, giving Lua control over display and logic
 Developers can write Lua scripts to build custom tools, editors, or games.
 
 ![blackbox](src/assets/blackbox.png)
+
+# Package games for distribution
+
+Visual Studio on terminal/power shell
+
+```
+dotnet publish blackbox.csproj -c Release -r win-x64 -p:PublishReadyToRun=false -p:TieredCompilation=false --self-contained
+```
+
+https://docs.monogame.net/articles/getting_started/packaging_games.html?tabs=windows
