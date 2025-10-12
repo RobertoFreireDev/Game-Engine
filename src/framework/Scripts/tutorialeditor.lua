@@ -122,7 +122,7 @@ function tutorialeditor:create()
 
         -- Sfx
         add(self.func,{ t = "-- Sfx --"})
-        add(self.func,{ l = "_psfx", c = "void PlaySfx(string index"})
+        add(self.func,{ l = "_psfx", c = "void PlaySfx(string index)"})
         add(self.func,{ t = ""})
 
         -- Time
