@@ -23,11 +23,16 @@ function movearrows(minX,minY,maxX,maxY,pos)
 end
 
 function movepage(a,pn,b)
+    local tmp = pn
     if _btnp(_keys.E) then
         pn = min(pn + 1,b)
     end
     if _btnp(_keys.Q) then
         pn = max(a,pn - 1)
+    end
+
+    if tmp ~= pn then
+        _psfx(_sfx.menu.select)
     end
 
     return pn

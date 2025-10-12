@@ -55,14 +55,7 @@ function tutorialeditor:init()
 end
 
 function tutorialeditor:update()
-    if _btnp(_keys.Q) then     
-        self.currenttutorialpage = self.currenttutorialpage - 1
-    end
-    if _btnp(_keys.E) then
-        self.currenttutorialpage = self.currenttutorialpage + 1
-    end
-
-    self.currenttutorialpage = clamp(1, self.currenttutorialpage, #self.tutorialpages)
+    self.currenttutorialpage = movepage(1,self.currenttutorialpage,#self.tutorialpages)
     local page=self.tutorialpages[self.currenttutorialpage]
     if page.update then
         page:update()
