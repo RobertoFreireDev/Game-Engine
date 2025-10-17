@@ -126,6 +126,7 @@ public class LuaBinding
 
         try
         {
+            TimeUtils.Reset();
             var initFunc = _lua.GetFunction("_init");
             if (initFunc != null)
             {

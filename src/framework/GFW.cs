@@ -78,14 +78,13 @@ public class GFW : Game
 
     public static void LoadMainFile()
     {
-        // Load game
+        LuaError.Reset();
         var script = string.Empty;
         if (LuaFileIO.HasFile(Constants.Mainfilename))
         {
             script = LuaFileIO.Read(Constants.Mainfilename);
         }
-        LuaProgram = new LuaBinding(script); 
-        TimeUtils.Reset();
+        LuaProgram = new LuaBinding(script);
     }
 
     private void OnResize(Object sender, EventArgs e)

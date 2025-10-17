@@ -119,7 +119,7 @@ function game:update()
     if _btnp(_keys.Q) then     
         self.sfxidx = self.sfxidx - 1
     end
-    if _btnp(_keys.E) then
+    if _btnp(_keys.Es) then
         self.sfxidx = self.sfxidx + 1
     end
 

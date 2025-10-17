@@ -6,8 +6,14 @@ namespace blackbox.Graphics;
 
 public static class LuaError
 {
-    private static string _message;
+    private static string _message = string.Empty;
     private static bool _error = false;
+
+    public static void Reset()
+    {
+        _message = string.Empty;
+        _error = false;
+    }
 
     public static bool HasError()
     {
