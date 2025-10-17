@@ -135,10 +135,3 @@ https://docs.monogame.net/articles/getting_started/packaging_games.html?tabs=win
 | `GetElapsedTime()`               | Returns total game runtime.                    |
 
 
-🧰 Utils
-
-| Function                                               | Description                           |
-| ------------------------------------------------------ | ------------------------------------- |
-| `SubstringToInt(string source, int start, int length)` | Converts a substring into an integer. |
-
-
