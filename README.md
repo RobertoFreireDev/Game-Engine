@@ -90,14 +90,14 @@ https://docs.monogame.net/articles/getting_started/packaging_games.html?tabs=win
 | ------------------------------------------------------------------------------------------------ | --------------------------------------------- |
 | `ShowHideMouse(bool show)`                                                                       | Shows or hides the mouse cursor.              |
 | `Pal(string palette)`                                                                            | Loads a new color palette.                    |
-| `DrawRect(...)`                                                                                  | Draws a rectangle outline.                    |
-| `DrawRectFill(...)`                                                                              | Draws a filled rectangle.                     |
-| `DrawCirc(...)`                                                                                  | Draws a circle outline.                       |
-| `DrawCircFill(...)`                                                                              | Draws a filled circle.                        |
-| `DrawCirc2(...)`                                                                                 | Draws a circle using rectangle bounds.        |
-| `DrawCircFill2(...)`                                                                             | Draws a filled circle using rectangle bounds. |
-| `DrawLine(...)`                                                                                  | Draws a line between two points.              |
-| `DrawPixel(...)`                                                                                 | Draws a single pixel.                         |
+| `DrawRect(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10, int thickness = 1)`                                                                                  | Draws a rectangle outline.                    |
+| `DrawRectFill(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)`                                                                              | Draws a filled rectangle.                     |
+| `DrawCirc(int x, int y, int r, int colorIndex = 0, int transparency = 10)`                                                                                  | Draws a circle outline.                       |
+| `DrawCircFill(int x, int y, int r, int colorIndex = 0, int transparency = 10)`                                                                              | Draws a filled circle.                        |
+| `DrawCirc2(int ox, int oy, int x0, int y0, int x1, int y1, int colorIndex = 0, int transparency = 10, int thickness = 1)`                                                                                 | Draws a circle using rectangle bounds.        |
+| `DrawCircFill2(int ox, int oy, int x0, int y0, int x1, int y1, int colorIndex = 0, int transparency = 10, int thickness = 1)`                                                                             | Draws a filled circle using rectangle bounds. |
+| `DrawLine(int x0, int y0, int x1, int y1, int scale = 1, int colorIndex = 0, int transparency = 10)`                                                                                  | Draws a line between two points.              |
+| `DrawPixel(int x, int y, int colorIndex = 0, int transparency = 10)`                                                                                 | Draws a single pixel.                         |
 | `Print(string text, int x, int y, int colorIndex = 0, bool wraptext = false, int wrapLimit = 0)` | Renders text on screen.                       |
 | `Camera(float x = 0.0f, float y = 0.0f)`                                                         | Moves or resets the camera position.          |
 
