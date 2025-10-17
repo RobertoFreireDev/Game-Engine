@@ -66,10 +66,6 @@ function _update()
 
     state:update()
 
-    if _btnp(_keys.Escape) then
-        _reboot()
-    end
-
     if (_btn(_keys.LeftControl) or _btn(_keys.RightControl)) and _btnp(_keys.R) then
         _iocreateorupdate(spriteFileName,_ggrid())
         _iocreateorupdate(mapFileName,_gmap())

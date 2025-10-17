@@ -144,6 +144,9 @@ public class GFW : Game
         if (KeyboardInput.IsF2Released())
             ScreenUtils.ToggleFullScreen(_graphics, GraphicsDevice);
 
+        if (KeyboardInput.IsEscPressed())
+            LoadMainFile();
+
         ScreenUtils.UpdateIsFocused(IsActive, _graphics.IsFullScreen);
         InputStateManager.Update();
 

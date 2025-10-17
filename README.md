@@ -112,7 +112,6 @@ dotnet publish blackbox.csproj -c Release -r win-x64 --self-contained true -p:Pu
 | ----------------- | ---------- | -------------------------------------- |
 | `GetFps()`        | `_sysfps`  | Returns the current frames per second. |
 | `IsFocused()`     | `_isfocused` | Checks if the game window is focused.  |
-| `ResetMainFile()` | `_reboot`  | Reloads the main Lua file.             |
 
 
 💾 IO File Functions

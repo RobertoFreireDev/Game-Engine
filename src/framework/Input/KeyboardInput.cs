@@ -9,6 +9,11 @@ public static class KeyboardInput
         return Pressed(Keys.LeftAlt) && Pressed(Keys.F4);
     }
 
+    public static bool IsEscPressed()
+    {
+        return Pressed(Keys.Escape);
+    }
+
     public static bool IsF2Released()
     {
         return Released(Keys.F2);
