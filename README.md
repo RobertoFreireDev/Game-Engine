@@ -14,7 +14,6 @@ Visual Studio on terminal/power shell
 dotnet publish blackbox.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
 ```
 
-https://docs.monogame.net/articles/getting_started/packaging_games.html?tabs=windows
 
 
 🧩 Texture Functions
@@ -26,7 +25,6 @@ https://docs.monogame.net/articles/getting_started/packaging_games.html?tabs=win
 | `LoadSingleImageFromBase64(int index, string spriteBase64)`                                                                                                              | `_lsimg`  | Loads a single image texture from a Base64 string.                                |
 | `DrawSingleImage(int index, int x, int y, int colorIndex = -1, int transparency = 10, bool flipX = false, bool flipY = false)`                                           | `_dsimg`  | Draws a single image at a given position.                                         |
 | `DrawSingleImageWithEffect(int index, int x, int y, double time, string parameters, int colorIndex = -1, int transparency = 10, bool flipX = false, bool flipY = false)` | `_dsimgfx`| Draws a single image with shader-based distortion and color effects.              |
-| `FixLength(string input, int x)`                                                                                                                                         | `—`       | Ensures a string has a fixed length by padding or trimming.                       |
 
 
 🗺️ Map Functions
