@@ -125,6 +125,13 @@ https://docs.monogame.net/articles/getting_started/packaging_games.html?tabs=win
 
 🔊 SFX Functions
 
+| Function                | Description                            |
+| ----------------------- | -------------------------------------- |
+| `PlaySfx(string index)` | Plays a sound effect by name or index. |
+
+
+⏱️ Timer Functions
+
 | Function                         | Description                                    |
 | -------------------------------- | ---------------------------------------------- |
 | `StartTimer(int i = 0)`          | Starts or resets a timer.                      |
