@@ -11,7 +11,7 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 Visual Studio on terminal/power shell
 
 ```
-dotnet publish blackbox.csproj -c Release -r win-x64 -p:PublishReadyToRun=false -p:TieredCompilation=false --self-contained
+dotnet publish blackbox.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
 ```
 
 https://docs.monogame.net/articles/getting_started/packaging_games.html?tabs=windows

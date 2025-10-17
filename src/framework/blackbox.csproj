@@ -25,6 +25,11 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
     <PackageReference Include="NLua" Version="1.7.5" />
   </ItemGroup>
+    <ItemGroup>
+	    <Content Include="Content\**\*" CopyToPublishDirectory="Always" />
+	    <Content Include="Scripts\**\*" CopyToPublishDirectory="Always" />
+	    <Content Include="main.lua" CopyToPublishDirectory="Always" />
+    </ItemGroup>
   <ItemGroup>
     <None Update="Scripts\imports.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
