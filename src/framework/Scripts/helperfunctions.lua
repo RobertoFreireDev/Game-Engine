@@ -5,6 +5,15 @@
     return sn
 end
 
+function getflags(n)
+    local v = _gflag(n)
+    local flags = {}
+    for i = 0, 7 do
+        flags[i + 1] = (v >> i) & 1
+    end
+    return flags
+end
+
 function movearrows(minX,minY,maxX,maxY,pos)
     if _btn(_keys.A) then
         pos.x = max(minX,pos.x-1)

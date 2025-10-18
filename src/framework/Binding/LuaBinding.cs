@@ -103,8 +103,8 @@ public class LuaBinding
         _lua.RegisterFunction("_dgrid", this, GetType().GetMethod("DrawGrid"));
 
         // Flags
-        _lua.RegisterFunction("_gflag", this, GetType().GetMethod("SetFlag"));
-        _lua.RegisterFunction("_sflag", this, GetType().GetMethod("GetFlag"));
+        _lua.RegisterFunction("_gflag", this, GetType().GetMethod("GetFlag"));
+        _lua.RegisterFunction("_sflag", this, GetType().GetMethod("SetFlag"));
 
         // Map
         _lua.RegisterFunction("_lmap", this, GetType().GetMethod("SetMap"));

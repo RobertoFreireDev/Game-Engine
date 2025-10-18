@@ -2,6 +2,7 @@
     firsttime = true,
     collorButtons = {},
     paintbuttons = {},
+    flagButtons = {},
     selectedcolor = 0,
     cell = 12,
     grid_w = 10,
@@ -29,7 +30,7 @@
     drawshape = { x0 = nil, y0 = nil, x1 = nil, y1 = nil},
     mousepos = { x= nil, y= nil},
     setpixel = { x = nil, y = nil, c = nil },
-    selectedRec = {}
+    selectedRec = {},
 }
 
 function spriteeditor:create()
@@ -47,6 +48,24 @@ function spriteeditor:create()
             self.selectedcolor = o.c  
         end 
         add(self.collorButtons,cbtn)
+    end
+    
+    local x,y,size,incx,incy=self.origin_x + 124,self.origin_y,9,0,1
+    for i=0,7 do
+	    local row = flr(i/4)
+	    local col = i%4
+        if col == 0 then
+            incx = 0
+            incy = incy + 1
+        else
+            incx = incx + 1
+        end
+	    local px = x + col*size + incx * 3
+	    local py = y + row*size + incy * 2 - 5
+        local fbtn = new_flagbutton(_colors.secondary,_colors.primary,px,py,0,0,size,size)
+        fbtn.clicked = function(o)
+        end 
+        add(self.flagButtons,fbtn)
     end    
     self.eraserbutton.clicked = function(o) self.paintbuttonselected = o self.selectedcolor = -1 end    
     self.pixelbutton.clicked = function(o) 
@@ -211,6 +230,10 @@ function spriteeditor:update()
         local sn = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
         if sn > 0 then
             self.spriteNumber = sn
+            local flags = getflags(self.spriteNumber)
+            for i = 1, #self.flagButtons do
+                self.flagButtons[i]:setflag(flags[i])
+            end
         end
     end
 
@@ -248,6 +271,9 @@ function spriteeditor:draw()
         o:draw()
     end)
     foreach(self.paintbuttons, function(o)
+        o:draw()
+    end)
+    foreach(self.flagButtons, function(o)
         o:draw()
     end)
 
