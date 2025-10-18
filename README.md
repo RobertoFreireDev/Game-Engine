@@ -14,7 +14,10 @@ Visual Studio on terminal/power shell
 dotnet publish blackbox.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
 ```
 
+Files published on folder : `Game-Engine\src\framework\bin\Release\net8.0\win-x64\publish`
 
+
+# Lua API Reference
 
 🧩 Texture Functions
 
