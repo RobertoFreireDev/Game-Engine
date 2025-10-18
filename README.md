@@ -38,6 +38,13 @@ dotnet publish blackbox.csproj -c Release -r win-x64 --self-contained true -p:Pu
 | `GetMap()`                                                                                                     | `_gmap`   | Returns the current map data as a string. |
 | `SetMap(string grid)`                                                                                          | `_lmap`   | Loads map data from a string.             |
 
+🏁 Flag Functions
+
+| Function                                                                                                       | Lua Alias | Description                               |
+| -------------------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------- |
+| `SetFlag(int index, int flag)`                                                                   | `_sflag`   | Sets flag to a sprite.                   |
+| `GetFlag(int index)`                                                                | `_gflag`   | Get flag from sprite.  |
+
 
 🧮 Grid Functions
 

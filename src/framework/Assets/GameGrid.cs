@@ -14,6 +14,7 @@ public class GridData
     public int[,] Copy;
     public Texture2D Texture;
     public Rectangle[] TileRects;
+    public int[] Flags;
     public int Columns;
     public int Rows;
     public int Size;
@@ -147,6 +148,7 @@ public class GridData
         Total = Columns * Rows;
         _enableUndoRedo = enableUndoRedo;
         TileRects = new Rectangle[Total];
+        Flags = new int[Total];
         for (int i = 0; i < Total; i++)
         {
             int x = (i % Columns) * Size;
@@ -553,6 +555,26 @@ public class GridData
             effects
         );
     }
+
+    internal void SetFlag(int index, int flag)
+    {
+        if (index < 0 || index >= Total)
+        {
+            return;
+        }
+
+        Flags[index] = flag;
+    }
+
+    internal int GetFlag(int index)
+    {
+        if (index < 0 || index >= Total)
+        {
+            return 0;
+        }
+
+        return Flags[index];
+    }
 }
 
 public static class GameGrid
@@ -653,10 +675,20 @@ public static class GameGrid
         return Data.GetPixel(x, y);
     }
 
+    public static void SetFlag(int index, int flag)
+    {
+        Data.SetFlag(index, flag);
+    }
+
+    public static int GetFlag(int index)
+    {
+        return Data.GetFlag(index);
+    }
+
     public static void DrawCustomGrid(
-        int n, int x, int y, int scale, Color color, int w = 1, int h = 1,
+        int index, int x, int y, int scale, Color color, int w = 1, int h = 1,
         bool flipX = false, bool flipY = false)
     {
-        Data.DrawCustomGrid(n, x, y, scale, color, w, h, flipX, flipY);
+        Data.DrawCustomGrid(index, x, y, scale, color, w, h, flipX, flipY);
     }
 }

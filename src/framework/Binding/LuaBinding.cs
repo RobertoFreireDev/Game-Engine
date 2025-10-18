@@ -102,6 +102,10 @@ public class LuaBinding
         _lua.RegisterFunction("_scircgrid", this, GetType().GetMethod("SetCirc"));
         _lua.RegisterFunction("_dgrid", this, GetType().GetMethod("DrawGrid"));
 
+        // Flags
+        _lua.RegisterFunction("_gflag", this, GetType().GetMethod("SetFlag"));
+        _lua.RegisterFunction("_sflag", this, GetType().GetMethod("GetFlag"));
+
         // Map
         _lua.RegisterFunction("_lmap", this, GetType().GetMethod("SetMap"));
         _lua.RegisterFunction("_cmap", this, GetType().GetMethod("CreateMap"));
@@ -254,6 +258,18 @@ public class LuaBinding
         }
 
         return input;
+    }
+    #endregion
+
+    #region Flags
+    public static void SetFlag(int index, int flag)
+    {
+        GameGrid.SetFlag(index, flag);
+    }
+
+    public static int GetFlag(int index)
+    {
+        return GameGrid.GetFlag(index);
     }
     #endregion
 
