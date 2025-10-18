@@ -97,10 +97,10 @@ function new_flagbutton(c,cb,x,y,x1,y1,w,h)
 	end
 
 	function o:setflag(a)
-		if a == 0 then
+		if a == 1 then
 			self.active = true
-		else a == 1
-			self.active = fals
+		elseif a == 0 then
+			self.active = false
 		end
 	end
 		
