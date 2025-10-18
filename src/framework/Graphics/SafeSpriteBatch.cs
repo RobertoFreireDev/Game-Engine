@@ -112,6 +112,6 @@ public class SafeSpriteBatch
             LuaError.SetError(Draw_has_not_begun);
             return;
         }
-        _spriteBatch.Draw(GFW.MouseTextures[MouseInput.Current_Cursor], MouseInput.MouseVirtualPosition(4), Color.White);
+        _spriteBatch.Draw(GFW.MouseTextures[MouseInput.Current_Cursor], MouseInput.MousePosition(4), Color.White);
     }
 }

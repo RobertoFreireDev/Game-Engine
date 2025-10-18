@@ -172,11 +172,7 @@ public class GFW : Game
         GraphicsDevice.SetRenderTarget(sceneTarget);
         GraphicsDevice.Clear(ColorUtils.GetColor(BackgroundColor));
         SpriteBatch.Begin();
-        LuaProgram.Draw();
-        if (ShowMouse)
-        {
-            SpriteBatch.DrawMouse();
-        }
+        LuaProgram.Draw();        
         SpriteBatch.End();
 
         GraphicsDevice.SetRenderTarget(null);
@@ -191,7 +187,11 @@ public class GFW : Game
         SpriteBatch.Draw(sceneTarget, ScreenUtils.BoxToDraw, Color.White);
         SpriteBatch.End();
 
-        SpriteBatch.Begin(SamplerState.PointClamp);                      
+        SpriteBatch.Begin(SamplerState.PointClamp);
+        if (ShowMouse)
+        {
+            SpriteBatch.DrawMouse();
+        }
         DrawRectWithHole(ScreenUtils.ScaleRectangle(ScreenUtils.BaseBox), Color.Black);
         SpriteBatch.End();
         base.Draw(gameTime);

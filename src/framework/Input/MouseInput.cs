@@ -26,6 +26,14 @@ internal static class MouseInput
             );
     }
 
+    public static Vector2 MousePosition(int offsetX = 0)
+    {
+        return new Vector2(
+                InputStateManager.CurrentMouseState().Position.X - offsetX,
+                InputStateManager.CurrentMouseState().Position.Y
+            );
+    }
+
     public static bool ScrollUp()
     {
         return InputStateManager.CurrentMouseState().ScrollWheelValue >
