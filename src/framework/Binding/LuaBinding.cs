@@ -112,6 +112,7 @@ public class LuaBinding
         _lua.RegisterFunction("_lmap", this, GetType().GetMethod("SetMap"));
         _lua.RegisterFunction("_cmap", this, GetType().GetMethod("CreateMap"));
         _lua.RegisterFunction("_gmap", this, GetType().GetMethod("GetMap"));
+        _lua.RegisterFunction("_gsprmap", this, GetType().GetMethod("GetSpriteFromMap"));        
         _lua.RegisterFunction("_smap", this, GetType().GetMethod("SetTileInMap"));
         _lua.RegisterFunction("_bmap", this, GetType().GetMethod("UpdateTileInMap"));
         _lua.RegisterFunction("_dmap", this, GetType().GetMethod("DrawMap"));
@@ -295,6 +296,11 @@ public class LuaBinding
     public static void SetTileInMap(int x, int y, int tileIndex = 0)
     {
         MapGrid.SetTile(x, y, tileIndex);
+    }
+
+    public static int GetSpriteFromMap(int x, int y)
+    {
+        return MapGrid.GetSpriteFromMap(x, y);
     }
 
     public static void DrawMap(int mapX, int mapY, int x, int y, int width, int height, int colorIndex = -1, int transparency = 10)

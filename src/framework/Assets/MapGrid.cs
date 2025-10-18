@@ -40,6 +40,16 @@ public class MapGridData
         Data[y, x] = tileIndex;
     }
 
+    public int GetTile(int x, int y)
+    {
+        if (InvalidGridPos(x, y))
+        {
+            return 0;
+        }
+
+        return Data[y, x];
+    }
+
     public void UpdateTiles(int x0, int y0, int x1, int y1, int tileIndex)
     {
         var (rx0, ry0, rx1, ry1, w, h) = Shapes.AdjustRect(x0, y0, x1, y1);
@@ -113,6 +123,11 @@ public static class MapGrid
     public static void SetTile(int x, int y, int tileIndex)
     {
         Data.SetTile(x, y, tileIndex);
+    }
+
+    public static int GetSpriteFromMap(int x, int y)
+    {
+        return Data.GetTile(x, y);
     }
 
     public static void UpdateTileInMap(int x0, int y0, int x1, int y1, int tileIndex)

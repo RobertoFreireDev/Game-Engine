@@ -40,6 +40,7 @@ Files published on folder : `Game-Engine\src\framework\bin\Release\net8.0\win-x6
 | `UpdateTileInMap(int x0, int y0, int x1, int y1, int tileIndex = 0)`                                           | `_bmap`   | Updates multiple tiles in the map.        |
 | `GetMap()`                                                                                                     | `_gmap`   | Returns the current map data as a string. |
 | `SetMap(string grid)`                                                                                          | `_lmap`   | Loads map data from a string.             |
+| `GetSpriteFromMap()`                                                                                           | `_gsprmap`   | Get sprite from map. |
 
 🏁 Flag Functions
 
