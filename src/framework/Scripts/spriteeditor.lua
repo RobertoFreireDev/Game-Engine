@@ -62,8 +62,10 @@ function spriteeditor:create()
         end
 	    local px = x + col*size + incx * 3
 	    local py = y + row*size + incy * 2 - 5
-        local fbtn = new_flagbutton(_colors.secondary,_colors.primary,px,py,0,0,size,size)
+        local fbtn = new_flagbutton(_colors.secondary,_colors.primary,px,py,0,0,size,size,i+1)
         fbtn.clicked = function(o)
+            o:toggleflag()
+            setflags(self.spriteNumber,self.flagButtons)
         end 
         add(self.flagButtons,fbtn)
     end    
@@ -102,6 +104,9 @@ function spriteeditor:update()
     foreach(self.paintbuttons, function(o)
         o:update()
         o.b.c = self.paintbuttonselected == o and _colors.tertiary or _colors.secondary
+    end)    
+    foreach(self.flagButtons, function(o)
+        o:update()
     end)
 
     self.pageNumber = movepage(0,self.pageNumber,const.maxPage)
@@ -228,7 +233,7 @@ function spriteeditor:update()
     if (not self.gridpos.x or not self.gridpos.y) and _mouseclickp(0) then 
         local spritespos = screen_to_grid(self.mousepos,self.sprites_x, self.sprites_y, self.sprites_w, self.sprites_h, self.sprites_cell)
         local sn = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
-        if sn > 0 then
+        if sn > 0 and self.spriteNumber ~= sn then
             self.spriteNumber = sn
             local flags = getflags(self.spriteNumber)
             for i = 1, #self.flagButtons do

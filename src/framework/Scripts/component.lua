@@ -80,8 +80,8 @@ function new_colorbutton(c,x,y,x1,y1,w,h)
 	return o
 end
 
-function new_flagbutton(c,cb,x,y,x1,y1,w,h)
-	local o = {c=c,cb=cb,x=x,y=y,box={x=x1,y=y1,w=w,h=h},active=false}
+function new_flagbutton(c,cb,x,y,x1,y1,w,h,index)
+	local o = {c=c,cb=cb,x=x,y=y,box={x=x1,y=y1,w=w,h=h},active=false,index=index}
 
 	function o:contains(p)
 		local bx = o.x + o.box.x
@@ -90,7 +90,7 @@ function new_flagbutton(c,cb,x,y,x1,y1,w,h)
 		       p.y >= by and p.y <= by + o.box.h
 	end
 
-	function o:update() 
+	function o:update()
 		if _mouseclickp(0) and o:contains(_mousepos()) then
 			o:clicked()
 		end
@@ -102,6 +102,10 @@ function new_flagbutton(c,cb,x,y,x1,y1,w,h)
 		elseif a == 0 then
 			self.active = false
 		end
+	end
+
+	function o:toggleflag()
+		self.active = not self.active
 	end
 		
 	function o:draw()

@@ -14,6 +14,18 @@ function getflags(n)
     return flags
 end
 
+function setflags(sn,flags)
+    local v = 0
+    local m = 1
+    for i = 0, 7 do
+        if flags[i + 1].active then
+            v = v + m
+        end
+        m = m*2
+    end
+    _sflag(sn,v)
+end
+
 function movearrows(minX,minY,maxX,maxY,pos)
     if _btn(_keys.A) then
         pos.x = max(minX,pos.x-1)
