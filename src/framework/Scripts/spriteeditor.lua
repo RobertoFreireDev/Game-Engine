@@ -87,6 +87,7 @@ function spriteeditor:create()
     add(self.paintbuttons,self.rectbutton)
     add(self.paintbuttons,self.circlebutton)
     add(self.paintbuttons,self.paintbutton)
+    self:updateflags()
 end
 
 function spriteeditor:init()
@@ -94,6 +95,13 @@ function spriteeditor:init()
         self:create()
         self.paintbuttonselected = self.pixelbutton
         self.firsttime = false
+    end
+end
+
+function spriteeditor:updateflags()
+    local flags = getflags(self.spriteNumber)
+    for i = 1, #self.flagButtons do
+        self.flagButtons[i]:setflag(flags[i])
     end
 end
 
@@ -235,10 +243,7 @@ function spriteeditor:update()
         local sn = updateSpriteNumber(spritespos,self.spriteNumber,self.pageNumber,self.sprites_w,self.sprites_h)
         if sn > 0 and self.spriteNumber ~= sn then
             self.spriteNumber = sn
-            local flags = getflags(self.spriteNumber)
-            for i = 1, #self.flagButtons do
-                self.flagButtons[i]:setflag(flags[i])
-            end
+            self:updateflags()
         end
     end
 

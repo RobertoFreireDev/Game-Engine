@@ -44,7 +44,8 @@ dotnet publish blackbox.csproj -c Release -r win-x64 --self-contained true -p:Pu
 | -------------------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------- |
 | `SetFlag(int index, int flag)`                                                                   | `_sflag`   | Sets flag to a sprite.                   |
 | `GetFlag(int index)`                                                                | `_gflag`   | Get flag from sprite.  |
-
+| `GetFlags()`                                                                   | `_getflags`   | Get flags.                   |
+| `Loadflags()`                                                                   | `_loadflags`   | Load flags.                   |
 
 🧮 Grid Functions
 

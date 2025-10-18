@@ -521,6 +521,17 @@ public class GridData
         UpdateTexture2d();
     }
 
+    public void SetFlags(string flags)
+    {
+        var data = new int[1, Total];
+        ArrayUtils.StringToIntArray(data, flags);
+        Flags = new int[Total];
+        for (int i = 0; i < Total; i++)
+        {
+            Flags[i] = data[0, i];
+        }
+    }
+
     public int GetPixel(int x, int y)
     {
         if (InvalidGridPos(x, y))
@@ -683,6 +694,26 @@ public static class GameGrid
     public static int GetFlag(int index)
     {
         return Data.GetFlag(index);
+    }
+
+    public static string GetFlags()
+    {
+        int[,] data = new int[1, Data.Flags.Length]; // 1 row, N columns
+
+        for (int i = 0; i < Data.Flags.Length; i++)
+        {
+            data[0, i] = Data.Flags[i];
+        }
+        return ArrayUtils.IntArrayToString(data);
+    }
+
+    public static void SetFlags(string data)
+    {
+        if (string.IsNullOrWhiteSpace(data))
+        {
+            return;
+        }
+        Data.SetFlags(data);
     }
 
     public static void DrawCustomGrid(

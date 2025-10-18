@@ -105,6 +105,8 @@ public class LuaBinding
         // Flags
         _lua.RegisterFunction("_gflag", this, GetType().GetMethod("GetFlag"));
         _lua.RegisterFunction("_sflag", this, GetType().GetMethod("SetFlag"));
+        _lua.RegisterFunction("_getflags", this, GetType().GetMethod("GetFlags"));
+        _lua.RegisterFunction("_loadflags", this, GetType().GetMethod("LoadFlags"));
 
         // Map
         _lua.RegisterFunction("_lmap", this, GetType().GetMethod("SetMap"));
@@ -271,6 +273,17 @@ public class LuaBinding
     {
         return GameGrid.GetFlag(index);
     }
+
+    public static void LoadFlags(string data)
+    {
+        GameGrid.SetFlags(data);
+    }
+
+    public static string GetFlags()
+    {
+        return GameGrid.GetFlags();
+    }
+
     #endregion
 
     #region MapFunctions
