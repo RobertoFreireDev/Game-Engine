@@ -414,33 +414,6 @@ public class LuaBinding
     }
     #endregion
 
-    #region InitFunctions
-    public static void ConfigTitle(string text)
-    {
-        GFW.UpdateTitle(text);
-    }
-
-    public static void ConfigFps30()
-    {
-        GFW.UpdateFPS(30);
-    }
-
-    public static void ConfigFps60()
-    {
-        GFW.UpdateFPS(60);
-    }
-
-    public static void EnableCRTshader(bool value, int inner = 85, int outer = 110)
-    {
-        GFW.EnableCRTshader(value, inner, outer);
-    }
-
-    public static void ConfigBackGroundColor(int colorIndex)
-    {
-        GFW.BackgroundColor = colorIndex;
-    }
-    #endregion
-
     #region InputFunctions
     public static LuaTable GetMousePos()
     {
@@ -611,6 +584,31 @@ public class LuaBinding
     #endregion
 
     #region SystemFunctions
+    public static void ConfigTitle(string text)
+    {
+        GFW.UpdateTitle(text);
+    }
+
+    public static void ConfigFps30()
+    {
+        GFW.UpdateFPS(30);
+    }
+
+    public static void ConfigFps60()
+    {
+        GFW.UpdateFPS(60);
+    }
+
+    public static void EnableCRTshader(bool value, int inner = 85, int outer = 110)
+    {
+        GFW.EnableCRTshader(value, inner, outer);
+    }
+
+    public static void ConfigBackGroundColor(int colorIndex)
+    {
+        GFW.BackgroundColor = colorIndex;
+    }
+
     public static int GetFps()
     {
         return TimeUtils.FPS;

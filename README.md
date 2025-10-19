@@ -73,17 +73,6 @@ Files published on folder : `Game-Engine\src\framework\bin\Release\net8.0\win-x6
 | `DrawGrid(int n, int x, int y, int scale, int colorIndex = -1, int transparency = 10, int w = 1, int h = 1, bool flipX = false, bool flipY = false)` | `_dgrid`      |
 
 
-⚙️ Init Functions
-
-| Function                                                       | Lua Alias   |
-| -------------------------------------------------------------- | ----------- |
-| `ConfigTitle(string text)`                                     | `_title`    |
-| `ConfigFps30()`                                                | `_fps30`    |
-| `ConfigFps60()`                                                | `_fps60`    |
-| `EnableCRTshader(bool value, int inner = 85, int outer = 110)` | `_crtshader`|
-| `ConfigBackGroundColor(int colorIndex)`                        | `_bckgdclr` |
-
-
 🖱️ Input Functions
 
 | Function                        | Lua Alias      |
@@ -124,6 +113,11 @@ Files published on folder : `Game-Engine\src\framework\bin\Release\net8.0\win-x6
 | ----------------- | ---------- |
 | `GetFps()`        | `_sysfps`  |
 | `IsFocused()`     | `_isfocused` |
+| `ConfigTitle(string text)`                                     | `_title`    |
+| `ConfigFps30()`                                                | `_fps30`    |
+| `ConfigFps60()`                                                | `_fps60`    |
+| `EnableCRTshader(bool value, int inner = 85, int outer = 110)` | `_crtshader`|
+| `ConfigBackGroundColor(int colorIndex)`                        | `_bckgdclr` |
 
 
 💾 IO File Functions
