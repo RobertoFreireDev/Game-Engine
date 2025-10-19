@@ -47,9 +47,14 @@ public class GFW : Game
         Window.Title = "Black Box";
     }
     
-    public static void PauseGame(bool value)
+    public static void PauseGame()
     {
-        GamePaused = value;
+        GamePaused = true;
+    }
+
+    public static void ResumeGame()
+    {
+        GamePaused = false;
     }
 
     public static void ShowHideMouse(bool value)

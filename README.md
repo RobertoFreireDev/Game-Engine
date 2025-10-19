@@ -45,7 +45,7 @@ Files published on folder : `Game-Engine\src\framework\bin\Release\net8.0\win-x6
 🏁 Flag Functions
 
 | Function                                                                                                       | Lua Alias |
-| -------------------------------------------------------------------------------------------------------------- |
+| -------------------------------------------------------------------------------------------------------------- | --------- |
 | `SetFlag(int index, int flag)`                                                                   | `_sflag`   |
 | `GetFlag(int index)`                                                                | `_gflag`   |
 | `GetFlags()`                                                                   | `_getflags`   |
@@ -151,7 +151,8 @@ Files published on folder : `Game-Engine\src\framework\bin\Release\net8.0\win-x6
 | -------------------------------- | -------------- |
 | `StartTimer(int i = 0)`          | `_stimer`      |
 | `GetTimer(int i = 0, int d = 4)` | `_gtimer`      |
-| `PauseGame(bool value)`          | `_pgame`       |
+| `PauseGame()`          | `_pgame`       |
+| `ResumeGame()`          | `_rgame`       |
 | `GetDateTime(int i = 0)`         | `_gtime`       |
 | `GetDeltaTime()`                 | `_gdeltatime`  |
 | `GetElapsedTime()`               | `_gelapsedtime`|

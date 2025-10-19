@@ -80,6 +80,7 @@ public class LuaBinding
         _lua.RegisterFunction("_stimer", this, GetType().GetMethod("StartTimer"));
         _lua.RegisterFunction("_gtimer", this, GetType().GetMethod("GetTimer"));
         _lua.RegisterFunction("_pgame", this, GetType().GetMethod("PauseGame"));
+        _lua.RegisterFunction("_rgame", this, GetType().GetMethod("ResumeGame"));
         _lua.RegisterFunction("_gtime", this, GetType().GetMethod("GetDateTime"));
         _lua.RegisterFunction("_gdeltatime", this, GetType().GetMethod("GetDeltaTime"));
         _lua.RegisterFunction("_gelapsedtime", this, GetType().GetMethod("GetElapsedTime"));
@@ -672,10 +673,15 @@ public class LuaBinding
         return TimeUtils.GetTime(i, d);
     }
 
-    public static void PauseGame(bool value)
+    public static void PauseGame()
     {
-        GFW.PauseGame(value);
+        GFW.PauseGame();
     }
+
+    public static void ResumeGame()
+    {
+        GFW.ResumeGame();
+    }    
 
     public static string GetDateTime(int i = 0)
     {
