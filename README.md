@@ -18,10 +18,15 @@ Visual Studio on terminal/power shell
 
 ```
 dotnet publish blackbox.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
+dotnet publish blackbox.csproj -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true
+dotnet publish blackbox.csproj -c Release -r linux-arm64 --self-contained true -p:PublishSingleFile=true
 ```
 
-Files published on folder : `Game-Engine\src\framework\bin\Release\net8.0\win-x64\publish`
+Files published on folder : 
 
+`Game-Engine\src\framework\bin\Release\net8.0\win-x64\publish`
+`Game-Engine\src\framework\bin\Release\net8.0\linux-arm64\publish`
+`Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish`
 
 # Lua API Reference
 
