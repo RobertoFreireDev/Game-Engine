@@ -6,7 +6,13 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 
 ![alt text](image.png)
 
-# Package games for distribution
+# Download the latest release at
+
+## Windows
+
+https://roberto-freire.itch.io/blackbox
+
+# Publish for distribution
 
 Visual Studio on terminal/power shell
 
