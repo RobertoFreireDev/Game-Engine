@@ -156,3 +156,11 @@ Files published on folder : `Game-Engine\src\framework\bin\Release\net8.0\win-x6
 | `GetDateTime(int i = 0)`         | `_gtime`       |
 | `GetDeltaTime()`                 | `_gdeltatime`  |
 | `GetElapsedTime()`               | `_gelapsedtime`|
+
+# Free assets used:
+
+- https://lospec.com/palette-list/anb16
+
+- https://lospec.com/palette-list/sweetie-16
+
+- https://hunteraudio.itch.io/8bit-sfx-and-music-pack
