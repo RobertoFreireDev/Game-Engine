@@ -25,6 +25,7 @@ public class GFW : Game
     public static bool ApplyCRTshader = false;
     public static int BackgroundColor;
     private static bool Updated = false;
+    private static bool IsFullScreen = false;
     private static LuaBinding LuaProgram;
     public static bool GamePaused = false;
     public static Effect CustomEffect;
@@ -38,7 +39,6 @@ public class GFW : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         Window.AllowUserResizing = true;
-        _graphics.IsFullScreen = false;
         IsMouseVisible = false;
         IsFixedTimeStep = true;
         Window.ClientSizeChanged += OnResize;
@@ -53,6 +53,8 @@ public class GFW : Game
             AppConfig.SetConfig(TxtFileIO.Read(Constants.MetadataFilename));
         }
 
+        IsFullScreen = AppConfig.IsFullscreen;
+        Updated = true;
         ColorUtils.SetPalette(AppConfig.Palette);
         Window.Title = string.IsNullOrWhiteSpace(AppConfig.Title) ? "Black Box" : AppConfig.Title;
 
@@ -155,7 +157,11 @@ public class GFW : Game
             Exit();
 
         if (KeyboardInput.IsF2Released())
+        {
             ScreenUtils.ToggleFullScreen(_graphics, GraphicsDevice);
+            IsFullScreen = _graphics.IsFullScreen;
+        }
+            
 
         if (KeyboardInput.IsEscPressed())
             LoadMainFile();
@@ -167,6 +173,12 @@ public class GFW : Game
 
         if (Updated)
         {
+            if (_graphics.IsFullScreen != IsFullScreen)
+            {
+                ScreenUtils.ToggleFullScreen(_graphics, GraphicsDevice);
+                IsFullScreen = _graphics.IsFullScreen;
+            }
+
             TargetElapsedTime = FPS != 30 ? TimeSpan.FromSeconds(1.0 / 60.0) : TimeSpan.FromSeconds(1.0 / 30.0);
             Updated = false;
         }

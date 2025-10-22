@@ -8,6 +8,7 @@ public static class AppConfig
     public static string Title { get; set; } = string.Empty;
     public static int ResolutionX { get; set; }
     public static int ResolutionY { get; set; }
+    public static bool IsFullscreen { get; set; }
 
     public static void SetConfig(string content)
     {
@@ -26,7 +27,7 @@ public static class AppConfig
             var key = parts[0].Trim().ToLower();
             var value = parts[1].Trim();
 
-            switch (key.ToLower())
+            switch (key)
             {
                 case "palette":
                     Palette = value.Trim('"');
@@ -39,6 +40,9 @@ public static class AppConfig
                     break;
                 case "resolutiony":
                     if (int.TryParse(value, out int resY)) ResolutionY = resY;
+                    break;
+                case "isfullscreen":
+                    if (bool.TryParse(value, out bool isFull)) IsFullscreen = isFull;
                     break;
             }
         }
