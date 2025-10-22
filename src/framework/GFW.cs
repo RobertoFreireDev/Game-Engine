@@ -20,7 +20,6 @@ public class GFW : Game
     public static List<Texture2D> MouseTextures;
     public static Texture2D PixelTexture;
     public static SafeSpriteBatch SpriteBatch;
-    public static string Title;
     public static int FPS;
     public static bool ShowMouse = true;
     public static bool ApplyCRTshader = false;
@@ -168,7 +167,6 @@ public class GFW : Game
 
         if (Updated)
         {
-            Window.Title = Title;
             TargetElapsedTime = FPS != 30 ? TimeSpan.FromSeconds(1.0 / 60.0) : TimeSpan.FromSeconds(1.0 / 30.0);
             Updated = false;
         }
