@@ -26,7 +26,6 @@
     <PackageReference Include="NLua" Version="1.7.5" />
   </ItemGroup>
     <ItemGroup>
-	    <Content Include="Content\**\*" CopyToPublishDirectory="Always" />
 	    <Content Include="Scripts\**\*" CopyToPublishDirectory="Always" />
 	    <Content Include="metadata.txt" CopyToPublishDirectory="Always" />
 	    <Content Include="main.lua" CopyToPublishDirectory="Always" />
