@@ -38,15 +38,31 @@ public class GFW : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        _graphics.IsFullScreen = false;
         Window.AllowUserResizing = true;
-        Window.ClientSizeChanged += OnResize;
+        _graphics.IsFullScreen = false;
         IsMouseVisible = false;
         IsFixedTimeStep = true;
-        ColorUtils.SetPalette();
-        Window.Title = "Black Box";
+        Window.ClientSizeChanged += OnResize;
+        LoadMetadata();
     }
     
+    private void LoadMetadata()
+    {
+        
+        if (TxtFileIO.HasFile(Constants.MetadataFilename))
+        {
+            AppConfig.SetConfig(TxtFileIO.Read(Constants.MetadataFilename));
+        }
+
+        ColorUtils.SetPalette(AppConfig.Palette);
+        Window.Title = string.IsNullOrWhiteSpace(AppConfig.Title) ? "Black Box" : AppConfig.Title;
+
+        if (AppConfig.ResolutionX > 64 && AppConfig.ResolutionY > 64)
+        {
+            ScreenUtils.BaseBox = new Rectangle(0, 0, AppConfig.ResolutionX, AppConfig.ResolutionY);
+        }
+    }
+
     public static void PauseGame()
     {
         GamePaused = true;
@@ -72,12 +88,6 @@ public class GFW : Game
     public static void UpdateFPS(int fps)
     {
         FPS = fps;
-        Updated = true;
-    }
-
-    public static void UpdateTitle(string title)
-    {
-        Title = title;
         Updated = true;
     }
 

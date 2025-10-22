@@ -22,7 +22,6 @@ public class LuaBinding
         _lua.UseTraceback = true;
 
         // Config
-        _lua.RegisterFunction("_title", this, GetType().GetMethod("ConfigTitle"));
         _lua.RegisterFunction("_fps30", this, GetType().GetMethod("ConfigFps30"));
         _lua.RegisterFunction("_fps60", this, GetType().GetMethod("ConfigFps60"));
 
@@ -49,7 +48,6 @@ public class LuaBinding
         // Draw
         _lua.RegisterFunction("_crtshader", this, GetType().GetMethod("EnableCRTshader"));
         _lua.RegisterFunction("_bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
-        _lua.RegisterFunction("_pal", this, GetType().GetMethod("Pal"));
         _lua.RegisterFunction("_rect", this, GetType().GetMethod("DrawRect"));
         _lua.RegisterFunction("_rectfill", this, GetType().GetMethod("DrawRectFill"));
         _lua.RegisterFunction("_circ", this, GetType().GetMethod("DrawCirc"));      
@@ -515,11 +513,6 @@ public class LuaBinding
         GFW.ShowHideMouse(show);
     }
 
-    public static void Pal(string palette)
-    {
-        ColorUtils.SetPalette(palette);
-    }
-
     public static void DrawRect(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10, int thickness = 1)
     {
         Shapes.DrawRectBorder(x, y, width, height, ColorUtils.GetColor(colorIndex, transparency), thickness);
@@ -584,11 +577,6 @@ public class LuaBinding
     #endregion
 
     #region SystemFunctions
-    public static void ConfigTitle(string text)
-    {
-        GFW.UpdateTitle(text);
-    }
-
     public static void ConfigFps30()
     {
         GFW.UpdateFPS(30);

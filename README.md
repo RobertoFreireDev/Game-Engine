@@ -106,7 +106,6 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 | `MouseButtonReleased(int i)`    | `_mouseclickr` |
 | `Scroll(int i)`                 | `_mousescroll` |
 | `UpdateCursor(int i)`           | `_mousecursor` |
-| `UpdateCursor/ShowHideMouse`    | `_mouseshow`   |
 | `JustPressed(int keyNumber)`    | `_btnp`        |
 | `Released(int keyNumber)`       | `_btnr`        |
 | `Pressed(int keyNumber)`        | `_btn`         |
@@ -117,7 +116,6 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 | Function                                                                                         | Lua Alias     |
 | ------------------------------------------------------------------------------------------------ | ------------- |
 | `ShowHideMouse(bool show)`                                                                       | `_mouseshow`  |
-| `Pal(string palette)`                                                                            | `_pal`        |
 | `DrawRect(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10, int thickness = 1)`                                                                                  | `_rect`       |
 | `DrawRectFill(int x, int y, int width, int height, int colorIndex = 0, int transparency = 10)`                                                                              | `_rectfill`   |
 | `DrawCirc(int x, int y, int r, int colorIndex = 0, int transparency = 10)`                                                                                  | `_circ`       |
@@ -136,7 +134,6 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 | ----------------- | ---------- |
 | `GetFps()`        | `_sysfps`  |
 | `IsFocused()`     | `_isfocused` |
-| `ConfigTitle(string text)`                                     | `_title`    |
 | `ConfigFps30()`                                                | `_fps30`    |
 | `ConfigFps60()`                                                | `_fps60`    |
 | `EnableCRTshader(bool value, int inner = 85, int outer = 110)` | `_crtshader`|

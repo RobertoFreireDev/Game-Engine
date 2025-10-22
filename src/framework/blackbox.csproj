@@ -28,6 +28,7 @@
     <ItemGroup>
 	    <Content Include="Content\**\*" CopyToPublishDirectory="Always" />
 	    <Content Include="Scripts\**\*" CopyToPublishDirectory="Always" />
+	    <Content Include="metadata.txt" CopyToPublishDirectory="Always" />
 	    <Content Include="main.lua" CopyToPublishDirectory="Always" />
     </ItemGroup>
   <ItemGroup>
@@ -58,7 +59,10 @@
     <None Update="Scripts\spriteeditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="main.lua">
+	<None Update="main.lua">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+    <None Update="metadata.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
