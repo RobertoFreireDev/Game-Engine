@@ -109,6 +109,9 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 | `JustPressed(int keyNumber)`    | `_btnp`        |
 | `Released(int keyNumber)`       | `_btnr`        |
 | `Pressed(int keyNumber)`        | `_btn`         |
+| `GamePadJustPressed(int buttonNumber, int playerIndex = 0)`       | `_gmpdp`         |
+| `GamePadReleased(int buttonNumber, int playerIndex = 0)`       | `_gmpdr`         |
+| `GamePadPressed(int buttonNumber, int playerIndex = 0)`       | `_gmpd`         |
 
 
 🎨 Draw Functions

@@ -45,6 +45,10 @@ public class LuaBinding
         _lua.RegisterFunction("_btnp", this, GetType().GetMethod("JustPressed"));
         _lua.RegisterFunction("_btnr", this, GetType().GetMethod("Released"));
 
+        _lua.RegisterFunction("_gmpd", this, GetType().GetMethod("GamePadPressed"));
+        _lua.RegisterFunction("_gmpdp", this, GetType().GetMethod("GamePadJustPressed"));
+        _lua.RegisterFunction("_gmpdr", this, GetType().GetMethod("GamePadReleased"));
+
         // Draw
         _lua.RegisterFunction("_crtshader", this, GetType().GetMethod("EnableCRTshader"));
         _lua.RegisterFunction("_bckgdclr", this, GetType().GetMethod("ConfigBackGroundColor"));
@@ -504,6 +508,51 @@ public class LuaBinding
         }
 
         return Input.KeyboardInput.Pressed((Keys)keyNumber);
+    }
+
+    public static bool GamePadJustPressed(int buttonNumber, int playerIndex = 0)
+    {
+        if (!IsGamePadDefined(buttonNumber, playerIndex))
+        {
+            return false;
+        }
+
+        return GamepadInput.JustPressed((Buttons)buttonNumber, (PlayerIndex)playerIndex);
+    }
+
+    public static bool GamePadReleased(int buttonNumber, int playerIndex = 0)
+    {
+        if (!IsGamePadDefined(buttonNumber, playerIndex))
+        {
+            return false;
+        }
+
+        return GamepadInput.Released((Buttons)buttonNumber, (PlayerIndex)playerIndex);
+    }
+
+    public static bool GamePadPressed(int buttonNumber, int playerIndex = 0)
+    {
+        if (!IsGamePadDefined(buttonNumber, playerIndex))
+        {
+            return false;
+        }
+
+        return GamepadInput.Pressed((Buttons)buttonNumber, (PlayerIndex)playerIndex);
+    }
+
+    private static bool IsGamePadDefined(int buttonNumber, int playerIndex)
+    {
+        if (!Enum.IsDefined(typeof(Buttons), buttonNumber))
+        {
+            return false;
+        }
+
+        if (!Enum.IsDefined(typeof(PlayerIndex), playerIndex))
+        {
+            return false;
+        }
+
+        return true;
     }
     #endregion
 
