@@ -159,7 +159,6 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 
 | Function                | Lua Alias |
 | ----------------------- | --------- |
-| `PlaySfx(string index)` | `_psfx`   |
 
 
 ⏱️ Timer Functions

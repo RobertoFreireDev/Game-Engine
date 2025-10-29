@@ -22,7 +22,6 @@ function change_state(st)
 end
 
 function changepage(p, o)
-    _psfx(_sfx.menu.select)
     change_state(p)
     buttonSelected = o
 end

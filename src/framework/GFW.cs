@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using blackbox.Sfx;
 
 namespace blackbox;
 
@@ -141,7 +140,6 @@ public class GFW : Game
         _graphics.SynchronizeWithVerticalRetrace = true;
         crtEffect = Content.Load<Effect>("CRT");
         CustomEffect = Content.Load<Effect>("CustomShader");
-        SfxPlayer.Load(Content);
         sceneTarget = new RenderTarget2D(
             GraphicsDevice,
             GraphicsDevice.PresentationParameters.BackBufferWidth,

@@ -52,10 +52,6 @@ function movepage(a,pn,b)
         pn = max(a,pn - 1)
     end
 
-    if tmp ~= pn then
-        _psfx(_sfx.menu.click)
-    end
-
     return pn
 end
 

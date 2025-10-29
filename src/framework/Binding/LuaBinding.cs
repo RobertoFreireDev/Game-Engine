@@ -2,7 +2,6 @@
 using blackbox.Assets;
 using blackbox.Input;
 using blackbox.IOFile;
-using blackbox.Sfx;
 using blackbox.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -76,7 +75,6 @@ public class LuaBinding
         _lua.RegisterFunction("_iodelete", this, GetType().GetMethod("DeleteFile"));
 
         //Sfx
-        _lua.RegisterFunction("_psfx", this, GetType().GetMethod("PlaySfx"));
 
         //Time
         _lua.RegisterFunction("_stimer", this, GetType().GetMethod("StartTimer"));
@@ -691,10 +689,6 @@ public class LuaBinding
     #endregion
 
     #region SfxFunctions
-    public static void PlaySfx(string index)
-    {
-        SfxPlayer.PlaySfx(index);
-    }
     #endregion
 
     #region TimerFunctions
