@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLua;
 using System;
+using blackbox.Sfx;
+using System.Text;
 
 namespace blackbox.Binding;
 
@@ -14,11 +16,13 @@ public class LuaBinding
 {
     private static Lua _lua;
     private string _scriptName = "main";
+    private static SfxPlayer _player;
 
     public LuaBinding(string script)
     {
         _lua = new Lua();
         _lua.UseTraceback = true;
+        _player = new SfxPlayer();
 
         // Config
         _lua.RegisterFunction("_fps30", this, GetType().GetMethod("ConfigFps30"));
@@ -75,6 +79,14 @@ public class LuaBinding
         _lua.RegisterFunction("_iodelete", this, GetType().GetMethod("DeleteFile"));
 
         //Sfx
+        _lua.RegisterFunction("_loadsfx", this, GetType().GetMethod("ReadSfx"));
+        _lua.RegisterFunction("_savesfx", this, GetType().GetMethod("CreateOrUpdateSfx"));
+        _lua.RegisterFunction("_getsfx", this, GetType().GetMethod("GetSfx"));
+        _lua.RegisterFunction("_setnotesfx", this, GetType().GetMethod("SetNoteSfx"));
+        _lua.RegisterFunction("_spdsfx", this, GetType().GetMethod("SetSfxSpeed"));
+        _lua.RegisterFunction("_playsfx", this, GetType().GetMethod("PlaySfx"));
+        _lua.RegisterFunction("_stopsfx", this, GetType().GetMethod("StopSfx"));
+        _lua.RegisterFunction("_validfx", this, GetType().GetMethod("ValidSfx"));
 
         //Time
         _lua.RegisterFunction("_stimer", this, GetType().GetMethod("StartTimer"));
@@ -686,9 +698,59 @@ public class LuaBinding
         TxtFileIO.CreateOrUpdate(fileName, content);
     }
 
+    public static void ReadSfx(string sfxfilename)
+    {
+        if (!HasFile(sfxfilename))
+        {
+            return;
+        }
+        var content = TxtFileIO.Read(sfxfilename);
+        _player.ConvertStringToData(content);
+    }
+
+    public static void CreateOrUpdateSfx(string sfxfilename)
+    {
+        var content = _player.ConvertDataToString();
+        if (string.IsNullOrWhiteSpace(content))
+        {
+            return;
+        }
+        TxtFileIO.CreateOrUpdate(sfxfilename, content);
+    }
     #endregion
 
     #region SfxFunctions
+    public static void SetNoteSfx(int index, int noteIndex, string note)
+    {
+        _player.SetNote(index, noteIndex, note);
+    }
+
+    public static string GetSfx(int index)
+    {
+        var sb = new StringBuilder();
+        sb = _player.GetSfx(index, sb);
+        return sb.ToString();
+    }
+
+    public static bool ValidSfx(string sound)
+    {
+        return _player.IsValidSoundString(sound);
+    }
+
+    public static void SetSfxSpeed(int index, int speed = 1)
+    {
+        _player.SetSpeed(index, speed);
+    }
+
+    public static void PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)
+    {
+        _player.PlaySfx(index, speed, channel, offset);
+    }
+
+    public static void StopSfx(int index)
+    {
+        _player.Stop(index);
+    }
     #endregion
 
     #region TimerFunctions

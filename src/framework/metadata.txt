@@ -1,4 +1,4 @@
-﻿isfullscreen = true
+﻿isfullscreen = false
 title = "Black Box"
 resolutionx = 320
 resolutiony = 180
