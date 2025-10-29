@@ -178,5 +178,3 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 - https://lospec.com/palette-list/anb16
 
 - https://lospec.com/palette-list/sweetie-16
-
-- https://hunteraudio.itch.io/8bit-sfx-and-music-pack

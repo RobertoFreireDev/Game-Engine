@@ -13,7 +13,7 @@ function tutorialeditor:create()
     function firstpage:draw()
         drawtutorialtext("[c10]Use 'Q' and 'E' to navigate pages[c10]",0,0)
         drawtutorialtext("[c09]BlackBox[c10] starts as a blank canvas\nUse Lua scripts to build custom tools, editors and games",0,20)
-        drawtutorialtext("- [c09]NLua[c10] --version 1.7.5\n- [c09]MonoGame.Framework.DesktopGL[c10] --version 3.8.4\n- Mix of [c09]ANB16[c10] and [c09]Sweetie 16[c10] palettes. Ref: lospec.com \n- Sfx from hunteraudio.itch.io/8bit-sfx-and-music-pack",0,50)
+        drawtutorialtext("- [c09]NLua[c10] --version 1.7.5\n- [c09]MonoGame.Framework.DesktopGL[c10] --version 3.8.4\n- Mix of [c09]ANB16[c10] and [c09]Sweetie 16[c10] palettes. Ref: lospec.com",0,50)
     end
 
     local hotkeystutorial = { category = "Global hotkeys" }
