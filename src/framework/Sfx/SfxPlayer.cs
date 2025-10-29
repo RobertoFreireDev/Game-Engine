@@ -210,6 +210,10 @@ public class SfxPlayer
         }
 
         var channel = Channels.FirstOrDefault(c => !c.Playing);
+        if (channel is null)
+        {
+            return;
+        }
         channel.Play(Data[index]);
     }
 }
