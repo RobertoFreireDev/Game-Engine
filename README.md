@@ -165,7 +165,6 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 | `SetNoteSfx(int index, int noteIndex, string note)`                                        | `_setnotesfx`  |
 | `SetSfxSpeed(int index, int speed = 1)`                                                    | `_spdsfx`      |
 | `PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)`                      | `_playsfx`     |
-| `StopSfx(int index)`                                                                       | `_stopsfx`     |
 | `ValidSfx(string sound)`                                                                   | `_validfx`     |
 
 

@@ -154,7 +154,7 @@ function sfxeditor:update()
     self.sounds[self.sfxIndex]:update()
 
     if _btnp(_keys.Space) then
-        _playsfx(self.sfxIndex-1, self.sounds[self.sfxIndex].speed)        
+        _playsfx(self.sfxIndex-1)        
     end
 
     if _btnp(_keys.W) then

@@ -8,6 +8,7 @@ namespace blackbox.Sfx;
 public class SfxPlayer
 {
     private SfxData[] Data = new SfxData[Constants.SfxQty];
+    private static SfxChannel[] Channels = new SfxChannel[Constants.ChannelQty];
 
     public SfxPlayer()
     {
@@ -15,7 +16,11 @@ public class SfxPlayer
         {
             Data[i] = new SfxData();
         }
-        AudioLib.CreateSound();
+        for (int i = 0; i < Channels.Length; i++)
+        {
+            Channels[i] = new SfxChannel();
+            Channels[i].CreateSound();
+        }
     }
 
     public void SetNote(int index, int noteIndex, string note)
@@ -197,20 +202,14 @@ public class SfxPlayer
         sfx.Speed = Math.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed);
     }
 
-    public void PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)
+    public void PlaySfx(int index)
     {
         if (!IsValidIndex(index))
         {
             return;
         }
 
-        var sfx = Data[index];
-        sfx.Speed = Math.Clamp(speed, Constants.MinSpeed, Constants.MaxSpeed);
-        AudioLib.Play(sfx, channel, offset);
-    }
-
-    public void Stop(int channel)
-    {
-        AudioLib.Stop(channel);
+        var channel = Channels.FirstOrDefault(c => !c.Playing);
+        channel.Play(Data[index]);
     }
 }

@@ -85,7 +85,6 @@ public class LuaBinding
         _lua.RegisterFunction("_setnotesfx", this, GetType().GetMethod("SetNoteSfx"));
         _lua.RegisterFunction("_spdsfx", this, GetType().GetMethod("SetSfxSpeed"));
         _lua.RegisterFunction("_playsfx", this, GetType().GetMethod("PlaySfx"));
-        _lua.RegisterFunction("_stopsfx", this, GetType().GetMethod("StopSfx"));
         _lua.RegisterFunction("_validfx", this, GetType().GetMethod("ValidSfx"));
 
         //Time
@@ -742,14 +741,9 @@ public class LuaBinding
         _player.SetSpeed(index, speed);
     }
 
-    public static void PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)
+    public static void PlaySfx(int index)
     {
-        _player.PlaySfx(index, speed, channel, offset);
-    }
-
-    public static void StopSfx(int index)
-    {
-        _player.Stop(index);
+        _player.PlaySfx(index);
     }
     #endregion
 

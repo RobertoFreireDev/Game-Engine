@@ -12,7 +12,6 @@ public static class Constants
     public const int MaxGameSingleImageTextures = 1024;
 
     public const int CharsPerNote = 5;
-    public const int ChannelQty = 8;
     public const int SfxQty = 64;
     public const int MaxNotes = 24;
     public const int MinPitch = 36;
@@ -25,4 +24,5 @@ public static class Constants
     public const int MaxSpeed = 32;
     public const int SpeedDigits = 2; // Look at MaxSpeed
     public const float SpeedSfx = 0.02f;
+    public static int ChannelQty = 16;
 }

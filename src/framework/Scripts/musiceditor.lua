@@ -25,7 +25,7 @@ function musiceditor:update()
     
     if _btnp(_keys.Space) then
         for i = 1, #self.bars do
-            _playsfx(self.bars[i].value, 8,i) 
+            _playsfx(self.bars[i].value) 
         end
     end
 end
