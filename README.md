@@ -158,7 +158,15 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 🔊 SFX Functions
 
 | Function                | Lua Alias |
-| ----------------------- | --------- |
+| ------------------------------------------------------------------------------------------ | -------------- |
+| `ReadSfx(string sfxfilename)`                                                              | `_loadsfx`     |
+| `CreateOrUpdateSfx(string sfxfilename)`                                                    | `_savesfx`     |
+| `GetSfx(int index)`                                                                        | `_getsfx`      |
+| `SetNoteSfx(int index, int noteIndex, string note)`                                        | `_setnotesfx`  |
+| `SetSfxSpeed(int index, int speed = 1)`                                                    | `_spdsfx`      |
+| `PlaySfx(int index, int speed = 1, int channel = -1, int offset = 0)`                      | `_playsfx`     |
+| `StopSfx(int index)`                                                                       | `_stopsfx`     |
+| `ValidSfx(string sound)`                                                                   | `_validfx`     |
 
 
 ⏱️ Timer Functions
