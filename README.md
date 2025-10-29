@@ -4,7 +4,7 @@ This engine starts as a blank canvas, giving Lua control over display and logic
 
 Developers can write Lua scripts to build custom tools, editors, or games.
 
-![BlackBox game image](image.JPG)
+![BlackBox game image](/image.JPG)
 
 # Download the latest release at
 
