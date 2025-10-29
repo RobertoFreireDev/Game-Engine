@@ -55,7 +55,10 @@
 	<None Update="Scripts\sfxeditor.lua">
 		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</None>
-    <None Update="Scripts\mapeditor.lua">
+	  <None Update="Scripts\musiceditor.lua">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
+	<None Update="Scripts\mapeditor.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\spriteeditor.lua">
