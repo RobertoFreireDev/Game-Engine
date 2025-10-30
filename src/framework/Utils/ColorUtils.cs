@@ -44,7 +44,8 @@ public static class ColorUtils
         {
             SetColor(palette);
         }
-        catch (Exception ex) {
+        catch 
+        {
             SetDefaultalette();
         }        
     }
@@ -69,7 +70,7 @@ public static class ColorUtils
             int b = Convert.ToInt32(hexColor.Substring(4, 2), 16);
             return new Color(r, g, b);
         }
-        catch (Exception ex)
+        catch
         {
             return Colors[0];
         }
