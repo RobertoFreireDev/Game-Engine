@@ -2,13 +2,13 @@
 using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 
 namespace blackbox.Sfx;
 
 public class SfxPlayer
 {
     private SfxData[] Data = new SfxData[Constants.SfxQty];
-    private static SfxChannel[] Channels = new SfxChannel[Constants.ChannelQty];
 
     public SfxPlayer()
     {
@@ -16,11 +16,7 @@ public class SfxPlayer
         {
             Data[i] = new SfxData();
         }
-        for (int i = 0; i < Channels.Length; i++)
-        {
-            Channels[i] = new SfxChannel();
-            Channels[i].CreateSound();
-        }
+        AudioLib.CreateSound();
     }
 
     public void SetNote(int index, int noteIndex, string note)
@@ -209,11 +205,7 @@ public class SfxPlayer
             return;
         }
 
-        var channel = Channels.FirstOrDefault(c => !c.Playing);
-        if (channel is null)
-        {
-            return;
-        }
-        channel.Play(Data[index]);
+        var sfx = Data[index];
+        AudioLib.Play(sfx);
     }
 }
