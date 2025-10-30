@@ -40,11 +40,20 @@ function tutorialeditor:create()
         drawtutorialtext("- [c10]Hold Ctrl + click[c10] -> draw block of sprites",0,20)
     end
 
+    local sfxeditor = { category = "Sfx Editor" }
+    function sfxeditor:draw()
+        drawtutorialtext("Sfx Editor Controls:",0,0)
+        drawtutorialtext("- [c10]Q,E[c10] -> navigate sfx",0,10)
+        drawtutorialtext("- [c10]A,D[c10] -> change sfx speed",0,20)
+        drawtutorialtext("- [c10]Space[c10] -> play sfx",0,30)        
+    end
+
     -- Add all pages
     add(tutorialeditor.tutorialpages, firstpage)
     add(tutorialeditor.tutorialpages, hotkeystutorial)
     add(tutorialeditor.tutorialpages, spriteeditor)
     add(tutorialeditor.tutorialpages, mapeditor)
+    add(tutorialeditor.tutorialpages, sfxeditor)
 end
 
 function tutorialeditor:init()

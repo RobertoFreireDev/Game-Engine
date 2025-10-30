@@ -85,11 +85,11 @@ function new_sfx(idx)
     end
 
     function sfx:changespeed()
-        if _btnp(_keys.E) then
+        if _btnp(_keys.D) then
             self.speed = min(self.speed + 1,32)
             _spdsfx(self.idx, self.speed)
         end
-        if _btnp(_keys.Q) then
+        if _btnp(_keys.A) then
             self.speed = max(1,self.speed - 1)
             _spdsfx(self.idx, self.speed)
         end
@@ -157,11 +157,11 @@ function sfxeditor:update()
         _playsfx(self.sfxIndex-1)        
     end
 
-    if _btnp(_keys.W) then
+    if _btnp(_keys.Q) then
         self.sfxIndex = max(1,self.sfxIndex-1)
         self.sounds[self.sfxIndex]:load()
     end
-    if _btnp(_keys.S) then
+    if _btnp(_keys.E) then
         self.sfxIndex = min(self.sfxIndex+1,64)
         self.sounds[self.sfxIndex]:load()
     end
