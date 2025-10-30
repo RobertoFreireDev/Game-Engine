@@ -101,8 +101,7 @@ function new_sfx(idx)
     end
 
     function sfx:draw()
-        _rectfill(0,0,320,180,11)
-        _print("Spd: "..self.speed.." Sfx: "..self.idx, self.notepos.x, 2, 1)
+        _print("Spd: "..self.speed.." Sfx: "..self.idx, self.notepos.x, 2, _colors.secondary)
         self:drawSection("Notes", self.notepos)
         self:drawSection("Octaves", self.octpos)
         self:drawSection("Volume", self.volpos)
@@ -115,20 +114,13 @@ function new_sfx(idx)
     end
 
     function sfx:drawSection(label, pos)
-        _print(label, pos.x, pos.y - pos.r*self.step.y - 8, 12)
-        _rectfill(
+        _print(label, pos.x - 3, pos.y - pos.r*self.step.y - 10, _colors.primary)
+        _rect(
             pos.x-2,
             pos.y-2 - pos.r*self.step.y,
             24*self.step.x+4,
             pos.r*self.step.y+4,
-            3
-        )
-        _rectfill(
-            pos.x-1,
-            pos.y-1 - pos.r*self.step.y,
-            24*self.step.x+2,
-            pos.r*self.step.y+2,
-            12
+            _colors.secondary
         )
     end
 
@@ -168,7 +160,6 @@ function sfxeditor:update()
 end
 
 function sfxeditor:draw()
-    _rectfill(0,0,320,180,11)
     self.sounds[self.sfxIndex]:draw()
 end
 
