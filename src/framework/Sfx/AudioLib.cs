@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Linq;
-using System.Reflection;
 
 namespace blackbox.Sfx;
 
@@ -131,7 +130,7 @@ public static class AudioLib
         switch (wave)
         {
             case Waveform.Square:
-                return (phase < 0.5 ? 1f : -1f) * volume * 0.577f;
+                return (phase < 0.5 ? 1f : -1f) * volume;
             default:
                 return 0;
         }

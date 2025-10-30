@@ -15,16 +15,13 @@ local game={
 }
 
 function game:init()
-    _setnotesfx(0, 0, "48205")
-    _setnotesfx(0, 1, "65206")
-    _setnotesfx(0, 2, "50208")
-    _setnotesfx(0, 3, "71209")
 end
 
 function game:update()
-
     if _btnp(_keys.A) then
-        _playsfx(0,8)
+        _playsfx(0)
+        _playsfx(1)
+        _playsfx(2)
     end
 end
 
