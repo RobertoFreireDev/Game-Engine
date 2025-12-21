@@ -373,6 +373,11 @@ public class GridData
 
         foreach (var p in pixels)
         {
+            if (p.X < rx0 || p.X > rx1 || p.Y < ry0 || p.Y > ry1)
+            {
+                continue;
+            }
+
             if (InvalidGridPos(p.X, p.Y))
             {
                 continue;
