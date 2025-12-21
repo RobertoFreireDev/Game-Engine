@@ -62,8 +62,28 @@ Find raspberry pi Ip address
 hostname -I
 ```
 
-Copy and paste on Raspberry pi via ssh
+Copy and paste published monogame files on Raspberry pi via ssh
 
+```
+on folder \Game-Engine\src\framework\bin\Release\net8.0\linux-arm64\publish
+
+open cmd
+
+scp -r . pi@raspberrypi.local:/home/pi/blackbox
+scp -r . pi@192.168.100.107:/home/pi/blackbox
+```
+
+If warning appears on first connection
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+```
+
+Try again with Ip address
 ```
 scp -r . pi@192.168.100.107:/home/pi/blackbox
 ```
@@ -74,23 +94,18 @@ Make the executable runnable
 chmod +x blackbox 
 ```
 
-Instal SDL2 library
+Instal SDL2 and audio libraroes
 
 ```
 sudo apt install -y libsdl2-dev
+sudo apt install rtkit
+reboot
 ```
 
 Run file on Raspberry
 
 ```
 ./blackbox
-```
-
-Fix audio issue:
-
-```
-sudo apt install rtkit
-reboot
 ```
 
 # Lua API Reference
