@@ -40,6 +40,53 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-arm64\publish
 Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 ```
 
+# Raspberry pi 5
+
+Publish
+
+```
+dotnet publish blackbox.csproj -c Release -r linux-arm64 --self-contained true -p:PublishSingleFile=true
+```
+
+Enable ssh
+
+```
+sudo systemctl enable ssh
+sudo systemctl start ssh
+sudo systemctl status ssh
+```
+
+Find raspberry pi Ip address
+
+```
+hostname -I
+```
+
+Copy and paste on Raspberry pi via ssh
+
+```
+scp -r . pi@192.168.100.107:/home/pi/blackbox
+```
+
+Make the executable runnable
+
+```
+chmod +x blackbox 
+```
+
+Instal SDL2 library
+
+```
+sudo apt install -y libsdl2-dev
+```
+
+Run file on Raspberry
+
+```
+./blackbox
+```
+
+
 # Lua API Reference
 
 🧩 Texture Functions
