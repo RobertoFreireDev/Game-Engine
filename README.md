@@ -70,7 +70,6 @@ on folder \Game-Engine\src\framework\bin\Release\net8.0\linux-arm64\publish
 open cmd
 
 scp -r . pi@raspberrypi.local:/home/pi/blackbox
-scp -r . pi@192.168.100.107:/home/pi/blackbox
 ```
 
 If warning appears on first connection
@@ -99,12 +98,18 @@ Instal SDL2 and audio libraroes
 ```
 sudo apt install -y libsdl2-dev
 sudo apt install rtkit
-reboot
 ```
 
 Run file on Raspberry
 
 ```
+./blackbox
+```
+
+Reboot and run again
+
+```
+reboot
 ./blackbox
 ```
 
