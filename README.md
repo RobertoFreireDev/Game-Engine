@@ -86,6 +86,12 @@ Run file on Raspberry
 ./blackbox
 ```
 
+Fix audio issue:
+
+```
+sudo apt install rtkit
+reboot
+```
 
 # Lua API Reference
 
