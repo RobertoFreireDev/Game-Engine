@@ -4,6 +4,8 @@ local gamepadexample = require("Scripts/Examples/gamepadexample")
 local sfxexample = require("Scripts/Examples/sfxexample")
 local timerexample  = require("Scripts/Examples/timerexample")
 local cameraexample   = require("Scripts/Examples/cameraexample")
+local topdowngameexample   = require("Scripts/Examples/topdowngameexample")
+local platformgameexample   = require("Scripts/Examples/platformgameexample")
 
 local game={
     examples = {},
@@ -18,6 +20,8 @@ function game:init()
     add(self.examples,timerexample)
     add(self.examples,sfxexample)
     add(self.examples,cameraexample)
+    add(self.examples,topdowngameexample)
+    add(self.examples,platformgameexample)
 end
 
 function game:update()
