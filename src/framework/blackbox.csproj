@@ -31,34 +31,7 @@
 	    <Content Include="main.lua" CopyToPublishDirectory="Always" />
     </ItemGroup>
   <ItemGroup>
-    <None Update="Scripts\imports.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\constants.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\helperfunctions.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\library.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\component.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\game.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\tutorialeditor.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-	<None Update="Scripts\sfxeditor.lua">
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	</None>
-	<None Update="Scripts\mapeditor.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Scripts\spriteeditor.lua">
+    <None Update="Scripts\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
 	<None Update="main.lua">

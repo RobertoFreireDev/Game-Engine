@@ -19,7 +19,6 @@ local spriteFileName, mapFileName, flagFileName, sfxFileName = "spritedata", "ma
 function change_state(st)
     state=st
     state:init()
-    _fps30()
 end
 
 function changepage(p, o)
@@ -28,6 +27,7 @@ function changepage(p, o)
 end
 
 function _init()   
+    _fps30()
     _ngrid(30,(const.maxPage+1)*4,10,true)
     _cmap(320,180,10)
     if _iohasfile(spriteFileName) then
