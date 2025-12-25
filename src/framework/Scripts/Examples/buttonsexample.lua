@@ -2,7 +2,7 @@
     title = "Buttons example"
 }
 
-function newPlayer(x,y)
+local newPlayer = function(x,y)
     local o = {}
     o.x = x
     o.y = y
