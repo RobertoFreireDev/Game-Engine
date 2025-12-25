@@ -2,7 +2,7 @@
     title = "GamePad example"
 }
 
-function newPlayer(x,y,i)
+local newPlayer = function(x,y,i)
     local o = {}
     o.x = x
     o.y = y

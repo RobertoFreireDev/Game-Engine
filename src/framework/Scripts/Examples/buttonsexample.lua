@@ -2,26 +2,77 @@
     title = "Buttons example"
 }
 
-function buttonsexample:init()
+function newPlayer(x,y)
+    local o = {}
+    o.x = x
+    o.y = y
+    o.c = 12
+    o.r = 4
+    o.speed = 1
+    o.butarr={1,2,0,3,5,6,3,4,8,7,4,0,1,2,0}
+    o.butarr[0]=0
+    o.dirx={-1,1, 0,0,-0.7, 0.7,0.7,-0.7}
+    o.diry={ 0,0,-1,1,-0.7,-0.7,0.7, 0.7}
+    o.lastdir = 0
+    o.mask = 0
+    o.a = 0
+    o.b = 0
+    
+    function o:update()
+        self.mask = 0
 
+        -- LEFT = 1
+        if _btn(_keys.Left) then
+            self.mask = self.mask + 1
+        end
+
+        -- RIGHT = 2
+        if _btn(_keys.Right) then
+            self.mask = self.mask + 2
+        end
+
+        -- UP = 4
+        if _btn(_keys.Up) then
+            self.mask = self.mask + 4
+        end
+
+        -- DOWN = 8
+        if _btn(_keys.Down) then
+            self.mask = self.mask + 8
+        end
+
+        local a,b,dir=self.x,self.y,self.butarr[self.mask]
+
+        if dir > 0 then
+            a=a+self.dirx[dir]*self.speed
+            b=b+self.diry[dir]*self.speed
+        end
+
+        self.lastdir=dir
+        self.x = a
+        self.y = b
+    end
+
+    function o:draw()    
+        _circfill(self.x, self.y, self.r, self.c, 10)
+        _print("lastdir = "..self.lastdir, 50, 100, 1)
+        _print("mask = "..self.mask, 50, 120, 1)
+        _print(self.x..", "..self.y, 50, 140, 1)
+    end
+
+    return o
+end
+
+function buttonsexample:init()
+    player = newPlayer(100,100)
 end
 
 function buttonsexample:update() 
-
+    player:update()
 end
 
 function buttonsexample:draw()
-
+    player:draw()
 end
 
 return buttonsexample
-
---[[
-🖱️ Input Functions
-
-    | Function                        | Lua Alias      |
-    | ------------------------------- | -------------- |
-    | `JustPressed(int keyNumber)`    | `_btnp`        |
-    | `Released(int keyNumber)`       | `_btnr`        |
-    | `Pressed(int keyNumber)`        | `_btn`         |
-]]
