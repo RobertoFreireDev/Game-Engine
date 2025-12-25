@@ -40,7 +40,7 @@ Game-Engine\src\framework\bin\Release\net8.0\linux-arm64\publish
 Game-Engine\src\framework\bin\Release\net8.0\linux-x64\publish
 ```
 
-# Raspberry pi 5
+# Raspberry pi 5 OS Lite (No desktop environment)
 
 Publish
 
