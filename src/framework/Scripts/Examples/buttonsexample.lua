@@ -11,15 +11,17 @@ function newPlayer(x,y)
     o.speed = 1
     o.butarr={1,2,0,3,5,6,3,4,8,7,4,0,1,2,0}
     o.butarr[0]=0
-    o.dirx={-1,1, 0,0,-0.7, 0.7,0.7,-0.7}
-    o.diry={ 0,0,-1,1,-0.7,-0.7,0.7, 0.7}
+    o.dirx={-1,1, 0,0,-0.7071, 0.7071,0.7071,-0.7071}
+    o.diry={ 0,0,-1,1,-0.7071,-0.7071,0.7071, 0.7071}
     o.lastdir = 0
     o.mask = 0
-    o.a = 0
-    o.b = 0
+    o.dx = 0
+    o.dy = 0
     
     function o:update()
         self.mask = 0
+        self.dx=0
+        self.dy=0
 
         -- LEFT = 1
         if _btn(_keys.Left) then
@@ -41,16 +43,21 @@ function newPlayer(x,y)
             self.mask = self.mask + 8
         end
 
-        local a,b,dir=self.x,self.y,self.butarr[self.mask]
+        local dir = self.butarr[self.mask]
+
+        if self.lastdir ~= dir and dir>=5 then
+            self.x=flr(self.x)+0.5
+            self.y=flr(self.y)+0.5
+        end
 
         if dir > 0 then
-            a=a+self.dirx[dir]*self.speed
-            b=b+self.diry[dir]*self.speed
+            self.dx=self.dx+self.dirx[dir]*self.speed
+            self.dy=self.dy+self.diry[dir]*self.speed
         end
 
         self.lastdir=dir
-        self.x = a
-        self.y = b
+        self.x = self.x + self.dx
+        self.y = self.y + self.dy
     end
 
     function o:draw()    
