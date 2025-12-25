@@ -27,6 +27,10 @@ end
 function game:update()
     if _btnp(_keys.Q) then
         self.onexample = not self.onexample
+
+        if self.onexample then
+            self.examples[self.index]:init()
+        end
     end
 
     if self.onexample then
