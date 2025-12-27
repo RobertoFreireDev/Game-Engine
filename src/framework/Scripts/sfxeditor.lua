@@ -7,7 +7,7 @@
 function new_sfx(idx)
     local sfx = {
         idx = idx,
-        speed = 8,
+        speed = 1,
         notes = {},
         octaves = {},
         vol = {},
@@ -86,7 +86,7 @@ function new_sfx(idx)
 
     function sfx:changespeed()
         if _btnp(_keys.D) then
-            self.speed = min(self.speed + 1,32)
+            self.speed = min(self.speed + 1,16)
             _spdsfx(self.idx, self.speed)
         end
         if _btnp(_keys.A) then
