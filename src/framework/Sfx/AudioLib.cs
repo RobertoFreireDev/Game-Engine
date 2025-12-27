@@ -16,43 +16,54 @@ public static class AudioLib
     public static void CreateSound()
     {
         for (int i = 0; i < Channels.Length; i++)
-        {
             Channels[i] = new SfxChannel();
-        }
+
         Sound = new DynamicSoundEffectInstance(SampleRate, AudioChannels.Mono);
         Sound.BufferNeeded += OnBufferNeeded;
+
+        // Pre-fill buffers to avoid starvation
+        int bufferSize = SampleRate / 30 * 2;
+        Sound.SubmitBuffer(new byte[bufferSize]);
+        Sound.SubmitBuffer(new byte[bufferSize]);
+
         Sound.Play();
     }
 
     public static void Play(SfxData sfx)
     {
         var ch = Channels.FirstOrDefault(c => !c.Playing);
-        if (ch is null)
-        {
+        if (ch == null)
             return;
-        }
+
         ch.CurrentSfx = sfx;
         ch.Position = 0;
         ch.Time = 0;
         ch.Playing = true;
-        ch.Phase = 0.0;
+        ch.Phase = 0;
         ch.CurrentSample = 0;
-        ch.TotalSamples = (int)(sfx.Notes.Length * sfx.Speed * Constants.SpeedSfx * SampleRate);
+
+        // total samples for fades
+        float secondsPerNote = sfx.Speed * Constants.SpeedSfx;
+        ch.TotalSamples = (int)(sfx.Notes.Length * secondsPerNote * SampleRate);
     }
 
-    public static void OnBufferNeeded(object sender, EventArgs e)
+    private static void OnBufferNeeded(object sender, EventArgs e)
     {
-        int samples = SampleRate / 30; // about 33ms of audio
-        float[] buffer = new float[samples];
-        GenerateAudio(buffer, samples);
-        byte[] byteBuffer = new byte[samples * sizeof(short)];
-        int outIndex = 0;
-        foreach (var f in buffer)
+        int samples = SampleRate / 30; // ~33 ms
+        float[] mixBuffer = new float[samples];
+
+        GenerateAudio(mixBuffer, samples);
+
+        byte[] byteBuffer = new byte[samples * 2];
+        int index = 0;
+
+        for (int i = 0; i < samples; i++)
         {
-            short sample = (short)(Math.Clamp(f, -1f, 1f) * short.MaxValue);
-            byteBuffer[outIndex++] = (byte)(sample & 0xFF);
-            byteBuffer[outIndex++] = (byte)((sample >> 8) & 0xFF);
+            short sample = (short)(Math.Clamp(mixBuffer[i], -1f, 1f) * short.MaxValue);
+            byteBuffer[index++] = (byte)(sample & 0xFF);
+            byteBuffer[index++] = (byte)((sample >> 8) & 0xFF);
         }
+
         Sound.SubmitBuffer(byteBuffer);
     }
 
@@ -60,58 +71,75 @@ public static class AudioLib
     {
         Array.Clear(buffer, 0, samples);
 
+        float masterGain = 1f / Channels.Length;
+
         for (int chIndex = 0; chIndex < Channels.Length; chIndex++)
         {
             var ch = Channels[chIndex];
-            if (!ch.Playing || ch.CurrentSfx == null) continue;
+            if (!ch.Playing || ch.CurrentSfx == null)
+                continue;
 
             var sfx = ch.CurrentSfx;
-            var speed = sfx.Speed * Constants.SpeedSfx;
+            float secondsPerNote = sfx.Speed * Constants.SpeedSfx;
+
+            // cache state locally
+            double time = ch.Time;
+            double phase = ch.Phase;
+            int position = ch.Position;
+            int currentSample = ch.CurrentSample;
+            bool playing = ch.Playing;
 
             for (int i = 0; i < samples; i++)
             {
-                ch.Time += 1.0 / SampleRate;
-                ch.CurrentSample++;
+                time += 1.0 / SampleRate;
+                currentSample++;
 
-                if (ch.Time >= speed)
+                if (time >= secondsPerNote)
                 {
-                    ch.Time -= speed;
-                    ch.Position++;
-                    if (ch.Position >= sfx.Notes.Length)
+                    time -= secondsPerNote;
+                    position++;
+
+                    if (position >= sfx.Notes.Length)
                     {
-                        ch.Playing = false;
+                        playing = false;
                         break;
                     }
                 }
 
-                var note = sfx.Notes[ch.Position];
+                var note = sfx.Notes[position];
                 float freq = PitchToFrequency(note.Pitch);
 
-                ch.Phase += freq / SampleRate;
-                ch.Phase -= Math.Floor(ch.Phase);
+                phase += freq / SampleRate;
+                phase -= Math.Floor(phase);
 
-                float sample = GenerateWave(note.Wave, ch.Phase, note.Volume);
+                float sample = GenerateWave(note.Wave, phase, note.Volume);
 
                 // Fade-in / fade-out
                 float gain = 1f;
                 int fadeInSamples = (int)(FadeInSeconds * SampleRate);
                 int fadeOutSamples = (int)(FadeOutSeconds * SampleRate);
 
-                if (ch.CurrentSample < fadeInSamples)
-                    gain = ch.CurrentSample / (float)fadeInSamples;
-                else if (ch.CurrentSample > ch.TotalSamples - fadeOutSamples)
-                    gain = (ch.TotalSamples - ch.CurrentSample) / (float)fadeOutSamples;
+                if (currentSample < fadeInSamples)
+                    gain = currentSample / (float)fadeInSamples;
+                else if (currentSample > ch.TotalSamples - fadeOutSamples)
+                    gain = (ch.TotalSamples - currentSample) / (float)fadeOutSamples;
 
-                buffer[i] += sample * gain;
+                buffer[i] += sample * gain * masterGain;
             }
+
+            // write back state ONCE
+            ch.Time = time;
+            ch.Phase = phase;
+            ch.Position = position;
+            ch.CurrentSample = currentSample;
+            ch.Playing = playing;
         }
 
-        // 2. Find max absolute value
+        // safety normalize
         float max = 0f;
         for (int i = 0; i < samples; i++)
             max = Math.Max(max, Math.Abs(buffer[i]));
 
-        // 3. If needed, scale down to fit [-1, 1]
         if (max > 1f)
         {
             float scale = 1f / max;
@@ -127,12 +155,10 @@ public static class AudioLib
 
     private static float GenerateWave(Waveform wave, double phase, float volume)
     {
-        switch (wave)
+        return wave switch
         {
-            case Waveform.Square:
-                return (phase < 0.5 ? 1f : -1f) * volume;
-            default:
-                return 0;
-        }
+            Waveform.Square => (phase < 0.5 ? 1f : -1f) * volume,
+            _ => 0f
+        };
     }
 }
