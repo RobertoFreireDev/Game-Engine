@@ -166,6 +166,75 @@ _keys = {
     OemEnlW            = 244 -- OEM Enlarge Window key
 }
 
+_keyboard = {
+    -- Digits
+    ['0'] = _keys.D0,
+    ['1'] = _keys.D1,
+    ['2'] = _keys.D2,
+    ['3'] = _keys.D3,
+    ['4'] = _keys.D4,
+    ['5'] = _keys.D5,
+    ['6'] = _keys.D6,
+    ['7'] = _keys.D7,
+    ['8'] = _keys.D8,
+    ['9'] = _keys.D9,
+
+    -- Letters (case handled by Shift)
+    ['A'] = _keys.A, ['a'] = _keys.A,
+    ['B'] = _keys.B, ['b'] = _keys.B,
+    ['C'] = _keys.C, ['c'] = _keys.C,
+    ['D'] = _keys.D, ['d'] = _keys.D,
+    ['E'] = _keys.E, ['e'] = _keys.E,
+    ['F'] = _keys.F, ['f'] = _keys.F,
+    ['G'] = _keys.G, ['g'] = _keys.G,
+    ['H'] = _keys.H, ['h'] = _keys.H,
+    ['I'] = _keys.I, ['i'] = _keys.I,
+    ['J'] = _keys.J, ['j'] = _keys.J,
+    ['K'] = _keys.K, ['k'] = _keys.K,
+    ['L'] = _keys.L, ['l'] = _keys.L,
+    ['M'] = _keys.M, ['m'] = _keys.M,
+    ['N'] = _keys.N, ['n'] = _keys.N,
+    ['O'] = _keys.O, ['o'] = _keys.O,
+    ['P'] = _keys.P, ['p'] = _keys.P,
+    ['Q'] = _keys.Q, ['q'] = _keys.Q,
+    ['R'] = _keys.R, ['r'] = _keys.R,
+    ['S'] = _keys.S, ['s'] = _keys.S,
+    ['T'] = _keys.T, ['t'] = _keys.T,
+    ['U'] = _keys.U, ['u'] = _keys.U,
+    ['V'] = _keys.V, ['v'] = _keys.V,
+    ['W'] = _keys.W, ['w'] = _keys.W,
+    ['X'] = _keys.X, ['x'] = _keys.X,
+    ['Y'] = _keys.Y, ['y'] = _keys.Y,
+    ['Z'] = _keys.Z, ['z'] = _keys.Z,
+
+    -- Punctuation / symbols
+    [','] = _keys.OemComma,
+    ['.'] = _keys.OemPeriod,
+    [';'] = _keys.OemSemicolon,
+    [':'] = _keys.OemSemicolon, -- shift
+    ['['] = _keys.OemOpenBrackets,
+    [']'] = _keys.OemCloseBrackets,
+    ['{'] = _keys.OemOpenBrackets, -- shift
+    ['}'] = _keys.OemCloseBrackets, -- shift
+    ['|'] = _keys.OemPipe,
+    ['\\'] = _keys.OemPipe,
+    ['"'] = _keys.OemQuotes,
+    ["'"] = _keys.OemQuotes,
+    ['+'] = _keys.OemPlus,
+    ['='] = _keys.OemPlus,
+    ['-'] = _keys.OemMinus,
+    ['_'] = _keys.OemMinus,
+    ['*'] = _keys.Multiply,
+    ['/'] = _keys.OemQuestion,
+    ['?'] = _keys.OemQuestion,
+    ['<'] = _keys.OemBackslash,
+    ['>'] = _keys.OemBackslash,
+    ['~'] = _keys.OemTilde,
+
+    -- Space
+    [' '] = _keys.Space,
+}
+
 _playerindex = {
     One = 0,
     Two = 1,

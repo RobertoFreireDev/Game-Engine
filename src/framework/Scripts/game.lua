@@ -1,4 +1,5 @@
 ﻿local buttonsexample = require("Scripts/Examples/buttonsexample")
+local keyboardexample   = require("Scripts/Examples/keyboardexample")
 local mouseexample = require("Scripts/Examples/mouseexample")
 local gamepadexample = require("Scripts/Examples/gamepadexample")
 local sfxexample = require("Scripts/Examples/sfxexample")
@@ -15,6 +16,7 @@ local game={
 
 function game:init()
     add(self.examples,buttonsexample)
+    add(self.examples,keyboardexample)
     add(self.examples,mouseexample)
     add(self.examples,gamepadexample)
     add(self.examples,timerexample)
