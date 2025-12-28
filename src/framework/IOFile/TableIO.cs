@@ -108,15 +108,26 @@ public static class TableIO
 
     private static string Escape(string value)
     {
-        if (value == null) return "";
+        value = NormalizeValue(value);
 
-        if (value.Contains(",") || value.Contains("\"") || value.Contains("\n"))
+        if (value.Contains(",") || value.Contains("\"") || value.Contains("\\n"))
         {
             value = value.Replace("\"", "\"\"");
             return $"\"{value}\"";
         }
 
         return value;
+    }
+
+    private static string NormalizeValue(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return string.Empty;
+
+        return value
+            .Replace("\r", string.Empty)
+            .Replace("\n", string.Empty)
+            .Replace("\t", string.Empty);
     }
 
     private static string[] ParseCsvLine(string line)
