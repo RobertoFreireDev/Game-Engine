@@ -6,6 +6,15 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 
 ![BlackBox game image](/image.JPG)
 
+## TO DO LIST:
+
+Databases:
+
+- Create a dictionary of tables to store in C# part and save on CSV files
+- In Lua, only read values, delete/update/create rows, try to add pagination to not load all the CSV file.
+
+Implement all examples:
+
 # Download the latest release at
 
 https://roberto-freire.itch.io/blackbox
