@@ -1,8 +1,8 @@
 ﻿using blackbox.Binding;
-using blackbox.Utils;
+using blackbox.IOFile;
 using System;
 
-namespace blackbox.Graphics;
+namespace blackbox.Utils;
 
 public static class LuaError
 {
@@ -43,6 +43,7 @@ public static class LuaError
         LuaBinding.EnableCRTshader(false);
         _error = true;
         _message = message;
+        TableIO.InsertRow(SystemLogs.Table, new string[] { DateTime.UtcNow.ToString(), SystemLogs.TypeError, message });
     }
 
     public static void Draw()

@@ -26,11 +26,15 @@
     <PackageReference Include="NLua" Version="1.7.5" />
   </ItemGroup>
     <ItemGroup>
+		<Content Include="Tables\**\*" CopyToPublishDirectory="Always" />
 	    <Content Include="Scripts\**\*" CopyToPublishDirectory="Always" />
 	    <Content Include="metadata.txt" CopyToPublishDirectory="Always" />
 	    <Content Include="main.lua" CopyToPublishDirectory="Always" />
     </ItemGroup>
   <ItemGroup>
+	<None Update="Tables\**\*">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</None>
     <None Update="Scripts\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

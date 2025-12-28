@@ -1,4 +1,4 @@
-﻿using blackbox.Graphics;
+﻿using blackbox.Utils;
 using System;
 using System.IO;
 using System.Linq;
@@ -7,7 +7,7 @@ namespace blackbox.IOFile;
 
 public static class FileIO
 {
-    public static bool HasFile(string fileName, string extension)
+    public static bool HasFile(string fileName, string extension, string path = "")
     {
         try
         {
@@ -16,24 +16,17 @@ public static class FileIO
                 return false;
             }
 
-            fileName += $".{extension}";
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            if (File.Exists(path))
-            {
-                return true;
-            }
-
+            var fullPath = BuildPath(fileName, extension, path);
+            return File.Exists(fullPath);
         }
         catch (Exception e)
         {
             LuaError.SetError("Error finding file: " + e.Message);
+            return false;
         }
-
-        return false;
     }
 
-    public static string Read(string fileName, string extension)
+    public static string Read(string fileName, string extension, string path = "")
     {
         try
         {
@@ -42,10 +35,9 @@ public static class FileIO
                 return string.Empty;
             }
 
-            fileName += $".{extension}";
+            var fullPath = BuildPath(fileName, extension, path);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(fullPath))
             {
                 return reader.ReadToEnd();
             }
@@ -62,7 +54,7 @@ public static class FileIO
         return string.Empty;
     }
 
-    public static void Create(string fileName, string extension, string content)
+    public static void Create(string fileName, string extension, string content, string path = "")
     {
         try
         {
@@ -71,15 +63,15 @@ public static class FileIO
                 return;
             }
 
-            fileName += $".{extension}";
+            var fullPath = BuildPath(fileName, extension, path);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            if (File.Exists(path))
+            if (File.Exists(fullPath))
             {
-                LuaError.SetError($"File already exists: {path}");
+                LuaError.SetError($"File already exists: {fullPath}");
+                return;
             }
 
-            CreateOrUpdateFile(path, content);
+            CreateOrUpdateFile(fullPath, content);
 
         }
         catch (Exception e)
@@ -88,7 +80,7 @@ public static class FileIO
         }
     }
 
-    public static void Update(string fileName, string extension, string content)
+    public static void Update(string fileName, string extension, string content, string path = "")
     {
         try
         {
@@ -97,15 +89,14 @@ public static class FileIO
                 return;
             }
 
-            fileName += $".{extension}";
+            var fullPath = BuildPath(fileName, extension, path);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            if (!File.Exists(path))
+            if (!File.Exists(fullPath))
             {
-                LuaError.SetError($"File doesn't exist: {path}");
+                LuaError.SetError($"File doesn't exist: {fullPath}");
             }
 
-            CreateOrUpdateFile(path, content);
+            CreateOrUpdateFile(fullPath, content);
         }
         catch (Exception e)
         {
@@ -113,7 +104,7 @@ public static class FileIO
         }
     }
 
-    public static void CreateOrUpdate(string fileName, string extension, string content)
+    public static void CreateOrUpdate(string fileName, string extension, string content, string path = "")
     {
         try
         {
@@ -122,11 +113,9 @@ public static class FileIO
                 return;
             }
 
-            fileName += $".{extension}";
+            var fullPath = BuildPath(fileName, extension, path);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-
-            CreateOrUpdateFile(path, content);
+            CreateOrUpdateFile(fullPath, content);
         }
         catch (Exception e)
         {
@@ -134,7 +123,7 @@ public static class FileIO
         }
     }
 
-    public static void Delete(string fileName, string extension)
+    public static void Delete(string fileName, string extension, string path = "")
     {
         try
         {
@@ -145,18 +134,28 @@ public static class FileIO
 
             fileName += $".{extension}";
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            if (!File.Exists(path))
+            var fullPath = BuildPath(fileName, extension, path);
+            if (!File.Exists(fullPath))
             {
-                LuaError.SetError($"File not found: {path}");
+                LuaError.SetError($"File not found: {fullPath}");
             }
 
-            File.Delete(path);
+            File.Delete(fullPath);
         }
         catch (Exception e)
         {
             LuaError.SetError("Error deleting file: " + e.Message);
         }
+    }
+
+    private static string BuildPath(string fileName, string extension, string path)
+    {
+        var basePath = string.IsNullOrWhiteSpace(path)
+            ? Directory.GetCurrentDirectory()
+            : path;
+
+        fileName += $".{extension}";
+        return Path.Combine(basePath, fileName);
     }
 
     private static void CreateOrUpdateFile(string path, string content)
