@@ -40,13 +40,6 @@ function printTable(tbl, x, y)
         return str .. string.rep(" ", width - #str)
     end
 
-    local headerLine = {}
-    for i, h in ipairs(headers) do
-        table.insert(headerLine, pad(h, colWidths[i]))
-    end
-    _print(table.concat(headerLine, " | "), x, y, 1)
-    y = y + 10
-
     local sepLine = {}
     for i, w in ipairs(colWidths) do
         table.insert(sepLine, string.rep("-", w))
