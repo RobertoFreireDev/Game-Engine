@@ -9,6 +9,7 @@ using NLua;
 using System;
 using blackbox.Sfx;
 using System.Text;
+using System.Collections;
 
 namespace blackbox.Binding;
 
@@ -78,6 +79,14 @@ public class LuaBinding
         _lua.RegisterFunction("_ioupdate", this, GetType().GetMethod("UpdateFile"));
         _lua.RegisterFunction("_iocreateorupdate", this, GetType().GetMethod("CreateOrUpdateFile"));
         _lua.RegisterFunction("_iodelete", this, GetType().GetMethod("DeleteFile"));
+
+        // tables
+        _lua.RegisterFunction("_tbct", this, GetType().GetMethod("CreateTable"));
+        _lua.RegisterFunction("_tbra", this, GetType().GetMethod("ReadTable"));
+        _lua.RegisterFunction("_tbir", this, GetType().GetMethod("InsertRow"));
+        _lua.RegisterFunction("_tbur", this, GetType().GetMethod("UpdateRow"));
+        _lua.RegisterFunction("_tbuc", this, GetType().GetMethod("UpdateCell"));
+        _lua.RegisterFunction("_tbdr", this, GetType().GetMethod("DeleteRow"));
 
         //Sfx
         _lua.RegisterFunction("_loadsfx", this, GetType().GetMethod("ReadSfx"));
@@ -727,6 +736,85 @@ public class LuaBinding
             return;
         }
         TxtFileIO.CreateOrUpdate(sfxfilename, content);
+    }
+    #endregion
+
+    #region TableFunctions
+    public static void CreateTable(string tableName, LuaTable columnsTable)
+    {
+        if (columnsTable == null || columnsTable.Values.Count == 0)
+        {
+            LuaError.SetError("Table must have at least one column");
+            return;
+        }
+
+        var columns = new string[columnsTable.Values.Count];
+        int i = 0;
+        foreach (var val in columnsTable.Values)
+        {
+            columns[i++] = val?.ToString() ?? "";
+        }
+
+        TableIO.CreateTable(tableName, columns);
+    }
+
+    public static LuaTable ReadTable(string tableName)
+    {
+        var tableData = TableIO.ReadTable(tableName);
+
+        LuaTable luaTable = _lua.DoString("return {}")[0] as LuaTable;
+
+        for (int i = 0; i < tableData.Count; i++)
+        {
+            var row = tableData[i];
+            LuaTable rowTable = _lua.DoString("return {}")[0] as LuaTable;
+            for (int j = 0; j < row.Length; j++)
+            {
+                rowTable[j + 1] = row[j]; // Lua is 1-indexed
+            }
+            luaTable[i + 1] = rowTable;
+        }
+
+        return luaTable;
+    }
+
+    public static void InsertRow(string tableName, LuaTable valuesTable)
+    {
+        if (valuesTable == null || valuesTable.Values.Count == 0) return;
+
+        var values = ToArray(valuesTable.Values);
+        TableIO.InsertRow(tableName, values);
+    }
+
+    public static void UpdateRow(string tableName, int rowIndex, LuaTable valuesTable)
+    {
+        if (valuesTable == null || valuesTable.Values.Count == 0) return;
+
+        var values = ToArray(valuesTable.Values);
+        TableIO.UpdateRow(tableName, rowIndex, values);
+    }
+
+    public static void UpdateCell(string tableName, int rowIndex, int columnIndex, string value)
+    {
+        TableIO.UpdateCell(tableName, rowIndex, columnIndex, value);
+    }
+
+    public static void DeleteRow(string tableName, int rowIndex)
+    {
+        TableIO.DeleteRow(tableName, rowIndex);
+    }
+
+    private static string[] ToArray(ICollection values)
+    {
+        var valuesList = new string[values.Count];
+        int i = 0;
+        foreach (var val in values)
+        {
+            valuesList[i] = val?.ToString() ?? string.Empty;
+            i++;
+        }
+
+        return valuesList;
     }
     #endregion
 

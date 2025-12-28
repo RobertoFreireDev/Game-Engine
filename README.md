@@ -142,6 +142,17 @@ reboot
 | `GetFlags()`                                                                   | `_getflags`   |
 | `Loadflags()`                                                                   | `_loadflags`   |
 
+📑 Table functions
+
+| Function                                                                                                       | Lua Alias |
+| -------------------------------------------------------------------------------------------------------------- | --------- |
+| `CreateTable(string tableName, LuaTable columnsTable)`     | `_tbct`   |
+| `ReadTable(string tableName)`     | `_tbra`   |
+| `InsertRow(string tableName, LuaTable valuesTable)`     | `_tbir`   |
+| `UpdateRow(string tableName, int rowIndex, LuaTable valuesTable)`     | `_tbur`   |
+| `UpdateCell(string tableName, int rowIndex, int columnIndex, string value)`     | `_tbuc`   |
+| `DeleteRow(string tableName, int rowIndex)`     | `_tbdr`   |
+
 🧮 Grid Functions
 
 | Function                                                                                                                                             | Lua Alias     |
