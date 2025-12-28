@@ -69,7 +69,8 @@ public class LuaBinding
         // Status
         _lua.RegisterFunction("_sysfps", this, GetType().GetMethod("GetFps"));
         _lua.RegisterFunction("_isfocused", this, GetType().GetMethod("IsFocused"));
-
+        _lua.RegisterFunction("_getscreen", this, GetType().GetMethod("GetVirtualScreen"));
+        
         // File 
         _lua.RegisterFunction("_iohasfile", this, GetType().GetMethod("HasFile"));
         _lua.RegisterFunction("_ioread", this, GetType().GetMethod("ReadFile"));
@@ -635,6 +636,17 @@ public class LuaBinding
     #endregion
 
     #region SystemFunctions
+    public static LuaTable GetVirtualScreen()
+    {
+        LuaTable table = _lua.DoString("return {}")[0] as LuaTable;
+        table["x"] = ScreenUtils.BaseBox.X;
+        table["y"] = ScreenUtils.BaseBox.Y;
+        table["width"] = ScreenUtils.BaseBox.Width;
+        table["height"] = ScreenUtils.BaseBox.Height;
+
+        return table;
+    }
+
     public static void ConfigFps30()
     {
         GFW.UpdateFPS(30);

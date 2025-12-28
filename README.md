@@ -205,6 +205,7 @@ reboot
 | ----------------- | ---------- |
 | `GetFps()`        | `_sysfps`  |
 | `IsFocused()`     | `_isfocused` |
+| `GetVirtualScreen()`     | `_getscreen` |
 | `ConfigFps30()`                                                | `_fps30`    |
 | `ConfigFps60()`                                                | `_fps60`    |
 | `EnableCRTshader(bool value, int inner = 85, int outer = 110)` | `_crtshader`|
