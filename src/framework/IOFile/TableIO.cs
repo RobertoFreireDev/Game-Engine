@@ -10,6 +10,7 @@ public static class TableIO
 {
     private const string extension = "csv";
     private const string path = "Tables";
+    private const char delimiter = ';';
 
     public static void CreateTable(string tableName, params string[] columns)
     {
@@ -19,7 +20,7 @@ public static class TableIO
             return;
         }
 
-        var header = string.Join(",", columns.Select(Escape));
+        var header = string.Join(delimiter.ToString(), columns.Select(FormatValue));
         FileIO.Create(tableName, extension, header, path);
     }
 
@@ -29,6 +30,7 @@ public static class TableIO
             return new List<string[]>();
 
         var content = FileIO.Read(tableName, extension, path);
+        content = content.Replace("\r\n", "\n");
         var lines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
         return lines.Select(ParseCsvLine).ToList();
@@ -45,7 +47,7 @@ public static class TableIO
             return;
         }
 
-        table.Add(values.Select(Escape).ToArray());
+        table.Add(values.Select(FormatValue).ToArray());
         WriteTable(tableName, table);
     }
 
@@ -58,7 +60,7 @@ public static class TableIO
             return;
         }
 
-        table[rowIndex + 1] = values.Select(Escape).ToArray();
+        table[rowIndex + 1] = values.Select(FormatValue).ToArray();
         WriteTable(tableName, table);
     }
 
@@ -78,7 +80,7 @@ public static class TableIO
             return;
         }
 
-        table[rowIndex + 1][columnIndex] = Escape(value);
+        table[rowIndex + 1][columnIndex] = FormatValue(value);
         WriteTable(tableName, table);
     }
 
@@ -101,33 +103,38 @@ public static class TableIO
         var sb = new StringBuilder();
 
         foreach (var row in table)
-            sb.AppendLine(string.Join(",", row));
-
-        FileIO.Update(tableName, extension, sb.ToString().TrimEnd(), path);
-    }
-
-    private static string Escape(string value)
-    {
-        value = NormalizeValue(value);
-
-        if (value.Contains(",") || value.Contains("\"") || value.Contains("\\n"))
         {
-            value = value.Replace("\"", "\"\"");
-            return $"\"{value}\"";
+            sb.AppendLine(string.Join(delimiter.ToString(), row));
         }
 
-        return value;
+        var content = sb.ToString().TrimEnd();
+        content = content
+            .Replace("\r\n", "\n");
+
+        FileIO.Update(tableName, extension, content, path);
     }
 
-    private static string NormalizeValue(string value)
+    private static List<char> allowedChars = new List<char>()
+    {
+        '0','1','2','3','4','5','6','7','8','9',
+        'A','B','C','D','E','F','G','H','I','J','K',
+        'L','M','N','O','P','Q','R','S','T','U','V',
+        'W','X','Y','Z',
+        'a','b','c','d','e','f','g','h','i','j','k',
+        'l','m','n','o','p','q','r','s','t','u','v',
+        'w','x','y','z',
+        ',','.',':','[',']','{','}',
+        '|','#','$','%','(',')','!','?',
+        '"','\'','_','+','-','=','*','/','\\',
+        '<','>',' ','~','Ꮖ'
+    }; // Don't allow delimiter ';'
+
+    private static string FormatValue(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             return string.Empty;
 
-        return value
-            .Replace("\r", string.Empty)
-            .Replace("\n", string.Empty)
-            .Replace("\t", string.Empty);
+        return new string(value.Where(c => allowedChars.Contains(c)).ToArray());
     }
 
     private static string[] ParseCsvLine(string line)
@@ -140,13 +147,7 @@ public static class TableIO
         {
             char c = line[i];
 
-            if (c == '"' && (i == 0 || line[i - 1] != '\\'))
-            {
-                inQuotes = !inQuotes;
-                continue;
-            }
-
-            if (c == ',' && !inQuotes)
+            if (c == delimiter)
             {
                 result.Add(sb.ToString());
                 sb.Clear();
