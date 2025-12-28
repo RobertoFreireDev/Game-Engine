@@ -1,1 +1,2 @@
 ﻿timestamp;type;message
+28/12/2025 23:09:17;3;[string "main"]:14: attempt to index a nil value (global 'asd')stack traceback:[string "main"]:14: in main chunk
