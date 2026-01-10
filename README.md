@@ -6,6 +6,14 @@ Developers can write Lua scripts to build custom tools, editors, or games.
 
 ![BlackBox game image](/image.JPG)
 
+# TO DO
+
+- Add effect selection in sfx editor
+- Use code for audio generation from LUAES to redo work on this project
+- Save and load music patterns
+- Implement UI for music editor
+
+
 # Download the latest release at
 
 https://roberto-freire.itch.io/blackbox
