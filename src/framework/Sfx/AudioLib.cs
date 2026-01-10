@@ -153,12 +153,74 @@ public static class AudioLib
         return 440f * (float)Math.Pow(2, (pitch - 69) / 12.0);
     }
 
+    static int noiseCounter = 0;
+    static int noiseRate = 8;          // adjust as needed
+    static float noiseValue = 0f;
+    static readonly Random rng = new Random();
+
     private static float GenerateWave(Waveform wave, double phase, float volume)
     {
-        return wave switch
+        // phase is normalized [0..1)
+        double p = phase * Math.PI * 2.0; // convert to radians
+        double sample = 0.0;
+
+        switch (wave)
         {
-            Waveform.Square => (phase < 0.5 ? 1f : -1f) * volume,
-            _ => 0f
-        };
+            case Waveform.Square:
+                sample = Math.Sin(p) >= 0 ? 1.0 : -1.0;
+                break;
+
+            case Waveform.Triangle:
+                // Proper bipolar triangle [-1..1]
+                sample = 2.0 * Math.Abs(2.0 * phase - 1.0) - 1.0;
+                break;
+
+            case Waveform.Saw:
+                sample = 2.0 * phase - 1.0;
+                break;
+
+            case Waveform.TiltedSaw:
+                sample = phase < 0.5
+                    ? (-1.0 + phase * 4.0)
+                    : (1.0 - (phase - 0.5) * 2.0);
+                break;
+
+            case Waveform.Pulser:
+                {
+                    int step = (int)(phase * 32.0) % 32;
+                    int duty = 6;
+                    sample = step < duty ? 1.0 : -1.0;
+                    break;
+                }
+
+            case Waveform.Organ:
+                sample =
+                    1.00 * Math.Sin(p) +
+                    0.50 * Math.Sin(p * 2.0) +
+                    0.30 * Math.Sin(p * 3.0) +
+                    0.20 * Math.Sin(p * 4.0) +
+                    0.10 * Math.Sin(p * 6.0);
+                sample *= 0.25;
+                break;
+
+            case Waveform.Phaser:
+                {
+                    double lfo = 0.5 * Math.Sin(p * 0.5 + Math.PI / 2.0);
+                    sample = Math.Sin(p + lfo * 3.0);
+                    break;
+                }
+
+            case Waveform.Noise:
+                noiseCounter++;
+                if (noiseCounter >= noiseRate)
+                {
+                    noiseCounter = 0;
+                    noiseValue = (float)(rng.NextDouble() * 2.0 - 1.0);
+                }
+                sample = noiseValue;
+                break;
+        }
+
+        return (float)(sample * volume);
     }
 }
