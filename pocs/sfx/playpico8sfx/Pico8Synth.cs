@@ -93,10 +93,10 @@ namespace playpico8sfx
             _sampleRate = sampleRate;
         }
 
-        public void LoadSound(Pico8Sound sound)
+        public void LoadSound(Pico8Sound sound, int startNoteIndex = 0)
         {
             _sound = sound;
-            _currentNoteIndex = 0;
+            _currentNoteIndex = Math.Clamp(startNoteIndex, 0, Math.Max(0, sound?.Notes.Count ?? 0));
             _samplesLeft = 0;
             _phase = 0;
             _isSilent = false;

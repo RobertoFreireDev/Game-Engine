@@ -13,13 +13,15 @@ namespace playpico8sfx
                 return;
             }
 
-            using var player = new Pico8SoundPlayer(sampleRate: 44100, channels: 1);
-            player.Play(sfxList[12], loop: true);
+            using var sfx = new Pico8SfxPlayer(sampleRate: 44100, channels: 4);
+            sfx.LoadSounds(sfxList);
 
-            Console.WriteLine("Playing first PICO-8 SFX. Press Enter to stop.");
+            Console.WriteLine("Playing PICO-8 sfx(12) on channel 0. Press Enter to stop.");
+            sfx.Sfx(32, channel: 0, offset: 0, loop: true);
+
             Console.ReadLine();
 
-            player.Stop();
+            sfx.Stop(0);
         }
     }
 }
